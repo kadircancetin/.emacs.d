@@ -1,0 +1,526 @@
+This repo is mine emacs configuration. I am aware of the lacking descriptions. Those are initial commits and I wish the descriptions will complete in time.
+
+* Startup optimization
+  Some garbage collection settings. It is a deep topic and I am not the expert. Briefly, this will reduce your startup time (if on the top of your config) and some rare little lag problems when the garbage collection is active.
+  #+BEGIN_SRC emacs-lisp
+    ;; https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga
+    (setq gc-cons-threshold-original (* 1024 1024 300))
+    (setq gc-cons-threshold (* 1024 1024 500))
+    (setq file-name-handler-alist-original file-name-handler-alist)
+    (setq file-name-handler-alist nil)
+    (run-with-idle-timer
+     5 nil
+     (lambda ()
+       (setq gc-cons-threshold gc-cons-threshold-original)
+       (setq file-name-handler-alist file-name-handler-alist-original)
+       (makunbound 'gc-cons-threshold-original)
+       (makunbound 'file-name-handler-alist-original)
+       (message "gc-cons-threshold and file-name-handler-alist restored")))
+
+    ;; extra: grabage collect when focus out, so there will not a problem
+    (add-hook 'focus-out-hook 'garbage-collect)
+  #+END_SRC
+* Emacs Default Settings
+  Emacs has so many internal minor modes and settings. Some are not very useful but activated and some are good but deactivated by default. So I change them to my personal choice.
+** Activate and Deactivateing internal minor modes
+   I think menu, tool, and scroll bars are unnecessary. Cursor blinking is distracting. So I disable those minor modes.
+   #+BEGIN_SRC emacs-lisp
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (blink-cursor-mode -1)
+
+  (delete-selection-mode 1)
+  (show-paren-mode 1)
+  (winner-mode 1)
+  (global-subword-mode 1)
+  (global-prettify-symbols-mode t)
+  (global-hl-line-mode)
+   #+END_SRC
+** Set Internal settings varabiles
+*** General
+    #+BEGIN_SRC emacs-lisp
+      (setq inhibit-startup-message t initial-scratch-message nil)
+      (defalias 'yes-or-no-p 'y-or-n-p)
+      (setq frame-title-format
+            '((:eval (projectile-project-name)))) ;; emacs frame name from
+                                                  ;; projectile. FIXME:
+                                                  ;; could be problem on the
+                                                  ;; first run the settings.
+      (setq scroll-conservatively 100) ; changeing the annoying emacs
+                                       ; default when you want to look the
+                                       ; bottom of the window
+    #+END_SRC
+*** Programing
+    #+BEGIN_SRC emacs-lisp
+      (setq-default indent-tabs-mode nil)
+      (setq-default tab-width 4)
+      (setq-default show-trailing-whitespace t)
+      (setq whitespace-newline -1 whitespace-line -1 whitespace-trailing -1)
+    #+END_SRC
+
+*** Appereance
+    #+BEGIN_SRC emacs-lisp
+      (fringe-mode '(5 . 0))                  ; my laptop screen is not full hd :(
+      (set-face-attribute 'default nil
+                       :family "Source Code Pro" :height 80 :weight 'normal)
+      (setq max-mini-window-height   1
+            resize-mini-windows      nil
+            message-truncate-lines   t)  ; set and try to force mini buffer should be mini
+    #+END_SRC
+*** Key bindings
+    #+BEGIN_SRC emacs-lisp
+      (keyboard-translate ?\C-h ?\C-?) ; C-h, C-? replace
+      (keyboard-translate ?\C-? ?\C-h)
+      (global-set-key (kbd "M-o") 'other-window)
+
+      (global-set-key (kbd "M-ı") ;; using mini advantages of Turkish keyboard
+                      (lambda() (interactive)
+                        (indent-region (point-min) (point-max))))
+
+      (global-set-key (kbd "M-u") 'winner-undo)
+      (global-set-key (kbd "C-x k")
+                      '(lambda () (interactive) (kill-buffer (current-buffer))))
+      (global-set-key (kbd "C-c <left>") nil)  ; disable winner undo
+    #+END_SRC
+
+*** Hooks
+    #+BEGIN_SRC emacs-lisp
+    (add-hook 'before-save-hook 'whitespace-cleanup)
+    #+END_SRC
+** Backup Setting
+   Backup files are annoying when they are on project folder. Keep them on another folder.
+   #+BEGIN_SRC emacs-lisp
+     ;; source: https://emacs.stackexchange.com/questions/33/put-all-backups-into-one-backup-folder
+     (let ((backup-dir "~/emacs/backups")
+           (auto-saves-dir "~/emacs/auto-saves/"))
+       (dolist (dir (list backup-dir auto-saves-dir))
+         (when (not (file-directory-p dir))
+           (make-directory dir t)))
+       (setq backup-directory-alist `(("." . ,backup-dir))
+             auto-save-file-name-transforms `((".*" ,auto-saves-dir t))
+             auto-save-list-file-prefix (concat auto-saves-dir ".saves-")
+             tramp-backup-directory-alist `((".*" . ,backup-dir))
+             tramp-auto-save-directory auto-saves-dir))
+
+     (setq backup-by-copying t    ; Don't delink hardlinks
+           delete-old-versions t  ; Clean up the backups
+           version-control t      ; Use version numbers on backups,
+           kept-new-versions 5    ; keep some new versions
+           kept-old-versions 2)   ; and some old ones, too
+   #+END_SRC
+* Initial Packages
+  Melpa setting and use-package settings for auto-download use-package for auto-download all other packages.
+** Melpa
+   #+BEGIN_SRC emacs-lisp
+  (require 'package)
+  (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                    (not (gnutls-available-p))))
+       (proto (if no-ssl "http" "https")))
+  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+  (when (< emacs-major-version 24)
+    (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
+    (package-initialize)
+    (add-to-list 'package-archives
+    '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+   #+END_SRC
+
+** Use-Package
+   #+BEGIN_SRC emacs-lisp
+   ;; https://github.com/novoid/dot-emacs/blob/master/config.org
+   (unless (package-installed-p 'use-package)
+     (package-refresh-contents)
+     (package-install 'use-package))
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+   (require 'use-package-ensure)
+   (setq use-package-always-ensure t)
+   #+END_SRC
+
+* JavaScript and React Native
+  #+BEGIN_SRC emacs-lisp
+     (use-package js2-mode
+       :ensure t
+       :init
+       (add-to-list 'auto-mode-alist (cons (rx ".js" eos) 'js2-mode))
+       (setq js2-basic-offset 2
+             js-indent-level 2))
+     (use-package typescript-mode)
+  #+END_SRC
+
+  Installing bash code for the language server. [[https://github.com/theia-ide/typescript-language-server][Link]].
+  #+BEGIN_SRC shell-script
+   npm i -g typescript-language-server; npm i -g typescript;
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package rjsx-mode
+      :init
+      (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
+      :bind
+      (:map rjsx-mode-map ("M-." . lsp-ui-peek-find-definitions))
+      :config
+      (define-key rjsx-mode-map "<" nil)
+      (define-key rjsx-mode-map (kbd "C-d") nil)
+      (define-key rjsx-mode-map ">" nil)
+      (add-hook 'rjsx-mode-hook #'lsp))
+  #+END_SRC
+
+* Python
+  Language server must be installed via the follwing bash command. If the language server will run on the virtual environment you will get better result.
+
+  #+BEGIN_SRC shell-script-mode
+  pip install python-language-server[all];
+  pip uninstall autopep8 yapf;
+  pip install pyls-isort pyls-black;
+  #+END_SRC
+
+  I use eglot.
+  #+BEGIN_SRC emacs-lisp
+    (use-package pyvenv)
+
+    (use-package python
+      :bind (:map python-mode-map
+                  ("C-c C-n" . flymake-goto-next-error)
+                  ("C-c C-p" . flymake-goto-prev-error)
+                  ("M-ı" . eglot-format-buffer) ;  M-ı used for indet all
+                                                ;  the buffer. But in
+                                                ;  python I use language
+                                                ;  server for that.
+                  ("M-." . xref-find-definitions))
+      :config
+      ;(add-hook 'before-save-hook (lambda() (interactive) (eglot-format-buffer)))
+)
+  #+END_SRC
+
+  This part find the projects virtual environment via the .venv file on the project directory. This is virtualfish default setting. And then run eglot.
+
+  #+BEGIN_SRC emacs-lisp
+    (defun kadir-configure-python ()
+      (progn
+        (eglot-ensure)))
+
+    (defun activate-venv-configure-python ()
+      "source: https://github.com/jorgenschaefer/pyvenv/issues/51"
+      (interactive)
+      (require 'projectile)
+      (progn
+        (let* ((pdir (projectile-project-root)) (pfile (concat pdir ".venv")))
+          (if (file-exists-p pfile)
+              (pyvenv-workon (with-temp-buffer
+                               (insert-file-contents pfile)
+                               (nth 0 (split-string (buffer-string))))))))
+      (kadir-configure-python))
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+    (add-hook 'python-mode-hook 'activate-venv-configure-python)
+  #+END_SRC
+
+* Org Mode
+  This part was written and copied in a bit of a rush. I will handle on my free time with use-package and write decent descriptions.
+  #+BEGIN_SRC emacs-lisp
+    (with-eval-after-load 'org
+      (define-key org-mode-map (kbd "C-a") 'mwim-beginning-of-code-or-line)
+      (add-hook 'org-mode-hook #'visual-line-mode)
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+      (setq org-catch-invisible-edits    'show-and-error
+            org-cycle-separator-lines    0
+            org-agenda-start-day         "-0d"
+            org-agenda-span              16
+            org-agenda-start-on-weekday  nil
+            org-link-frame-setup         '((vm . vm-visit-folder-other-frame)
+                                           (vm-imap . vm-visit-imap-folder-other-frame)
+                                           (gnus . org-gnus-no-new-news)
+                                           (file . find-file)
+                                           (wl . wl-other-frame))))
+    (use-package org-bullets)
+    (setq org-bullets-bullet-list '("*" "*" "*" "*"))
+  #+END_SRC
+* Packages
+** Helm
+   - Addition of theese settings:
+     - =savehist-mode= will activated end of the settings for the remembering helm-M-x history.
+     - =shackle-mode= used for helm allways open bottom of the frame.
+   #+BEGIN_SRC emacs-lisp
+     (defun spacemacs//helm-hide-minibuffer-maybe ()
+       "Hide minibuffer in Helm session if we use the header line as input field."
+       (when (with-helm-buffer helm-echo-input-in-header-line)
+         (let ((ov (make-overlay (point-min) (point-max) nil nil t)))
+           (overlay-put ov 'window (selected-window))
+           (overlay-put ov 'face
+                        (let ((bg-color (face-background 'default nil)))
+                          `(:background ,bg-color :foreground ,bg-color)))
+           (setq-local cursor-type nil))))
+   #+END_SRC
+
+   This part could be writen with decent use-pacage key binding syntax.
+   #+BEGIN_SRC emacs-lisp
+        (use-package helm
+          :init
+          (helm-mode 1)
+          :config
+          (setq helm-buffers-fuzzy-matching           t
+                helm-ff-search-library-in-sexp        t
+                helm-echo-input-in-header-line        t
+                helm-M-x-always-save-history          t
+                helm-M-x-input-history                t
+                helm-display-function                 'pop-to-buffer)
+          (require 'helm-config)
+          (global-set-key (kbd "M-x") 'helm-M-x)
+          (global-set-key (kbd "C-x b") 'helm-buffers-list)
+          (global-set-key (kbd "C-x C-f") #'helm-find-files)
+          (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+          (add-hook 'helm-minibuffer-set-up-hook
+                    'spacemacs//helm-hide-minibuffer-maybe))
+   #+END_SRC
+** Shackle mode
+   Description on the helm section.
+   #+BEGIN_SRC emacs-lisp
+     (use-package shackle
+       :init
+       (shackle-mode 1)
+       :config
+       (setq shackle-rules
+             '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.4)
+               ("*eglot-help.*" :regexp t :align t :size 0.2))))
+   #+END_SRC
+** Company Mode
+   I use =helm-company= for fuzzy searching. I change so many bindings. It could be writen a use-pacage :bind syntax.
+   #+BEGIN_SRC emacs-lisp
+          (use-package company
+            :init
+            (global-company-mode 1)
+            (let ((map company-active-map))
+              (define-key map [return] 'nil)
+              (define-key map (kbd "RET") 'nil)
+              (define-key map (kbd "TAB") 'company-complete-selection)
+              (define-key map (kbd "<tab>") 'company-complete-selection)
+              (define-key map (kbd "C-n") 'company-select-next)
+              (define-key map (kbd "C-p") 'company-select-previous)
+              )
+            (define-key company-mode-map (kbd "C-.") 'helm-company)
+            (setq company-idle-delay         0.05
+                  company-dabbrev-downcase   0.05
+                  company-minimum-prefix-length 1
+                  company-tooltip-align-annotations 't)
+            :config
+            (use-package helm-company))
+   #+END_SRC
+** Web Mode
+   #+BEGIN_SRC emacs-lisp
+     (use-package web-mode
+       :init
+       (setq css-indent-offset 2
+             web-mode-markup-indent-offset 2
+             web-mode-css-indent-offset 2
+             web-mode-code-indent-offset 2
+             web-mode-attr-indent-offset 2
+             web-mode-engines-alist '(("django"    . "\\.html\\'")))
+       (add-hook 'mhtml-mode 'web-mode)
+       (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
+   #+END_SRC
+** Searching on the project
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-rg
+       :init
+       (global-set-key (kbd "<C-tab>") #'helm-rg)
+       (setq helm-rg-default-directory 'git-root
+             helm-rg--extra-args '("--max-columns" "200")))
+     (use-package deadgrep
+       :bind ("<C-iso-lefttab>" . #'deadgrep))
+   #+END_SRC
+** undo-tree mode
+   #+BEGIN_SRC emacs-lisp
+     (use-package undo-tree
+       ;; TODO: unto tree tüm geçmişi kaydediyor. araştırmak lazım
+       :init
+       (undo-tree-mode)
+       :bind
+       (("M-_" . undo-tree-redo)
+        ("C-_" . undo-tree-undo)))
+   #+END_SRC
+
+** mwim and better default moveing
+   Better C-a, C-e, C-w defaults.
+   #+BEGIN_SRC emacs-lisp
+     (defun spacemacs/backward-kill-word-or-region (&optional arg)
+       "Calls `kill-region' when a region is active and
+     `backward-kill-word' otherwise. ARG is passed to
+     `backward-kill-word' if no region is active."
+       (interactive "p")
+       (if (region-active-p)
+           ;; call interactively so kill-region handles rectangular selection
+           ;; correctly (see https://github.com/syl20bnr/spacemacs/issues/3278)
+           (call-interactively #'kill-region)
+         (backward-kill-word arg)))
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package mwim
+       :bind (("C-a" . mwim-beginning-of-code-or-line)
+              ("C-e" . mwim-end-of-line-or-code)
+              ("C-w" . spacemacs/backward-kill-word-or-region)))
+   #+END_SRC
+** expand-region mode
+   #+BEGIN_SRC emacs-lisp
+     (use-package expand-region
+       :bind (("C-t" . er/expand-region))
+       :config
+       (setq expand-region-fast-keys-enabled   nil
+             expand-region-subword-enabled     t))
+   #+END_SRC
+** Magit
+   #+BEGIN_SRC emacs-lisp
+     (use-package magit)
+   #+END_SRC
+** Projectile
+   Projectile is powerfull tool. I use it just for find in projectile and in some functions.
+   #+BEGIN_SRC emacs-lisp
+     (use-package projectile)
+     (use-package helm-projectile
+       :bind (("C-x f" . helm-projectile)))
+   #+END_SRC
+** Wakatime
+   I like statistics.
+   #+BEGIN_SRC emacs-lisp
+     (use-package wakatime-mode
+       :init
+       (add-hook 'prog-mode-hook 'wakatime-mode))
+   #+END_SRC
+** Mini modes for colors
+   Those modes creates make coloring git changes, paranthesiz, curor, `TODO` keyword.
+   #+BEGIN_SRC emacs-lisp
+     (use-package rainbow-delimiters
+       :init
+       (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+     (use-package hl-todo
+       :init
+       (global-hl-todo-mode))
+     (use-package diff-hl
+       :init
+       (global-diff-hl-mode 1)
+       (diff-hl-flydiff-mode 1))
+     (use-package color-identifiers-mode
+       :init
+       (add-hook 'prog-mode-hook #'global-color-identifiers-mode))
+     (use-package beacon
+       :init
+       (beacon-mode 1)
+       (setq beacon-color "#2FB90E"))
+   #+END_SRC
+** doom-modeline
+   #+BEGIN_SRC emacs-lisp
+     (use-package doom-modeline
+       :init
+       (doom-modeline-mode 1)
+       (setq doom-modeline-bar-width       1
+           doom-modeline-height            1
+           doom-modeline-buffer-encoding   nil
+           ;; doom-modeline-buffer-modification-icon t
+           doom-modeline-vcs-max-length    20
+           doom-modeline-icon              t
+           doom-modeline-buffer-file-name-style 'relative-to-project)
+       (set-face-attribute 'mode-line nil :height 80)
+       (set-face-attribute 'mode-line-inactive nil :height 80))
+   #+END_SRC
+** eglot
+   Just using for python. This block could be run when on python mode opening for the reduce startup time.
+   #+BEGIN_SRC emacs-lisp
+     (use-package eglot
+       :bind
+       (("C-c DEL" . 'eglot-help-at-point))
+       :config
+       (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd")))
+   #+END_SRC
+** lsp-mode
+   Just using for js. This block could be run when on js mode opening for the reduce startup time.
+   #+BEGIN_SRC emacs-lisp
+     (use-package lsp-mode
+       :config
+       (setq  lsp-enable-snippet nil
+              lsp-prefer-flymake nil)
+       (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+       (use-package flycheck)
+       (flymake-mode 0)
+       (flycheck-mode 1)
+       (use-package lsp-ui
+         :requires lsp-mode flycheck
+         :init
+         (setq lsp-ui-doc-enable t
+               lsp-ui-doc-use-childframe t
+               lsp-ui-doc-position 'top
+               lsp-ui-doc-include-signature t
+               lsp-ui-sideline-enable nil
+               lsp-ui-flycheck-enable t
+               lsp-ui-flycheck-list-position 'right
+               lsp-ui-flycheck-live-reporting nil  ; daha az sıklıkla flycheck
+               lsp-ui-peek-enable t
+               lsp-ui-peek-list-width 60
+               lsp-ui-peek-peek-height 25))
+       (use-package company-lsp
+         :requires company
+         :config
+         (push 'company-lsp company-backends)))
+   #+END_SRC
+** multiple cursors
+   #+BEGIN_SRC emacs-lisp
+     (use-package multiple-cursors
+       :bind (("C-M-n" . mc/mark-next-word-like-this)
+              ("C-M-p" . 'mc/mark-previous-like-this)
+              ("C-M-S-n" . mc/skip-to-next-like-this)
+              ("C-M-S-p" . mc/skip-to-previous-like-this)
+              ("C-S-N" . mc/unmark-previous-like-this)
+              ("C-S-P" . mc/unmark-next-like-this)
+              ("C-M-<mouse-1>" . mc/add-cursor-on-click)))
+   #+END_SRC
+* Theme and Apperiance
+  #+BEGIN_SRC emacs-lisp
+     (use-package spacemacs-theme
+       :defer t
+       :init
+       (load-theme 'spacemacs-dark t))
+  #+END_SRC
+* TODO Experimental
+  This part for trying the new features, modes, settings etc..
+  #+BEGIN_SRC emacs-lisp
+    (use-package dashboard
+      :init
+      (dashboard-setup-startup-hook))
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package dumb-jump
+      :init
+      (setq dumb-jump-prefer-searcher 'rg
+            dumb-jump-force-searcher  'rg
+            dumb-jump-selector 'helm
+            )
+      :bind
+      (("M-." . dumb-jump-go)))
+  #+END_SRC
+** TODO chekout
+    #+BEGIN_SRC emacs-lisp
+   (use-package auto-compile
+     :config (auto-compile-on-load-mode))
+   (setq load-prefer-newer t)
+    #+END_SRC
+
+# * TODO look
+  # ;; NOTE: https://github.com/mhayashi1120/auto-highlight-symbol-mode
+  # ;;       - otomatik alt çizmece
+  # ;; NOTE: https://github.com/bmag/emacs-purpose
+  # ;;       - windowlara amaç ekleme ve ordaki bufferların o windowdan olmasını sağlama
+  # ;; NOTE: empty lineların bulunup silinmesi
+  # ;;      - https://github.com/lewang/ws-butler
+  # ;;      - http://wikemacs.org/wiki/Whitespace-mode
+  # ;; NOTE: emmet mode https://github.com/smihica/emmet-mode
+  # (use-package highlight-symbol) ;; TODO: kısa yol atayıp kullan
+
+* End
+  I don't know why but if save hist will on the top. It creates a bug.
+  #+BEGIN_SRC emacs-lisp
+    (setq savehist-additional-variables      '(extended-command-history))
+    (savehist-mode 1)
+  #+END_SRC
