@@ -244,6 +244,10 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
     (setq org-bullets-bullet-list '("*" "*" "*" "*"))
   #+END_SRC
 * Packages
+** yaml-mode
+   #+BEGIN_SRC emacs-lisp
+   (use-package yaml-mode)
+   #+END_SRC
 ** auto compile for speed up
    #+BEGIN_SRC emacs-lisp
    (use-package auto-compile
