@@ -40,17 +40,21 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
 ** Set Internal settings varabiles
 *** General
     #+BEGIN_SRC emacs-lisp
-      (setq ring-bell-function 'ignore )
-      (setq inhibit-startup-message t initial-scratch-message nil)
+      (setq indent-tabs-mode         nil
+            ring-bell-function      'ignore
+            inhibit-startup-message  t
+            initial-scratch-message  nil
+            mark-ring-max            128
+            kill-ring-max            256)
       (defalias 'yes-or-no-p 'y-or-n-p)
-      (setq frame-title-format
-            '((:eval (projectile-project-name)))) ;; emacs frame name from
-                                                  ;; projectile. FIXME:
-                                                  ;; could be problem on the
-                                                  ;; first run the settings.
-      (setq scroll-conservatively 100) ; changeing the annoying emacs
-                                       ; default when you want to look the
-                                       ; bottom of the window
+      (setq frame-title-format'
+            '((:eval (projectile-project-name))))
+      ;; emacs frame name from projectile. FIXME: could be problem on the
+      ;; first run the settings.
+
+      (setq scroll-conservatively 100)
+      ;; changeing the annoying emacs default when you want to look the
+      ;; bottom of the window
     #+END_SRC
 *** Programing
     #+BEGIN_SRC emacs-lisp
@@ -64,7 +68,7 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
     #+BEGIN_SRC emacs-lisp
       (fringe-mode '(5 . 0))                  ; my laptop screen is not full hd :(
       (set-face-attribute 'default nil
-                       :family "Source Code Pro" :height 80 :weight 'normal)
+                          :family "Source Code Pro" :height 80 :weight 'normal)
       (setq max-mini-window-height   1
             resize-mini-windows      nil
             message-truncate-lines   t)  ; set and try to force mini buffer should be mini
@@ -135,36 +139,37 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
-   (require 'use-package-ensure)
-   (setq use-package-always-ensure t)
+     (require 'use-package-ensure)
+     (setq use-package-always-ensure t
+           use-package-always-defer t)
    #+END_SRC
 
 * JavaScript and React Native
   #+BEGIN_SRC emacs-lisp
-     (use-package js2-mode
-       :ensure t
-       :init
-       (add-to-list 'auto-mode-alist (cons (rx ".js" eos) 'js2-mode))
-       (setq js2-basic-offset 2
-             js-indent-level 2))
-     (use-package typescript-mode)
+    (use-package js2-mode
+      :ensure t
+      :init
+      (add-to-list 'auto-mode-alist (cons (rx ".js" eos) 'js2-mode))
+      (setq js2-basic-offset 2
+            js-indent-level 2))
+    (use-package typescript-mode)
   #+END_SRC
 
   Installing bash code for the language server. [[https://github.com/theia-ide/typescript-language-server][Link]].
   #+BEGIN_SRC shell-script
-   npm i -g typescript-language-server; npm i -g typescript;
+   ; npm i -g typescript-language-server; npm i -g typescript;
   #+END_SRC
 
   #+BEGIN_SRC emacs-lisp
     (use-package rjsx-mode
       :init
       (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
-      :bind
-      (:map rjsx-mode-map ("M-." . lsp-ui-peek-find-definitions))
+      :bind (:map rjsx-mode-map
+                  ("M-." . lsp-ui-peek-find-definitions)
+                  ("<" . nil)
+                  ("C-d" . nil)
+                  (">" . nil))
       :config
-      (define-key rjsx-mode-map "<" nil)
-      (define-key rjsx-mode-map (kbd "C-d") nil)
-      (define-key rjsx-mode-map ">" nil)
       (add-hook 'rjsx-mode-hook #'lsp))
   #+END_SRC
 
@@ -172,9 +177,7 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
   Language server must be installed via the follwing bash command. If the language server will run on the virtual environment you will get better result.
 
   #+BEGIN_SRC shell-script-mode
-  pip install python-language-server[all];
-  pip uninstall autopep8 yapf;
-  pip install pyls-isort pyls-black;
+  ; pip install python-language-server[all]; pip uninstall autopep8 yapf; pip install pyls-isort pyls-black;
   #+END_SRC
 
   I use eglot.
@@ -222,6 +225,7 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
 * Org Mode
   This part was written and copied in a bit of a rush. I will handle on my free time with use-package and write decent descriptions.
   #+BEGIN_SRC emacs-lisp
+
     (with-eval-after-load 'org
       (define-key org-mode-map (kbd "C-a") 'mwim-beginning-of-code-or-line)
       (add-hook 'org-mode-hook #'visual-line-mode)
@@ -240,6 +244,18 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
     (setq org-bullets-bullet-list '("*" "*" "*" "*"))
   #+END_SRC
 * Packages
+** auto compile for speed up
+   #+BEGIN_SRC emacs-lisp
+   (use-package auto-compile
+     :init (auto-compile-on-load-mode)
+     (setq load-prefer-newer t))
+(setq auto-compile-display-buffer nil)
+(setq auto-compile-mode-line-counter t)
+   #+END_SRC
+** Restclient
+   #+BEGIN_SRC emacs-lisp
+   (use-package restclient)
+   #+END_SRC
 ** Helm
    - Addition of theese settings:
      - =savehist-mode= will activated end of the settings for the remembering helm-M-x history.
@@ -258,23 +274,23 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
 
    This part could be writen with decent use-pacage key binding syntax.
    #+BEGIN_SRC emacs-lisp
-        (use-package helm
-          :init
-          (helm-mode 1)
-          :config
-          (setq helm-buffers-fuzzy-matching           t
-                helm-ff-search-library-in-sexp        t
-                helm-echo-input-in-header-line        t
-                helm-M-x-always-save-history          t
-                helm-M-x-input-history                t
-                helm-display-function                 'pop-to-buffer)
-          (require 'helm-config)
-          (global-set-key (kbd "M-x") 'helm-M-x)
-          (global-set-key (kbd "C-x b") 'helm-buffers-list)
-          (global-set-key (kbd "C-x C-f") #'helm-find-files)
-          (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-          (add-hook 'helm-minibuffer-set-up-hook
-                    'spacemacs//helm-hide-minibuffer-maybe))
+     (use-package helm
+       :init
+       (setq helm-buffers-fuzzy-matching           t
+             helm-ff-search-library-in-sexp        t
+             helm-echo-input-in-header-line        t
+             helm-M-x-always-save-history          t
+             helm-M-x-input-history                t
+             helm-display-function                 'pop-to-buffer)
+       (helm-mode 1)
+       :config
+       (require 'helm-config)
+       (global-set-key (kbd "M-x") 'helm-M-x)
+       (global-set-key (kbd "C-x b") 'helm-buffers-list)
+       (global-set-key (kbd "C-x C-f") #'helm-find-files)
+       (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+       (add-hook 'helm-minibuffer-set-up-hook
+                 'spacemacs//helm-hide-minibuffer-maybe))
    #+END_SRC
 ** Shackle mode
    Description on the helm section.
@@ -288,26 +304,25 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
                ("*eglot-help.*" :regexp t :align t :size 0.2))))
    #+END_SRC
 ** Company Mode
-   I use =helm-company= for fuzzy searching. I change so many bindings. It could be writen a use-pacage :bind syntax.
+   I use =helm-company= for fuzzy searching. I change so many bindings. It could be writen a use-package :bind syntax.
    #+BEGIN_SRC emacs-lisp
-          (use-package company
-            :init
-            (global-company-mode 1)
-            (let ((map company-active-map))
-              (define-key map [return] 'nil)
-              (define-key map (kbd "RET") 'nil)
-              (define-key map (kbd "TAB") 'company-complete-selection)
-              (define-key map (kbd "<tab>") 'company-complete-selection)
-              (define-key map (kbd "C-n") 'company-select-next)
-              (define-key map (kbd "C-p") 'company-select-previous)
-              )
-            (define-key company-mode-map (kbd "C-.") 'helm-company)
-            (setq company-idle-delay         0.05
-                  company-dabbrev-downcase   0.05
-                  company-minimum-prefix-length 1
-                  company-tooltip-align-annotations 't)
-            :config
-            (use-package helm-company))
+     (use-package company
+       :init
+       (global-company-mode 1)
+       (setq company-idle-delay         0.05
+             company-dabbrev-downcase   0.05
+             company-minimum-prefix-length 1
+             company-tooltip-align-annotations 't)
+       :bind ((:map company-active-map
+                   ([return] . nil)
+                   ("RET" . nil)
+                   ("TAB" . company-complete-selection)
+                   ("<tab>" . company-complete-selection)
+                   ("C-n" . company-select-next)
+                   ("C-p" . company-select-previous))
+              (:map company-mode-map ("C-." . helm-company)))
+       :config
+       (use-package helm-company))
    #+END_SRC
 ** Web Mode
    #+BEGIN_SRC emacs-lisp
@@ -326,9 +341,9 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
    #+BEGIN_SRC emacs-lisp
      (use-package helm-rg
        :init
-       (global-set-key (kbd "<C-tab>") #'helm-rg)
        (setq helm-rg-default-directory 'git-root
-             helm-rg--extra-args '("--max-columns" "200")))
+             helm-rg--extra-args '("--max-columns" "200"))
+       :bind ("<C-tab>" . #'helm-rg))
      (use-package deadgrep
        :bind ("<C-iso-lefttab>" . #'deadgrep))
    #+END_SRC
@@ -338,9 +353,8 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
        ;; TODO: unto tree tüm geçmişi kaydediyor. araştırmak lazım
        :init
        (undo-tree-mode)
-       :bind
-       (("M-_" . undo-tree-redo)
-        ("C-_" . undo-tree-undo)))
+       :bind (("M-_" . undo-tree-redo)
+              ("C-_" . undo-tree-undo)))
    #+END_SRC
 
 ** mwim and better default moveing
@@ -367,14 +381,16 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
 ** expand-region mode
    #+BEGIN_SRC emacs-lisp
      (use-package expand-region
-       :bind (("C-t" . er/expand-region))
-       :config
+       :init
        (setq expand-region-fast-keys-enabled   nil
-             expand-region-subword-enabled     t))
+             expand-region-subword-enabled     t)
+       :bind (("C-t" . er/expand-region)))
    #+END_SRC
 ** Magit
    #+BEGIN_SRC emacs-lisp
-     (use-package magit)
+     (use-package magit
+       :config
+       (use-package magit-todos :init (magit-todos-mode 1)))
    #+END_SRC
 ** Projectile
    Projectile is powerfull tool. I use it just for find in projectile and in some functions.
@@ -443,7 +459,8 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
        (setq  lsp-enable-snippet nil
               lsp-prefer-flymake nil)
        (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-       (use-package flycheck)
+       (use-package flycheck
+         )
        (flymake-mode 0)
        (flycheck-mode 1)
        (use-package lsp-ui
@@ -486,9 +503,17 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
 * TODO Experimental
   This part for trying the new features, modes, settings etc..
   #+BEGIN_SRC emacs-lisp
+  ;; (use-package which-key)
+  #+END_SRC
+  #+BEGIN_SRC emacs-lisp
     (use-package dashboard
       :init
-      (dashboard-setup-startup-hook))
+      (dashboard-setup-startup-hook)
+      :config
+      (setq dashboard-items '((recents  . 5)
+                              (bookmarks . 5)
+                              (projects . 5)
+                              (registers . 5))))
   #+END_SRC
 
   #+BEGIN_SRC emacs-lisp
@@ -501,23 +526,17 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
       :bind
       (("M-." . dumb-jump-go)))
   #+END_SRC
-** TODO chekout
-    #+BEGIN_SRC emacs-lisp
-   (use-package auto-compile
-     :config (auto-compile-on-load-mode))
-   (setq load-prefer-newer t)
-    #+END_SRC
 
-# * TODO look
-  # ;; NOTE: https://github.com/mhayashi1120/auto-highlight-symbol-mode
-  # ;;       - otomatik alt çizmece
-  # ;; NOTE: https://github.com/bmag/emacs-purpose
-  # ;;       - windowlara amaç ekleme ve ordaki bufferların o windowdan olmasını sağlama
-  # ;; NOTE: empty lineların bulunup silinmesi
-  # ;;      - https://github.com/lewang/ws-butler
-  # ;;      - http://wikemacs.org/wiki/Whitespace-mode
-  # ;; NOTE: emmet mode https://github.com/smihica/emmet-mode
-  # (use-package highlight-symbol) ;; TODO: kısa yol atayıp kullan
+   # * TODO look
+   # ;; NOTE: https://github.com/mhayashi1120/auto-highlight-symbol-mode
+   # ;;       - otomatik alt çizmece
+   # ;; NOTE: https://github.com/bmag/emacs-purpose
+   # ;;       - windowlara amaç ekleme ve ordaki bufferların o windowdan olmasını sağlama
+   # ;; NOTE: empty lineların bulunup silinmesi
+   # ;;      - https://github.com/lewang/ws-butler
+   # ;;      - http://wikemacs.org/wiki/Whitespace-mode
+   # ;; NOTE: emmet mode https://github.com/smihica/emmet-mode
+   # (use-package highlight-symbol) ;; TODO: kısa yol atayıp kullan
 
 * End
   I don't know why but if save hist will on the top. It creates a bug.
