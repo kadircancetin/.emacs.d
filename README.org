@@ -23,19 +23,30 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
 * Emacs Default Settings
   Emacs has so many internal minor modes and settings. Some are not very useful but activated and some are good but deactivated by default. So I change them to my personal choice.
 ** Activate and Deactivateing internal minor modes
-   I think menu, tool, and scroll bars are unnecessary. Cursor blinking is distracting. So I disable those minor modes.
+   =menu-bar-mode=, =tool-bar-mode= and =scrool-bar-mode= are generaly modern and mouse based features. I don't like them
    #+BEGIN_SRC emacs-lisp
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  (blink-cursor-mode -1)
+     (menu-bar-mode -1)
+     (tool-bar-mode -1)
+     (scroll-bar-mode -1)
+   #+END_SRC
 
-  (delete-selection-mode 1)
-  (show-paren-mode 1)
-  (winner-mode 1)
-  (global-subword-mode 1)
-  (global-prettify-symbols-mode t)
-  (global-hl-line-mode)
+   Blink my cursor is annoying.
+   #+BEGIN_SRC emacs-lisp
+     (blink-cursor-mode -1)
+   #+END_SRC
+
+   Default emacs' response when you have selected text and writing is
+   not intuitive. =delete-selection-mode= change it what most people
+   get used to on other editors.
+   #+BEGIN_SRC emacs-lisp
+     (delete-selection-mode 1)
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+     (show-paren-mode 1)            ; shows matching parentheses
+     (winner-mode 1)                ; provide undo, redo your window layout
+     (global-subword-mode 1)        ; make camel-case usable with word shorcuts
+     (global-hl-line-mode 1)        ; highlight your cusor line. don't lost.
    #+END_SRC
 ** Set Internal settings varabiles
 *** General
