@@ -5,7 +5,7 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
   #+BEGIN_SRC emacs-lisp
     ;; https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga
     (setq gc-cons-threshold-original (* 1024 1024 300))
-    (setq gc-cons-threshold (* 1024 1024 500))
+    (setq gc-cons-threshold most-positive-fixnum)
     (setq file-name-handler-alist-original file-name-handler-alist)
     (setq file-name-handler-alist nil)
     (run-with-idle-timer
