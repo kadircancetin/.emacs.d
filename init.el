@@ -1,10 +1,10 @@
 (setq emacs_start_from nil)             ; if nil from ORG, otherwise file
 (setq emacs_start_from 'file)           ; if nil from ORG, otherwise file
 
-(use-package benchmark-init
-  :ensure t
-  :config
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+;; (use-package benchmark-init
+;;   :ensure t
+;;   :config
+;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 (defun emacs_start__with_org()
   (require 'org)
