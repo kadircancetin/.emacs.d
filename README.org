@@ -1,7 +1,10 @@
 This repo is mine emacs configuration. I am aware of the lacking comments. Those are initial commits and I wish the comments will complete in time.
 
 * Startup optimization
-  Some garbage collection settings. It is a deep topic and I am not the expert. Briefly, this will reduce your startup time (if on the top of your config) and some rare little lag problems when the garbage collection is active.
+  Some garbage collection settings. It is a deep topic and I am not
+  the expert. Briefly, this will reduce your startup time (if on the
+  top of your config) and some rare little lag problems when the
+  garbage collection is active.
   #+BEGIN_SRC emacs-lisp
     ;; https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga
     (setq gc-cons-threshold-original (* 1024 1024 300))
@@ -18,12 +21,15 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
        (message "gc-cons-threshold and file-name-handler-alist restored")))
 
     ;; extra: grabage collect when focus out, so there will not a problem
-    (add-hook 'focus-out-hook 'garbage-collect)
+    ;; (add-hook 'focus-out-hook 'garbage-collect)
   #+END_SRC
 * Emacs Default Settings
-  Emacs has so many internal minor modes and settings. Some are not very useful but activated and some are good but deactivated by default. So I change them to my personal choice.
+  Emacs has so many internal minor modes and settings. Some are not
+  very useful but activated and some are good but deactivated by
+  default. So I change them to my personal choice.
 ** Activate and Deactivateing internal minor modes
-   =menu-bar-mode=, =tool-bar-mode= and =scrool-bar-mode= are generaly modern and mouse based features. I don't like them
+   =menu-bar-mode=, =tool-bar-mode= and =scrool-bar-mode= are generaly
+   modern and mouse based features. I don't like them
    #+BEGIN_SRC emacs-lisp
      (menu-bar-mode -1)
      (tool-bar-mode -1)
@@ -90,27 +96,32 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
                     message-truncate-lines   t)  ; set and try to force mini buffer should be mini
     #+END_SRC
 *** Key bindings
+    I use M-ı for indent all buffer except python mode. In python
+    instead of useing indent-regiton I use language servers' format
+    buffer.
     #+BEGIN_SRC emacs-lisp
-      (keyboard-translate ?\C-h ?\C-?) ; C-h, C-? replace
+      ; C-h, C-? replace
+      (keyboard-translate ?\C-h ?\C-?)
       (keyboard-translate ?\C-? ?\C-h)
+
       (global-set-key (kbd "M-o") 'other-window)
-
-      (global-set-key (kbd "M-ı") ;; using mini advantages of Turkish keyboard
-                      (lambda() (interactive)
-                        (indent-region (point-min) (point-max))))
-
       (global-set-key (kbd "M-u") 'winner-undo)
+      (global-set-key (kbd "C-c <left>") nil)    ; disable winner undo default
       (global-set-key (kbd "C-x k")
                       '(lambda () (interactive) (kill-buffer (current-buffer))))
-      (global-set-key (kbd "C-c <left>") nil)  ; disable winner undo
+      (global-set-key (kbd "M-ı")                ; indent all buffer
+                      (lambda() (interactive)
+                        (indent-region (point-min) (point-max))))
     #+END_SRC
 
 *** Hooks
+    Clean whitespaces before saving.
     #+BEGIN_SRC emacs-lisp
     (add-hook 'before-save-hook 'whitespace-cleanup)
     #+END_SRC
 ** Backup Setting
-   Backup files are annoying when they are on project folder. Keep them on another folder.
+   Backup files are annoying when they are on project folder. Keep
+   them on another folder.
    #+BEGIN_SRC emacs-lisp
      ;; source: https://emacs.stackexchange.com/questions/33/put-all-backups-into-one-backup-folder
      (let ((backup-dir "~/emacs/backups")
