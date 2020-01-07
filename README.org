@@ -516,13 +516,20 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
    #+END_SRC
 * Theme and Apperiance
   #+BEGIN_SRC emacs-lisp
-     (use-package spacemacs-theme
-       :defer t
-       :init
-       (load-theme 'spacemacs-dark t))
+    (if window-system
+        (progn (use-package spacemacs-theme
+                 :defer t
+                 :init
+                 (load-theme 'spacemacs-dark t)))
+      (progn
+        (global-hl-line-mode -1)
+        (load-theme 'wombat t)))
   #+END_SRC
 * TODO Experimental
   This part for trying the new features, modes, settings etc..
+  #+BEGIN_SRC emacs-lisp
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  #+END_SRC
   #+BEGIN_SRC emacs-lisp
   ;; (use-package which-key)
   #+END_SRC
