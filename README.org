@@ -425,6 +425,7 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
 ** Magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
+       :bind (("C-x 4 C-m" . magit-diff-visit-file-other-window))
        :config
        (use-package magit-todos :init (magit-todos-mode 1)))
    #+END_SRC
