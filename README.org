@@ -499,7 +499,10 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
        (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd")))
    #+END_SRC
 ** lsp-mode
-   Just using for js. This block could be run when on js mode opening for the reduce startup time.
+   - [ ] TODO: nested yerine =:after= ile kodlanacak
+     https://github.com/jwiegley/use-package/issues/453
+   - Just using for js. This block could be run when on js mode opening
+   for the reduce startup time.
    #+BEGIN_SRC emacs-lisp
      (use-package lsp-mode
        :config
@@ -540,24 +543,7 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
               ("C-S-P" . mc/unmark-next-like-this)
               ("C-M-<mouse-1>" . mc/add-cursor-on-click)))
    #+END_SRC
-* Theme and Apperiance
-  #+BEGIN_SRC emacs-lisp
-    (if window-system
-        (progn (use-package spacemacs-theme
-                 :defer t
-                 :init
-                 (load-theme 'spacemacs-dark t)))
-      (progn
-        (global-hl-line-mode -1)
-        (load-theme 'wombat t)))
-  #+END_SRC
-* TODO Experimental
-  This part for trying the new features, modes, settings etc..
-  #+BEGIN_SRC emacs-lisp
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
-  ;; (use-package which-key)
-  #+END_SRC
-
+** Dashboard
   #+BEGIN_SRC emacs-lisp
     (use-package dashboard
       :init
@@ -585,6 +571,33 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
                               (bookmarks . 10)
                               (registers . 5))))
   #+END_SRC
+
+* Theme and Apperiance
+  #+BEGIN_SRC emacs-lisp
+    (if window-system
+        (progn (use-package spacemacs-theme
+                 :defer t
+                 :init
+                 (load-theme 'spacemacs-dark t)))
+      (progn
+        (global-hl-line-mode -1)
+        (load-theme 'wombat t)))
+  #+END_SRC
+* Experimental
+  #+BEGIN_SRC emacs-lisp
+    (use-package bm
+      :bind (("C-x C-m" . bm-toggle)
+             ("C-x C-n" . bm-next)
+             ("C-x C-p" . bm-previous)))
+    (use-package helm-bm
+      :bind (("C-x C-a" . helm-bm)))
+  #+END_SRC
+  This part for trying the new features, modes, settings etc..
+  #+BEGIN_SRC emacs-lisp
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  ;; (use-package which-key)
+  #+END_SRC
+
 
   #+BEGIN_SRC emacs-lisp
     (use-package dumb-jump
