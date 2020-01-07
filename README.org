@@ -555,18 +555,34 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
   This part for trying the new features, modes, settings etc..
   #+BEGIN_SRC emacs-lisp
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
-  #+END_SRC
-  #+BEGIN_SRC emacs-lisp
   ;; (use-package which-key)
   #+END_SRC
+
   #+BEGIN_SRC emacs-lisp
     (use-package dashboard
       :init
+      (setq dashboard-banner-logo-title   "Kemacs?"
+            dashboard-center-content      t
+            ;; dashboard-set-heading-icons t
+            dashboard-set-file-icons t
+            dashboard-startup-banner      'logo
+            dashboard-set-navigator    t
+            dashboard-set-init-info       t
+            dashboard-set-footer          nil
+            )
+      ;; Format: "(icon title help action face prefix suffix)"
+      (setq dashboard-navigator-buttons
+            `(;; line1
+              ((,nil
+                "Agenda"
+                "Browse homepage"
+                (lambda (&rest _) (org-agenda-list "homepage")))
+               ("?" "" "?/h" #'help nil "<" ">"))))
       (dashboard-setup-startup-hook)
       :config
-      (setq dashboard-items '((recents  . 5)
-                              (bookmarks . 5)
-                              (projects . 5)
+      (setq dashboard-items '((projects . 10)
+                              (recents  . 5)
+                              (bookmarks . 10)
                               (registers . 5))))
   #+END_SRC
 
