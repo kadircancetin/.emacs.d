@@ -51,21 +51,27 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
 ** Set Internal settings varabiles
 *** General
     #+BEGIN_SRC emacs-lisp
-      (setq indent-tabs-mode         nil
-            ring-bell-function      'ignore
-            inhibit-startup-message  t
-            initial-scratch-message  nil
-            mark-ring-max            128
-            kill-ring-max            256)
+      ;; cleaning init.el (another file for custom-set-variables etc.)
+      (setq custom-file (concat user-emacs-directory "/custom.el"))
+
+      (setq indent-tabs-mode         nil    ; space instead of tabs
+            ring-bell-function      'ignore ; shutdown rings
+            inhibit-startup-message  t      ; disable startup messages
+            initial-scratch-message  nil    ; disable startup messages
+            mark-ring-max            128    ; increatese mark-ring
+            kill-ring-max            256)   ; increatese kill-ring history
+
+      ;; short yes no question when emacs ask
       (defalias 'yes-or-no-p 'y-or-n-p)
+
+      ;; emacs frame name from projectile.
+      ;;FIXME: could be problem on the first run the settings.
       (setq frame-title-format'
             '((:eval (projectile-project-name))))
-      ;; emacs frame name from projectile. FIXME: could be problem on the
-      ;; first run the settings.
 
-      (setq scroll-conservatively 100)
       ;; changeing the annoying emacs default when you want to look the
       ;; bottom of the window
+      (setq scroll-conservatively 100)
     #+END_SRC
 *** Programing
     #+BEGIN_SRC emacs-lisp
