@@ -260,6 +260,21 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
     (use-package org-bullets)
     (setq org-bullets-bullet-list '("*" "*" "*" "*"))
   #+END_SRC
+* Elisp
+  I can't use emacs-lisp in (use-pacage) but it saving the day.
+  #+BEGIN_SRC emacs-lisp
+    (add-hook 'emacs-lisp-mode-hook
+              (lambda ()
+                (progn
+                  (use-package elisp-slime-nav
+                    :bind (
+                           ("M-." . elisp-slime-nav-find-elisp-thing-at-point)
+                           ("M-," . pop-tag-mark))
+                    )
+                  (message "mk")
+                  )
+                ))
+  #+END_SRC
 * Packages
 ** yaml-mode
    #+BEGIN_SRC emacs-lisp
