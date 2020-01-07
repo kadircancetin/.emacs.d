@@ -1,4 +1,4 @@
-This repo is mine emacs configuration. I am aware of the lacking descriptions. Those are initial commits and I wish the descriptions will complete in time.
+This repo is mine emacs configuration. I am aware of the lacking comments. Those are initial commits and I wish the comments will complete in time.
 
 * Startup optimization
   Some garbage collection settings. It is a deep topic and I am not the expert. Briefly, this will reduce your startup time (if on the top of your config) and some rare little lag problems when the garbage collection is active.
@@ -52,14 +52,13 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
 *** General
     #+BEGIN_SRC emacs-lisp
       ;; cleaning init.el (another file for custom-set-variables etc.)
-      (setq custom-file (concat user-emacs-directory "/custom.el"))
+      (setq-default custom-file (concat user-emacs-directory "/custom.el"))
 
-      (setq indent-tabs-mode         nil    ; space instead of tabs
-            ring-bell-function      'ignore ; shutdown rings
-            inhibit-startup-message  t      ; disable startup messages
-            initial-scratch-message  nil    ; disable startup messages
-            mark-ring-max            128    ; increatese mark-ring
-            kill-ring-max            256)   ; increatese kill-ring history
+      (setq-default ring-bell-function      'ignore ; shutdown rings
+                    inhibit-startup-message  t      ; disable startup messages
+                    initial-scratch-message  nil    ; disable startup messages
+                    mark-ring-max            128    ; increatese mark-ring
+                    kill-ring-max            256)   ; increatese kill-ring history
 
       ;; short yes no question when emacs ask
       (defalias 'yes-or-no-p 'y-or-n-p)
@@ -71,14 +70,14 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
 
       ;; changeing the annoying emacs default when you want to look the
       ;; bottom of the window
-      (setq scroll-conservatively 100)
+      (setq-default scroll-conservatively 100)
     #+END_SRC
 *** Programing
     #+BEGIN_SRC emacs-lisp
-      (setq-default indent-tabs-mode nil)
-      (setq-default tab-width 4)
-      (setq-default show-trailing-whitespace t)
-      (setq whitespace-newline -1 whitespace-line -1 whitespace-trailing -1)
+      (setq-default indent-tabs-mode nil       ; space instead of tabs
+                    tab-width 4                ; 4 space for tab
+                    show-trailing-whitespace t) ; showing empty whitespaces
+      (setq-default whitespace-newline -1 whitespace-line -1 whitespace-trailing -1)
     #+END_SRC
 
 *** Appereance
@@ -86,9 +85,9 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
       (fringe-mode '(5 . 0))                  ; my laptop screen is not full hd :(
       (set-face-attribute 'default nil
                           :family "Source Code Pro" :height 80 :weight 'normal)
-      (setq max-mini-window-height   1
-            resize-mini-windows      nil
-            message-truncate-lines   t)  ; set and try to force mini buffer should be mini
+      (setq-default max-mini-window-height   1
+                    resize-mini-windows      nil
+                    message-truncate-lines   t)  ; set and try to force mini buffer should be mini
     #+END_SRC
 *** Key bindings
     #+BEGIN_SRC emacs-lisp
@@ -119,17 +118,17 @@ This repo is mine emacs configuration. I am aware of the lacking descriptions. T
        (dolist (dir (list backup-dir auto-saves-dir))
          (when (not (file-directory-p dir))
            (make-directory dir t)))
-       (setq backup-directory-alist `(("." . ,backup-dir))
-             auto-save-file-name-transforms `((".*" ,auto-saves-dir t))
-             auto-save-list-file-prefix (concat auto-saves-dir ".saves-")
-             tramp-backup-directory-alist `((".*" . ,backup-dir))
-             tramp-auto-save-directory auto-saves-dir))
+       (setq-default backup-directory-alist `(("." . ,backup-dir))
+                     auto-save-file-name-transforms `((".*" ,auto-saves-dir t))
+                     auto-save-list-file-prefix (concat auto-saves-dir ".saves-")
+                     tramp-backup-directory-alist `((".*" . ,backup-dir))
+                     tramp-auto-save-directory auto-saves-dir))
 
-     (setq backup-by-copying t    ; Don't delink hardlinks
-           delete-old-versions t  ; Clean up the backups
-           version-control t      ; Use version numbers on backups,
-           kept-new-versions 5    ; keep some new versions
-           kept-old-versions 2)   ; and some old ones, too
+     (setq-default backup-by-copying t    ; Don't delink hardlinks
+                   delete-old-versions t  ; Clean up the backups
+                   version-control t      ; Use version numbers on backups,
+                   kept-new-versions 5    ; keep some new versions
+                   kept-old-versions 2)   ; and some old ones, too
    #+END_SRC
 * Initial Packages
   Melpa setting and use-package settings for auto-download use-package for auto-download all other packages.
