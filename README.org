@@ -1,13 +1,19 @@
-This repo is mine emacs configuration. I am aware of the lacking comments. Those are initial commits and I wish the comments will complete in time.
+This repo is mine emacs configuration. I am aware of the lacking
+comments. Those are initial commits and I wish the comments will
+complete in time.
 
 * Startup optimization
   Some garbage collection settings. It is a deep topic and I am not
   the expert. Briefly, this will reduce your startup time (if on the
   top of your config) and some rare little lag problems when the
   garbage collection is active.
+
+  Addition of this starup setup, I use =gcmh=. You could it on related
+  title.
   #+BEGIN_SRC emacs-lisp
     ;; https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga
-    (setq gc-cons-threshold-original (* 1024 1024 300))
+    (setq gc-cons-percentage 0.6)
+    (setq gc-cons-threshold-original (* 1024 1024 200))
     (setq gc-cons-threshold most-positive-fixnum)
     (setq file-name-handler-alist-original file-name-handler-alist)
     (setq file-name-handler-alist nil)
@@ -19,9 +25,6 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
        (makunbound 'gc-cons-threshold-original)
        (makunbound 'file-name-handler-alist-original)
        (message "gc-cons-threshold and file-name-handler-alist restored")))
-
-    ;; extra: grabage collect when focus out, so there will not a problem
-    ;; (add-hook 'focus-out-hook 'garbage-collect)
   #+END_SRC
 * Emacs Default Settings
   Emacs has so many internal minor modes and settings. Some are not
@@ -53,6 +56,7 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
      (winner-mode 1)                ; provide undo, redo your window layout
      (global-subword-mode 1)        ; make camel-case usable with word shorcuts
      (global-hl-line-mode 1)        ; highlight your cusor line. don't lost.
+     (save-place-mode 1)            ; save cursor position for next file opening, and restore it
    #+END_SRC
 ** Set Internal settings varabiles
 *** General
@@ -64,6 +68,7 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
                     inhibit-startup-message  t      ; disable startup messages
                     initial-scratch-message  nil    ; disable startup messages
                     mark-ring-max            128    ; increatese mark-ring
+                    column-number-mode       t      ; show column number on modeline
                     kill-ring-max            256)   ; increatese kill-ring history
 
       ;; short yes no question when emacs ask
@@ -74,15 +79,16 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
       (setq frame-title-format'
             '((:eval (projectile-project-name))))
 
-      ;; changeing the annoying emacs default when you want to look the
-      ;; bottom of the window
-      (setq-default scroll-conservatively 100)
+      ;; smooth scrooling
+      ;; (setq scroll-step 1)
+      ;; (setq scroll-conservatively 10000)
+      ;; (setq auto-window-vscroll nil)
     #+END_SRC
 *** Programing
     #+BEGIN_SRC emacs-lisp
       (setq-default indent-tabs-mode nil       ; space instead of tabs
                     tab-width 4                ; 4 space for tab
-                    show-trailing-whitespace t) ; showing empty whitespaces
+                    show-trailing-whitespace nil) ; showing empty whitespaces
       (setq-default whitespace-newline -1 whitespace-line -1 whitespace-trailing -1)
     #+END_SRC
 
@@ -275,15 +281,14 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
   #+BEGIN_SRC emacs-lisp
     (add-hook 'emacs-lisp-mode-hook
               (lambda ()
-                (progn
-                  (use-package elisp-slime-nav
-                    :bind (
-                           ("M-." . elisp-slime-nav-find-elisp-thing-at-point)
-                           ("M-," . pop-tag-mark))
-                    )
-                  (message "mk")
-                  )
-                ))
+                (use-package elisp-slime-nav
+                  :bind (("M-." . elisp-slime-nav-find-elisp-thing-at-point)
+                         ("M-," . pop-tag-mark)))))
+
+    (use-package aggressive-indent
+      :diminish
+      :hook (emacs-lisp-mode . aggressive-indent-mode))
+
   #+END_SRC
 * Packages
 ** yaml-mode
@@ -338,6 +343,24 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
        (add-hook 'helm-minibuffer-set-up-hook
                  'spacemacs//helm-hide-minibuffer-maybe))
    #+END_SRC
+
+   helm-dash is offline documentation and search on helm thing. Before
+   useing helm-dash you should download the docs from =helm-das-install-docset=
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-dash
+       :commands helm-dash)
+   #+END_SRC
+
+   show mode and search on helm
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-describe-modes)
+
+     ;; (use-package helm-descbinds
+     ;;   :init
+     ;;   (fset 'describe-bindings 'helm-descbinds))
+   #+END_SRC
+
+
 ** Shackle mode
    Description on the helm section.
    #+BEGIN_SRC emacs-lisp
@@ -360,12 +383,12 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
              company-minimum-prefix-length 1
              company-tooltip-align-annotations 't)
        :bind ((:map company-active-map
-                   ([return] . nil)
-                   ("RET" . nil)
-                   ("TAB" . company-complete-selection)
-                   ("<tab>" . company-complete-selection)
-                   ("C-n" . company-select-next)
-                   ("C-p" . company-select-previous))
+                    ([return] . nil)
+                    ("RET" . nil)
+                    ("TAB" . company-complete-selection)
+                    ("<tab>" . company-complete-selection)
+                    ("C-n" . company-select-next)
+                    ("C-p" . company-select-previous))
               (:map company-mode-map ("C-." . helm-company)))
        :config
        (use-package helm-company))
@@ -398,7 +421,7 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
      (use-package undo-tree
        ;; TODO: unto tree tüm geçmişi kaydediyor. araştırmak lazım
        :init
-       (undo-tree-mode)
+       (global-undo-tree-mode)
        :bind (("M-_" . undo-tree-redo)
               ("C-_" . undo-tree-undo)))
    #+END_SRC
@@ -442,7 +465,11 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
 ** Projectile
    Projectile is powerfull tool. I use it just for find in projectile and in some functions.
    #+BEGIN_SRC emacs-lisp
-     (use-package projectile)
+     (use-package projectile
+       :init
+       (projectile-mode 1)         ; son projeleri hatırlamada işe yaramazsa sil geç
+       )
+
      (use-package helm-projectile
        :bind (("C-x f" . helm-projectile)))
    #+END_SRC
@@ -477,6 +504,7 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
 ** doom-modeline
    #+BEGIN_SRC emacs-lisp
      (use-package doom-modeline
+       :commands (doom-mode-line-mode)
        :init
        (doom-modeline-mode 1)
        (setq doom-modeline-bar-width       1
@@ -544,7 +572,7 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
               ("C-M-<mouse-1>" . mc/add-cursor-on-click)))
    #+END_SRC
 ** Dashboard
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (use-package dashboard
       :init
       (setq dashboard-banner-logo-title   "Kemacs?"
@@ -570,8 +598,14 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
                               (recents  . 5)
                               (bookmarks . 10)
                               (registers . 5))))
-  #+END_SRC
+   #+END_SRC
 
+** gcmh
+   #+BEGIN_SRC emacs-lisp
+     (use-package gcmh
+       :init
+       (gcmh-mode 1))
+   #+END_SRC
 * Theme and Apperiance
   #+BEGIN_SRC emacs-lisp
     (if window-system
@@ -585,10 +619,11 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
   #+END_SRC
 * Experimental
   #+BEGIN_SRC emacs-lisp
-    (use-package bm
-      :bind (("C-x C-m" . bm-toggle)
-             ("C-x C-n" . bm-next)
-             ("C-x C-p" . bm-previous)))
+    ;; (use-package bm
+    ;;   :bind (("C-x C-m" . bm-toggle)
+    ;;          ("C-x C-n" . bm-next)
+    ;;          ("C-x C-p" . bm-previous)))
+
     (use-package helm-bm
       :bind (("C-x C-a" . helm-bm)))
   #+END_SRC
@@ -610,17 +645,49 @@ This repo is mine emacs configuration. I am aware of the lacking comments. Those
       (("M-." . dumb-jump-go)))
   #+END_SRC
 
-   # * TODO look
-   # ;; NOTE: https://github.com/mhayashi1120/auto-highlight-symbol-mode
-   # ;;       - otomatik alt çizmece
-   # ;; NOTE: https://github.com/bmag/emacs-purpose
-   # ;;       - windowlara amaç ekleme ve ordaki bufferların o windowdan olmasını sağlama
-   # ;; NOTE: empty lineların bulunup silinmesi
-   # ;;      - https://github.com/lewang/ws-butler
-   # ;;      - http://wikemacs.org/wiki/Whitespace-mode
-   # ;; NOTE: emmet mode https://github.com/smihica/emmet-mode
-   # (use-package highlight-symbol) ;; TODO: kısa yol atayıp kullan
+  #+BEGIN_QUOTE
+  ....An example is that if you paste (yank) a block of text, it will be highlighted until you press the next key. This is just a small tweak, but gives a nice bit of visual feedback.  -- http://pragmaticemacs.com/emacs/volatile-highlights/
+  #+END_QUOTE
 
+  #+BEGIN_SRC emacs-lisp
+    (use-package volatile-highlights
+      :config
+      (volatile-highlights-mode 1)
+      (vhl/define-extension 'undo-tree 'undo-tree-yank 'undo-tree-move)
+      (vhl/install-extension 'undo-tree))
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package better-jumper
+      :init
+      (better-jumper-mode +1)
+      :bind (("C-x C-n" . better-jumper-jump-forward)
+             ("C-x C-p" . better-jumper-jump-backward))
+      :config
+      (global-set-key (kbd "C-x C-m") (lambda () (interactive)
+                                        (progn
+                                          (better-jumper-set-jump (point))
+                                          (message "better jumper add link")))))
+
+  #+END_SRC
+
+  # * TODO look
+  # ;; NOTE: https://github.com/mhayashi1120/auto-highlight-symbol-mode
+  # ;;       - otomatik alt çizmece
+  # ;; NOTE: https://github.com/bmag/emacs-purpose
+  # ;;       - windowlara amaç ekleme ve ordaki bufferların o windowdan olmasını sağlama
+  # ;; NOTE: empty lineların bulunup silinmesi
+  # ;;      - https://github.com/lewang/ws-butler
+  # ;;      - http://wikemacs.org/wiki/Whitespace-mode
+  # ;; NOTE: emmet mode https://github.com/smihica/emmet-mode
+  # (use-package highlight-symbol) ;; TODO: kısa yol atayıp kullan
+
+  #  (use-package so-long :config (global-so-long-mode 1)) so-long şu
+  # an için melpada falan yok. master branche geçmiş, bi ara bulup
+  # yüklemek lazım efsana bir şey
+
+* todo list
+  - TODO: rest client ı http uzuntılı dosyalara bağla
 * End
   I don't know why but if save hist will on the top. It creates a bug.
   #+BEGIN_SRC emacs-lisp
