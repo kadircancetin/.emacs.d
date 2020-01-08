@@ -293,19 +293,21 @@ complete in time.
 * Packages
 ** yaml-mode
    #+BEGIN_SRC emacs-lisp
-   (use-package yaml-mode)
+     (use-package yaml-mode)
    #+END_SRC
 ** auto compile for speed up
    #+BEGIN_SRC emacs-lisp
-   (use-package auto-compile
-     :init (auto-compile-on-load-mode)
-     (setq load-prefer-newer t))
-(setq auto-compile-display-buffer nil)
-(setq auto-compile-mode-line-counter t)
+     (use-package auto-compile
+       :init (auto-compile-on-load-mode)
+       (setq load-prefer-newer t))
+     ;; (setq auto-compile-display-buffer nil)
+     ;; (setq auto-compile-mode-line-counter t)
    #+END_SRC
 ** Restclient
    #+BEGIN_SRC emacs-lisp
-   (use-package restclient)
+     (use-package restclient
+       :init
+       (add-to-list 'auto-mode-alist '("\\(\\.http\\'\\)" . restclient-mode)))
    #+END_SRC
 ** Helm
    - Addition of theese settings:
