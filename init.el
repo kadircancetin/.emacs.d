@@ -13,19 +13,6 @@
 ;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 
-(defun get-last-modifed (file)
-  ;; source: https://gist.github.com/jmdeldin/4942461
-  "Returns the last modified date of a FILE."
-  (interactive)
-  (format-time-string "%Y-%m-%d %T"
-                      (nth 5 (file-attributes file))))
-
-(defun most-recent-p (file1 file2)
-  ;; source: https://gist.github.com/jmdeldin/4942461
-  "Returns t if FILE1 was modified more recently than FILE2."
-  (string< (get-last-modifed file1) (get-last-modifed file2)))
-
-
 (defun emacs_start__with_org()
   (require 'org)
   (org-babel-load-file
@@ -45,6 +32,7 @@
     (load-file "~/.emacs.d/README.el")
     ))
 
-(if (most-recent-p  "~/.emacs.d/README.org" "~/.emacs.d/README.el")
-    (emacs_start__with_tangled)
-  (emacs_start__with_org))
+
+(if (file-newer-than-file-p "~/.emacs.d/README.org" "~/.emacs.d/README.el")
+    (emacs_start__with_org)
+  (emacs_start__with_tangled))
