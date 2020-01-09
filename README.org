@@ -716,22 +716,20 @@ complete in time.
   #+END_SRC
 
 * todo list
-  # * TODO look
-  # ;; NOTE: https://github.com/mhayashi1120/auto-highlight-symbol-mode
-  # ;;       - otomatik alt çizmece
-  # ;; NOTE: https://github.com/bmag/emacs-purpose
-  # ;;       - windowlara amaç ekleme ve ordaki bufferların o windowdan olmasını sağlama
-  # ;; NOTE: empty lineların bulunup silinmesi
-  # ;;      - https://github.com/lewang/ws-butler
-  # ;;      - http://wikemacs.org/wiki/Whitespace-mode
-  # ;; NOTE: emmet mode https://github.com/smihica/emmet-mode
-  # (use-package highlight-symbol) ;; TODO: kısa yol atayıp kullan
+  Bu liste incelemeyi düşündüğüm ve düzeltmeyi planladığım şeyleri barındır.
 
-  #  (use-package so-long :config (global-so-long-mode 1)) so-long şu
-  # an için melpada falan yok. master branche geçmiş, bi ara bulup
-  # yüklemek lazım efsana bir şey
-
-  # (x-ray) package https://www.emacswiki.org/emacs/XrayPackage#toc4
+  - ace-window da bufferların yerini değiştirme vardı. ya ace kur yada
+    alternatifini bul
+  - https://github.com/mhayashi1120/auto-highlight-symbol-mode
+    - otomatik alt çizmece
+  - https://github.com/bmag/emacs-purpose
+    - windowlara amaç ekleme ve ordaki bufferların o windowdan olmasını sağlama
+  - empty lineların bulunup silinmesi
+  - https://github.com/lewang/ws-butler
+  - http://wikemacs.org/wiki/Whitespace-mode
+  - https://github.com/smihica/emmet-mode
+  - (use-package highlight-symbol)
+  - (x-ray) package https://www.emacswiki.org/emacs/XrayPackage#toc4
 
 * End
   I don't know why but if save hist will on the top. It creates a bug.
