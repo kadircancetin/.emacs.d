@@ -298,6 +298,12 @@ complete in time.
 ** yaml-mode
    #+BEGIN_SRC emacs-lisp
      (use-package yaml-mode)
+
+     (use-package docker-compose-mode
+       :mode "docker-compose.*\.yml\\'")
+
+     (use-package dockerfile-mode
+       :mode "Dockerfile[a-zA-Z.-]*\\'")
    #+END_SRC
 ** auto compile for speed up
    #+BEGIN_SRC emacs-lisp
@@ -398,6 +404,14 @@ complete in time.
               (:map company-mode-map ("C-." . helm-company)))
        :config
        (use-package helm-company))
+
+     (use-package company-quickhelp
+       :after (company)
+       :init
+       (company-quickhelp-mode)
+       (setq company-quickhelp-max-lines 20
+             company-quickhelp-delay     nil)
+       :bind (:map company-active-map ("M-h" . company-quickhelp-manual-begin)))
    #+END_SRC
 ** Web Mode
    #+BEGIN_SRC emacs-lisp
@@ -612,6 +626,23 @@ complete in time.
        :init
        (gcmh-mode 1))
    #+END_SRC
+** so-long mode
+   =so-long= is a new very primitive emacs internal package that
+   handle long files. When the long files opens, so-long major mode
+   automatically activate and default major-mode deactivated. So the
+   problem on freezing when opening the big file is avoided.
+   #+BEGIN_SRC emacs-lisp
+     (use-package quelpa)
+
+     (unless (package-installed-p 'so-long)
+       (quelpa
+        '(so-long :fetcher url
+                  :url "https://raw.githubusercontent.com/emacs-mirror/emacs/master/lisp/so-long.el"
+                  :upgrade nil))
+       (package-install 'use-package))
+     (global-so-long-mode 1)
+   #+END_SRC
+
 * Theme and Apperiance
   #+BEGIN_SRC emacs-lisp
     (if window-system
