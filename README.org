@@ -713,9 +713,9 @@ complete in time.
                                         (progn
                                           (better-jumper-set-jump (point))
                                           (message "better jumper add link")))))
-
   #+END_SRC
 
+* todo list
   # * TODO look
   # ;; NOTE: https://github.com/mhayashi1120/auto-highlight-symbol-mode
   # ;;       - otomatik alt çizmece
@@ -731,8 +731,8 @@ complete in time.
   # an için melpada falan yok. master branche geçmiş, bi ara bulup
   # yüklemek lazım efsana bir şey
 
-* todo list
-  - TODO: rest client ı http uzuntılı dosyalara bağla
+  # (x-ray) package https://www.emacswiki.org/emacs/XrayPackage#toc4
+
 * End
   I don't know why but if save hist will on the top. It creates a bug.
   #+BEGIN_SRC emacs-lisp
