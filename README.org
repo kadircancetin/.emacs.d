@@ -2,6 +2,54 @@ This repo is mine emacs configuration. I am aware of the lacking
 comments. Those are initial commits and I wish the comments will
 complete in time.
 
+* Table of Contents                                                     :TOC_5:
+- [[#startup-optimization][Startup optimization]]
+- [[#emacs-default-settings][Emacs Default Settings]]
+  - [[#activate-and-deactivateing-internal-minor-modes][Activate and Deactivateing internal minor modes]]
+  - [[#set-internal-settings-varabiles][Set Internal settings varabiles]]
+    - [[#general][General]]
+    - [[#programing][Programing]]
+    - [[#appereance][Appereance]]
+    - [[#key-bindings][Key bindings]]
+    - [[#hooks][Hooks]]
+  - [[#backup-setting][Backup Setting]]
+- [[#my-functions][My Functions]]
+- [[#initial-packages][Initial Packages]]
+  - [[#melpa][Melpa]]
+  - [[#use-package][Use-Package]]
+- [[#javascript-and-react-native][JavaScript and React Native]]
+- [[#python][Python]]
+- [[#org-mode][Org Mode]]
+- [[#elisp][Elisp]]
+- [[#packages][Packages]]
+  - [[#yaml-mode][yaml-mode]]
+  - [[#auto-compile-for-speed-up][auto compile for speed up]]
+  - [[#restclient][Restclient]]
+  - [[#helm][Helm]]
+  - [[#ivy][IVY]]
+  - [[#shackle-mode][Shackle mode]]
+  - [[#company-mode][Company Mode]]
+  - [[#web-mode][Web Mode]]
+  - [[#searching-on-the-project][Searching on the project]]
+  - [[#undo-tree-mode][undo-tree mode]]
+  - [[#mwim-and-better-default-moveing][mwim and better default moveing]]
+  - [[#expand-region-mode][expand-region mode]]
+  - [[#magit][Magit]]
+  - [[#projectile][Projectile]]
+  - [[#wakatime][Wakatime]]
+  - [[#mini-modes-for-colors][Mini modes for colors]]
+  - [[#doom-modeline][doom-modeline]]
+  - [[#eglot][eglot]]
+  - [[#lsp-mode][lsp-mode]]
+  - [[#multiple-cursors][multiple cursors]]
+  - [[#dashboard][Dashboard]]
+  - [[#gcmh][gcmh]]
+  - [[#so-long-mode][so-long mode]]
+- [[#theme-and-apperiance][Theme and Apperiance]]
+- [[#experimental][Experimental]]
+- [[#list][list]]
+- [[#end][End]]
+
 * Startup optimization
   Some garbage collection settings. It is a deep topic and I am not
   the expert. Briefly, this will reduce your startup time (if on the
@@ -13,7 +61,7 @@ complete in time.
   #+BEGIN_SRC emacs-lisp
     ;; https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga
     (setq gc-cons-percentage 0.6)
-    (setq gc-cons-threshold-original (* 1024 1024 200))
+    (setq gc-cons-threshold-original (* 1024 1024 20))
     (setq gc-cons-threshold most-positive-fixnum)
     (setq file-name-handler-alist-original file-name-handler-alist)
     (setq file-name-handler-alist nil)
@@ -72,7 +120,10 @@ complete in time.
                     mark-ring-max            128    ; increatese mark-ring
                     column-number-mode       t      ; show column number on modeline
                     default-buffer-file-coding-system 'utf-8-unix
-                    kill-ring-max            256)   ; increatese kill-ring history
+                    kill-ring-max            256    ; increatese kill-ring history
+                    search-whitespace-regexp ".*?"  ; make isearch more fuzzy like
+                    ;; vc-follow-symlinks       t
+                    )
 
       ;; short yes no question when emacs ask
       (defalias 'yes-or-no-p 'y-or-n-p)
@@ -86,6 +137,8 @@ complete in time.
       ;; (setq scroll-step 1)
       ;; (setq scroll-conservatively 10000)
       ;; (setq auto-window-vscroll nil)
+
+      (add-to-list 'default-frame-alist '(fullscreen . maximized))
     #+END_SRC
 *** Programing
     #+BEGIN_SRC emacs-lisp
@@ -150,6 +203,35 @@ complete in time.
                    kept-new-versions 5    ; keep some new versions
                    kept-old-versions 2)   ; and some old ones, too
    #+END_SRC
+* My Functions
+  These are self documented little functions. Some of them copying
+  (and maybe some eddited version) from internet. I wrote the source
+  of the functions on the comment line. Some of them are I wrote.
+
+  #+BEGIN_SRC emacs-lisp
+    (defun kadir/open_thunar()
+      "This functions open the thunar file editor on the buffers
+        directory. Working and testing only on the linux systems."
+      (interactive)
+      (start-process "*shellout*" nil "thunar"))
+    (defun kadir/open_terminator()
+      "This functions open the thunar file editor on the buffers
+        directory. Working and testing only on the linux systems."
+      (interactive)
+      (start-process "*shellout*" nil "terminator"))
+    ;; "C-x *" is default calc bind. cearful about it if you use calc
+    (global-set-key (kbd "C-x *") #'kadir/open_thunar)
+    (global-set-key (kbd "C-x -") #'kadir/open_terminator)
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+    (defun kadir/find-config ()
+      ;; source: https://github.com/KaratasFurkan/.emacs.d
+      "Open config file. (probably this file)"
+      (interactive) (find-file config-org))
+
+    (global-set-key (kbd "C-x c") 'find-config)
+  #+END_SRC
 * Initial Packages
   Melpa setting and use-package settings for auto-download use-package for auto-download all other packages.
 ** Melpa
@@ -262,8 +344,13 @@ complete in time.
   This part was written and copied in a bit of a rush. I will handle on my free time with use-package and write decent descriptions.
   #+BEGIN_SRC emacs-lisp
 
+    (use-package toc-org
+      :init
+      (add-hook 'org-mode-hook 'toc-org-mode))
+
     (with-eval-after-load 'org
       (use-package htmlize)
+      (use-package org-bullets)
       (define-key org-mode-map (kbd "C-a") 'mwim-beginning-of-code-or-line)
       (add-hook 'org-mode-hook #'visual-line-mode)
       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
@@ -277,7 +364,7 @@ complete in time.
                                            (gnus . org-gnus-no-new-news)
                                            (file . find-file)
                                            (wl . wl-other-frame))))
-    (use-package org-bullets)
+
     (setq org-bullets-bullet-list '("*" "*" "*" "*"))
   #+END_SRC
 * Elisp
@@ -326,6 +413,7 @@ complete in time.
 
    #+END_SRC
 ** Helm
+   Helm is [[https://github.com/emacs-helm/helm][helm]]. I like it.
    - Addition of theese settings:
      - =savehist-mode= will activated end of the settings for the remembering helm-M-x history.
      - =shackle-mode= used for helm allways open bottom of the frame.
@@ -341,25 +429,31 @@ complete in time.
            (setq-local cursor-type nil))))
    #+END_SRC
 
-   This part could be writen with decent use-pacage key binding syntax.
+   Addition of this bindings I use =helm-apropos= with M-x.
    #+BEGIN_SRC emacs-lisp
      (use-package helm
        :init
-       (setq helm-buffers-fuzzy-matching           t
-             helm-ff-search-library-in-sexp        t
-             helm-echo-input-in-header-line        t
-             helm-M-x-always-save-history          t
-             helm-M-x-input-history                t
-             helm-display-function                 'pop-to-buffer)
-       (helm-mode 1)
+       (setq-default  helm-ff-search-library-in-sexp        t
+                      helm-echo-input-in-header-line        t
+                      helm-M-x-always-save-history          t
+                      helm-M-x-input-history                t
+                      ;;helm-completion-style                 'helm-fuzzy
+                      helm-completion-style                 '(helm-flex)
+                      helm-buffers-fuzzy-matching           t
+                      helm-candidate-number-limit           500
+                      helm-display-function                 'pop-to-buffer)
+       ;; (helm-mode 1)
+       :bind (("M-x"      . helm-M-x)
+              ("C-x b"    . helm-buffers-list)
+              ("C-x C-f"  . helm-find-files)
+              ("C-x i"    . helm-imenu-all-buffer)
+              ("C-x C-i"  . helm-imenu)
+              ("M-y"      . helm-show-kill-ring))
        :config
        (require 'helm-config)
-       (global-set-key (kbd "M-x") 'helm-M-x)
-       (global-set-key (kbd "C-x b") 'helm-buffers-list)
-       (global-set-key (kbd "C-x C-f") #'helm-find-files)
-       (global-set-key (kbd "M-y") 'helm-show-kill-ring)
        (add-hook 'helm-minibuffer-set-up-hook
                  'spacemacs//helm-hide-minibuffer-maybe))
+
    #+END_SRC
 
    helm-dash is offline documentation and search on helm thing. Before
@@ -485,9 +579,9 @@ complete in time.
 ** Magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
-       :bind (("C-x 4 C-m" . magit-diff-visit-file-other-window))
+       :bind (("C-x 4 C-m" . magit-diff-visit-file-other-window)
+              ("C-x g" . magit-status))
        :config
-       (global-set-key (kbd "C-x g") 'magit-status)
        (use-package magit-todos :init (magit-todos-mode 1)))
    #+END_SRC
 ** Projectile
@@ -663,6 +757,13 @@ complete in time.
         (load-theme 'wombat t)))
   #+END_SRC
 * Experimental
+  Make dired with icons. I don't understant that i like or not but it
+  could be stant in experimental for just now.
+  #+BEGIN_SRC emacs-lisp
+    (use-package all-the-icons-dired
+      :defer nil
+      :hook (dired-mode . all-the-icons-dired-mode))
+  #+END_SRC
   #+BEGIN_SRC emacs-lisp
     ;; (use-package bm
     ;;   :bind (("C-x C-m" . bm-toggle)
@@ -672,10 +773,14 @@ complete in time.
     (use-package helm-bm
       :bind (("C-x C-a" . helm-bm)))
   #+END_SRC
-  This part for trying the new features, modes, settings etc..
+
+  I use which key defaultly false but sometimes I need it.
   #+BEGIN_SRC emacs-lisp
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
-  ;; (use-package which-key)
+    (use-package which-key
+      :config
+      (which-key-setup-side-window-bottom)
+      (setq which-key-idle-delay 0.01))
+    ;; (use-package which-key)
   #+END_SRC
 
 
@@ -696,8 +801,9 @@ complete in time.
 
   #+BEGIN_SRC emacs-lisp
     (use-package volatile-highlights
-      :config
+      :init
       (volatile-highlights-mode 1)
+      :config
       (vhl/define-extension 'undo-tree 'undo-tree-yank 'undo-tree-move)
       (vhl/install-extension 'undo-tree))
   #+END_SRC
@@ -714,12 +820,18 @@ complete in time.
                                           (better-jumper-set-jump (point))
                                           (message "better jumper add link")))))
   #+END_SRC
-
+  # ;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+  # ;; (use-package org-plus-contrib)
+  # ;; (add-to-list 'org-export-backends 'taskjuggler)
+  # ;; (org-babel-do-load-languages
+  # ;;  'org-babel-load-languages
+  # ;;  '((python . t)))
+  # ;; (setq org-confirm-babel-evaluate nil)
 * todo list
   Bu liste incelemeyi düşündüğüm ve düzeltmeyi planladığım şeyleri barındır.
-
   - ace-window da bufferların yerini değiştirme vardı. ya ace kur yada
     alternatifini bul
+  - pdf-tools
   - https://github.com/mhayashi1120/auto-highlight-symbol-mode
     - otomatik alt çizmece
   - https://github.com/bmag/emacs-purpose
@@ -730,10 +842,10 @@ complete in time.
   - https://github.com/smihica/emmet-mode
   - (use-package highlight-symbol)
   - (x-ray) package https://www.emacswiki.org/emacs/XrayPackage#toc4
-
+  - https://oremacs.com/2017/12/27/company-numbers/
 * End
   I don't know why but if save hist will on the top. It creates a bug.
   #+BEGIN_SRC emacs-lisp
-    (setq savehist-additional-variables      '(extended-command-history))
+    ;; (setq savehist-additional-variables      '(extended-command-history))
     (savehist-mode 1)
   #+END_SRC
