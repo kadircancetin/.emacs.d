@@ -317,7 +317,13 @@ complete in time.
    #+BEGIN_SRC emacs-lisp
      (use-package restclient
        :init
-       (add-to-list 'auto-mode-alist '("\\(\\.http\\'\\)" . restclient-mode)))
+       (add-to-list 'auto-mode-alist '("\\(\\.http\\'\\)" . restclient-mode))
+       :config
+       (add-to-list 'company-backends 'company-restclient))
+
+     (use-package company-restclient
+       :after (company restclient))
+
    #+END_SRC
 ** Helm
    - Addition of theese settings:
@@ -393,6 +399,7 @@ complete in time.
        (setq company-idle-delay         0.05
              company-dabbrev-downcase   0.05
              company-minimum-prefix-length 1
+             ;; company-echo-delay 0                ; remove annoying blinking
              company-tooltip-align-annotations 't)
        :bind ((:map company-active-map
                     ([return] . nil)
