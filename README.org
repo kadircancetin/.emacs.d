@@ -442,7 +442,7 @@ complete in time.
                       helm-buffers-fuzzy-matching           t
                       helm-candidate-number-limit           500
                       helm-display-function                 'pop-to-buffer)
-       ;; (helm-mode 1)
+       (helm-mode 1)
        :bind (("M-x"      . helm-M-x)
               ("C-x b"    . helm-buffers-list)
               ("C-x C-f"  . helm-find-files)
@@ -545,6 +545,16 @@ complete in time.
        (global-undo-tree-mode)
        :bind (("M-_" . undo-tree-redo)
               ("C-_" . undo-tree-undo)))
+   #+END_SRC
+
+   Additionly you could save all the undo tree history with this
+   settings but I thing it is slowing down the opening the buffers and
+   some times raise a bug when the closing buffer. So I disabled it
+   but may be some one like it.
+   #+BEGIN_SRC emacs-lisp
+     ;; (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))
+     ;;    undo-tree-auto-save-history t
+     ;; )
    #+END_SRC
 
 ** mwim and better default moveing
@@ -685,8 +695,8 @@ complete in time.
 ** multiple cursors
    #+BEGIN_SRC emacs-lisp
      (use-package multiple-cursors
-       :bind (("C-M-n" . mc/mark-next-word-like-this)
-              ("C-M-p" . 'mc/mark-previous-like-this)
+       :bind (("C-M-n" . mc/mark-next-like-this)
+              ("C-M-p" . mc/mark-previous-like-this)
               ("C-M-S-n" . mc/skip-to-next-like-this)
               ("C-M-S-p" . mc/skip-to-previous-like-this)
               ("C-S-N" . mc/unmark-previous-like-this)
@@ -819,6 +829,20 @@ complete in time.
                                         (progn
                                           (better-jumper-set-jump (point))
                                           (message "better jumper add link")))))
+  #+END_SRC
+
+
+  This is statistical for finding the much used functions. I hope I
+  will find unnecassary key bindings which I realy don't use and I see
+  some function that I invoke thats whith M-x.
+  #+BEGIN_SRC emacs-lisp
+
+    (use-package keyfreq
+      :init
+      (keyfreq-mode 1)
+      (keyfreq-autosave-mode 1))
+
+
   #+END_SRC
   # ;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
   # ;; (use-package org-plus-contrib)
