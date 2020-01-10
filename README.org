@@ -43,7 +43,6 @@ complete in time.
   - [[#lsp-mode][lsp-mode]]
   - [[#multiple-cursors][multiple cursors]]
   - [[#dashboard][Dashboard]]
-  - [[#gcmh][gcmh]]
   - [[#so-long-mode][so-long mode]]
 - [[#theme-and-apperiance][Theme and Apperiance]]
 - [[#experimental][Experimental]]
@@ -54,26 +53,11 @@ complete in time.
   Some garbage collection settings. It is a deep topic and I am not
   the expert. Briefly, this will reduce your startup time (if on the
   top of your config) and some rare little lag problems when the
-  garbage collection is active.
+  garbage collection is on active. This .el code is the first part of
+  the init.el.
 
-  Addition of this starup setup, I use =gcmh=. You could it on related
-  title.
-  #+BEGIN_SRC emacs-lisp
-    ;; https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga
-    (setq gc-cons-percentage 0.6)
-    (setq gc-cons-threshold-original (* 1024 1024 20))
-    (setq gc-cons-threshold most-positive-fixnum)
-    (setq file-name-handler-alist-original file-name-handler-alist)
-    (setq file-name-handler-alist nil)
-    (run-with-idle-timer
-     5 nil
-     (lambda ()
-       (setq gc-cons-threshold gc-cons-threshold-original)
-       (setq file-name-handler-alist file-name-handler-alist-original)
-       (makunbound 'gc-cons-threshold-original)
-       (makunbound 'file-name-handler-alist-original)
-       (message "gc-cons-threshold and file-name-handler-alist restored")))
-  #+END_SRC
+  Addition of this starup setup, I use =gcmh=. You could fint it on
+  related title.
 * Emacs Default Settings
   Emacs has so many internal minor modes and settings. Some are not
   very useful but activated and some are good but deactivated by
@@ -265,7 +249,6 @@ complete in time.
 * JavaScript and React Native
   #+BEGIN_SRC emacs-lisp
     (use-package js2-mode
-      :ensure t
       :init
       (add-to-list 'auto-mode-alist (cons (rx ".js" eos) 'js2-mode))
       (setq js2-basic-offset 2
@@ -345,7 +328,8 @@ complete in time.
   #+BEGIN_SRC emacs-lisp
 
     (use-package toc-org
-      :init
+      :defer 5
+      :config
       (add-hook 'org-mode-hook 'toc-org-mode))
 
     (with-eval-after-load 'org
@@ -394,9 +378,10 @@ complete in time.
    #+END_SRC
 ** auto compile for speed up
    #+BEGIN_SRC emacs-lisp
-     (use-package auto-compile
-       :init (auto-compile-on-load-mode)
-       (setq load-prefer-newer t))
+     ;; (use-package auto-compile
+     ;;   :init
+     ;;   (auto-compile-on-load-mode)
+     ;;   (setq load-prefer-newer t))
      ;; (setq auto-compile-display-buffer nil)
      ;; (setq auto-compile-mode-line-counter t)
    #+END_SRC
@@ -410,7 +395,6 @@ complete in time.
 
      (use-package company-restclient
        :after (company restclient))
-
    #+END_SRC
 ** Helm
    Helm is [[https://github.com/emacs-helm/helm][helm]]. I like it.
@@ -432,6 +416,7 @@ complete in time.
    Addition of this bindings I use =helm-apropos= with M-x.
    #+BEGIN_SRC emacs-lisp
      (use-package helm
+       :defer 0.15
        :init
        (setq-default  helm-ff-search-library-in-sexp        t
                       helm-echo-input-in-header-line        t
@@ -442,7 +427,7 @@ complete in time.
                       helm-buffers-fuzzy-matching           t
                       helm-candidate-number-limit           500
                       helm-display-function                 'pop-to-buffer)
-       (helm-mode 1)
+                                             ; (helm-mode 1)
        :bind (("M-x"      . helm-M-x)
               ("C-x b"    . helm-buffers-list)
               ("C-x C-f"  . helm-find-files)
@@ -451,9 +436,10 @@ complete in time.
               ("M-y"      . helm-show-kill-ring))
        :config
        (require 'helm-config)
+       (message "helm actv")
+
        (add-hook 'helm-minibuffer-set-up-hook
                  'spacemacs//helm-hide-minibuffer-maybe))
-
    #+END_SRC
 
    helm-dash is offline documentation and search on helm thing. Before
@@ -466,20 +452,42 @@ complete in time.
    show mode and search on helm
    #+BEGIN_SRC emacs-lisp
      (use-package helm-describe-modes)
-
      ;; (use-package helm-descbinds
      ;;   :init
      ;;   (fset 'describe-bindings 'helm-descbinds))
    #+END_SRC
 
 
+# ** IVY
+#    #+BEGIN_SRC emacs-lisp
+#      ;; (use-package ivy :ensure t
+#      ;;   :init
+#      ;;   (ivy-mode 1)
+#      ;;   :diminish (ivy-mode . "")
+#      ;;   :bind
+#      ;;   (:map ivy-mode-map
+#      ;;         ("C-'" . ivy-avy))
+#      ;;   :config
+#      ;;   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
+#      ;;   (setq ivy-use-virtual-buffers t)
+#      ;;   ;; number of result lines to display
+#      ;;   (setq ivy-height 10)
+#      ;;   ;; does not count candidates
+#      ;;   (setq ivy-count-format "")
+#      ;;   ;; no regexp by default
+#      ;;   (setq ivy-initial-inputs-alist nil)
+#      ;;   ;; configure regexp engine.
+#      ;;   (setq ivy-re-builders-alist
+#      ;;         ;; allow input not in order
+#      ;;         '((t   . ivy--regex-ignore-order))))
+#    #+END_SRC
 ** Shackle mode
    Description on the helm section.
    #+BEGIN_SRC emacs-lisp
      (use-package shackle
-       :init
-       (shackle-mode 1)
+       :defer 0.2
        :config
+       (shackle-mode 1)
        (setq shackle-rules
              '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.4)
                ("*eglot-help.*" :regexp t :align t :size 0.2))))
@@ -488,13 +496,7 @@ complete in time.
    I use =helm-company= for fuzzy searching. I change so many bindings. It could be writen a use-package :bind syntax.
    #+BEGIN_SRC emacs-lisp
      (use-package company
-       :init
-       (global-company-mode 1)
-       (setq company-idle-delay         0.05
-             company-dabbrev-downcase   0.05
-             company-minimum-prefix-length 1
-             ;; company-echo-delay 0                ; remove annoying blinking
-             company-tooltip-align-annotations 't)
+       :defer 0.8
        :bind ((:map company-active-map
                     ([return] . nil)
                     ("RET" . nil)
@@ -504,6 +506,12 @@ complete in time.
                     ("C-p" . company-select-previous))
               (:map company-mode-map ("C-." . helm-company)))
        :config
+       (global-company-mode 1)
+       (setq company-idle-delay         0.05
+             company-dabbrev-downcase   0.05
+             company-minimum-prefix-length 1
+             ;; company-echo-delay 0                ; remove annoying blinking
+             company-tooltip-align-annotations 't)
        (use-package helm-company))
 
      (use-package company-quickhelp
@@ -540,8 +548,8 @@ complete in time.
 ** undo-tree mode
    #+BEGIN_SRC emacs-lisp
      (use-package undo-tree
-       ;; TODO: unto tree tüm geçmişi kaydediyor. araştırmak lazım
-       :init
+       :defer 0.2
+       :config
        (global-undo-tree-mode)
        :bind (("M-_" . undo-tree-redo)
               ("C-_" . undo-tree-undo)))
@@ -598,7 +606,8 @@ complete in time.
    Projectile is powerfull tool. I use it just for find in projectile and in some functions.
    #+BEGIN_SRC emacs-lisp
      (use-package projectile
-       :init
+       :defer 2
+       :config
        (projectile-mode 1)         ; son projeleri hatırlamada işe yaramazsa sil geç
        )
 
@@ -609,36 +618,42 @@ complete in time.
    I like statistics.
    #+BEGIN_SRC emacs-lisp
      (use-package wakatime-mode
-       :init
-       (add-hook 'prog-mode-hook 'wakatime-mode))
+       :defer 5
+       :config
+       (add-hook 'prog-mode-hook 'wakatime-mode)
+       (message "waka activated"))
    #+END_SRC
 ** Mini modes for colors
    Those modes creates make coloring git changes, paranthesiz, curor, `TODO` keyword.
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-delimiters
-       :init
+       :defer 1
+       :config
        (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
      (use-package hl-todo
-       :init
+       :defer 1
+       :config
        (global-hl-todo-mode))
      (use-package diff-hl
-       :init
+       :defer 1
+       :config
        (global-diff-hl-mode 1)
        (diff-hl-flydiff-mode 1))
      (use-package color-identifiers-mode
-       :init
+       :defer 1
+       :config
        (add-hook 'prog-mode-hook #'global-color-identifiers-mode))
      (use-package beacon
-       :init
+       :defer 1
+       :config
        (beacon-mode 1)
        (setq beacon-color "#2FB90E"))
    #+END_SRC
 ** doom-modeline
    #+BEGIN_SRC emacs-lisp
      (use-package doom-modeline
-       :commands (doom-mode-line-mode)
-       :init
-       (doom-modeline-mode 1)
+       :defer 0.01
+       :config
        (setq doom-modeline-bar-width       1
              doom-modeline-height            1
              doom-modeline-buffer-encoding   nil
@@ -647,7 +662,8 @@ complete in time.
              doom-modeline-icon              t
              doom-modeline-buffer-file-name-style 'relative-to-project)
        (set-face-attribute 'mode-line nil :height 80)
-       (set-face-attribute 'mode-line-inactive nil :height 80))
+       (set-face-attribute 'mode-line-inactive nil :height 80)
+       (doom-modeline-mode 1))
    #+END_SRC
 ** eglot
    Just using for python. This block could be run when on python mode opening for the reduce startup time.
@@ -724,20 +740,13 @@ complete in time.
                  "Browse homepage"
                  (lambda (&rest _) (org-agenda-list "homepage")))
                 ("?" "" "?/h" #'help nil "<" ">"))))
-       (dashboard-setup-startup-hook)
-       :config
-       (setq dashboard-items '((projects . 10)
-                               (recents  . 5)
+       (setq dashboard-items '((recents  . 5)
                                (bookmarks . 10)
-                               (registers . 5))))
+                               (registers . 5)))
+       (dashboard-setup-startup-hook)
+       )
    #+END_SRC
 
-** gcmh
-   #+BEGIN_SRC emacs-lisp
-     (use-package gcmh
-       :init
-       (gcmh-mode 1))
-   #+END_SRC
 ** so-long mode
    =so-long= is a new very primitive emacs internal package that
    handle long files. When the long files opens, so-long major mode
@@ -752,26 +761,26 @@ complete in time.
                   :url "https://raw.githubusercontent.com/emacs-mirror/emacs/master/lisp/so-long.el"
                   :upgrade nil))
        (package-install 'use-package))
-     (global-so-long-mode 1)
+     (run-with-idle-timer
+      5 nil
+      (lambda() global-so-long-mode 1))
    #+END_SRC
 
 * Theme and Apperiance
   #+BEGIN_SRC emacs-lisp
     (if window-system
         (progn (use-package spacemacs-theme
-                 :defer t
                  :init
                  (load-theme 'spacemacs-dark t)))
       (progn
         (global-hl-line-mode -1)
-        (load-theme 'wombat t)))
+        (load-theme 'spacemacs-dark t)))
   #+END_SRC
 * Experimental
   Make dired with icons. I don't understant that i like or not but it
   could be stant in experimental for just now.
   #+BEGIN_SRC emacs-lisp
     (use-package all-the-icons-dired
-      :defer nil
       :hook (dired-mode . all-the-icons-dired-mode))
   #+END_SRC
   #+BEGIN_SRC emacs-lisp
@@ -799,8 +808,7 @@ complete in time.
       :init
       (setq dumb-jump-prefer-searcher 'rg
             dumb-jump-force-searcher  'rg
-            dumb-jump-selector 'helm
-            )
+            dumb-jump-selector 'helm)
       :bind
       (("M-." . dumb-jump-go)))
   #+END_SRC
@@ -811,20 +819,20 @@ complete in time.
 
   #+BEGIN_SRC emacs-lisp
     (use-package volatile-highlights
-      :init
-      (volatile-highlights-mode 1)
+      :defer 3
       :config
+      (volatile-highlights-mode 1)
       (vhl/define-extension 'undo-tree 'undo-tree-yank 'undo-tree-move)
       (vhl/install-extension 'undo-tree))
   #+END_SRC
 
   #+BEGIN_SRC emacs-lisp
     (use-package better-jumper
-      :init
-      (better-jumper-mode +1)
+      :defer 1
       :bind (("C-x C-n" . better-jumper-jump-forward)
              ("C-x C-p" . better-jumper-jump-backward))
       :config
+      (better-jumper-mode +1)
       (global-set-key (kbd "C-x C-m") (lambda () (interactive)
                                         (progn
                                           (better-jumper-set-jump (point))
@@ -836,13 +844,11 @@ complete in time.
   will find unnecassary key bindings which I realy don't use and I see
   some function that I invoke thats whith M-x.
   #+BEGIN_SRC emacs-lisp
-
     (use-package keyfreq
-      :init
+      :defer 2
+      :config
       (keyfreq-mode 1)
       (keyfreq-autosave-mode 1))
-
-
   #+END_SRC
   # ;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
   # ;; (use-package org-plus-contrib)
@@ -867,6 +873,7 @@ complete in time.
   - (use-package highlight-symbol)
   - (x-ray) package https://www.emacswiki.org/emacs/XrayPackage#toc4
   - https://oremacs.com/2017/12/27/company-numbers/
+  - popup eshell
 * End
   I don't know why but if save hist will on the top. It creates a bug.
   #+BEGIN_SRC emacs-lisp
