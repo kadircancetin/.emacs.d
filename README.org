@@ -26,7 +26,6 @@ complete in time.
   - [[#auto-compile-for-speed-up][auto compile for speed up]]
   - [[#restclient][Restclient]]
   - [[#helm][Helm]]
-  - [[#ivy][IVY]]
   - [[#shackle-mode][Shackle mode]]
   - [[#company-mode][Company Mode]]
   - [[#web-mode][Web Mode]]
@@ -76,19 +75,23 @@ complete in time.
      (blink-cursor-mode -1)
    #+END_SRC
 
-   Default emacs' response when you have selected text and writing is
-   not intuitive. =delete-selection-mode= change it what most people
-   get used to on other editors.
+   Activated minor modes. Actually there is very very minimal
+   difference on the startup time if you activate it with
+   run-with-idle-timer but for the purpose of the consistency of the
+   config, I try to never ever activate anyting with startup except
+   visual things linke theme and startup buffer.
    #+BEGIN_SRC emacs-lisp
-     (delete-selection-mode 1)
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp
-     (show-paren-mode 1)            ; shows matching parentheses
-     (winner-mode 1)                ; provide undo, redo your window layout
-     (global-subword-mode 1)        ; make camel-case usable with word shorcuts
-     (global-hl-line-mode 1)        ; highlight your cusor line. don't lost.
-     (save-place-mode 1)            ; save cursor position for next file opening, and restore it
+     (run-with-idle-timer
+      0.15 nil
+      (lambda ()
+        (progn
+          (delete-selection-mode 1)      ; writing when ther is selected, delete the selected part
+          (show-paren-mode 1)            ; shows matching parentheses
+          (winner-mode 1)                ; provide undo, redo your window layout
+          (global-subword-mode 1)        ; make camel-case usable with word shorcuts
+          (global-hl-line-mode 1)        ; highlight your cusor line. don't lost.
+          (save-place-mode 1)            ; save cursor position for next file opening, and restore it
+          )))
    #+END_SRC
 ** Set Internal settings varabiles
 *** General
@@ -193,12 +196,13 @@ complete in time.
   #+BEGIN_SRC emacs-lisp
     (defun kadir/open_thunar()
       "This functions open the thunar file editor on the buffers
-        directory. Working and testing only on the linux systems."
+                directory. Working and testing only on the linux systems."
       (interactive)
       (start-process "*shellout*" nil "thunar"))
+
     (defun kadir/open_terminator()
       "This functions open the thunar file editor on the buffers
-        directory. Working and testing only on the linux systems."
+    directory. Working and testing only on the linux systems."
       (interactive)
       (start-process "*shellout*" nil "terminator"))
     ;; "C-x *" is default calc bind. cearful about it if you use calc
@@ -206,13 +210,31 @@ complete in time.
     (global-set-key (kbd "C-x -") #'kadir/open_terminator)
   #+END_SRC
 
+  This function tangled the this org file to .el file with
+  asyncronously.
+  #+BEGIN_SRC emacs-lisp
+    (defun kadir/save_async()
+      (interactive)
+      (when (equal (buffer-file-name) config-org)
+        (async-start
+         (lambda ()
+           (require 'org)
+           ;; TODO: ~/emacsleri değikenden al
+           (org-babel-tangle-file "~/.emacs.d/README.org" "~/.emacs.d/README.el"))
+         (lambda(result)
+           (message "tangled saved files to: %s" result)))))
+
+    (add-hook 'after-save-hook 'kadir/save_async)
+  #+END_SRC
+
+
   #+BEGIN_SRC emacs-lisp
     (defun kadir/find-config ()
       ;; source: https://github.com/KaratasFurkan/.emacs.d
       "Open config file. (probably this file)"
       (interactive) (find-file config-org))
 
-    (global-set-key (kbd "C-x c") 'find-config)
+    (global-set-key (kbd "C-x c") 'kadir/find-config)
   #+END_SRC
 * Initial Packages
   Melpa setting and use-package settings for auto-download use-package for auto-download all other packages.
@@ -251,7 +273,9 @@ complete in time.
       (add-to-list 'auto-mode-alist (cons (rx ".js" eos) 'js2-mode))
       (setq js2-basic-offset 2
             js-indent-level 2))
-    (use-package typescript-mode)
+    (use-package typescript-mode
+      :bind (:map typescript-mode-map ("M-." . lsp-ui-peek-find-definitions))
+      )
   #+END_SRC
 
   Installing bash code for the language server. [[https://github.com/theia-ide/typescript-language-server][Link]].
@@ -264,6 +288,8 @@ complete in time.
       :init
       (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
       :bind (:map rjsx-mode-map
+                  ("C-c C-n" . flycheck-next-error)
+                  ("C-c C-p" . flycheck-previous-error)
                   ("M-." . lsp-ui-peek-find-definitions)
                   ("<" . nil)
                   ("C-d" . nil)
@@ -271,7 +297,6 @@ complete in time.
       :config
       (add-hook 'rjsx-mode-hook #'lsp))
   #+END_SRC
-
 * Python
   Language server must be installed via the follwing bash command. If the language server will run on the virtual environment you will get better result.
 
@@ -416,6 +441,18 @@ complete in time.
      (use-package helm
        :defer 0.15
        :init
+
+       ;; TODO: beklenmedik hareketler yapmış olabilirim, kontrol etmek
+       ;; lazım
+       (setq helm-boring-buffer-regexp-list (list
+                                             (rx "` ")
+                                             (rx "*helm")
+                                             (rx "*lsp")
+                                             (rx "*Eglot")
+                                             (rx "*Echo Area")
+                                             (rx "*Minibuf")))
+
+
        (setq-default  helm-ff-search-library-in-sexp        t
                       helm-echo-input-in-header-line        t
                       helm-M-x-always-save-history          t
@@ -433,7 +470,8 @@ complete in time.
               ("C-x C-i"  . helm-imenu)
               ("M-y"      . helm-show-kill-ring))
        :config
-       (require 'helm-config)
+       ;; i thing it load the default helm, shortcuts which I never use.
+       ;; (require 'helm-config)
        (add-hook 'helm-minibuffer-set-up-hook
                  'spacemacs//helm-hide-minibuffer-maybe))
    #+END_SRC
@@ -767,6 +805,9 @@ complete in time.
     (if window-system
         (progn (use-package spacemacs-theme
                  :init
+                 (setq spacemacs-theme-comment-italic t
+                       spacemacs-theme-org-height nil
+                       )
                  (load-theme 'spacemacs-dark t)))
       (progn
         (global-hl-line-mode -1)
@@ -860,16 +901,17 @@ complete in time.
   - pdf-tools
   - https://github.com/mhayashi1120/auto-highlight-symbol-mode
     - otomatik alt çizmece
-  - https://github.com/bmag/emacs-purpose
-    - windowlara amaç ekleme ve ordaki bufferların o windowdan olmasını sağlama
-  - empty lineların bulunup silinmesi
   - https://github.com/lewang/ws-butler
-  - http://wikemacs.org/wiki/Whitespace-mode
+  - http://wikemacs.org/wiki/Whitespace-mode   - empty lineların bulunup silinmesi
   - https://github.com/smihica/emmet-mode
   - (use-package highlight-symbol)
   - (x-ray) package https://www.emacswiki.org/emacs/XrayPackage#toc4
   - https://oremacs.com/2017/12/27/company-numbers/
+  - magit todo da exclude etme olayı. bazı dosyalar büyük olunca çok
+    fena patlıyor
   - popup eshell
+  - org mode capture gibi bişiler.
+  - org async https://github.com/astahlman/ob-async
 * End
   I don't know why but if save hist will on the top. It creates a bug.
   #+BEGIN_SRC emacs-lisp
