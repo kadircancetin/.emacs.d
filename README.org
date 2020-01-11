@@ -95,8 +95,6 @@ complete in time.
     #+BEGIN_SRC emacs-lisp
       ;; cleaning init.el (another file for custom-set-variables etc.)
       (setq-default custom-file (concat user-emacs-directory "custom.el"))
-      (load custom-file)
-
 
       (setq-default ring-bell-function      'ignore ; shutdown rings
                     inhibit-startup-message  t      ; disable startup messages
@@ -436,8 +434,6 @@ complete in time.
               ("M-y"      . helm-show-kill-ring))
        :config
        (require 'helm-config)
-       (message "helm actv")
-
        (add-hook 'helm-minibuffer-set-up-hook
                  'spacemacs//helm-hide-minibuffer-maybe))
    #+END_SRC
