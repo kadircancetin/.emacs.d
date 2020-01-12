@@ -2,6 +2,7 @@
 ;; startup optimization
 ;; source: https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga
 
+(setq load-prefer-newer noninteractive)
 (setq gc-cons-percentage 0.6)
 (setq gc-cons-threshold-original (* 1024 1024 20))
 (setq gc-cons-threshold most-positive-fixnum)

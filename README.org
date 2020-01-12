@@ -65,14 +65,14 @@ complete in time.
    =menu-bar-mode=, =tool-bar-mode= and =scrool-bar-mode= are generaly
    modern and mouse based features. I don't like them
    #+BEGIN_SRC emacs-lisp
-     (menu-bar-mode -1)
-     (tool-bar-mode -1)
-     (scroll-bar-mode -1)
+     ;; (menu-bar-mode -1)
+     ;; (tool-bar-mode -1)
+     ;; (scroll-bar-mode -1)
    #+END_SRC
 
    Blink my cursor is annoying.
    #+BEGIN_SRC emacs-lisp
-     (blink-cursor-mode -1)
+     ;; (blink-cursor-mode -1)
    #+END_SRC
 
    Activated minor modes. Actually there is very very minimal
@@ -98,6 +98,7 @@ complete in time.
     #+BEGIN_SRC emacs-lisp
       ;; cleaning init.el (another file for custom-set-variables etc.)
       (setq-default custom-file (concat user-emacs-directory "custom.el"))
+      ;; (load-file  (concat user-emacs-directory "custom.el"))
 
       (setq-default ring-bell-function      'ignore ; shutdown rings
                     inhibit-startup-message  t      ; disable startup messages
@@ -135,9 +136,6 @@ complete in time.
 
 *** Appereance
     #+BEGIN_SRC emacs-lisp
-      (fringe-mode '(5 . 0))                  ; my laptop screen is not full hd :(
-      (set-face-attribute 'default nil
-                          :family "Source Code Pro" :height 80 :weight 'normal)
       (setq-default max-mini-window-height   1
                     resize-mini-windows      nil
                     message-truncate-lines   t)  ; set and try to force mini buffer should be mini
@@ -441,7 +439,7 @@ complete in time.
      (use-package helm
        :defer 0.15
        :init
-
+       ;;(require 'helm-config)
        ;; TODO: beklenmedik hareketler yapmış olabilirim, kontrol etmek
        ;; lazım
        (setq helm-boring-buffer-regexp-list (list
@@ -470,8 +468,8 @@ complete in time.
               ("C-x C-i"  . helm-imenu)
               ("M-y"      . helm-show-kill-ring))
        :config
+       (helm-mode 1)
        ;; i thing it load the default helm, shortcuts which I never use.
-       ;; (require 'helm-config)
        (add-hook 'helm-minibuffer-set-up-hook
                  'spacemacs//helm-hide-minibuffer-maybe))
    #+END_SRC
@@ -686,7 +684,7 @@ complete in time.
 ** doom-modeline
    #+BEGIN_SRC emacs-lisp
      (use-package doom-modeline
-       :defer 0.01
+       :defer 0.1
        :config
        (setq doom-modeline-bar-width       1
              doom-modeline-height            1
@@ -808,10 +806,12 @@ complete in time.
                  (setq spacemacs-theme-comment-italic t
                        spacemacs-theme-org-height nil
                        )
+                 (disable-theme 'wombat)
                  (load-theme 'spacemacs-dark t)))
       (progn
         (global-hl-line-mode -1)
-        (load-theme 'spacemacs-dark t)))
+        ;;(load-theme 'wombat t)
+        ))
   #+END_SRC
 * Experimental
   Make dired with icons. I don't understant that i like or not but it
