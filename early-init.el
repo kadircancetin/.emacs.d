@@ -1,3 +1,8 @@
+;; from doom-emacs early-init el. I don't know what it is and I don't
+;; get any speed up whit that but they claim resizing frame is very
+;; problem thing so I added that
+(setq frame-inhibit-implied-resize t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; startup optimization
 ;; source: https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga

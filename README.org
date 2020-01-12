@@ -14,6 +14,10 @@ complete in time.
     - [[#hooks][Hooks]]
   - [[#backup-setting][Backup Setting]]
 - [[#my-functions][My Functions]]
+  - [[#linux-integrationgs][Linux Integrationgs]]
+  - [[#emacs-configrations][Emacs configrations]]
+  - [[#eshell][Eshell]]
+  - [[#programing-1][Programing]]
 - [[#initial-packages][Initial Packages]]
   - [[#melpa][Melpa]]
   - [[#use-package][Use-Package]]
@@ -50,6 +54,8 @@ complete in time.
 - [[#experimental][Experimental]]
   - [[#autho-highlight][autho highlight]]
   - [[#other-experimentals][other experimentals]]
+  - [[#ace-window][ace-window]]
+  - [[#wrap-region][wrap-region]]
 - [[#list][list]]
 - [[#end][End]]
 
@@ -196,28 +202,30 @@ complete in time.
   These are self documented little functions. Some of them copying
   (and maybe some eddited version) from internet. I wrote the source
   of the functions on the comment line. Some of them are I wrote.
-
+** Linux Integrationgs
   #+BEGIN_SRC emacs-lisp
-    (defun kadir/open_thunar()
+    (defun kadir-open-thunar()
       "This functions open the thunar file editor on the buffers
                 directory. Working and testing only on the linux systems."
       (interactive)
       (start-process "*shellout*" nil "thunar"))
 
-    (defun kadir/open_terminator()
+    (defun kadir-open-terminator()
       "This functions open the thunar file editor on the buffers
     directory. Working and testing only on the linux systems."
       (interactive)
       (start-process "*shellout*" nil "terminator"))
     ;; "C-x *" is default calc bind. cearful about it if you use calc
-    (global-set-key (kbd "C-x *") #'kadir/open_thunar)
-    (global-set-key (kbd "C-x -") #'kadir/open_terminator)
+    (global-set-key (kbd "C-x *") #'kadir-open-thunar)
+    (global-set-key (kbd "C-x -") #'kadir-open-terminator)
   #+END_SRC
 
+** Emacs configrations
   This function tangled the this org file to .el file with
   asyncronously.
   #+BEGIN_SRC emacs-lisp
-    (defun kadir/save_async()
+    (defun kadir-save-config-async()
+      ""
       (interactive)
       (when (equal (buffer-file-name) config-org)
         (use-package async)
@@ -229,18 +237,41 @@ complete in time.
          (lambda(result)
            (message "tangled saved files to: %s" result)))))
 
-    (add-hook 'after-save-hook 'kadir/save_async)
+    (add-hook 'after-save-hook 'kadir-save-config-async)
   #+END_SRC
 
 
   #+BEGIN_SRC emacs-lisp
-    (defun kadir/find-config ()
+    (defun kadir-find-config ()
       ;; source: https://github.com/KaratasFurkan/.emacs.d
       "Open config file. (probably this file)"
       (interactive) (find-file config-org))
 
-    (global-set-key (kbd "C-x c") 'kadir/find-config)
+    (global-set-key (kbd "C-x c") 'kadir-find-config)
   #+END_SRC
+** Eshell
+   #+BEGIN_SRC emacs-lisp
+     (defun eshell/clear ()
+       "Clear the eshell buffer. Type clear on eshell"
+       ;; source: https://emacs.stackexchange.com/questions/12503/how-to-clear-the-eshell
+       (let ((inhibit-read-only t))
+         (erase-buffer)
+         (eshell-send-input)))
+   #+END_SRC
+** Programing
+   #+BEGIN_SRC emacs-lisp
+     (defun kadir-comment-or-self-insert (&optional beg end)
+       "If region active comment-or-uncomment work,
+     otherwise (self-insert /)"
+       (interactive (if (use-region-p)
+                        (list (region-beginning) (region-end))))
+
+       (if (region-active-p)
+           (comment-or-uncomment-region beg end)
+         (self-insert-command 1 ?/)))
+
+     (global-set-key "/" 'kadir-comment-or-self-insert)
+   #+END_SRC
 * Initial Packages
   Melpa setting and use-package settings for auto-download use-package for auto-download all other packages.
 ** Melpa
@@ -293,12 +324,12 @@ complete in time.
       :init
       (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
       :bind (:map rjsx-mode-map
+                  ;; ("<" . nil)
+                  ;; ("C-d" . nil)
+                  ;; (">" . nil)
                   ("C-c C-n" . flycheck-next-error)
                   ("C-c C-p" . flycheck-previous-error)
-                  ("M-." . lsp-ui-peek-find-definitions)
-                  ("<" . nil)
-                  ("C-d" . nil)
-                  (">" . nil))
+                  ("M-." . lsp-ui-peek-find-definitions))
       :config
       (add-hook 'rjsx-mode-hook #'lsp))
   #+END_SRC
@@ -725,7 +756,8 @@ complete in time.
              ;; doom-modeline-buffer-modification-icon t
              doom-modeline-vcs-max-length    20
              doom-modeline-icon              t
-             doom-modeline-buffer-file-name-style 'relative-to-project)
+             ;; relative-to-project
+             doom-modeline-buffer-file-name-style 'relative-from-project)
        (set-face-attribute 'mode-line nil :height 80)
        (set-face-attribute 'mode-line-inactive nil :height 80)
        (doom-modeline-mode 1))
@@ -952,13 +984,28 @@ complete in time.
    # ;;  'org-babel-load-languages
    # ;;  '((python . t)))
    # ;; (setq org-confirm-babel-evaluate nil)
+** ace-window
+   #+BEGIN_SRC emacs-lisp
+     (use-package ace-window
+       :defer t
+       :init
+       (setq aw-keys '(?a ?s ?n ?o ?p ?f ?p ?k ?l)
+             aw-scope 'frame)
+       :bind (("C-x w s" . ace-swap-window)
+              ("C-x o" . ace-window)))
+   #+END_SRC
+** wrap-region
+   #+BEGIN_SRC emacs-lisp
+     (use-package wrap-region
+       :defer 1
+       :config
+       (wrap-region-add-wrapper "<>" "</>" "/" 'rjsx-mode)
+       (wrap-region-global-mode t))
+   #+END_SRC
 * todo list
   Bu liste incelemeyi düşündüğüm ve düzeltmeyi planladığım şeyleri barındır.
-  - ace-window da bufferların yerini değiştirme vardı. ya ace kur yada
-    alternatifini bul
   - early-init dosyasının silinip oto tangle ile otomatik ayarlanması.
   - org mode capture gibi bişiler.
-  - region to string şeysi.
   - magit todo da exclude etme olayı. bazı dosyalar büyük olunca çok
     fena patlıyor
   - popup eshell
@@ -972,6 +1019,7 @@ complete in time.
   - org
     - https://github.com/mtekman/org-tanglesync.el#from-external-file-push-to-tangled-block
     - https://github.com/astahlman/ob-async
+    - doomda ** girintileri ekstra içerde ve güzel görünüyor. nasıl?
 * End
   I don't know why but if save hist will on the top. It creates a bug.
   #+BEGIN_SRC emacs-lisp
