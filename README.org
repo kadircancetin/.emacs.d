@@ -46,6 +46,8 @@ complete in time.
   - [[#so-long-mode][so-long mode]]
 - [[#theme-and-apperiance][Theme and Apperiance]]
 - [[#experimental][Experimental]]
+  - [[#autho-highlight][autho highlight]]
+  - [[#other-experimentals][other experimentals]]
 - [[#list][list]]
 - [[#end][End]]
 
@@ -90,7 +92,7 @@ complete in time.
           (show-paren-mode 1)            ; shows matching parentheses
           (winner-mode 1)                ; provide undo, redo your window layout
           (global-subword-mode 1)        ; make camel-case usable with word shorcuts
-          (global-hl-line-mode 1)        ; highlight your cusor line. don't lost.
+
           (save-place-mode 1)            ; save cursor position for next file opening, and restore it
           )))
    #+END_SRC
@@ -297,7 +299,9 @@ complete in time.
       (add-hook 'rjsx-mode-hook #'lsp))
   #+END_SRC
 * Python
-  Language server must be installed via the follwing bash command. If the language server will run on the virtual environment you will get better result.
+  Language server must be installed via the follwing bash command. If
+  the language server will run on the virtual environment you will get
+  better result.
 
   #+BEGIN_SRC shell-script-mode
   ; pip install python-language-server[all]; pip uninstall autopep8 yapf; pip install pyls-isort pyls-black;
@@ -315,13 +319,13 @@ complete in time.
                                             ;  the buffer. But in
                                             ;  python I use language
                                             ;  server for that.
-                  ("M-." . xref-find-definitions))
-      :config
-      ;;(add-hook 'before-save-hook (lambda() (interactive) (eglot-format-buffer)))
-      )
+                  ("M-." . xref-find-definitions)))
+    ;;(add-hook 'before-save-hook (lambda() (interactive) (eglot-format-buffer)))
   #+END_SRC
 
-  This part find the projects virtual environment via the .venv file on the project directory. This is virtualfish default setting. And then run eglot.
+  This part find the projects virtual environment via the .venv file
+  on the project directory. This is virtualfish default setting. And
+  then run eglot.
 
   #+BEGIN_SRC emacs-lisp
     (defun kadir-configure-python ()
@@ -346,7 +350,8 @@ complete in time.
   #+END_SRC
 
 * Org Mode
-  This part was written and copied in a bit of a rush. I will handle on my free time with use-package and write decent descriptions.
+  This part was written and copied in a bit of a rush. I will handle
+  on my free time with use-package and write decent descriptions.
   #+BEGIN_SRC emacs-lisp
 
     (use-package toc-org
@@ -384,7 +389,7 @@ complete in time.
 
     (use-package aggressive-indent
       :diminish
-      :hook (emacs-lisp-mode . aggressive-indent-mode))
+      :hook ((emacs-lisp-mode . aggressive-indent-mode)))
 
   #+END_SRC
 * Packages
@@ -806,6 +811,12 @@ complete in time.
    #+END_SRC
 
 * Theme and Apperiance
+  Highlighting and region select should be has different colors.
+  #+BEGIN_SRC emacs-lisp
+    (set-face-attribute 'highlight nil
+                        :underline t :weight 'bold :background nil :foreground nil)
+  #+END_SRC
+
   #+BEGIN_SRC emacs-lisp
     (if window-system
         (progn (use-package spacemacs-theme
@@ -813,11 +824,41 @@ complete in time.
                  (setq spacemacs-theme-comment-italic t
                        spacemacs-theme-org-height nil)
                  (disable-theme 'wombat)
+                 (global-hl-line-mode 1)        ; highlight your cusor line. don't lost.
                  (load-theme 'spacemacs-dark t)))
       (progn
         (global-hl-line-mode -1)))
   #+END_SRC
 * Experimental
+** autho highlight
+   Will activate by major modes.
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'emacs-lisp-mode-hook 'auto-highlight-symbol-mode)
+     (add-hook 'python-mode-hook 'auto-highlight-symbol-mode)
+     (use-package auto-highlight-symbol
+       :defer t
+       :config
+       (progn
+         (set-face-attribute 'ahs-plugin-defalt-face nil
+                             :underline t :weight 'bold :background nil :foreground nil)
+         (set-face-attribute 'ahs-definition-face nil
+                             :underline t :weight 'bold :background nil :foreground nil)
+         (set-face-attribute 'ahs-face nil
+                             :underline t :weight 'bold :background nil :foreground nil)
+         (set-face-attribute 'ahs-plugin-whole-buffer-face nil
+                             :underline t :weight 'bold :background nil :foreground nil)
+
+         (setq ahs-case-fold-search nil
+               ahs-default-range 'ahs-range-display
+               ahs-idle-timer 0
+               ahs-idle-interval 0.2
+               ahs-inhibit-face-list nil)
+         (setq ahs-idle-timer
+               (run-with-idle-timer ahs-idle-interval t
+                                    'ahs-idle-function))))
+
+   #+END_SRC
+** other experimentals
   Make dired with icons. I don't understant that i like or not but it
   could be stant in experimental for just now.
   #+BEGIN_SRC emacs-lisp
