@@ -898,20 +898,20 @@ complete in time.
   Bu liste incelemeyi düşündüğüm ve düzeltmeyi planladığım şeyleri barındır.
   - ace-window da bufferların yerini değiştirme vardı. ya ace kur yada
     alternatifini bul
-  - pdf-tools
+  - org mode capture gibi bişiler.
   - https://github.com/mhayashi1120/auto-highlight-symbol-mode
     - otomatik alt çizmece
-  - https://github.com/lewang/ws-butler
-  - http://wikemacs.org/wiki/Whitespace-mode   - empty lineların bulunup silinmesi
-  - https://github.com/smihica/emmet-mode
   - (use-package highlight-symbol)
-  - (x-ray) package https://www.emacswiki.org/emacs/XrayPackage#toc4
-  - https://oremacs.com/2017/12/27/company-numbers/
   - magit todo da exclude etme olayı. bazı dosyalar büyük olunca çok
     fena patlıyor
   - popup eshell
-  - org mode capture gibi bişiler.
+  - https://github.com/lewang/ws-butler
+  - https://github.com/smihica/emmet-mode
+  - (x-ray) package https://www.emacswiki.org/emacs/XrayPackage#toc4
+  - https://oremacs.com/2017/12/27/company-numbers/
+  - http://wikemacs.org/wiki/Whitespace-mode   - empty lineların bulunup silinmesi
   - org async https://github.com/astahlman/ob-async
+  - pdf-tools
 * End
   I don't know why but if save hist will on the top. It creates a bug.
   #+BEGIN_SRC emacs-lisp
