@@ -72,7 +72,7 @@ complete in time.
 
    Blink my cursor is annoying.
    #+BEGIN_SRC emacs-lisp
-     ;; (blink-cursor-mode -1)
+     (blink-cursor-mode -1)
    #+END_SRC
 
    Activated minor modes. Actually there is very very minimal
@@ -912,6 +912,10 @@ complete in time.
   - http://wikemacs.org/wiki/Whitespace-mode   - empty lineların bulunup silinmesi
   - org async https://github.com/astahlman/ob-async
   - pdf-tools
+  - ^L yi çizgi olarak çizme
+  - org
+    - https://github.com/mtekman/org-tanglesync.el#from-external-file-push-to-tangled-block
+    - https://github.com/astahlman/ob-async
 * End
   I don't know why but if save hist will on the top. It creates a bug.
   #+BEGIN_SRC emacs-lisp
