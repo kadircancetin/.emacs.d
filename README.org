@@ -44,6 +44,8 @@ complete in time.
   - [[#multiple-cursors][multiple cursors]]
   - [[#dashboard][Dashboard]]
   - [[#so-long-mode][so-long mode]]
+  - [[#disabled-packages][disabled packages]]
+    - [[#which-key][Which-key]]
 - [[#theme-and-apperiance][Theme and Apperiance]]
 - [[#experimental][Experimental]]
   - [[#autho-highlight][autho highlight]]
@@ -217,6 +219,7 @@ complete in time.
     (defun kadir/save_async()
       (interactive)
       (when (equal (buffer-file-name) config-org)
+        (use-package async)
         (async-start
          (lambda ()
            (require 'org)
@@ -502,29 +505,29 @@ complete in time.
    #+END_SRC
 
 
-# ** IVY
-#    #+BEGIN_SRC emacs-lisp
-#      ;; (use-package ivy :ensure t
-#      ;;   :init
-#      ;;   (ivy-mode 1)
-#      ;;   :diminish (ivy-mode . "")
-#      ;;   :bind
-#      ;;   (:map ivy-mode-map
-#      ;;         ("C-'" . ivy-avy))
-#      ;;   :config
-#      ;;   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
-#      ;;   (setq ivy-use-virtual-buffers t)
-#      ;;   ;; number of result lines to display
-#      ;;   (setq ivy-height 10)
-#      ;;   ;; does not count candidates
-#      ;;   (setq ivy-count-format "")
-#      ;;   ;; no regexp by default
-#      ;;   (setq ivy-initial-inputs-alist nil)
-#      ;;   ;; configure regexp engine.
-#      ;;   (setq ivy-re-builders-alist
-#      ;;         ;; allow input not in order
-#      ;;         '((t   . ivy--regex-ignore-order))))
-#    #+END_SRC
+   # ** IVY
+   #    #+BEGIN_SRC emacs-lisp
+   #      ;; (use-package ivy :ensure t
+   #      ;;   :init
+   #      ;;   (ivy-mode 1)
+   #      ;;   :diminish (ivy-mode . "")
+   #      ;;   :bind
+   #      ;;   (:map ivy-mode-map
+   #      ;;         ("C-'" . ivy-avy))
+   #      ;;   :config
+   #      ;;   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
+   #      ;;   (setq ivy-use-virtual-buffers t)
+   #      ;;   ;; number of result lines to display
+   #      ;;   (setq ivy-height 10)
+   #      ;;   ;; does not count candidates
+   #      ;;   (setq ivy-count-format "")
+   #      ;;   ;; no regexp by default
+   #      ;;   (setq ivy-initial-inputs-alist nil)
+   #      ;;   ;; configure regexp engine.
+   #      ;;   (setq ivy-re-builders-alist
+   #      ;;         ;; allow input not in order
+   #      ;;         '((t   . ivy--regex-ignore-order))))
+   #    #+END_SRC
 ** Shackle mode
    Description on the helm section.
    #+BEGIN_SRC emacs-lisp
@@ -670,6 +673,9 @@ complete in time.
 ** Mini modes for colors
    Those modes creates make coloring git changes, paranthesiz, curor, `TODO` keyword.
    #+BEGIN_SRC emacs-lisp
+     (use-package highlight-symbol
+       :defer t   ;; TODO: bind key
+       )
      (use-package rainbow-delimiters
        :defer 1
        :config
@@ -693,6 +699,20 @@ complete in time.
        (beacon-mode 1)
        (setq beacon-color "#2FB90E"))
    #+END_SRC
+
+   #+BEGIN_QUOTE
+   ....An example is that if you paste (yank) a block of text, it will be highlighted until you press the next key. This is just a small tweak, but gives a nice bit of visual feedback.  -- http://pragmaticemacs.com/emacs/volatile-highlights/
+   #+END_QUOTE
+
+   #+BEGIN_SRC emacs-lisp
+    (use-package volatile-highlights
+      :defer 3
+      :config
+      (volatile-highlights-mode 1)
+      (vhl/define-extension 'undo-tree 'undo-tree-yank 'undo-tree-move)
+      (vhl/install-extension 'undo-tree))
+   #+END_SRC
+
 ** doom-modeline
    #+BEGIN_SRC emacs-lisp
      (use-package doom-modeline
@@ -806,9 +826,23 @@ complete in time.
                   :upgrade nil))
        (package-install 'use-package))
      (run-with-idle-timer
-      5 nil
-      (lambda() global-so-long-mode 1))
+      2 nil
+      (lambda()
+        (progn
+          (global-so-long-mode 1)
+          (add-hook 'so-long-hook (lambda() (toggle-truncate-lines))))))
    #+END_SRC
+** disabled packages
+   This packages
+*** Which-key
+    I use which key defaultly false but sometimes I need it.
+    #+BEGIN_SRC emacs-lisp
+     (use-package which-key
+       :config
+       (which-key-setup-side-window-bottom)
+       (setq which-key-idle-delay 0.01))
+     ;; (use-package which-key)
+    #+END_SRC
 
 * Theme and Apperiance
   Highlighting and region select should be has different colors.
@@ -859,33 +893,24 @@ complete in time.
 
    #+END_SRC
 ** other experimentals
-  Make dired with icons. I don't understant that i like or not but it
-  could be stant in experimental for just now.
-  #+BEGIN_SRC emacs-lisp
+   Make dired with icons. I don't understant that i like or not but it
+   could be stant in experimental for just now.
+   #+BEGIN_SRC emacs-lisp
     (use-package all-the-icons-dired
       :hook (dired-mode . all-the-icons-dired-mode))
-  #+END_SRC
-  #+BEGIN_SRC emacs-lisp
-    ;; (use-package bm
-    ;;   :bind (("C-x C-m" . bm-toggle)
-    ;;          ("C-x C-n" . bm-next)
-    ;;          ("C-x C-p" . bm-previous)))
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+    (use-package bm
+      :bind (("C-x C-m" . bm-toggle)
+             ("C-x C-n" . bm-next)
+             ("C-x C-p" . bm-previous)))
 
     (use-package helm-bm
       :bind (("C-x C-a" . helm-bm)))
-  #+END_SRC
+   #+END_SRC
 
-  I use which key defaultly false but sometimes I need it.
-  #+BEGIN_SRC emacs-lisp
-    (use-package which-key
-      :config
-      (which-key-setup-side-window-bottom)
-      (setq which-key-idle-delay 0.01))
-    ;; (use-package which-key)
-  #+END_SRC
-
-
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (use-package dumb-jump
       :init
       (setq dumb-jump-prefer-searcher 'rg
@@ -893,61 +918,45 @@ complete in time.
             dumb-jump-selector 'helm)
       :bind
       (("M-." . dumb-jump-go)))
-  #+END_SRC
+   #+END_SRC
 
-  #+BEGIN_QUOTE
-  ....An example is that if you paste (yank) a block of text, it will be highlighted until you press the next key. This is just a small tweak, but gives a nice bit of visual feedback.  -- http://pragmaticemacs.com/emacs/volatile-highlights/
-  #+END_QUOTE
-
-  #+BEGIN_SRC emacs-lisp
-    (use-package volatile-highlights
-      :defer 3
-      :config
-      (volatile-highlights-mode 1)
-      (vhl/define-extension 'undo-tree 'undo-tree-yank 'undo-tree-move)
-      (vhl/install-extension 'undo-tree))
-  #+END_SRC
-
-  #+BEGIN_SRC emacs-lisp
-    (use-package better-jumper
-      :defer 1
-      :bind (("C-x C-n" . better-jumper-jump-forward)
-             ("C-x C-p" . better-jumper-jump-backward))
-      :config
-      (better-jumper-mode +1)
-      (global-set-key (kbd "C-x C-m") (lambda () (interactive)
-                                        (progn
-                                          (better-jumper-set-jump (point))
-                                          (message "better jumper add link")))))
-  #+END_SRC
+   #+BEGIN_SRC emacs-lisp
+    ;; (use-package better-jumper
+    ;;   :defer 1
+    ;;   :bind (("C-x C-n" . better-jumper-jump-forward)
+    ;;          ("C-x C-p" . better-jumper-jump-backward))
+    ;;   :config
+    ;;   (better-jumper-mode +1)
+    ;;   (global-set-key (kbd "C-x C-m") (lambda () (interactive)
+    ;;                                     (progn
+    ;;                                       (better-jumper-set-jump (point))
+    ;;                                       (message "better jumper add link")))))
+   #+END_SRC
 
 
-  This is statistical for finding the much used functions. I hope I
-  will find unnecassary key bindings which I realy don't use and I see
-  some function that I invoke thats whith M-x.
-  #+BEGIN_SRC emacs-lisp
+   This is statistical for finding the much used functions. I hope I
+   will find unnecassary key bindings which I realy don't use and I see
+   some function that I invoke thats whith M-x.
+   #+BEGIN_SRC emacs-lisp
     (use-package keyfreq
       :defer 2
       :config
       (keyfreq-mode 1)
       (keyfreq-autosave-mode 1))
-  #+END_SRC
-  # ;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-  # ;; (use-package org-plus-contrib)
-  # ;; (add-to-list 'org-export-backends 'taskjuggler)
-  # ;; (org-babel-do-load-languages
-  # ;;  'org-babel-load-languages
-  # ;;  '((python . t)))
-  # ;; (setq org-confirm-babel-evaluate nil)
+   #+END_SRC
+   # ;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+   # ;; (use-package org-plus-contrib)
+   # ;; (add-to-list 'org-export-backends 'taskjuggler)
+   # ;; (org-babel-do-load-languages
+   # ;;  'org-babel-load-languages
+   # ;;  '((python . t)))
+   # ;; (setq org-confirm-babel-evaluate nil)
 * todo list
   Bu liste incelemeyi düşündüğüm ve düzeltmeyi planladığım şeyleri barındır.
   - ace-window da bufferların yerini değiştirme vardı. ya ace kur yada
     alternatifini bul
   - early-init dosyasının silinip oto tangle ile otomatik ayarlanması.
   - org mode capture gibi bişiler.
-  - https://github.com/mhayashi1120/auto-highlight-symbol-mode
-    - otomatik alt çizmece
-  - (use-package highlight-symbol)
   - magit todo da exclude etme olayı. bazı dosyalar büyük olunca çok
     fena patlıyor
   - popup eshell
