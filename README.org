@@ -94,8 +94,9 @@ complete in time.
           (show-paren-mode 1)            ; shows matching parentheses
           (winner-mode 1)                ; provide undo, redo your window layout
           (global-subword-mode 1)        ; make camel-case usable with word shorcuts
-
           (save-place-mode 1)            ; save cursor position for next file opening, and restore it
+          (global-page-break-lines-mode 1) ; ^L to cizgi
+          (global-prettify-symbols-mode 1) ; lambda to cool lambda character
           )))
    #+END_SRC
 ** Set Internal settings varabiles
@@ -957,6 +958,7 @@ complete in time.
     alternatifini bul
   - early-init dosyasının silinip oto tangle ile otomatik ayarlanması.
   - org mode capture gibi bişiler.
+  - region to string şeysi.
   - magit todo da exclude etme olayı. bazı dosyalar büyük olunca çok
     fena patlıyor
   - popup eshell
@@ -967,7 +969,6 @@ complete in time.
   - http://wikemacs.org/wiki/Whitespace-mode   - empty lineların bulunup silinmesi
   - org async https://github.com/astahlman/ob-async
   - pdf-tools
-  - ^L yi çizgi olarak çizme
   - org
     - https://github.com/mtekman/org-tanglesync.el#from-external-file-push-to-tangled-block
     - https://github.com/astahlman/ob-async
