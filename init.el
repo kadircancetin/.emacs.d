@@ -1,3 +1,8 @@
+(if (version< emacs-version "27")
+    ;; early-init.el comes from emacs 27. so if your emacs older than,
+    ;; we need to load it by regular way
+    (load-file (expand-file-name "early-init.el" user-emacs-directory)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; startup optimization
 ;; source: https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga
@@ -18,11 +23,6 @@
    (message "gc-cons-threshold and file-name-handler-alist restored")))
 ;; (add-hook 'post-gc-hook (lambda () (message "*GC active*") ))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; (use-package benchmark-init
-;;   :ensure t
-;;   :config
-;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 (defvar config-org (expand-file-name "README.org" user-emacs-directory))
 (defvar config-el (expand-file-name "README.el" user-emacs-directory))

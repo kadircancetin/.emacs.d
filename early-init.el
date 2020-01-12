@@ -11,3 +11,11 @@
                     :family "Source Code Pro" :height 80 :weight 'normal)
 
 (setq package-enable-at-startup nil)
+
+;; (use-package benchmark-init :ensure t)
+(if (file-exists-p "~/.emacs.d/elpa/benchmark-init-20150905.938/benchmark-init.elc")
+    ;; TODO: get the from file whithout the version.
+    (progn
+      (load-file "~/.emacs.d/elpa/benchmark-init-20150905.938/benchmark-init.elc")
+      (add-hook 'after-init-hook 'benchmark-init/deactivate))
+  (message "benchmark test is not installed, so not tested."))

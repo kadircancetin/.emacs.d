@@ -22,6 +22,7 @@ complete in time.
 - [[#org-mode][Org Mode]]
 - [[#elisp][Elisp]]
 - [[#packages][Packages]]
+  - [[#init-benchmark-test][init-benchmark test]]
   - [[#yaml-mode][yaml-mode]]
   - [[#auto-compile-for-speed-up][auto compile for speed up]]
   - [[#restclient][Restclient]]
@@ -387,6 +388,12 @@ complete in time.
 
   #+END_SRC
 * Packages
+** init-benchmark test
+   This package help the find package loading times and bottleneck of
+   the init process. I use it on early-init if it is installed.
+   #+BEGIN_SRC emacs-lisp
+     (use-package benchmark-init :ensure t :defer t)
+   #+END_SRC
 ** yaml-mode
    #+BEGIN_SRC emacs-lisp
      (use-package yaml-mode)
@@ -804,14 +811,11 @@ complete in time.
         (progn (use-package spacemacs-theme
                  :init
                  (setq spacemacs-theme-comment-italic t
-                       spacemacs-theme-org-height nil
-                       )
+                       spacemacs-theme-org-height nil)
                  (disable-theme 'wombat)
                  (load-theme 'spacemacs-dark t)))
       (progn
-        (global-hl-line-mode -1)
-        ;;(load-theme 'wombat t)
-        ))
+        (global-hl-line-mode -1)))
   #+END_SRC
 * Experimental
   Make dired with icons. I don't understant that i like or not but it
@@ -898,6 +902,7 @@ complete in time.
   Bu liste incelemeyi düşündüğüm ve düzeltmeyi planladığım şeyleri barındır.
   - ace-window da bufferların yerini değiştirme vardı. ya ace kur yada
     alternatifini bul
+  - early-init dosyasının silinip oto tangle ile otomatik ayarlanması.
   - org mode capture gibi bişiler.
   - https://github.com/mhayashi1120/auto-highlight-symbol-mode
     - otomatik alt çizmece
