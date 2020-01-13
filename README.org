@@ -696,11 +696,12 @@ complete in time.
 ** Wakatime
    I like statistics.
    #+BEGIN_SRC emacs-lisp
-     (use-package wakatime-mode
-       :defer 5
-       :config
-       (add-hook 'prog-mode-hook 'wakatime-mode)
-       (message "waka activated"))
+     (if (and (executable-find "wakatime") (file-exists-p "~/.wakatime.cfg"))
+	 (use-package wakatime-mode
+	   :defer 5
+	   :config
+	   (add-hook 'prog-mode-hook 'wakatime-mode)
+	   (message "waka activated")))
    #+END_SRC
 ** Mini modes for colors
    Those modes creates make coloring git changes, paranthesiz, curor, `TODO` keyword.
