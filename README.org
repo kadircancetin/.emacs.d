@@ -203,7 +203,7 @@ complete in time.
   (and maybe some eddited version) from internet. I wrote the source
   of the functions on the comment line. Some of them are I wrote.
 ** Linux Integrationgs
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (defun kadir-open-thunar()
       "This functions open the thunar file editor on the buffers
                 directory. Working and testing only on the linux systems."
@@ -218,12 +218,12 @@ complete in time.
     ;; "C-x *" is default calc bind. cearful about it if you use calc
     (global-set-key (kbd "C-x *") #'kadir-open-thunar)
     (global-set-key (kbd "C-x -") #'kadir-open-terminator)
-  #+END_SRC
+   #+END_SRC
 
 ** Emacs configrations
-  This function tangled the this org file to .el file with
-  asyncronously.
-  #+BEGIN_SRC emacs-lisp
+   This function tangled the this org file to .el file with
+   asyncronously.
+   #+BEGIN_SRC emacs-lisp
     (defun kadir-save-config-async()
       ""
       (interactive)
@@ -238,17 +238,17 @@ complete in time.
            (message "tangled saved files to: %s" result)))))
 
     (add-hook 'after-save-hook 'kadir-save-config-async)
-  #+END_SRC
+   #+END_SRC
 
 
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (defun kadir-find-config ()
       ;; source: https://github.com/KaratasFurkan/.emacs.d
       "Open config file. (probably this file)"
       (interactive) (find-file config-org))
 
     (global-set-key (kbd "C-x c") 'kadir-find-config)
-  #+END_SRC
+   #+END_SRC
 ** Eshell
    #+BEGIN_SRC emacs-lisp
      (defun eshell/clear ()
@@ -999,12 +999,15 @@ complete in time.
      (use-package wrap-region
        :defer 1
        :config
-       (wrap-region-add-wrapper "<>" "</>" "/" 'rjsx-mode)
+       (wrap-region-add-wrapper "<>" "</>" "#" 'rjsx-mode)
        (wrap-region-global-mode t))
    #+END_SRC
 * todo list
   Bu liste incelemeyi düşündüğüm ve düzeltmeyi planladığım şeyleri barındır.
   - early-init dosyasının silinip oto tangle ile otomatik ayarlanması.
+  - rjsx mode auto format buffer.
+  - lsp-highlight-read .. facei background ayarlıyor, düzeltilecek.
+  - python activate auto format minor mode
   - org mode capture gibi bişiler.
   - magit todo da exclude etme olayı. bazı dosyalar büyük olunca çok
     fena patlıyor
