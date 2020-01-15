@@ -56,6 +56,8 @@ complete in time.
   - [[#other-experimentals][other experimentals]]
   - [[#ace-window][ace-window]]
   - [[#wrap-region][wrap-region]]
+  - [[#async-byte-comp][async byte comp]]
+  - [[#anzu-mode][anzu mode]]
 - [[#list][list]]
 - [[#end][End]]
 
@@ -769,7 +771,7 @@ complete in time.
    #+BEGIN_SRC emacs-lisp
      (use-package eglot
        :bind
-       (("C-c DEL" . 'eglot-help-at-point))
+       (:map eglot-mode-map("C-c DEL" . 'eglot-help-at-point))  ; TODO: change keybind
        :config
        (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd")))
    #+END_SRC
@@ -1004,9 +1006,25 @@ complete in time.
        (wrap-region-add-wrapper "<>" "</>" "#" 'rjsx-mode)
        (wrap-region-global-mode t))
    #+END_SRC
+** async byte comp
+   #+BEGIN_SRC emacs-lisp
+     (run-with-idle-timer 1 nil
+                          (lambda () (async-bytecomp-package-mode 1)))
+   #+END_SRC
+** anzu mode
+   #+BEGIN_SRC emacs-lisp
+     (use-package anzu ; TODO: anzu mode ve isearch yarı fuzzy olunca eşleşmiyor
+       :defer 1
+       :config
+       (anzu-mode 1))
+   #+END_SRC
 * todo list
   Bu liste incelemeyi düşündüğüm ve düzeltmeyi planladığım şeyleri barındır.
+  - C-x 4 M-. bind
+  - https://github.com/rolandwalker/back-button ****güzelllll****
   - early-init dosyasının silinip oto tangle ile otomatik ayarlanması.
+  - symbol-overlay dene (auto highltt yerine)
+  - undo tree region undo??
   - rjsx mode auto format buffer.
   - lsp-highlight-read .. facei background ayarlıyor, düzeltilecek.
   - python activate auto format minor mode
