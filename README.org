@@ -1015,7 +1015,7 @@ complete in time.
      (use-package anzu ; TODO: anzu mode ve isearch yarı fuzzy olunca eşleşmiyor
        :defer 1
        :config
-       (anzu-mode 1))
+       (global-anzu-mode 1))
    #+END_SRC
 * todo list
   Bu liste incelemeyi düşündüğüm ve düzeltmeyi planladığım şeyleri barındır.
