@@ -105,6 +105,8 @@ complete in time.
           (save-place-mode 1)            ; save cursor position for next file opening, and restore it
           (global-page-break-lines-mode 1) ; ^L to cizgi
           (global-prettify-symbols-mode 1) ; lambda to cool lambda character
+          (global-auto-revert-mode 1)      ; auto revert
+          (global-auto-composition-mode 1)
           )))
    #+END_SRC
 ** Set Internal settings varabiles
@@ -113,7 +115,8 @@ complete in time.
       ;; cleaning init.el (another file for custom-set-variables etc.)
       (setq-default custom-file (concat user-emacs-directory "custom.el"))
       ;; (load-file  (concat user-emacs-directory "custom.el"))
-
+      (setq global-auto-revert-non-file-buffers t)
+      (setq auto-revert-verbose nil)
       (setq-default ring-bell-function      'ignore ; shutdown rings
                     inhibit-startup-message  t      ; disable startup messages
                     initial-scratch-message  nil    ; disable startup messages
@@ -122,6 +125,7 @@ complete in time.
                     default-buffer-file-coding-system 'utf-8-unix
                     kill-ring-max            256    ; increatese kill-ring history
                     search-whitespace-regexp ".*?"  ; make isearch more fuzzy like
+                    require-final-newline    t
                     ;; vc-follow-symlinks       t
                     )
 
@@ -546,7 +550,7 @@ complete in time.
        (setq shackle-rules
              '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.4)
                ("*eglot-help.*" :regexp t :align t :size 0.2)))
-       (add-to-list 'shackle-rules '(help-mode :align right :size 0.4)))
+       (add-to-list 'shackle-rules '(help-mode :align above :size 0.2 :select t)))
    #+END_SRC
 ** Company Mode
    I use =helm-company= for fuzzy searching. I change so many bindings. It could be writen a use-package :bind syntax.
@@ -1014,7 +1018,7 @@ complete in time.
   - org
     - https://github.com/mtekman/org-tanglesync.el#from-external-file-push-to-tangled-block
     - https://github.com/astahlman/ob-async
-    - doomda ** girintileri ekstra içerde ve güzel görünüyor. nasıl?
+  - defult settingsler yeniden yerşeltilmeli. çok karıştılar.
 * End
   I don't know why but if save hist will on the top. It creates a bug.
   #+BEGIN_SRC emacs-lisp
