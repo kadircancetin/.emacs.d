@@ -18,3 +18,8 @@
         (emacs_start__with_org)
       (emacs_start__with_tangled))
   (emacs_start__with_org))
+
+(if (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
+    (progn
+      (load-file (expand-file-name "experimental.el" user-emacs-directory))
+      (message "EXPERIMENTAL EL LOADED")))
