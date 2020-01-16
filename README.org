@@ -4,7 +4,7 @@ complete in time.
 
 * Table of Contents                                                     :TOC_5:
 - [[#startup-optimization][Startup optimization]]
-- [[#emacs-default-settings][Emacs Default Settings]]
+- [[#default-emacs-settings][Default Emacs Settings]]
   - [[#activate-and-deactivateing-internal-minor-modes][Activate and Deactivateing internal minor modes]]
   - [[#set-internal-settings-varabiles][Set Internal settings varabiles]]
     - [[#general][General]]
@@ -67,7 +67,7 @@ complete in time.
   top of your config) and some rare little lag problems when the
   garbage collection is on active. This .el code is the first part of
   the init.el.
-* Emacs Default Settings
+* Default Emacs Settings
   Emacs has so many internal minor modes and settings. Some are not
   very useful but activated and some are good but deactivated by
   default. So I change them to my personal choice.
@@ -116,8 +116,10 @@ complete in time.
       ;; cleaning init.el (another file for custom-set-variables etc.)
       (setq-default custom-file (concat user-emacs-directory "custom.el"))
       ;; (load-file  (concat user-emacs-directory "custom.el"))
-      (setq global-auto-revert-non-file-buffers t)
-      (setq auto-revert-verbose nil)
+      (setq auto-revert-interval 2
+            auto-revert-check-vc-info t
+            global-auto-revert-non-file-buffers t
+            auto-revert-verbose nil)
       (setq-default ring-bell-function      'ignore ; shutdown rings
                     inhibit-startup-message  t      ; disable startup messages
                     initial-scratch-message  nil    ; disable startup messages
@@ -142,6 +144,7 @@ complete in time.
       ;; (setq scroll-step 1)
       ;; (setq scroll-conservatively 10000)
       ;; (setq auto-window-vscroll nil)
+      (setq-default dired-listing-switches "-lha") ; make dired human readble
       (setq-default indent-tabs-mode nil       ; space instead of tabs
                     tab-width 4                ; 4 space for tab
                     show-trailing-whitespace nil) ; showing empty whitespaces
@@ -174,10 +177,33 @@ complete in time.
                         (indent-region (point-min) (point-max))))
     #+END_SRC
 
+    For the purpose of fast spliting and go.
+    #+begin_src emacs-lisp
+      (with-eval-after-load "window"
+        ;; source: https://github.com/ianpan870102/yay-evil-emacs/blob/master/config.org
+        (defun kadir/split-and-follow-horizontally ()
+          "Split window below and follow."
+          (interactive)
+          (split-window-below)
+          (other-window 1))
+        (defun kadir/split-and-follow-vertically ()
+          "Split window below and follow."
+          (interactive)
+          (split-window-right)
+          (other-window 1))
+        (global-set-key (kbd "C-x 2") #'kadir/split-and-follow-horizontally)
+        (global-set-key (kbd "C-x 3") #'kadir/split-and-follow-vertically))
+    #+end_src
 *** Hooks
     Clean whitespaces before saving.
     #+BEGIN_SRC emacs-lisp
       (add-hook 'before-save-hook 'whitespace-cleanup)
+      (run-with-idle-timer
+       0.15 nil
+       (lambda () (progn
+               (require 'hideshow)
+               (add-hook 'prog-mode-hook 'hs-minor-mode)
+               (global-set-key (kbd "C-c C-t") 'hs-toggle-hiding))))
     #+END_SRC
 ** Backup Setting
    Backup files are annoying when they are on project folder. Keep
@@ -202,7 +228,8 @@ complete in time.
                    kept-old-versions 2)   ; and some old ones, too
    #+END_SRC
 * Initial Packages
-  Melpa setting and use-package settings for auto-download use-package for auto-download all other packages.
+  Melpa setting and use-package settings for auto-download use-package
+  for auto-download all other packages.
 ** Melpa
    #+BEGIN_SRC emacs-lisp
      (require 'package)
@@ -236,27 +263,27 @@ complete in time.
   of the functions on the comment line. Some of them are I wrote.
 ** Linux Integrationgs
    #+BEGIN_SRC emacs-lisp
-     (defun kadir-open-thunar()
+     (defun kadir/open-thunar()
        "This functions open the thunar file editor on the buffers
                  directory. Working and testing only on the linux systems."
        (interactive)
        (start-process "*shellout*" nil "thunar"))
 
-     (defun kadir-open-terminator()
+     (defun kadir/open-terminator()
        "This functions open the thunar file editor on the buffers
      directory. Working and testing only on the linux systems."
        (interactive)
        (start-process "*shellout*" nil "terminator"))
      ;; "C-x *" is default calc bind. cearful about it if you use calc
-     (global-set-key (kbd "C-x *") #'kadir-open-thunar)
-     (global-set-key (kbd "C-x -") #'kadir-open-terminator)
+     (global-set-key (kbd "C-x *") #'kadir/open-thunar)
+     (global-set-key (kbd "C-x -") #'kadir/open-terminator)
    #+END_SRC
 
 ** Emacs configrations
    This function tangled the this org file to .el file with
    asyncronously.
    #+BEGIN_SRC emacs-lisp
-     (defun kadir-save-config-async()
+     (defun kadir/save-config-async()
        ""
        (interactive)
        (when (equal (buffer-file-name) config-org)
@@ -269,17 +296,17 @@ complete in time.
           (lambda(result)
             (message "tangled saved files to: %s" result)))))
 
-     (add-hook 'after-save-hook 'kadir-save-config-async)
+     (add-hook 'after-save-hook 'kadir/save-config-async)
    #+END_SRC
 
 
    #+BEGIN_SRC emacs-lisp
-     (defun kadir-find-config ()
+     (defun kadir/find-config ()
        ;; source: https://github.com/KaratasFurkan/.emacs.d
        "Open config file. (probably this file)"
        (interactive) (find-file config-org))
 
-     (global-set-key (kbd "C-x c") 'kadir-find-config)
+     (global-set-key (kbd "C-x c") 'kadir/find-config)
    #+END_SRC
 ** Eshell
    #+BEGIN_SRC emacs-lisp
@@ -292,7 +319,7 @@ complete in time.
    #+END_SRC
 ** Programing
    #+BEGIN_SRC emacs-lisp
-     (defun kadir-comment-or-self-insert (&optional beg end)
+     (defun kadir/comment-or-self-insert (&optional beg end)
        "If region active comment-or-uncomment work,
      otherwise (self-insert /)"
        (interactive (if (use-region-p)
@@ -302,7 +329,7 @@ complete in time.
            (comment-or-uncomment-region beg end)
          (self-insert-command 1 ?/)))
 
-     (global-set-key "/" 'kadir-comment-or-self-insert)
+     (global-set-key "/" 'kadir/comment-or-self-insert)
    #+END_SRC
 * JavaScript and React Native
   #+BEGIN_SRC emacs-lisp
@@ -365,7 +392,7 @@ complete in time.
   then run eglot.
 
   #+BEGIN_SRC emacs-lisp
-    (defun kadir-configure-python ()
+    (defun kadir/configure-python ()
       (progn
         (eglot-ensure)))
 
@@ -379,7 +406,7 @@ complete in time.
               (pyvenv-workon (with-temp-buffer
                                (insert-file-contents pfile)
                                (nth 0 (split-string (buffer-string))))))))
-      (kadir-configure-python))
+      (kadir/configure-python))
   #+END_SRC
 
   #+BEGIN_SRC emacs-lisp
@@ -413,14 +440,19 @@ complete in time.
                                            (vm-imap . vm-visit-imap-folder-other-frame)
                                            (gnus . org-gnus-no-new-news)
                                            (file . find-file)
-                                           (wl . wl-other-frame))))
+                                           (wl . wl-other-frame)))
+      (defun kadir/org-indent-activate-but-config ()
+        "org-indent-mode activated if the current buffer is not README.org"
+        (unless (equal (buffer-file-name) config-org)
+          (org-indent-mode 1)))
+      (add-hook 'org-mode-hook #'kadir/org-indent-activate-but-config))
 
     (use-package htmlize)
     (use-package org-bullets)
-    ;; (add-hook 'org-mode-hook 'org-indent-mode)
+
     (add-hook 'org-mode-hook #'visual-line-mode)
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-    (setq org-bullets-bullet-list '("." "." "." "."))
+    (setq org-bullets-bullet-list '("⁖" "⁖" "." "."))
   #+END_SRC
 * Elisp
   I can't use emacs-lisp in (use-pacage) but it saving the day.
@@ -617,7 +649,7 @@ complete in time.
    edit search result feature. It could bu use with multiple cursors
    and thats fantastic.
    #+BEGIN_SRC emacs-lisp
-     (defun kadir-helm-do-ag-project-root-or-current-dir ()
+     (defun kadir/helm-do-ag-project-root-or-current-dir ()
        ;; source: https://github.com/KaratasFurkan/.emacs.d
        "If in a project call `helm-do-ag-project-root', else call
      `helm-do-ag' with current directory."
@@ -685,8 +717,10 @@ complete in time.
 ** Magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
-       :bind (("C-x 4 C-m" . magit-diff-visit-file-other-window)
-              ("C-x g" . magit-status))
+       :bind (("C-x g" . magit-status)
+              (:map magit-status-mode-map
+                    (("C-x 4 C-m" . magit-diff-visit-file-other-window))
+                    ))
        :config
        (use-package magit-todos :init (magit-todos-mode 1)))
    #+END_SRC
@@ -715,6 +749,13 @@ complete in time.
 ** Mini modes for colors
    Those modes creates make coloring git changes, paranthesiz, curor, `TODO` keyword.
    #+BEGIN_SRC emacs-lisp
+     ;; (use-package highlight-numbers
+     ;;   :hook (prog-mode . highlight-numbers-mode))
+
+     ;; TODO: highlight-operators kebap case'i bozuyor
+     ;; (use-package highlight-operators
+     ;;   :hook (prog-mode . highlight-operators-mode))
+
      (use-package highlight-symbol
        :defer t   ;; TODO: bind key
        )
@@ -830,7 +871,7 @@ complete in time.
    #+BEGIN_SRC emacs-lisp
      (use-package dashboard
        :init
-       (setq dashboard-banner-logo-title   "Kemacs?"
+       (setq dashboard-banner-logo-title   nil
              dashboard-center-content      t
              ;; dashboard-set-heading-icons t
              dashboard-set-file-icons t
@@ -842,11 +883,14 @@ complete in time.
        ;; Format: "(icon title help action face prefix suffix)"
        (setq dashboard-navigator-buttons
              `(;; line1
-               ((,nil
+               (
+                (,nil
                  "Agenda"
-                 "Browse homepage"
+                 "Agenda"
                  (lambda (&rest _) (org-agenda-list "homepage")))
-                ("?" "" "?/h" #'help nil "<" ">"))))
+                )
+               (("EMACS HELP" "" "?/h" (lambda (&rest _) (info "emacs")) nil "<" ">"))
+               ))
        (setq dashboard-items '((recents  . 5)
                                (bookmarks . 10)
                                (registers . 5)))
@@ -906,6 +950,27 @@ complete in time.
       (progn
         (global-hl-line-mode -1)))
   #+END_SRC
+
+  Beautifying org mode. ([[https://jft.rocks/emacs/use-unicode-symbol-to-display-org-mode-checkboxes][source]])
+  #+BEGIN_SRC emacs-lisp
+      (add-hook 'org-mode-hook (lambda ()
+                               "Beautify Org Checkbox Symbol"
+                               (push '("[ ]" .  "☐") prettify-symbols-alist)
+                               (push '("[X]" . "☑" ) prettify-symbols-alist)
+                               (push '("[-]" . "❍" ) prettify-symbols-alist)
+                               (prettify-symbols-mode)))
+
+    (defface org-checkbox-done-text
+      '((t (:foreground "#71696A" :strike-through t)))
+      "Face for the text part of a checked org-mode checkbox.")
+
+    (font-lock-add-keywords
+     'org-mode
+     `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)"
+        1 'org-checkbox-done-text prepend))
+     'append)
+
+  #+END_SRC
 * Experimental
 ** yassnippet
    #+BEGIN_SRC emacs-lisp
@@ -950,8 +1015,8 @@ complete in time.
    Make dired with icons. I don't understant that i like or not but it
    could be stant in experimental for just now.
    #+BEGIN_SRC emacs-lisp
-     (use-package all-the-icons-dired
-       :hook (dired-mode . all-the-icons-dired-mode))
+     ;; (use-package all-the-icons-dired
+     ;;   :hook (dired-mode . all-the-icons-dired-mode))
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
@@ -985,17 +1050,6 @@ complete in time.
      ;;                                       (message "better jumper add link")))))
    #+END_SRC
 
-
-   This is statistical for finding the much used functions. I hope I
-   will find unnecassary key bindings which I realy don't use and I see
-   some function that I invoke thats whith M-x.
-   #+BEGIN_SRC emacs-lisp
-     (use-package keyfreq
-       :defer 2
-       :config
-       (keyfreq-mode 1)
-       (keyfreq-autosave-mode 1))
-   #+END_SRC
    # ;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
    # ;; (use-package org-plus-contrib)
    # ;; (add-to-list 'org-export-backends 'taskjuggler)
@@ -1019,6 +1073,8 @@ complete in time.
        :defer 1
        :config
        (wrap-region-add-wrapper "<>" "</>" "#" 'rjsx-mode)
+       (wrap-region-add-wrapper "#+begin_src emacs-lisp\n  " "\n#+end_src" "*" 'org-mode)
+       (wrap-region-add-wrapper "=" "=" "=" 'org-mode)
        (wrap-region-global-mode t))
    #+END_SRC
 ** async byte comp
@@ -1057,6 +1113,7 @@ complete in time.
   - org
     - https://github.com/mtekman/org-tanglesync.el#from-external-file-push-to-tangled-block
     - https://github.com/astahlman/ob-async
+  - key-corde mode
   - defult settingsler yeniden yerşeltilmeli. çok karıştılar.
 * End
   I don't know why but if save hist will on the top. It creates a bug.
