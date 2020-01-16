@@ -33,6 +33,8 @@
 (set-face-attribute 'default nil
                     :family "Source Code Pro" :height 80 :weight 'normal)
 
+(set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro" :italic t)
+
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (load-theme 'wombat t)
 
