@@ -30,7 +30,6 @@ complete in time.
   - [[#auto-compile-for-speed-up][auto compile for speed up]]
   - [[#restclient][Restclient]]
   - [[#helm][Helm]]
-  - [[#helm-ag][helm-ag]]
   - [[#shackle-mode][Shackle mode]]
   - [[#company-mode][Company Mode]]
   - [[#web-mode][Web Mode]]
@@ -52,6 +51,7 @@ complete in time.
     - [[#which-key][Which-key]]
 - [[#theme-and-apperiance][Theme and Apperiance]]
 - [[#experimental][Experimental]]
+  - [[#yassnippet][yassnippet]]
   - [[#autho-highlight][autho highlight]]
   - [[#other-experimentals][other experimentals]]
   - [[#ace-window][ace-window]]
@@ -398,11 +398,12 @@ complete in time.
       :config
       (add-hook 'org-mode-hook 'toc-org-mode))
 
-    (with-eval-after-load 'org
-      (use-package htmlize)
-      (use-package org-bullets)
+    (use-package org
+      :config
       (define-key org-mode-map (kbd "C-a") 'mwim-beginning-of-code-or-line)
       (setq org-src-tab-acts-natively t) ; intent code blocks with its major modes
+      (setq org-src-window-setup 'current-window) ; edit code on same window
+
       (setq org-catch-invisible-edits    'show-and-error
             org-cycle-separator-lines    0
             org-agenda-start-day         "-0d"
@@ -413,10 +414,13 @@ complete in time.
                                            (gnus . org-gnus-no-new-news)
                                            (file . find-file)
                                            (wl . wl-other-frame))))
+
+    (use-package htmlize)
+    (use-package org-bullets)
     ;; (add-hook 'org-mode-hook 'org-indent-mode)
     (add-hook 'org-mode-hook #'visual-line-mode)
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-    (setq org-bullets-bullet-list '("*" "*" "*" "*"))
+    (setq org-bullets-bullet-list '("." "." "." "."))
   #+END_SRC
 * Elisp
   I can't use emacs-lisp in (use-pacage) but it saving the day.
@@ -512,7 +516,7 @@ complete in time.
                       helm-buffers-fuzzy-matching           t
                       helm-candidate-number-limit           500
                       helm-display-function                 'pop-to-buffer)
-                                             ; (helm-mode 1)
+
        :bind (("M-x"      . helm-M-x)
               ("C-x b"    . helm-buffers-list)
               ("C-x C-f"  . helm-find-files)
@@ -601,7 +605,8 @@ complete in time.
      (use-package helm-rg
        :init
        (setq helm-rg-default-directory 'git-root
-             helm-rg--extra-args '("--max-columns" "200"))
+             helm-rg--extra-args '("--max-columns" "200")
+             helm-rg-input-min-search-chars 1)
        :bind ("<C-tab>" . #'helm-rg))
      (use-package deadgrep
        :bind ("<C-iso-lefttab>" . #'deadgrep))
@@ -686,10 +691,10 @@ complete in time.
        (use-package magit-todos :init (magit-todos-mode 1)))
    #+END_SRC
 ** Projectile
-   Projectile is powerfull tool. I use it just for find in projectile and in some functions.
+   Projectile is powerfull tool. I use it just for find in projectile directly.
    #+BEGIN_SRC emacs-lisp
      (use-package projectile
-       :defer 2
+       :defer 1
        :config
        (projectile-mode 1)         ; son projeleri hatırlamada işe yaramazsa sil geç
        )
@@ -902,6 +907,17 @@ complete in time.
         (global-hl-line-mode -1)))
   #+END_SRC
 * Experimental
+** yassnippet
+   #+BEGIN_SRC emacs-lisp
+     (use-package yasnippet
+       :bind
+       (("C-ş" . yas-insert-snippet)
+        ("M-ş" . yas-insert-snippet))
+       :config
+       (yas-global-mode))
+
+     (use-package yasnippet-snippets)
+   #+END_SRC
 ** autho highlight
    Will activate by major modes.
    #+BEGIN_SRC emacs-lisp
