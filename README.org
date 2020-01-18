@@ -201,9 +201,9 @@ complete in time.
       (run-with-idle-timer
        0.15 nil
        (lambda () (progn
-               (require 'hideshow)
-               (add-hook 'prog-mode-hook 'hs-minor-mode)
-               (global-set-key (kbd "C-c C-t") 'hs-toggle-hiding))))
+                    (require 'hideshow)
+                    (add-hook 'prog-mode-hook 'hs-minor-mode)
+                    (global-set-key (kbd "C-c C-t") 'hs-toggle-hiding))))
     #+END_SRC
 ** Backup Setting
    Backup files are annoying when they are on project folder. Keep
@@ -431,10 +431,18 @@ complete in time.
       (setq org-src-tab-acts-natively t) ; intent code blocks with its major modes
       (setq org-src-window-setup 'current-window) ; edit code on same window
 
+
+      (setq org-agenda-files (apply 'append
+                                    (mapcar
+                                     (lambda (directory)
+                                       (directory-files-recursively
+                                        directory org-agenda-file-regexp))
+                                     '("~/org"))))  ;; recursively get org files
+
       (setq org-catch-invisible-edits    'show-and-error
             org-cycle-separator-lines    0
             org-agenda-start-day         "-0d"
-            org-agenda-span              16
+            org-agenda-span              20
             org-agenda-start-on-weekday  nil
             org-link-frame-setup         '((vm . vm-visit-folder-other-frame)
                                            (vm-imap . vm-visit-imap-folder-other-frame)
@@ -887,7 +895,7 @@ complete in time.
                 (,nil
                  "Agenda"
                  "Agenda"
-                 (lambda (&rest _) (org-agenda-list "homepage")))
+                 (lambda (&rest _) (org-agenda)))
                 )
                (("EMACS HELP" "" "?/h" (lambda (&rest _) (info "emacs")) nil "<" ">"))
                ))
@@ -953,7 +961,7 @@ complete in time.
 
   Beautifying org mode. ([[https://jft.rocks/emacs/use-unicode-symbol-to-display-org-mode-checkboxes][source]])
   #+BEGIN_SRC emacs-lisp
-      (add-hook 'org-mode-hook (lambda ()
+    (add-hook 'org-mode-hook (lambda ()
                                "Beautify Org Checkbox Symbol"
                                (push '("[ ]" .  "☐") prettify-symbols-alist)
                                (push '("[X]" . "☑" ) prettify-symbols-alist)
