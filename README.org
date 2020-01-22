@@ -3,63 +3,62 @@ comments. Those are initial commits and I wish the comments will
 complete in time.
 
 * Table of Contents                                                     :TOC_5:
-- [[#startup-optimization][Startup optimization]]
-- [[#default-emacs-settings][Default Emacs Settings]]
-  - [[#activate-and-deactivateing-internal-minor-modes][Activate and Deactivateing internal minor modes]]
-  - [[#set-internal-settings-varabiles][Set Internal settings varabiles]]
-    - [[#general][General]]
-    - [[#appereance][Appereance]]
-    - [[#key-bindings][Key bindings]]
-    - [[#hooks][Hooks]]
-  - [[#backup-setting][Backup Setting]]
-- [[#initial-packages][Initial Packages]]
-  - [[#melpa][Melpa]]
-  - [[#use-package][Use-Package]]
-- [[#my-functions][My Functions]]
-  - [[#linux-integrationgs][Linux Integrationgs]]
-  - [[#emacs-configrations][Emacs configrations]]
-  - [[#eshell][Eshell]]
-  - [[#programing][Programing]]
-- [[#javascript-and-react-native][JavaScript and React Native]]
-- [[#python][Python]]
-- [[#org-mode][Org Mode]]
-- [[#elisp][Elisp]]
-- [[#packages][Packages]]
-  - [[#init-benchmark-test][init-benchmark test]]
-  - [[#yaml-mode][yaml-mode]]
-  - [[#auto-compile-for-speed-up][auto compile for speed up]]
-  - [[#restclient][Restclient]]
-  - [[#helm][Helm]]
-  - [[#shackle-mode][Shackle mode]]
-  - [[#company-mode][Company Mode]]
-  - [[#web-mode][Web Mode]]
-  - [[#searching-on-the-project][Searching on the project]]
-  - [[#undo-tree-mode][undo-tree mode]]
-  - [[#mwim-and-better-default-moveing][mwim and better default moveing]]
-  - [[#expand-region-mode][expand-region mode]]
-  - [[#magit][Magit]]
-  - [[#projectile][Projectile]]
-  - [[#wakatime][Wakatime]]
-  - [[#mini-modes-for-colors][Mini modes for colors]]
-  - [[#doom-modeline][doom-modeline]]
-  - [[#eglot][eglot]]
-  - [[#lsp-mode][lsp-mode]]
-  - [[#multiple-cursors][multiple cursors]]
-  - [[#dashboard][Dashboard]]
-  - [[#so-long-mode][so-long mode]]
-  - [[#disabled-packages][disabled packages]]
-    - [[#which-key][Which-key]]
-- [[#theme-and-apperiance][Theme and Apperiance]]
-- [[#experimental][Experimental]]
-  - [[#yassnippet][yassnippet]]
-  - [[#autho-highlight][autho highlight]]
-  - [[#other-experimentals][other experimentals]]
-  - [[#ace-window][ace-window]]
-  - [[#wrap-region][wrap-region]]
-  - [[#async-byte-comp][async byte comp]]
-  - [[#anzu-mode][anzu mode]]
-- [[#list][list]]
-- [[#end][End]]
+  - [[#startup-optimization][Startup optimization]]
+  - [[#default-emacs-settings][Default Emacs Settings]]
+    - [[#activate-and-deactivateing-internal-minor-modes][Activate and Deactivateing internal minor modes]]
+    - [[#set-internal-settings-varabiles][Set Internal settings varabiles]]
+      - [[#general][General]]
+      - [[#appereance][Appereance]]
+      - [[#key-bindings][Key bindings]]
+      - [[#hooks][Hooks]]
+    - [[#backup-setting][Backup Setting]]
+  - [[#initial-packages][Initial Packages]]
+    - [[#melpa][Melpa]]
+    - [[#use-package][Use-Package]]
+  - [[#my-functions][My Functions]]
+    - [[#linux-integrationgs][Linux Integrationgs]]
+    - [[#emacs-configrations][Emacs configrations]]
+    - [[#eshell][Eshell]]
+    - [[#programing][Programing]]
+  - [[#javascript-and-react-native][JavaScript and React Native]]
+  - [[#python][Python]]
+  - [[#org-mode][Org Mode]]
+  - [[#packages][Packages]]
+    - [[#init-benchmark-test][init-benchmark test]]
+    - [[#yaml-mode][yaml-mode]]
+    - [[#auto-compile-for-speed-up][auto compile for speed up]]
+    - [[#restclient][Restclient]]
+    - [[#helm][Helm]]
+    - [[#shackle-mode][Shackle mode]]
+    - [[#company-mode][Company Mode]]
+    - [[#web-mode][Web Mode]]
+    - [[#searching-on-the-project][Searching on the project]]
+    - [[#undo-tree-mode][undo-tree mode]]
+    - [[#mwim-and-better-default-moveing][mwim and better default moveing]]
+    - [[#expand-region-mode][expand-region mode]]
+    - [[#magit][Magit]]
+    - [[#projectile][Projectile]]
+    - [[#wakatime][Wakatime]]
+    - [[#mini-modes-for-colors][Mini modes for colors]]
+    - [[#doom-modeline][doom-modeline]]
+    - [[#eglot][eglot]]
+    - [[#lsp-mode][lsp-mode]]
+    - [[#multiple-cursors][multiple cursors]]
+    - [[#dashboard][Dashboard]]
+    - [[#so-long-mode][so-long mode]]
+    - [[#disabled-packages][disabled packages]]
+      - [[#which-key][Which-key]]
+  - [[#theme-and-apperiance][Theme and Apperiance]]
+  - [[#experimental][Experimental]]
+    - [[#yassnippet][yassnippet]]
+    - [[#autho-highlight][autho highlight]]
+    - [[#other-experimentals][other experimentals]]
+    - [[#ace-window][ace-window]]
+    - [[#wrap-region][wrap-region]]
+    - [[#async-byte-comp][async byte comp]]
+    - [[#anzu-mode][anzu mode]]
+  - [[#list][list]]
+  - [[#end][End]]
 
 * Startup optimization
   Some garbage collection settings. It is a deep topic and I am not
@@ -114,6 +113,9 @@ complete in time.
 *** General
     #+BEGIN_SRC emacs-lisp
       ;; cleaning init.el (another file for custom-set-variables etc.)
+      (put 'narrow-to-page 'disabled nil)
+      (put 'narrow-to-region 'disabled nil)
+
       (setq-default custom-file (concat user-emacs-directory "custom.el"))
       ;; (load-file  (concat user-emacs-directory "custom.el"))
       (setq auto-revert-interval 2
@@ -144,7 +146,7 @@ complete in time.
       ;; (setq scroll-step 1)
       ;; (setq scroll-conservatively 10000)
       ;; (setq auto-window-vscroll nil)
-      (setq-default dired-listing-switches "-lha") ; make dired human readble
+      (setq-default dired-listing-switches "-haGg") ; make dired human readble
       (setq-default indent-tabs-mode nil       ; space instead of tabs
                     tab-width 4                ; 4 space for tab
                     show-trailing-whitespace nil) ; showing empty whitespaces
@@ -426,11 +428,14 @@ complete in time.
       (add-hook 'org-mode-hook 'toc-org-mode))
 
     (use-package org
+      :bind
+      (:map org-mode-map
+            ("M-." . elisp-slime-nav-find-elisp-thing-at-point))
       :config
       (define-key org-mode-map (kbd "C-a") 'mwim-beginning-of-code-or-line)
       (setq org-src-tab-acts-natively t) ; intent code blocks with its major modes
       (setq org-src-window-setup 'current-window) ; edit code on same window
-
+      (setq org-src-fontify-natively t)
 
       (setq org-agenda-files (apply 'append
                                     (mapcar
@@ -438,6 +443,7 @@ complete in time.
                                        (directory-files-recursively
                                         directory org-agenda-file-regexp))
                                      '("~/org"))))  ;; recursively get org files
+
 
       (setq org-catch-invisible-edits    'show-and-error
             org-cycle-separator-lines    0
@@ -449,6 +455,7 @@ complete in time.
                                            (gnus . org-gnus-no-new-news)
                                            (file . find-file)
                                            (wl . wl-other-frame)))
+
       (defun kadir/org-indent-activate-but-config ()
         "org-indent-mode activated if the current buffer is not README.org"
         (unless (equal (buffer-file-name) config-org)
@@ -462,19 +469,14 @@ complete in time.
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
     (setq org-bullets-bullet-list '("⁖" "⁖" "." "."))
   #+END_SRC
-* Elisp
-  I can't use emacs-lisp in (use-pacage) but it saving the day.
+
   #+BEGIN_SRC emacs-lisp
-    (add-hook 'emacs-lisp-mode-hook
-              (lambda ()
-                (use-package elisp-slime-nav
-                  :init
-                  (elisp-slime-nav-mode 1))))
+    (use-package stripe-buffer
+      :config
+      (set-face-attribute 'stripe-highlight nil :background "#333335")
 
-    (use-package aggressive-indent
-      :diminish
-      :hook ((emacs-lisp-mode . aggressive-indent-mode)))
-
+      :hook ((org-mode . turn-on-stripe-table-mode)
+             (dired-mode-hook stripe-listify-buffer)))
   #+END_SRC
 * Packages
 ** init-benchmark test
@@ -551,8 +553,8 @@ complete in time.
                       helm-echo-input-in-header-line        t
                       helm-M-x-always-save-history          t
                       helm-M-x-input-history                t
-                      ;;helm-completion-style                 'helm-fuzzy
-                      helm-completion-style                 '(helm-flex)
+                      ;; helm-completion-style                 'helm-fuzzy
+                      helm-completion-style                  '(basic flex)
                       helm-buffers-fuzzy-matching           t
                       helm-candidate-number-limit           500
                       helm-display-function                 'pop-to-buffer)
@@ -595,7 +597,7 @@ complete in time.
        (setq shackle-rules
              '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.4)
                ("*eglot-help.*" :regexp t :align t :size 0.2)))
-       (add-to-list 'shackle-rules '(help-mode :align above :size 0.2 :select t)))
+       (add-to-list 'shackle-rules '(help-mode :align t :size 0.4 :select t)))
    #+END_SRC
 ** Company Mode
    I use =helm-company= for fuzzy searching. I change so many bindings. It could be writen a use-package :bind syntax.
@@ -1123,6 +1125,7 @@ complete in time.
     - https://github.com/astahlman/ob-async
   - key-corde mode
   - defult settingsler yeniden yerşeltilmeli. çok karıştılar.
+  - https://github.com/lassik/emacs-format-all-the-code  (format all languages)
 * End
   I don't know why but if save hist will on the top. It creates a bug.
   #+BEGIN_SRC emacs-lisp
