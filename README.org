@@ -196,6 +196,14 @@ complete in time.
         (global-set-key (kbd "C-x 2") #'kadir/split-and-follow-horizontally)
         (global-set-key (kbd "C-x 3") #'kadir/split-and-follow-vertically))
     #+end_src
+
+    #+BEGIN_SRC emacs-lisp
+      (defun kadir/last-buffer ()
+        "get last buffer which is not windowed"
+        (interactive)
+        (switch-to-buffer (other-buffer (current-buffer) nil)))
+      (global-set-key (kbd "M-<SPC>") #'kadir/last-buffer )
+    #+END_SRC
 *** Hooks
     Clean whitespaces before saving.
     #+BEGIN_SRC emacs-lisp
@@ -228,6 +236,19 @@ complete in time.
                    version-control t      ; Use version numbers on backups,
                    kept-new-versions 5    ; keep some new versions
                    kept-old-versions 2)   ; and some old ones, too
+   #+END_SRC
+** folding
+   #+BEGIN_SRC emacs-lisp
+     (defun kadir/hide-fold-defs ()
+       "Folds the all functions in python"
+       (interactive)
+       (save-excursion
+         (beginning-of-buffer)
+         (hs-hide-level 2)))
+     (setq hs-isearch-open t)
+     ;; (setq hs-allow-nesting t)
+     (global-set-key (kbd "M-t") #'hs-toggle-hiding)
+     (global-set-key (kbd "C-c M-t") #'kadir/hide-fold-defs)
    #+END_SRC
 * Initial Packages
   Melpa setting and use-package settings for auto-download use-package
@@ -477,6 +498,11 @@ complete in time.
 
       :hook ((org-mode . turn-on-stripe-table-mode)
              (dired-mode-hook stripe-listify-buffer)))
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package org-web-tools
+      :defer t)
   #+END_SRC
 * Packages
 ** init-benchmark test
@@ -941,6 +967,21 @@ complete in time.
       ;; (use-package which-key)
     #+END_SRC
 
+*** google translate
+    #+BEGIN_SRC emacs-lisp
+      (use-package google-translate
+        :config
+        (setq google-translate-default-source-language "auto"
+              google-translate-default-target-language "tr"))
+    #+END_SRC
+** shell-pop
+   #+BEGIN_SRC emacs-lisp
+     (use-package shell-pop
+       :defer 0.5
+       :init
+       (setq shell-pop-shell-type '("aweshell" "aweshell*" (lambda () (eshell)))
+             shell-pop-window-size 40))
+   #+END_SRC
 * Theme and Apperiance
   Highlighting and region select should be has different colors.
   #+BEGIN_SRC emacs-lisp
@@ -1010,10 +1051,8 @@ complete in time.
                              :underline t :weight 'bold :background nil :foreground nil)
          (set-face-attribute 'ahs-plugin-whole-buffer-face nil
                              :underline t :weight 'bold :background nil :foreground nil)
-
          (setq ahs-case-fold-search nil
                ahs-default-range 'ahs-range-display
-               ahs-idle-timer 0
                ahs-idle-interval 0.2
                ahs-inhibit-face-list nil)
          (setq ahs-idle-timer
@@ -1112,7 +1151,6 @@ complete in time.
   - org mode capture gibi bişiler.
   - magit todo da exclude etme olayı. bazı dosyalar büyük olunca çok
     fena patlıyor
-  - popup eshell
   - https://github.com/lewang/ws-butler
   - https://github.com/smihica/emmet-mode
   - (x-ray) package https://www.emacswiki.org/emacs/XrayPackage#toc4
@@ -1126,6 +1164,7 @@ complete in time.
   - key-corde mode
   - defult settingsler yeniden yerşeltilmeli. çok karıştılar.
   - https://github.com/lassik/emacs-format-all-the-code  (format all languages)
+  - https://github.com/manateelazycat/company-english-helper
 * End
   I don't know why but if save hist will on the top. It creates a bug.
   #+BEGIN_SRC emacs-lisp

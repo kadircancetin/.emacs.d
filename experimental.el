@@ -1,9 +1,3 @@
-(use-package google-translate
-  :config
-  (setq google-translate-default-source-language "auto"
-        google-translate-default-target-language "tr"
-        ))
-
 (use-package ob-restclient
   ;; link: https://github.com/alf/ob-restclient.el
   ;; (org-babel-do-load-languages
@@ -11,26 +5,32 @@
   ;;  '((restclient . t)))
   )
 
+
+(use-package aweshell
+  :defer 1
+  :load-path "~/.emacs.d/site-lisp/aweshell"
+  :init
+  (require 'aweshell))
+
 (use-package eaf
   :defer 1
   :load-path "~/.emacs.d/site-lisp/emacs-application-framework"
   :init
   (require 'eaf)
   (setq eaf-var-list
-        '((eaf-camera-save-path . "~/Downloads")
-          (eaf-browser-enable-plugin . "true")
+        '((eaf-camera-save-path          . "~/Downloads")
+          (eaf-browser-enable-plugin     . "true")
           (eaf-browser-enable-javascript . "true")
-          (eaf-browser-remember-history . "true")
-          (eaf-browser-default-zoom . "0.8")
-          (eaf-browser-blank-page-url . "https://www.google.com")
+          (eaf-browser-remember-history  . "true")
+          (eaf-browser-default-zoom      . "0.8")
+          (eaf-browser-blank-page-url    . "https://www.google.com")
           ))
   :config
   (defun eaf_open_current_buffer ()
     (interactive)
     (eaf-open (buffer-file-name))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package org-web-tools
-  :defer 4)
+
 
 (use-package dired-subtree
   :after dired
@@ -39,32 +39,6 @@
   (bind-keys :map dired-mode-map
              ("i" . dired-subtree-insert)
              (";" . dired-subtree-remove)))
-;;;;;
-;; Isearch things
-
-;;;;;
-(defun kadir/hide-fold-defs ()
-  "Folds the all functions in python"
-  (interactive)
-  (save-excursion
-    (beginning-of-buffer)
-    (hs-hide-level 2)))
-
-(setq hs-isearch-open t)
-;; (setq hs-allow-nesting t)
-(global-set-key (kbd "M-t") #'hs-toggle-hiding)
-(global-set-key (kbd "C-c M-t") #'kadir/hide-fold-defs)
-
-;;;;;;;;
-;; last buffers
-;;;;;;;
-(defun kadir/last-buffer ()
-  "get last buffer which is not windowed"
-  (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) nil)))
-
-(global-set-key (kbd "M-<SPC>") #'kadir/last-buffer )
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tree macs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
