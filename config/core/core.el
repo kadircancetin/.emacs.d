@@ -22,11 +22,6 @@
 (use-package benchmark-init :ensure t :defer t) ;; TODO: delete or more logical things
 
 
-;; Activated minor modes. Actually there is very very minimal
-;; difference on the startup time if you activate it with
-;; run-with-idle-timer but for the purpose of the consistency of the
-;; config, I try to never ever activate anyting with startup except
-;; visual things linke theme and startup buffer.
 (run-with-idle-timer
  0.15 nil  ;; defer
  (lambda ()
@@ -45,12 +40,12 @@
      (global-auto-composition-mode 1))))
 
 
-(load-file (expand-file-name "config/core/core-settings.el" user-emacs-directory))
+(load-file (expand-file-name "config/core/settings.el" user-emacs-directory))
 
 
 ;; settings and packages which important and used for all the major modes
-(load-file (expand-file-name "config/core/core-functions.el" user-emacs-directory))
-(load-file (expand-file-name "config/core/core-packages.el" user-emacs-directory))
+(load-file (expand-file-name "config/core/functions.el" user-emacs-directory))
+(load-file (expand-file-name "config/core/packages.el" user-emacs-directory))
 
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
@@ -64,4 +59,5 @@
 
 (run-with-idle-timer 1 nil ;; TODO: ?
                      (lambda () (async-bytecomp-package-mode 1)))
+
 (provide 'core)

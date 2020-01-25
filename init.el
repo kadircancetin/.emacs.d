@@ -16,9 +16,13 @@
   "There is some minor packages which could be used with helm.")
 
 (add-to-list 'load-path "~/.emacs.d/config/core")
+(add-to-list 'load-path "~/.emacs.d/config/core-extra")
 (add-to-list 'load-path "~/.emacs.d/config/binds")
+
+
 (require 'core)
 (require 'binds)
+(require 'core-extra)
 
 
 (if (file-exists-p config-el)

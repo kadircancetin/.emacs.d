@@ -130,7 +130,28 @@
   :defer 2
   :commands (yas-insert-snippet yas-insert-snippet)
   :config
+  (use-package yasnippet-snippets   :defer nil)
   (yas-global-mode))
 
 
-(use-package yasnippet-snippets)
+(use-package auto-highlight-symbol
+  :defer t
+  :init
+  (add-hook 'prog-mode-hook 'auto-highlight-symbol-mode)
+  :config
+  (progn
+    (set-face-attribute 'ahs-plugin-defalt-face nil
+                        :underline t :weight 'bold :background nil :foreground nil)
+    (set-face-attribute 'ahs-definition-face nil
+                        :underline t :weight 'bold :background nil :foreground nil)
+    (set-face-attribute 'ahs-face nil
+                        :underline t :weight 'bold :background nil :foreground nil)
+    (set-face-attribute 'ahs-plugin-whole-buffer-face nil
+                        :underline t :weight 'bold :background nil :foreground nil)
+    (setq ahs-case-fold-search nil
+          ahs-default-range 'ahs-range-display
+          ahs-idle-interval 0.2
+          ahs-inhibit-face-list nil)
+    (setq ahs-idle-timer
+          (run-with-idle-timer ahs-idle-interval t
+                               'ahs-idle-function))))

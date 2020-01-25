@@ -224,35 +224,6 @@
        (add-hook 'mhtml-mode 'web-mode)
        (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
    #+END_SRC
-** mwim and better default moveing
-   Better C-a, C-e, C-w defaults.
-   #+BEGIN_SRC emacs-lisp
-     (defun spacemacs/backward-kill-word-or-region (&optional arg)
-       "Calls `kill-region' when a region is active and
-     `backward-kill-word' otherwise. ARG is passed to
-     `backward-kill-word' if no region is active."
-       (interactive "p")
-       (if (region-active-p)
-           ;; call interactively so kill-region handles rectangular selection
-           ;; correctly (see https://github.com/syl20bnr/spacemacs/issues/3278)
-           (call-interactively #'kill-region)
-         (backward-kill-word arg)))
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package mwim
-       :bind (("C-a" . mwim-beginning-of-code-or-line)
-              ("C-e" . mwim-end-of-line-or-code)
-              ("C-w" . spacemacs/backward-kill-word-or-region)))
-   #+END_SRC
-** expand-region mode
-   #+BEGIN_SRC emacs-lisp
-     (use-package expand-region
-       :init
-       (setq expand-region-fast-keys-enabled   nil
-             expand-region-subword-enabled     t)
-       :bind (("C-t" . er/expand-region)))
-   #+END_SRC
 ** Magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
@@ -421,25 +392,6 @@
           (global-so-long-mode 1)
           (add-hook 'so-long-hook (lambda() (toggle-truncate-lines))))))
    #+END_SRC
-** disabled packages
-   This packages
-*** Which-key
-    I use which key defaultly false but sometimes I need it.
-    #+BEGIN_SRC emacs-lisp
-      (use-package which-key
-        :config
-        (which-key-setup-side-window-bottom)
-        (setq which-key-idle-delay 0.01))
-      ;; (use-package which-key)
-    #+END_SRC
-
-*** google translate
-    #+BEGIN_SRC emacs-lisp
-      (use-package google-translate
-        :config
-        (setq google-translate-default-source-language "auto"
-              google-translate-default-target-language "tr"))
-    #+END_SRC
 ** shell-pop
    #+BEGIN_SRC emacs-lisp
      (use-package shell-pop
@@ -489,43 +441,6 @@
 
   #+END_SRC
 * Experimental
-** yassnippet
-   #+BEGIN_SRC emacs-lisp
-     (use-package yasnippet
-       :bind
-       (("C-ş" . yas-insert-snippet)
-        ("M-ş" . yas-insert-snippet))
-       :config
-       (yas-global-mode))
-
-     (use-package yasnippet-snippets)
-   #+END_SRC
-** autho highlight
-   Will activate by major modes.
-   #+BEGIN_SRC emacs-lisp
-     (add-hook 'emacs-lisp-mode-hook 'auto-highlight-symbol-mode)
-     (add-hook 'python-mode-hook 'auto-highlight-symbol-mode)
-     (use-package auto-highlight-symbol
-       :defer t
-       :config
-       (progn
-         (set-face-attribute 'ahs-plugin-defalt-face nil
-                             :underline t :weight 'bold :background nil :foreground nil)
-         (set-face-attribute 'ahs-definition-face nil
-                             :underline t :weight 'bold :background nil :foreground nil)
-         (set-face-attribute 'ahs-face nil
-                             :underline t :weight 'bold :background nil :foreground nil)
-         (set-face-attribute 'ahs-plugin-whole-buffer-face nil
-                             :underline t :weight 'bold :background nil :foreground nil)
-         (setq ahs-case-fold-search nil
-               ahs-default-range 'ahs-range-display
-               ahs-idle-interval 0.2
-               ahs-inhibit-face-list nil)
-         (setq ahs-idle-timer
-               (run-with-idle-timer ahs-idle-interval t
-                                    'ahs-idle-function))))
-
-   #+END_SRC
 ** other experimentals
    Make dired with icons. I don't understant that i like or not but it
    could be stant in experimental for just now.
