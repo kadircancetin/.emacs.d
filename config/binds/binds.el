@@ -66,8 +66,18 @@
    ("C-ş" . yas-insert-snippet)
    ("M-ş" . yas-insert-snippet)
 
+   ;; hide
    ("M-t" . hs-toggle-hiding)
    ("C-c M-t" . kadir/hide-fold-defs)
+
+   ;; bm
+   ("C-x C-m" . bm-toggle)
+   ("C-x C-n" . bm-next)
+   ("C-x C-p" . bm-previous)
+   ("C-x C-a" . helm-bm)
+
+   ;; magit
+   ("C-x g" . magit-status)
    )
  )
 

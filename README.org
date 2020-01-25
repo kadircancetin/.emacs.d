@@ -1,5 +1,4 @@
-* m
-** Eshell
+* Eshell
    #+BEGIN_SRC emacs-lisp
      (defun eshell/clear ()
        "Clear the eshell buffer. Type clear on eshell"
@@ -98,11 +97,6 @@
   =org-indent-mode= is very good mode but I use it whith =#+STARTUP:
   indent= when I want to.
   #+BEGIN_SRC emacs-lisp
-    (use-package toc-org
-      :defer 5
-      :config
-      (add-hook 'org-mode-hook 'toc-org-mode))
-
     (use-package org
       :bind
       (:map org-mode-map
@@ -224,28 +218,6 @@
        (add-hook 'mhtml-mode 'web-mode)
        (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
    #+END_SRC
-** Magit
-   #+BEGIN_SRC emacs-lisp
-     (use-package magit
-       :bind (("C-x g" . magit-status)
-              (:map magit-status-mode-map
-                    (("C-x 4 C-m" . magit-diff-visit-file-other-window))
-                    ))
-       :config
-       (use-package magit-todos :init (magit-todos-mode 1)))
-   #+END_SRC
-** Projectile
-   Projectile is powerfull tool. I use it just for find in projectile directly.
-   #+BEGIN_SRC emacs-lisp
-     (use-package projectile
-       :defer 1
-       :config
-       (projectile-mode 1)         ; son projeleri hatırlamada işe yaramazsa sil geç
-       )
-
-     (use-package helm-projectile
-       :bind (("C-x f" . helm-projectile)))
-   #+END_SRC
 ** Wakatime
    I like statistics.
    #+BEGIN_SRC emacs-lisp
@@ -306,71 +278,6 @@
        (vhl/install-extension 'undo-tree))
    #+END_SRC
 
-** lsp-mode
-   - [ ] TODO: nested yerine =:after= ile kodlanacak
-     https://github.com/jwiegley/use-package/issues/453
-   - Just using for js. This block could be run when on js mode opening
-   for the reduce startup time.
-   #+BEGIN_SRC emacs-lisp
-     (use-package lsp-mode
-       :config
-       (setq  lsp-enable-snippet nil
-              lsp-prefer-flymake nil)
-       (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-       (use-package flycheck
-         )
-       (flymake-mode 0)
-       (flycheck-mode 1)
-       (use-package lsp-ui
-         :requires lsp-mode flycheck
-         :init
-         (setq lsp-ui-doc-enable t
-               lsp-ui-doc-use-childframe t
-               lsp-ui-doc-position 'top
-               lsp-ui-doc-include-signature t
-               lsp-ui-sideline-enable nil
-               lsp-ui-flycheck-enable t
-               lsp-ui-flycheck-list-position 'right
-               lsp-ui-flycheck-live-reporting nil  ; daha az sıklıkla flycheck
-               lsp-ui-peek-enable t
-               lsp-ui-peek-list-width 60
-               lsp-ui-peek-peek-height 25))
-       (use-package company-lsp
-         :requires company
-         :config
-         (push 'company-lsp company-backends)))
-   #+END_SRC
-** Dashboard
-   #+BEGIN_SRC emacs-lisp
-     (use-package dashboard
-       :init
-       (setq dashboard-banner-logo-title   nil
-             dashboard-center-content      t
-             ;; dashboard-set-heading-icons t
-             dashboard-set-file-icons t
-             dashboard-startup-banner      'logo
-             dashboard-set-navigator    t
-             dashboard-set-init-info       t
-             dashboard-set-footer          nil
-             )
-       ;; Format: "(icon title help action face prefix suffix)"
-       (setq dashboard-navigator-buttons
-             `(;; line1
-               (
-                (,nil
-                 "Agenda"
-                 "Agenda"
-                 (lambda (&rest _) (org-agenda)))
-                )
-               (("EMACS HELP" "" "?/h" (lambda (&rest _) (info "emacs")) nil "<" ">"))
-               ))
-       (setq dashboard-items '((recents  . 5)
-                               (bookmarks . 10)
-                               (registers . 5)))
-       (dashboard-setup-startup-hook)
-       )
-   #+END_SRC
-
 ** so-long mode
    =so-long= is a new very primitive emacs internal package that
    handle long files. When the long files opens, so-long major mode
@@ -391,14 +298,6 @@
         (progn
           (global-so-long-mode 1)
           (add-hook 'so-long-hook (lambda() (toggle-truncate-lines))))))
-   #+END_SRC
-** shell-pop
-   #+BEGIN_SRC emacs-lisp
-     (use-package shell-pop
-       :defer 0.5
-       :init
-       (setq shell-pop-shell-type '("aweshell" "aweshell*" (lambda () (eshell)))
-             shell-pop-window-size 40))
    #+END_SRC
 * Theme and Apperiance
   Highlighting and region select should be has different colors.
@@ -442,31 +341,6 @@
   #+END_SRC
 * Experimental
 ** other experimentals
-   Make dired with icons. I don't understant that i like or not but it
-   could be stant in experimental for just now.
-   #+BEGIN_SRC emacs-lisp
-     ;; (use-package all-the-icons-dired
-     ;;   :hook (dired-mode . all-the-icons-dired-mode))
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package bm
-       :bind (("C-x C-m" . bm-toggle)
-              ("C-x C-n" . bm-next)
-              ("C-x C-p" . bm-previous)))
-
-     (use-package helm-bm
-       :bind (("C-x C-a" . helm-bm)))
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package dumb-jump
-       :init
-       (setq dumb-jump-prefer-searcher 'rg
-             dumb-jump-force-searcher  'rg
-             dumb-jump-selector 'helm))
-   #+END_SRC
-
    #+BEGIN_SRC emacs-lisp
      ;; (use-package better-jumper
      ;;   :defer 1

@@ -126,18 +126,11 @@
   )
 
 
-(use-package yasnippet
-  :defer 2
-  :commands (yas-insert-snippet yas-insert-snippet)
-  :config
-  (use-package yasnippet-snippets   :defer nil)
-  (yas-global-mode))
-
-
 (use-package auto-highlight-symbol
   :defer t
   :init
-  (add-hook 'prog-mode-hook 'auto-highlight-symbol-mode)
+  (add-hook 'emacs-lisp-mode-hook 'auto-highlight-symbol-mode)
+  (add-hook 'python-mode-hook 'auto-highlight-symbol-mode)
   :config
   (progn
     (set-face-attribute 'ahs-plugin-defalt-face nil
