@@ -1,4 +1,5 @@
 (load-file (expand-file-name "config/core-extra/packages.el" user-emacs-directory))
+(load-file (expand-file-name "config/core-extra/functions.el" user-emacs-directory))
 
 (if (and (executable-find "wakatime") (file-exists-p "~/.wakatime.cfg"))
     (use-package wakatime-mode

@@ -36,7 +36,7 @@
      (global-page-break-lines-mode 1) ; ^L to visual line
      (global-prettify-symbols-mode 1) ; lambda to cool lambda character
      (global-auto-revert-mode 1)      ; auto revert
-     (savehist-mode 1)
+     (savehist-mode 1)                ; saving hist for helm
      (global-auto-composition-mode 1))))
 
 

@@ -1,13 +1,3 @@
-(defun kadir/helm-do-ag-project-root-or-current-dir ()
-  ;; source: https://github.com/KaratasFurkan/.emacs.d
-  ;; TODO: bind key
-  "If in a project call `helm-do-ag-project-root', else call
-     `helm-do-ag' with current directory."
-  (interactive)
-  (if (projectile-project-p)
-      (helm-do-ag-project-root)
-    (helm-do-ag default-directory)))
-
 (defun kadir/find-config ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
   "Open config file. (probably this file)"

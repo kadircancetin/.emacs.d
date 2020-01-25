@@ -22,11 +22,6 @@
 ;; short yes no question when emacs ask
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; emacs frame name from projectile.
-;;FIXME: could be problem on the first run the settings.
-(setq frame-title-format'
-      '((:eval (projectile-project-name))))
-
 ;; smooth scrooling
 ;; (setq scroll-step 1)
 ;; (setq scroll-conservatively 10000)

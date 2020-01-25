@@ -13,22 +13,22 @@
 
 
 
-(add-hook 'org-mode-hook (lambda ()
-                           "Beautify Org Checkbox Symbol"
-                           (push '("[ ]" .  "☐") prettify-symbols-alist)
-                           (push '("[X]" . "☑" ) prettify-symbols-alist)
-                           (push '("[-]" . "❍" ) prettify-symbols-alist)
-                           (prettify-symbols-mode)))
+;;;;;;;;;;;;;;;;;;;
 
-(defface org-checkbox-done-text
-  '((t (:foreground "#71696A" :strike-through t)))
-  "Face for the text part of a checked org-mode checkbox.")
-
-(font-lock-add-keywords
- 'org-mode
- `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)"
-    1 'org-checkbox-done-text prepend))
- 'append)
+(use-package doom-modeline
+  :defer 0.1
+  :config
+  (setq doom-modeline-bar-width       1
+        doom-modeline-height            1
+        doom-modeline-buffer-encoding   nil
+        ;; doom-modeline-buffer-modification-icon t
+        doom-modeline-vcs-max-length    20
+        doom-modeline-icon              t
+        ;; relative-to-project
+        doom-modeline-buffer-file-name-style 'relative-from-project)
+  (set-face-attribute 'mode-line nil :height 80)
+  (set-face-attribute 'mode-line-inactive nil :height 80)
+  (doom-modeline-mode 1))
 
 
 (provide 'k_theme)

@@ -17,6 +17,7 @@
 (add-to-list 'load-path "~/.emacs.d/config/k_rest")
 (add-to-list 'load-path "~/.emacs.d/config/k_theme")
 (add-to-list 'load-path "~/.emacs.d/config/k_colors")
+(add-to-list 'load-path "~/.emacs.d/config/k_elisp")
 
 
 (require 'core)
@@ -30,8 +31,9 @@
 (require 'k_rest)
 (require 'k_theme)
 (require 'k_colors)
+(require 'k_elisp)
 
 (if (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
     (progn
-      ;;(load-file (expand-file-name "experimental.el" user-emacs-directory))
+      ;; (load-file (expand-file-name "experimental.el" user-emacs-directory))
       (message "EXPERIMENTAL EL LOADED")))

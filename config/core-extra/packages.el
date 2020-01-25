@@ -105,11 +105,41 @@
   (yas-global-mode))
 
 
+(use-package ace-window
+  :defer t
+  :init
+  (setq aw-keys '(?a ?s ?n ?o ?p ?f ?p ?k ?l)
+        aw-scope 'frame))
 
 
+(use-package wrap-region
+  :defer 1
+  :config
+  (wrap-region-add-wrapper "<>" "</>" "#" 'rjsx-mode)
+  (wrap-region-add-wrapper "#+begin_src emacs-lisp\n  " "\n#+end_src" "*" 'org-mode)
+  (wrap-region-add-wrapper "=" "=" "=" 'org-mode)
+  (wrap-region-global-mode t))
 
 
+(use-package helm-ag
+  :config (setq
+           helm-ag-base-command
+           "rg -S --no-heading --color=never --line-number --max-columns 200"))
+(use-package helm-rg
+  :init (setq helm-rg-default-directory 'git-root
+              helm-rg--extra-args '("--max-columns" "200")
+              helm-rg-input-min-search-chars 1))
+(use-package deadgrep)
 
 
+(use-package anzu ; TODO: anzu mode ve isearch yarı fuzzy olunca eşleşmiyor
+  :defer 1
+  :config
+  (global-anzu-mode 1))
+
 
 
+(use-package eglot
+  :bind
+  (:map eglot-mode-map("C-c DEL" . 'eglot-help-at-point))  ; TODO: change keybind
+  )
