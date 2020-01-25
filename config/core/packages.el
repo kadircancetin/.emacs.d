@@ -148,3 +148,31 @@
     (setq ahs-idle-timer
           (run-with-idle-timer ahs-idle-interval t
                                'ahs-idle-function))))
+
+
+(use-package company
+  :defer 0.8
+  :bind ((:map company-active-map
+               ([return] . nil)
+               ("RET" . nil)
+               ("TAB" . company-complete-selection)
+               ("<tab>" . company-complete-selection)
+               ("C-n" . company-select-next)
+               ("C-p" . company-select-previous))
+         (:map company-mode-map ("C-." . helm-company)))
+  :config
+  (global-company-mode 1)
+  (setq company-idle-delay         0.05
+        company-dabbrev-downcase   0.05
+        company-minimum-prefix-length 1
+        ;; company-echo-delay 0                ; remove annoying blinking
+        company-tooltip-align-annotations 't)
+  (use-package helm-company))
+
+(use-package company-quickhelp
+  :after (company)
+  :init
+  (company-quickhelp-mode)
+  (setq company-quickhelp-max-lines 20
+        company-quickhelp-delay     nil)
+  :bind (:map company-active-map ("M-h" . company-quickhelp-manual-begin)))

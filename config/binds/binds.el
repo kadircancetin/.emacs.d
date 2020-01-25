@@ -18,7 +18,7 @@
    ("C-e"             . mwim-end-of-line-or-code)
    ("/"               . kadir/comment-or-self-insert)
    ("C-t"             . er/expand-region)
-   ( "C-c C-t" . hs-toggle-hiding)
+   ( "C-c C-t"        . hs-toggle-hiding)
 
    ;; MC
    ("C-M-n"           . mc/mark-next-like-this)
@@ -63,21 +63,21 @@
    ("C-_"             . undo-tree-undo)
 
    ;; YAS
-   ("C-ş" . yas-insert-snippet)
-   ("M-ş" . yas-insert-snippet)
+   ("C-ş"             . yas-insert-snippet)
+   ("M-ş"             . yas-insert-snippet)
 
    ;; hide
-   ("M-t" . hs-toggle-hiding)
-   ("C-c M-t" . kadir/hide-fold-defs)
+   ("M-t"             . hs-toggle-hiding)
+   ("C-c M-t"         . kadir/hide-fold-defs)
 
    ;; bm
-   ("C-x C-m" . bm-toggle)
-   ("C-x C-n" . bm-next)
-   ("C-x C-p" . bm-previous)
-   ("C-x C-a" . helm-bm)
+   ("C-x C-m"         . bm-toggle)
+   ("C-x C-n"         . bm-next)
+   ("C-x C-p"         . bm-previous)
+   ("C-x C-a"         . helm-bm)
 
    ;; magit
-   ("C-x g" . magit-status)
+   ("C-x g"           . magit-status)
    )
  )
 
