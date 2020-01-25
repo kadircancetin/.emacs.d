@@ -12,6 +12,14 @@
 
 (defun emacs_start__with_tangled() (load-file config-el))
 
+(defvar kadir/helm-extras t
+  "There is some minor packages which could be used with helm.")
+
+(add-to-list 'load-path "~/.emacs.d/config/core")
+(add-to-list 'load-path "~/.emacs.d/config/binds")
+(require 'core)
+(require 'binds)
+
 
 (if (file-exists-p config-el)
     (if (file-newer-than-file-p config-org config-el)
