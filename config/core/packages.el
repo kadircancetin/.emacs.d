@@ -100,8 +100,6 @@
                                         (rx "*Minibuf")))
   (setq  helm-ff-search-library-in-sexp        t
          helm-echo-input-in-header-line        t
-         helm-M-x-always-save-history          t
-         helm-M-x-input-history                t
          ;; helm-completion-style                 'helm-fuzzy
          helm-completion-style                  '(basic flex)
          helm-buffers-fuzzy-matching           t

@@ -22,6 +22,8 @@
 (use-package benchmark-init :ensure t :defer t) ;; TODO: delete or more logical things
 
 
+(savehist-mode 1)
+
 (run-with-idle-timer
  0.15 nil  ;; defer
  (lambda ()
@@ -36,8 +38,8 @@
      (global-page-break-lines-mode 1) ; ^L to visual line
      (global-prettify-symbols-mode 1) ; lambda to cool lambda character
      (global-auto-revert-mode 1)      ; auto revert
-     (savehist-mode 1)                ; saving hist for helm
      (global-auto-composition-mode 1))))
+
 
 
 (load-file (expand-file-name "config/core/settings.el" user-emacs-directory))

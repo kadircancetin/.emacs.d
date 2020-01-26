@@ -59,3 +59,21 @@
               version-control t      ; Use version numbers on backups,
               kept-new-versions 5    ; keep some new versions
               kept-old-versions 2)   ; and some old ones, too
+
+
+
+(setq history-length t)
+(setq history-delete-duplicates t)
+(setq savehist-additional-variables
+                    '(savehist-minibuffer-history-variables
+                      helm-M-x-input-history
+                      helm-grep-history
+                      minibuffer-history
+                      file-name-history
+                      mark-ring
+                      extended-command-history
+                      kill-ring
+                      search-ring
+                      regexp-search-ring
+                      compile-history
+                      command-history))
