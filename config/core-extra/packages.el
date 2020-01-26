@@ -181,5 +181,7 @@
   :config
   (use-package magit-todos
     :defer nil
-    :init (magit-todos-mode 1)))
+    :init
+    (magit-todos-mode 1)
+    (magit-todos-branch-list-toggle)))
 

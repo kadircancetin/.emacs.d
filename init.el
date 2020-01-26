@@ -23,6 +23,7 @@
 (require 'k_rest)
 (require 'k_colors)
 (require 'k_elisp)
+(require 'k_java)
 
 (require 'k_theme)
 (require 'binds)
