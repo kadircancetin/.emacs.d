@@ -11,6 +11,37 @@
         (global-set-key (kbd key) value)))
 
 
+(bind-keys
+ :prefix-map kadir/custom
+ :prefix "ö"
+ ("ö"                 . (lambda()(interactive)(insert "ö")))
+ ("l"                 . goto-last-change)
+ ("r"                 . helm-rg)
+ ("a"                 . kadir/helm-do-ag-project-root-or-current-dir)
+ ("t"                 . hs-toggle-hiding)
+ ("y"                 . yas-insert-snippet)
+ ("d"                 . deadgrep))
+
+(bind-keys
+ :prefix-map kadir/window
+ :prefix "öw"
+ ("s"                 . ace-swap-window))
+
+(bind-keys
+ :prefix-map kadir/helm
+ :prefix "öh"
+ ("a"                 . helm-apropos))
+
+(bind-keys
+ :prefix-map kadir/bookmark
+ :prefix "öb"
+ ("t"                 . bm-toggle)
+ ("b"                 . bm-toggle)
+ ("n"                 . bm-next)
+ ("p"                 . bm-previous)
+ ("a"                 . helm-bm))
+
+
 (kadir/bind
  '(;; editing
    ("C-w"             . spacemacs/backward-kill-word-or-region)
@@ -18,8 +49,8 @@
    ("C-e"             . mwim-end-of-line-or-code)
    ("/"               . kadir/comment-or-self-insert)
    ("C-t"             . er/expand-region)
-   ( "C-c C-t"        . hs-toggle-hiding)
-
+   ("C-M-SPC"         . goto-last-change)
+   
    ;; MC
    ("C-M-n"           . mc/mark-next-like-this)
    ("C-M-p"           . mc/mark-previous-like-this)
@@ -36,9 +67,8 @@
    ("M-ı"             . (lambda() (interactive) (indent-region (point-min) (point-max))))
    ("C-x 2"           . kadir/split-and-follow-horizontally)
    ("C-x 3"           . kadir/split-and-follow-vertically)
-   ("C-x w s"         . ace-swap-window)
    ("C-x o"           . ace-window)
-   ("M-<SPC>"         . kadir/last-buffer )
+   ("M-<SPC>"         . kadir/last-buffer)
 
    ;; shortcuts
    ("C-x c"           . kadir/find-config)
@@ -49,8 +79,8 @@
    ("M-x"             . helm-M-x)
    ("C-x b"           . helm-buffers-list)
    ("C-x C-f"         . helm-find-files)
-   ("C-x i"           . helm-imenu-all-buffer)
-   ("C-x C-i"         . helm-imenu)
+   ;; ("C-x i"           . helm-imenu-all-buffer)
+   ;; ("C-x C-i"         . helm-imenu)
    ("M-y"             . helm-show-kill-ring)
    ("C-x f"           . helm-projectile)
 
@@ -62,14 +92,6 @@
    ("M-_"             . undo-tree-redo)
    ("C-_"             . undo-tree-undo)
 
-   ;; YAS
-   ("C-ş"             . yas-insert-snippet)
-   ("M-ş"             . yas-insert-snippet)
-
-   ;; hide
-   ("M-t"             . hs-toggle-hiding)
-   ("C-c M-t"         . kadir/hide-fold-defs)
-
    ;; bm
    ("C-x C-m"         . bm-toggle)
    ("C-x C-n"         . bm-next)
@@ -80,7 +102,7 @@
    ("C-x g"           . magit-status)
 
    ;; treemacs
-   ("M-0"       . treemacs)
+   ("M-0"             . treemacs)
    )
  )
 
