@@ -1,5 +1,6 @@
 (use-package multiple-cursors)
 (use-package mwim)
+(use-package goto-chg)
 
 
 (use-package undo-tree
@@ -23,8 +24,6 @@
   (add-to-list 'shackle-rules '(help-mode :align t :size 0.4 :select t)))
 
 
-
-
 (use-package auto-highlight-symbol
   :defer t
   :config

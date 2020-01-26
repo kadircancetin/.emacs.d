@@ -1,7 +1,7 @@
-(if (version< emacs-version "27")
-    ;; early-init.el comes from emacs 27. so if your emacs older than,
-    ;; we need to load it by regular way
-    (load-file (expand-file-name "early-init.el" user-emacs-directory)))
+(when (version< emacs-version "27")
+  ;; early-init.el comes from emacs 27. so if your emacs older than, we need to load it by
+  ;; regular way
+  (load-file (expand-file-name "early-init.el" user-emacs-directory)))
 
 (defvar kadir/helm-extras nil
   "There is some packages which could be used with helm but not necassary.")
@@ -28,7 +28,6 @@
 (require 'k_theme)
 (require 'binds)
 
-(if (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
-    (progn
-      (load-file (expand-file-name "experimental.el" user-emacs-directory))
-      (message "EXPERIMENTAL EL LOADED")))
+(when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
+  (load-file (expand-file-name "experimental.el" user-emacs-directory))
+  (message "EXPERIMENTAL EL LOADED"))
