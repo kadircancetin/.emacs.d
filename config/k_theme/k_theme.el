@@ -1,5 +1,16 @@
-(set-face-attribute 'highlight nil
-                    :underline t :weight 'bold :background nil :foreground nil)
+(defun kadir/lsp-set-colors()
+  (set-face-attribute 'highlight nil
+                      :underline t :weight 'bold :background nil :foreground nil)
+  (set-face-attribute 'lsp-face-highlight-read nil
+                      :underline t :weight 'bold :background nil :foreground nil)
+  (set-face-attribute 'lsp-face-highlight-write nil
+                      :underline t :weight 'bold :background nil :foreground nil)
+  (set-face-attribute 'lsp-face-highlight-textual nil
+                      :underline t :weight 'bold :background nil :foreground nil)
+  ;; (set-face-attribute 'rjsx-tag nil
+  ;;                     :underline nil :weight 'normal :background nil :foreground nil)
+  )
+
 
 
 (if window-system

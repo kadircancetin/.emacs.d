@@ -121,12 +121,15 @@
 
 
 (use-package eglot
+  ;; :config
+  ;; (add-to-list 'eglot-server-programs '((js-mode) "typescript-language-server" "--stdio"))
   :bind
   (:map eglot-mode-map("C-c DEL" . 'eglot-help-at-point)))  ; TODO: change keybind
 
 
 (use-package lsp-mode
   :config
+  (kadir/lsp-set-colors)
   (setq  lsp-enable-snippet nil
          lsp-prefer-flymake nil)
   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
@@ -180,4 +183,3 @@
     :defer nil
     :init (magit-todos-mode 1)))
 
-

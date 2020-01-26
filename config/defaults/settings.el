@@ -44,7 +44,7 @@
 
 (setq hs-isearch-open t)
 
-(setq completion-styles '(basic flex))
+;; (setq completion-styles '(basic flex))
 
 
 ;; back up

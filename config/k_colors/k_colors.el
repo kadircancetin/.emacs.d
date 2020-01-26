@@ -24,7 +24,9 @@
 (use-package color-identifiers-mode
   :defer 1
   :config
-  (add-hook 'prog-mode-hook #'global-color-identifiers-mode))
+  ;; NOTE: move theese to modules
+  (add-hook 'python-mode-hook #'global-color-identifiers-mode))
+
 (use-package beacon
   :defer 1
   :config
