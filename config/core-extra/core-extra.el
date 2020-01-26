@@ -19,12 +19,12 @@
              :url "https://raw.githubusercontent.com/emacs-mirror/emacs/master/lisp/so-long.el"
              :upgrade nil))
   (package-install 'use-package))
+
 (run-with-idle-timer
- 2 nil
- (lambda()
-   (progn
-     (global-so-long-mode 1)
-     (add-hook 'so-long-hook (lambda() (toggle-truncate-lines))))))
+ 2 nil (lambda()
+         (progn
+           (global-so-long-mode 1)
+           (add-hook 'so-long-hook (lambda() (toggle-truncate-lines))))))
 
 
 (provide 'core-extra)

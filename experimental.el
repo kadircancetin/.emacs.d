@@ -39,6 +39,7 @@
   (bind-keys :map dired-mode-map
              ("i" . dired-subtree-insert)
              (";" . dired-subtree-remove)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tree macs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

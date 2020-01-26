@@ -30,5 +30,25 @@
   (set-face-attribute 'mode-line-inactive nil :height 80)
   (doom-modeline-mode 1))
 
+
+
+(defun kadir/ahs-set-colors()
+  (set-face-attribute 'ahs-plugin-defalt-face nil
+                      :underline t :weight 'bold :background nil :foreground nil)
+  (set-face-attribute 'ahs-definition-face nil
+                      :underline t :weight 'bold :background nil :foreground nil)
+  (set-face-attribute 'ahs-face nil
+                      :underline t :weight 'bold :background nil :foreground nil)
+  (set-face-attribute 'ahs-plugin-whole-buffer-face nil
+                      :underline t :weight 'bold :background nil :foreground nil)
+  )
+
+
+(use-package stripe-buffer
+  :config
+  (set-face-attribute 'stripe-highlight nil :background "#333335")
+
+  :hook ((org-mode . turn-on-stripe-table-mode)
+         (dired-mode-hook stripe-listify-buffer)))
 
 (provide 'k_theme)
