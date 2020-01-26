@@ -1,3 +1,7 @@
+;; default emacs settings
+
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 ;; cleaning init.el (another file for custom-set-variables etc.)
 (setq-default custom-file (concat user-emacs-directory "custom.el"))
 ;; (load-file  (concat user-emacs-directory "custom.el"))
@@ -27,21 +31,24 @@
 ;; (setq scroll-conservatively 10000)
 ;; (setq auto-window-vscroll nil)
 (setq-default dired-listing-switches "-lha") ; make dired human readble
+
 (setq-default indent-tabs-mode nil       ; space instead of tabs
               tab-width 4                ; 4 space for tab
               show-trailing-whitespace nil) ; showing empty whitespaces
 
 (setq-default whitespace-newline -1 whitespace-line -1 whitespace-trailing -1)
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
 
 (setq-default max-mini-window-height   1
               resize-mini-windows      nil
               message-truncate-lines   t)  ; set and try to force mini buffer should be mini
 
 (setq hs-isearch-open t)
+
+(setq completion-styles '(basic flex))
+
 
 ;; back up
+
 ;; source: https://emacs.stackexchange.com/questions/33/put-all-backups-into-one-backup-folder
 (let ((backup-dir "~/emacs/backups")
       (auto-saves-dir "~/emacs/auto-saves/"))
@@ -62,6 +69,8 @@
 
 
 
+;; persistant history
+
 (setq history-length t)
 (setq history-delete-duplicates t)
 (setq savehist-additional-variables

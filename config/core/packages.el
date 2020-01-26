@@ -100,8 +100,7 @@
                                         (rx "*Minibuf")))
   (setq  helm-ff-search-library-in-sexp        t
          helm-echo-input-in-header-line        t
-         ;; helm-completion-style                 'helm-fuzzy
-         helm-completion-style                  '(basic flex)
+         ;; helm-completion-style                  '(basic flex)
          helm-buffers-fuzzy-matching           t
          helm-candidate-number-limit           500
          helm-display-function                 'pop-to-buffer)
