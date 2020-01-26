@@ -78,6 +78,9 @@
 
    ;; magit
    ("C-x g"           . magit-status)
+
+   ;; treemacs
+   ("M-0"       . treemacs)
    )
  )
 

@@ -65,9 +65,6 @@
        (treemacs-git-mode 'deferred))
       (`(t . _)
        (treemacs-git-mode 'simple))))
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs))
 
   ;; (add-hook 'treemacs-mode-hook (lambda ()
   ;;                                 (setq buffer-face-mode-face `(:background "#211C1C"))

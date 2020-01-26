@@ -1,3 +1,10 @@
+(defun eshell/clear ()
+  "Clear the eshell buffer. Type clear on eshell"
+  ;; source: https://emacs.stackexchange.com/questions/12503/how-to-clear-the-eshell
+  (let ((inhibit-read-only t))
+    (erase-buffer)
+    (eshell-send-input)))
+
 (defun kadir/find-config ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
   "Open config file. (probably this file)"

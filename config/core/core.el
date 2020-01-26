@@ -47,7 +47,6 @@
 
 ;; settings and packages which important and used for all the major modes
 (load-file (expand-file-name "config/core/functions.el" user-emacs-directory))
-(load-file (expand-file-name "config/core/packages.el" user-emacs-directory))
 
 
 (add-hook 'before-save-hook 'whitespace-cleanup)

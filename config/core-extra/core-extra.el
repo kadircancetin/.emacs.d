@@ -2,6 +2,7 @@
 (load-file (expand-file-name "config/core-extra/functions.el" user-emacs-directory))
 
 (if (and (executable-find "wakatime") (file-exists-p "~/.wakatime.cfg"))
+    ;; TODO: whith use package
     (use-package wakatime-mode
       :defer 5
       :config
@@ -25,13 +26,5 @@
      (global-so-long-mode 1)
      (add-hook 'so-long-hook (lambda() (toggle-truncate-lines))))))
 
-
-
-(defun eshell/clear ()
-  "Clear the eshell buffer. Type clear on eshell"
-  ;; source: https://emacs.stackexchange.com/questions/12503/how-to-clear-the-eshell
-  (let ((inhibit-read-only t))
-    (erase-buffer)
-    (eshell-send-input)))
 
 (provide 'core-extra)
