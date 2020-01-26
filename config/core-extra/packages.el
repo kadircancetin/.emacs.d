@@ -27,9 +27,6 @@
 
 (use-package auto-highlight-symbol
   :defer t
-  :init
-  (add-hook 'emacs-lisp-mode-hook 'auto-highlight-symbol-mode)
-  (add-hook 'python-mode-hook 'auto-highlight-symbol-mode)
   :config
   (kadir/ahs-set-colors)
   (setq ahs-case-fold-search nil

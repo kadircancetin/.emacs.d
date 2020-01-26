@@ -1,3 +1,5 @@
+(add-hook 'emacs-lisp-mode-hook 'auto-highlight-symbol-mode)
+
 (use-package elisp-slime-nav
   :commands (elisp-slime-nav-find-elisp-thing-at-point)
   :bind (:map emacs-lisp-mode-map

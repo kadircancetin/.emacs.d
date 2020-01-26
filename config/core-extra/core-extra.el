@@ -9,7 +9,7 @@
       (add-hook 'prog-mode-hook 'wakatime-mode)
       (message "waka activated")))
 
-
+
 
 (use-package quelpa)
 

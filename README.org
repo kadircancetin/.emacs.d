@@ -7,7 +7,6 @@
   - undo tree region undo??
   - rjsx mode auto format buffer.
   - lsp-highlight-read .. facei background ayarlıyor, düzeltilecek.
-  - python activate auto format minor mode
   - org mode capture gibi bişiler.
   - magit todo da exclude etme olayı. bazı dosyalar büyük olunca çok
     fena patlıyor

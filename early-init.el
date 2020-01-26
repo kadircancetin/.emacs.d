@@ -29,7 +29,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(fringe-mode 5)                  ; my laptop screen is not full hd :(
+(fringe-mode 4)                  ; my laptop screen is not full hd :(
 (set-face-attribute 'default nil
                     :family "Source Code Pro" :height 80 :weight 'normal)
 

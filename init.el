@@ -9,6 +9,8 @@
 (let ((default-directory "~/.emacs.d/config"))
   (normal-top-level-add-subdirs-to-load-path))
 
+;; `defaults' configure the defaults settings of the emacs. Like
+;; enabling winner-mode. And install and load the `use-pacage'.
 (require 'defaults)
 (require 'core-extra)
 (require 'extras)
