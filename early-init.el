@@ -9,14 +9,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq load-prefer-newer noninteractive)
 (setq gc-cons-percentage 0.6)
-(setq gc-cons-threshold-original (* 1024 1024 20))
 (setq gc-cons-threshold most-positive-fixnum)
 (setq file-name-handler-alist-original file-name-handler-alist)
 (setq file-name-handler-alist nil)
 (run-with-idle-timer
  1.5 nil
  (lambda ()
-   (setq gc-cons-threshold gc-cons-threshold-original)
+   (setq gc-cons-threshold (* 1024 1024 20))
    (setq file-name-handler-alist file-name-handler-alist-original)
    (makunbound 'gc-cons-threshold-original)
    (makunbound 'file-name-handler-alist-original)

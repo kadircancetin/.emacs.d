@@ -130,12 +130,10 @@
   (setq  lsp-enable-snippet nil
          lsp-prefer-flymake nil)
   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-  (use-package flycheck
-    )
+  (use-package flycheck)
   (flymake-mode 0)
   (flycheck-mode 1)
   (use-package lsp-ui
-    :requires lsp-mode flycheck
     :init
     (setq lsp-ui-doc-enable t
           lsp-ui-doc-use-childframe t
@@ -149,7 +147,6 @@
           lsp-ui-peek-list-width 60
           lsp-ui-peek-peek-height 25))
   (use-package company-lsp
-    :requires company
     :config
     (push 'company-lsp company-backends)))
 

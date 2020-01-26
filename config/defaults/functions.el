@@ -15,7 +15,6 @@
      otherwise (self-insert /)"
   (interactive (if (use-region-p)
                    (list (region-beginning) (region-end))))
-
   (if (region-active-p)
       (comment-or-uncomment-region beg end)
     (self-insert-command 1 ?/)))
@@ -75,7 +74,7 @@
   "Folds the all functions in python"
   (interactive)
   (save-excursion
-    (beginning-of-buffer)
+    (goto-char (point-min))
     (hs-hide-level 2)))
 
 ;; (defun kadir/save-config-async()
