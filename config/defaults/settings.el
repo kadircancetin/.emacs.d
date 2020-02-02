@@ -9,6 +9,9 @@
 (setq-default custom-file (concat user-emacs-directory "custom.el"))
 ;; (load-file  (concat user-emacs-directory "custom.el"))
 
+(setq echo-keystrokes 0.1)
+
+
 (setq auto-revert-interval 2
       auto-revert-check-vc-info t
       global-auto-revert-non-file-buffers t
@@ -17,6 +20,7 @@
 (setq-default ring-bell-function      'ignore ; shutdown rings
               inhibit-startup-message  t      ; disable startup messages
               initial-scratch-message  nil    ; disable startup messages
+              initial-major-mode      'text-mode ; initial buffer text-mode
               mark-ring-max            128    ; increatese mark-ring
               column-number-mode       t      ; show column number on modeline
               default-buffer-file-coding-system 'utf-8-unix
@@ -25,6 +29,20 @@
               require-final-newline    t
               ;; vc-follow-symlinks       t
               )
+
+
+(setq winner-boring-buffers
+      '("*Completions*"
+        "*Compile-Log*"
+        "*inferior-lisp*"
+        "*Fuzzy Completions*"
+        "*Apropos*"
+        "*Help*"
+        "*cvs*"
+        "*Buffer List*"
+        "*Ibuffer*"
+        "*esh command on file*"))
+
 
 ;; short yes no question when emacs ask
 (defalias 'yes-or-no-p 'y-or-n-p)
