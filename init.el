@@ -1,25 +1,41 @@
-(if (version< emacs-version "27")
-    ;; early-init.el comes from emacs 27. so if your emacs older than,
-    ;; we need to load it by regular way
-    (load-file (expand-file-name "early-init.el" user-emacs-directory)))
+(when (version< emacs-version "27")
+  ;; early-init.el comes from emacs 27. so if your emacs older than, we need to load it by
+  ;; regular way
+  (load-file (expand-file-name "early-init.el" user-emacs-directory)))
 
-(defvar config-org (expand-file-name "README.org" user-emacs-directory))
-(defvar config-el (expand-file-name "README.el" user-emacs-directory))
+(defvar kadir/helm-extras nil
+  "There is some packages which could be used with helm but not necassary.")
 
-(defun emacs_start__with_org()
-  (require 'org)
-  (org-babel-load-file (expand-file-name config-org user-emacs-directory)))
+(let ((default-directory "~/.emacs.d/config"))
+  (normal-top-level-add-subdirs-to-load-path))
 
-(defun emacs_start__with_tangled() (load-file config-el))
+;; `defaults' configure the defaults settings of the emacs. Like
+;; enabling winner-mode. And install and load the `use-pacage'.
+(require 'defaults)
 
+(require 'core-extra)
+(require 'extras)
 
-(if (file-exists-p config-el)
-    (if (file-newer-than-file-p config-org config-el)
-        (emacs_start__with_org)
-      (emacs_start__with_tangled))
-  (emacs_start__with_org))
+;; extra big features
+(require 'k_treemacs)
 
-(if (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
-    (progn
-      (load-file (expand-file-name "experimental.el" user-emacs-directory))
-      (message "EXPERIMENTAL EL LOADED")))
+;; programing languages and major modes
+(require 'k_html)
+(require 'k_python)
+(require 'k_js)
+(require 'k_org)
+(require 'k_dotfiles)
+(require 'k_rest)
+(require 'k_colors)
+(require 'k_elisp)
+(require 'k_java)
+
+;; appriance and UI 
+(require 'k_theme)
+
+;; all global bindings
+(require 'binds)
+
+(when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
+  (load-file (expand-file-name "experimental.el" user-emacs-directory))
+  (message "EXPERIMENTAL EL LOADED"))
