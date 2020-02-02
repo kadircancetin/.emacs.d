@@ -13,6 +13,10 @@
 ;; enabling winner-mode. And install and load the `use-pacage'.
 (require 'defaults)
 
+;; appriance and UI 
+(require 'k_theme)
+
+;; additinaol core features (like lsp) and extra packages
 (require 'core-extra)
 (require 'extras)
 
@@ -29,9 +33,6 @@
 (require 'k_colors)
 (require 'k_elisp)
 (require 'k_java)
-
-;; appriance and UI 
-(require 'k_theme)
 
 ;; all global bindings
 (require 'binds)
