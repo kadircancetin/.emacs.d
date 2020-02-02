@@ -64,5 +64,10 @@
   (setq which-key-idle-delay 0.8))
 
 
+(use-package back-button
+  :init
+  (back-button-mode 1))
+
+
 
 (provide 'extras)

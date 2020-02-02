@@ -1,18 +1,7 @@
 (load-file (expand-file-name "config/core-extra/packages.el" user-emacs-directory))
 (load-file (expand-file-name "config/core-extra/functions.el" user-emacs-directory))
 
-(if (and (executable-find "wakatime") (file-exists-p "~/.wakatime.cfg"))
-    ;; TODO: whith use package
-    (use-package wakatime-mode
-      :defer 5
-      :config
-      (add-hook 'prog-mode-hook 'wakatime-mode)
-      (message "waka activated")))
-
-
-
 (use-package quelpa)
-
 (unless (package-installed-p 'so-long)
   (quelpa
    '(so-long :fetcher url

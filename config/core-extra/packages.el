@@ -195,3 +195,20 @@
 
 (use-package sudo-edit
   :commands (sudo-edit))
+
+
+(use-package dired-subtree
+  :after dired
+  :defer nil
+  :config
+  (bind-keys :map dired-mode-map
+             ("i" . dired-subtree-insert)
+             (";" . dired-subtree-remove)))
+
+
+(use-package wakatime-mode
+  :if (executable-find "wakatime")
+  :defer 5
+  :config
+  (add-hook 'prog-mode-hook 'wakatime-mode)
+  (message "waka activated"))

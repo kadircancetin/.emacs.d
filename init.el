@@ -12,9 +12,14 @@
 ;; `defaults' configure the defaults settings of the emacs. Like
 ;; enabling winner-mode. And install and load the `use-pacage'.
 (require 'defaults)
+
 (require 'core-extra)
 (require 'extras)
 
+;; extra big features
+(require 'k_treemacs)
+
+;; programing languages and major modes
 (require 'k_html)
 (require 'k_python)
 (require 'k_js)
@@ -25,9 +30,12 @@
 (require 'k_elisp)
 (require 'k_java)
 
+;; appriance and UI 
 (require 'k_theme)
+
+;; all global bindings
 (require 'binds)
 
 (when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
-  ;;(load-file (expand-file-name "experimental.el" user-emacs-directory))
+  (load-file (expand-file-name "experimental.el" user-emacs-directory))
   (message "EXPERIMENTAL EL LOADED"))
