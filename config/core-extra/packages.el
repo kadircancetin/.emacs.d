@@ -48,6 +48,13 @@
                ("C-p" . company-select-previous))
          (:map company-mode-map ("C-." . helm-company)))
   :config
+  ;; TODO: tabnine güzel hoş ama default companye ek olarak gelmeli,
+  ;; şu anda default companyi eziyor
+
+  ;; documantation: M-x company-tabnine-install-binary
+  ;; (use-package company-tabnine :ensure t)
+  ;; (add-to-list 'company-backends #'company-tabnine)
+  
   (global-company-mode 1)
   (setq company-idle-delay         0.05
         company-dabbrev-downcase   0.05
@@ -55,6 +62,7 @@
         ;; company-echo-delay 0                ; remove annoying blinking
         company-tooltip-align-annotations 't)
   (use-package helm-company))
+
 (use-package company-quickhelp
   :after (company)
   :init

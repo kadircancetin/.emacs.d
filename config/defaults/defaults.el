@@ -39,8 +39,10 @@
  0.15 nil  ;; defer
  (lambda ()
    (progn
+     ;; (display-battery-mode 1)
      (blink-cursor-mode -1)
 
+     (display-time-mode 1)
      (delete-selection-mode 1)      ; writing when ther is selected, delete the selected part
      (show-paren-mode 1)            ; shows matching parentheses
      (winner-mode 1)                ; provide undo, redo your window layout

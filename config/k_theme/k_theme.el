@@ -14,17 +14,30 @@
 
 
 (if window-system
-    (progn (use-package spacemacs-theme
-             :init
-             (setq-default spacemacs-theme-comment-italic t
-                           spacemacs-theme-org-height nil)
-             (disable-theme 'wombat)
-             (global-hl-line-mode 1)        ; highlight your cusor line. don't lost.
-             (load-theme 'spacemacs-dark t)))
+    (progn
+      (disable-theme 'wombat)
+      (global-hl-line-mode 1)        ; highlight your cusor line. don't lost.
+
+      (use-package spacemacs-theme
+        :init
+        (setq-default spacemacs-theme-comment-italic t
+                      spacemacs-theme-org-height nil)
+        (load-theme 'spacemacs-dark t))
+
+      ;; (use-package doom-themes
+      ;;   :custom-face
+      ;;   (cursor ((t (:background "BlanchedAlmond"))))
+      ;;   :config
+      ;;   ;; flashing mode-line on errors
+      ;;   (doom-themes-visual-bell-config)
+      ;;   ;; Corrects (and improves) org-mode's native fontification.
+      ;;   (doom-themes-org-config)
+      ;;   (load-theme 'doom-one t))
+      )
   (progn
     (global-hl-line-mode -1)))
-
 
+
 (use-package doom-modeline
   :defer 0.1
   :config
