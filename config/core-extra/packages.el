@@ -192,3 +192,6 @@
     (magit-todos-mode 1)
     (magit-todos-branch-list-toggle)))
 
+
+(use-package sudo-edit
+  :commands (sudo-edit))
