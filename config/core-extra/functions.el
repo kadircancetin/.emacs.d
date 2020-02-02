@@ -1,6 +1,5 @@
 (defun kadir/helm-do-ag-project-root-or-current-dir ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
-  ;; TODO: bind key
   "If in a project call `helm-do-ag-project-root', else call
      `helm-do-ag' with current directory."
   (interactive)

@@ -173,7 +173,7 @@
 
 
 (use-package magit
-  :defer 9
+  :defer t
   :commands (magit-status)
   :bind ((:map magit-status-mode-map
                (("C-x 4 C-m" . magit-diff-visit-file-other-window))))

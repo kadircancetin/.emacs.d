@@ -29,5 +29,5 @@
 (require 'binds)
 
 (when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
-  (load-file (expand-file-name "experimental.el" user-emacs-directory))
+  ;;(load-file (expand-file-name "experimental.el" user-emacs-directory))
   (message "EXPERIMENTAL EL LOADED"))

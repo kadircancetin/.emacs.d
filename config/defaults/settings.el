@@ -74,16 +74,9 @@
 
 (setq history-length t)
 (setq history-delete-duplicates t)
-(setq savehist-additional-variables
-                    '(savehist-minibuffer-history-variables
-                      helm-M-x-input-history
-                      helm-grep-history
-                      minibuffer-history
-                      file-name-history
-                      mark-ring
-                      extended-command-history
-                      kill-ring
-                      search-ring
-                      regexp-search-ring
-                      compile-history
-                      command-history))
+(setq savehist-additional-variables '(savehist-minibuffer-history-variables
+                                      helm-M-x-input-history
+                                      minibuffer-history
+                                      file-name-history
+                                      extended-command-history
+                                      command-history))

@@ -1,3 +1,5 @@
+tramp
+request/
 *.elc
 *.#
 *~

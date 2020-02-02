@@ -80,5 +80,12 @@
   :after treemacs dired
   :config (treemacs-icons-dired-mode))
 
+
 (use-package treemacs-magit
   :after treemacs magit)
+
+;; (use-package elmacro)
+
+(use-package back-button
+  :init
+  (back-button-mode 1))

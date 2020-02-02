@@ -20,7 +20,7 @@
    (makunbound 'gc-cons-threshold-original)
    (makunbound 'file-name-handler-alist-original)
    (message "gc-cons-threshold and file-name-handler-alist restored")))
-(add-hook 'post-gc-hook (lambda () (message "*GC active*") ))
+;; (add-hook 'post-gc-hook (lambda () (message "*GC active*") ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq package-enable-at-startup nil)
