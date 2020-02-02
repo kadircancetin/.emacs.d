@@ -1,5 +1,6 @@
 Bu liste incelemeyi düşündüğüm ve düzeltmeyi planladığım şeyleri barındır.
 - C-x 4 M-. bind
+- company tabnine ayarları vs MatthewZMD de gayet iyi.
 - https://github.com/rolandwalker/back-button ****güzelllll****
 - symbol-overlay dene (auto highltt yerine)
 - undo tree region undo??

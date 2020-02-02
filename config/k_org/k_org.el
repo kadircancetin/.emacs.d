@@ -3,7 +3,7 @@
 (use-package org-web-tools)
 
 (defun kadir/org-screenshot ()
-  ;; source: https://delta.re/org-screenshot/
+  ;; fork from: https://delta.re/org-screenshot/
   "Take a screenshot into a time stamped unique-named file in the
     same directory as the org-buffer and insert a link to this file."
   (interactive)
@@ -27,7 +27,8 @@
     (if (file-exists-p filename)
         (insert (concat "[[file:" filename "]]")))
     (org-remove-inline-images)
-    (org-display-inline-images)))
+    (org-display-inline-images)
+    (other-frame 0)))
 
 
 (use-package org
