@@ -20,12 +20,16 @@
  ("a"                 . kadir/helm-do-ag-project-root-or-current-dir)
  ("t"                 . hs-toggle-hiding)
  ("y"                 . yas-insert-snippet)
- ("d"                 . deadgrep))
+ ("d"                 . deadgrep)
+ ("j"                 . dumb-jump-go))
 
 (bind-keys
  :prefix-map kadir/window
  :prefix "öw"
- ("s"                 . ace-swap-window))
+ ("s"                 . ace-swap-window)
+ ("w"                 . resize-window-width)
+ ("h"                 . resize-window-height)
+ )
 
 (bind-keys
  :prefix-map kadir/helm
@@ -103,6 +107,10 @@
 
    ;; treemacs
    ("M-0"             . treemacs)
+
+   ;; fonts
+   ("C-+"                . text-scale-increase)
+   ("C--"                . text-scale-decrease)
    )
  )
 
