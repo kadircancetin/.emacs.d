@@ -2,12 +2,38 @@
 (use-package org-bullets)
 (use-package org-web-tools)
 
+(defun kadir/org-screenshot ()
+  ;; source: https://delta.re/org-screenshot/
+  "Take a screenshot into a time stamped unique-named file in the
+    same directory as the org-buffer and insert a link to this file."
+  (interactive)
+  (when (eq major-mode 'org-mode)
+    (suspend-frame)
+    (org-display-inline-images)
+    (setq filename
+          (concat
+           (make-temp-name
+            (concat (file-name-nondirectory (buffer-file-name))
+                    "_imgs/"
+                    (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
+    (unless (file-exists-p (file-name-directory filename))
+      (make-directory (file-name-directory filename)))
+                                        ; take screenshot
+    (if (eq system-type 'darwin)
+        (call-process "screencapture" nil nil nil "-i" filename))
+    (if (eq system-type 'gnu/linux)
+        (call-process "import" nil nil nil filename))
+                                        ; insert into file if correctly taken
+    (if (file-exists-p filename)
+        (insert (concat "[[file:" filename "]]")))
+    (org-remove-inline-images)
+    (org-display-inline-images)))
+
 
 (use-package org
   :bind
   (:map org-mode-map
         ("M-." . elisp-slime-nav-find-elisp-thing-at-point))
-
   :config
   (define-key org-mode-map (kbd "C-a") 'mwim-beginning-of-code-or-line)
   (setq org-src-tab-acts-natively t) ; intent code blocks with its major modes
