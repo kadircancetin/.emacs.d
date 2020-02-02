@@ -64,9 +64,13 @@
   (setq which-key-idle-delay 0.8))
 
 
-(use-package back-button
-  :init
-  (back-button-mode 1))
+(use-package benchmark-init :ensure t)
+
+
+;; NOTE: very long emacs shutdown time when it is activated
+;; (use-package back-button
+;;   :init
+;;   (back-button-mode 1))
 
 
 

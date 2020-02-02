@@ -1,7 +1,7 @@
 ;; (use-package highlight-numbers
 ;;   :hook (prog-mode . highlight-numbers-mode))
 
-;; TODO: highlight-operators kebap case'i bozuyor
+;; NOTE: highlight-operators kebap case'i bozuyor
 ;; (use-package highlight-operators
 ;;   :hook (prog-mode . highlight-operators-mode))
 

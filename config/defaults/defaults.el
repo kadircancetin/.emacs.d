@@ -29,9 +29,6 @@
   :config
   (auto-package-update-maybe))
 
-
-(use-package benchmark-init :ensure t :defer t) ;; TODO: delete or more logical things
-
 
 (savehist-mode 1)
 
@@ -63,14 +60,13 @@
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
-(run-with-idle-timer ;; TODO: why whitespace is not required but hs reqire "reqiure"
- 0.15 nil
+(run-with-idle-timer
+ 0.20 nil
  (lambda () (progn
          (require 'hideshow)
          (add-hook 'prog-mode-hook 'hs-minor-mode))))
 
-
-(run-with-idle-timer 1 nil ;; TODO: ?
+(run-with-idle-timer 1 nil 
                      (lambda () (async-bytecomp-package-mode 1)))
 
 (provide 'defaults)

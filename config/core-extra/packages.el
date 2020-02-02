@@ -84,7 +84,6 @@
           :init
           (fset 'describe-bindings 'helm-descbinds))))
 
-  ;; (require 'helm-config) ;; TODO: is it realy necessary
   (setq helm-boring-buffer-regexp-list (list
                                         (rx "` ")
                                         (rx "*helm")

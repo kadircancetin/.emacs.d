@@ -1,9 +1,6 @@
-Bu liste incelemeyi düşündüğüm ve düzeltmeyi planladığım şeyleri barındır.
-- C-x 4 M-. bind
+* TODO List
 - company tabnine ayarları vs MatthewZMD de gayet iyi.
-- https://github.com/rolandwalker/back-button ****güzelllll****
 - symbol-overlay dene (auto highltt yerine)
-- undo tree region undo??
 - org mode capture gibi bişiler.
 - magit todo da exclude etme olayı. bazı dosyalar büyük olunca çok
   fena patlıyor
@@ -18,6 +15,5 @@ Bu liste incelemeyi düşündüğüm ve düzeltmeyi planladığım şeyleri bar�
   - https://github.com/mtekman/org-tanglesync.el#from-external-file-push-to-tangled-block
   - https://github.com/astahlman/ob-async
 - key-corde mode
-- defult settingsler yeniden yerşeltilmeli. çok karıştılar.
 - https://github.com/lassik/emacs-format-all-the-code  (format all languages)
 - https://github.com/manateelazycat/company-english-helper
