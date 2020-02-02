@@ -15,7 +15,20 @@
 
 (require 'use-package-ensure)
 (setq use-package-always-ensure t
-      use-package-always-defer t)
+      use-package-always-defer t
+      use-package-expand-minimally t)
+
+
+(use-package auto-package-update
+  :if (not (daemonp))
+  :custom
+  (auto-package-update-interval 7) ;; in days
+  (auto-package-update-prompt-before-update t)
+  (auto-package-update-delete-old-versions t)
+  (auto-package-update-hide-results t)
+  :config
+  (auto-package-update-maybe))
+
 
 (use-package benchmark-init :ensure t :defer t) ;; TODO: delete or more logical things
 
