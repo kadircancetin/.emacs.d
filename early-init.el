@@ -38,6 +38,14 @@
 (load-theme 'wombat t)
 
 
+
+(setq window-divider-default-places t
+      window-divider-default-bottom-width 1
+      window-divider-default-right-width 1)
+(set-face-attribute 'window-divider nil :foreground "#4C4262")
+(window-divider-mode 1)
+
+
 (when (file-exists-p "~/.emacs.d/elpa/benchmark-init-20150905.938/benchmark-init.elc")
   ;; TODO: get the from file whithout the version.
   (load-file "~/.emacs.d/elpa/benchmark-init-20150905.938/benchmark-init.elc")
