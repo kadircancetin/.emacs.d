@@ -38,7 +38,14 @@
 
 
 (use-package company
-  :defer 0.8
+  :init
+  (setq-default company-dabbrev-downcase nil)
+  (setq company-idle-delay         0
+        company-dabbrev-downcase   0
+        company-minimum-prefix-length 1
+        ;; company-echo-delay 0                ; remove annoying blinking
+        company-tooltip-align-annotations 't)
+  :defer 0.1
   :bind ((:map company-active-map
                ([return] . nil)
                ("RET" . nil)
@@ -48,20 +55,22 @@
                ("C-p" . company-select-previous))
          (:map company-mode-map ("C-." . helm-company)))
   :config
-  ;; TODO: tabnine güzel hoş ama default companye ek olarak gelmeli,
-  ;; şu anda default companyi eziyor
-
-  ;; documantation: M-x company-tabnine-install-binary
-  ;; (use-package company-tabnine :ensure t)
-  ;; (add-to-list 'company-backends #'company-tabnine)
-  
+  ;; (use-package company-tabnine :defer nil)
   (global-company-mode 1)
-  (setq company-idle-delay         0.05
-        company-dabbrev-downcase   0.05
-        company-minimum-prefix-length 1
-        ;; company-echo-delay 0                ; remove annoying blinking
-        company-tooltip-align-annotations 't)
-  (use-package helm-company))
+
+  (progn
+    (setq company-backends nil)
+    (add-to-list 'company-backends '(company-yasnippet
+                                     :separate
+                                     ;; company-tabnine
+                                     company-files
+                                     ))
+    (add-to-list 'company-backends '(company-capf))
+    (prin1 company-backends)
+    )
+
+  (load-file (expand-file-name "company-try-hard.el" user-emacs-directory))
+  )
 
 (use-package company-quickhelp
   :after (company)
@@ -69,7 +78,10 @@
   (company-quickhelp-mode)
   (setq company-quickhelp-max-lines 20
         company-quickhelp-delay     nil)
-  :bind (:map company-active-map ("M-h" . company-quickhelp-manual-begin)))
+  :bind (:map company-active-map ("M-h"
+                                  . company-quickhelp-manual-begin)))
+
+(use-package helm-company)
 
 
 (use-package helm
