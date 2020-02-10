@@ -10,9 +10,13 @@
   (normal-top-level-add-subdirs-to-load-path))
 
 ;; `defaults' configure the defaults settings of the emacs. Like
-;; enabling winner-mode. And install and load the `use-pacage'.
+;; enabling winner-mode. And install and load the `use-package'.
 (require 'defaults)
 
+;; appriance and UI 
+(require 'k_theme)
+
+;; additional core and extra packages
 (require 'core-extra)
 (require 'extras)
 
@@ -29,9 +33,6 @@
 (require 'k_colors)
 (require 'k_elisp)
 (require 'k_java)
-
-;; appriance and UI 
-(require 'k_theme)
 
 ;; all global bindings
 (require 'binds)

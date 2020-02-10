@@ -47,7 +47,7 @@
                            "--jsx-bracket-same-line" "true"
                            "--print-width" "90"))
   (add-hook 'js2-mode-hook 'prettier-js-mode)
-  (add-hook 'web-mode-hook 'prettier-js-mode)
+  ;; (add-hook 'web-mode-hook 'prettier-js-mode)
   (add-hook 'rjsx-mode 'prettier-js-mode))
 
 (provide 'k_js)
