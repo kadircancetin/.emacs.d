@@ -22,7 +22,6 @@
  ("y"                 . yas-insert-snippet)
  ("d"                 . deadgrep)
  ("c"                 . (lambda()(interactive)(org-capture nil "t")))
- ("i"                 . (lambda()(interactive)(kadir/find-inbox)))
  ("j"                 . dumb-jump-go))
 
 (bind-keys
@@ -32,6 +31,14 @@
  ("w"                 . resize-window-width)
  ("h"                 . resize-window-height)
  )
+
+
+(bind-keys
+ :prefix-map kadir/open
+ :prefix "öo"
+ ("i"                 . kadir/find-inbox)
+ ("c"                 . kadir/find-config)
+ ("a"                 . org-agenda))
 
 (bind-keys
  :prefix-map kadir/helm
@@ -77,7 +84,6 @@
    ("M-<SPC>"         . kadir/last-buffer)
 
    ;; shortcuts
-   ("C-x c"           . kadir/find-config)
    ("C-x *"           . kadir/open-thunar)
    ("C-x -"           . kadir/open-terminator)
 

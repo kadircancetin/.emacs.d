@@ -8,7 +8,7 @@
 (defun kadir/find-config ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
   "Open config file. (probably this file)"
-  (interactive) (find-file config-org))
+  (interactive) (find-file "~/.emacs.d/config"))
 
 (defun kadir/find-inbox ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
