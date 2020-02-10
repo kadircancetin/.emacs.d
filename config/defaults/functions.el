@@ -10,6 +10,11 @@
   "Open config file. (probably this file)"
   (interactive) (find-file config-org))
 
+(defun kadir/find-inbox ()
+  ;; source: https://github.com/KaratasFurkan/.emacs.d
+  "Open config file. (probably this file)"
+  (interactive) (find-file "~/org/inbox.org"))
+
 (defun kadir/comment-or-self-insert (&optional beg end)
   "If region active comment-or-uncomment work,
      otherwise (self-insert /)"

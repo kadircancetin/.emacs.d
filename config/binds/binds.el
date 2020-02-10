@@ -21,6 +21,8 @@
  ("t"                 . hs-toggle-hiding)
  ("y"                 . yas-insert-snippet)
  ("d"                 . deadgrep)
+ ("c"                 . (lambda()(interactive)(org-capture nil "t")))
+ ("i"                 . (lambda()(interactive)(kadir/find-inbox)))
  ("j"                 . dumb-jump-go))
 
 (bind-keys
@@ -110,7 +112,7 @@
 
    ;; fonts
    ("C-+"                . text-scale-increase)
-   ("C--"                . text-scale-decrease)
+   ;; ("C-*"                . text-scale-decrease)
    )
  )
 
