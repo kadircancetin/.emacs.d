@@ -119,6 +119,7 @@
    ;; fonts
    ("C-+"                . text-scale-increase)
    ;; ("C-*"                . text-scale-decrease)
+   ("C-c c"                 . (lambda()(interactive)(org-capture nil "t")))
    )
  )
 

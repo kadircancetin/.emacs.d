@@ -48,6 +48,12 @@
                                     directory org-agenda-file-regexp))
                                  '("~/org"))))  ;; recursively get org files
 
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline "~/org/inbox.org" "Tasks")
+           "* TODO %?\nSCHEDULED: %t\n\%a")
+          ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
+           "* %?\nEntered on %U\n  %i\n  %a")))
+  
   (setq org-catch-invisible-edits    'show-and-error
         org-cycle-separator-lines    0
         org-agenda-start-day         "-0d"
@@ -61,6 +67,7 @@
 
 
 (add-hook 'org-mode-hook #'visual-line-mode)
+(add-hook 'org-mode-hook #'org-indent-mode)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (setq org-bullets-bullet-list '("⁖" "⁖" "." "."))
 
