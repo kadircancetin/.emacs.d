@@ -1,3 +1,4 @@
+;; TODO: flycheck otomatik aktif oluyor
 ;; lazy load for linter
 (use-package projectile  :commands (projectile-project-root))
 
@@ -30,12 +31,36 @@
 
 (defun kadir/configure-python ()
   (if (eq kadir/python-lsp-eglot 'eglot)
-      (progn (eglot-ensure)
-             (setq-default eglot-ignored-server-capabilites '(:documentHighlightProvider
-                                                              :hoverProvider
-                                                              :signatureHelpProvider)))
-    (progn (lsp)
-           (remove-hook 'python-mode-hook #'auto-highlight-symbol-mode))))
+      (progn
+        (eglot-ensure)
+        (setq-default eglot-ignored-server-capabilites '(:documentHighlightProvider
+                                                         :hoverProvider
+                                                         :signatureHelpProvider))
+
+        (setq company-dabbrev-ignore-case t)
+        (setq company-dabbrev-downcase nil)
+        (add-hook 'eglot-managed-mode-hook
+                  (lambda ()
+                    (interactive)
+                    (message "mk")
+                    (setq company-backends nil)
+                    (add-to-list 'company-backends '(
+                                                     ;; company-tabnine
+                                                     ;; :separate
+                                                     company-yasnippet
+                                                     ))
+
+                    (add-to-list 'company-backends '(company-capf
+                                                     :with
+                                                     company-dabbrev
+                                                     :separate
+                                                     company-files
+                                                     ))
+                    (prin1 company-backends)
+                    )))
+
+    (lsp)
+    (remove-hook 'python-mode-hook #'auto-highlight-symbol-mode)))
 
 (defun activate-venv-configure-python ()
   "source: https://github.com/jorgenschaefer/pyvenv/issues/51"
