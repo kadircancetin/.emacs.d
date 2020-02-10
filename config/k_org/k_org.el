@@ -49,10 +49,17 @@
                                  '("~/org"))))  ;; recursively get org files
 
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/org/inbox.org" "Tasks")
+        '(("t" "Todo" entry (file+headline "~/org/inbox.org" "Inbox")
            "* TODO %?\nSCHEDULED: %t\n\%a")
           ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
-           "* %?\nEntered on %U\n  %i\n  %a")))
+           "* %?\nEntered on %U\n  %i\n  %a")
+          ("p" "Protocol"
+           entry (file+headline "inbox.org" "Notes")
+           "* %:description :RESEARCH:\n#+BEGIN_QUOTE\n%i\n\n -- %:link %u\n #+END_QUOTE\n\n%?")
+          ("L" "Protocol Link"
+           entry (file+headline "inbox.org" "Notes")
+           "* %? [[%:link][%:description]] \nCaptured On: %u")
+          ))
   
   (setq org-catch-invisible-edits    'show-and-error
         org-cycle-separator-lines    0

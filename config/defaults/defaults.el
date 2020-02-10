@@ -69,4 +69,9 @@
 (run-with-idle-timer 1 nil 
                      (lambda () (async-bytecomp-package-mode 1)))
 
+(run-with-idle-timer 0.75 nil
+                     (lambda() 
+                       (server-start)
+                       (require 'org-protocol)))
+
 (provide 'defaults)
