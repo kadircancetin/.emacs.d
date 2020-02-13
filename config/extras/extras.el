@@ -53,7 +53,20 @@
 (use-package google-translate
   :init
   (setq google-translate-default-source-language "auto"
-        google-translate-default-target-language "tr"))
+        google-translate-default-target-language "tr")
+  :config
+  ;; unmerged bug fixes
+  ;; https://github.com/atykhonov/google-translate/issues/98
+  (defun google-translate-json-suggestion (json)
+    "Retrieve from JSON (which returns by the
+`google-translate-request' function) suggestion. This function
+does matter when translating misspelled word. So instead of
+translation it is possible to get suggestion."
+    (let ((info (aref json 7)))
+      (if (and info (> (length info) 0))
+          (aref info 1)
+        nil)))
+  )
 
 
 (use-package which-key
