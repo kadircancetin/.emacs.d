@@ -50,14 +50,14 @@
 
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "~/org/inbox.org" "Inbox")
-           "* TODO %?\nSCHEDULED: %t\n\%a")
+           "* TODO %?\nAdded: \%u\n\%a")
           ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
            "* %?\nEntered on %U\n  %i\n  %a")
           ("p" "Protocol"
-           entry (file+headline "inbox.org" "Notes")
+           entry (file+headline "inbox.org" "Inbox")
            "* %:description :RESEARCH:\n#+BEGIN_QUOTE\n%i\n\n -- %:link %u\n #+END_QUOTE\n\n%?")
           ("L" "Protocol Link"
-           entry (file+headline "inbox.org" "Notes")
+           entry (file+headline "inbox.org" "Inbox")
            "* %? [[%:link][%:description]] \nCaptured On: %u")
           ))
   

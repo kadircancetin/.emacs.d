@@ -15,3 +15,9 @@
 
 
 (global-set-key (kbd "C-c d d") 'deft)
+
+
+(use-package nov
+  :init
+  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+  )
