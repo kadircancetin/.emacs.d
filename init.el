@@ -16,7 +16,9 @@
 ;; appriance and UI 
 (require 'k_theme)
 
-;; additional core and extra packages
+
+;; additinaol core features (like lsp) and extra packages
+
 (require 'core-extra)
 (require 'extras)
 
