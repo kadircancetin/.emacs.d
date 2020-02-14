@@ -21,3 +21,5 @@
   :init
   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
   )
+
+(use-package darkroom)

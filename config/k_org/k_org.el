@@ -40,7 +40,7 @@
   (setq org-src-tab-acts-natively t) ; intent code blocks with its major modes
   (setq org-src-window-setup 'current-window) ; edit code on same window
   (setq org-src-fontify-natively t)
-
+  (setq org-startup-indented t)
   (setq org-agenda-files (apply 'append
                                 (mapcar
                                  (lambda (directory)
@@ -74,9 +74,8 @@
 
 
 (add-hook 'org-mode-hook #'visual-line-mode)
-(add-hook 'org-mode-hook #'org-indent-mode)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-(setq org-bullets-bullet-list '("⁖" "⁖" "." "."))
+(setq org-bullets-bullet-list '("✿" "⁖" "." "." "." "."))
 
 
 ;;; Capture settings
