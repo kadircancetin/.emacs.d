@@ -37,8 +37,6 @@
                                                          :hoverProvider
                                                          :signatureHelpProvider))
 
-        (setq company-dabbrev-ignore-case t)
-        (setq company-dabbrev-downcase nil)
         (add-hook 'eglot-managed-mode-hook
                   (lambda ()
                     (interactive)

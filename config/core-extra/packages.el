@@ -61,10 +61,12 @@
   (progn
     (setq company-backends nil)
     (add-to-list 'company-backends '(company-yasnippet
+                                     :with
+                                     company-dabbrev
                                      :separate
                                      ;; company-tabnine
-                                     company-files
-                                     ))
+                                     company-files))
+
     (add-to-list 'company-backends '(company-capf))
     (prin1 company-backends)
     )
