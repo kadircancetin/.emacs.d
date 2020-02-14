@@ -50,15 +50,15 @@
 
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "~/org/inbox.org" "Inbox")
-           "* TODO %?\nAdded: \%u\n\%a")
+           "* TODO %?\n  Added: \%u\n  \%a")
           ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
-           "* %?\nEntered on %U\n  %i\n  %a")
+           "* %?\n  Entered on %U\n  %i\n  %a")
           ("p" "Protocol"
            entry (file+headline "inbox.org" "Inbox")
-           "* %:description :RESEARCH:\n#+BEGIN_QUOTE\n%i\n\n -- %:link %u\n #+END_QUOTE\n\n%?")
+           "* %:description :RESEARCH:\n  #+BEGIN_QUOTE\n    %i\n\n     -- %:link %u\n  #+END_QUOTE\n\n%?")
           ("L" "Protocol Link"
            entry (file+headline "inbox.org" "Inbox")
-           "* %? [[%:link][%:description]] \nCaptured On: %u")
+           "* %? [[%:link][%:description]] \n  Captured On: %u")
           ))
   
   (setq org-catch-invisible-edits    'show-and-error
