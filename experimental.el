@@ -20,6 +20,13 @@
 (use-package nov
   :init
   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+  :bind (:map nov-mode-map
+              ("n" . next-line)
+              ("p" . previous-line)
+              ("f" . forward-char)
+              ("b" . backward-char)
+              ("h" . nov-next-document)
+              ("l"  . nov-previous-document))
   )
 
 (use-package darkroom)
