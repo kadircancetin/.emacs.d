@@ -70,8 +70,10 @@
                      (lambda () (async-bytecomp-package-mode 1)))
 
 (run-with-idle-timer 0.75 nil
-                     (lambda() 
-                       (server-start)
+                     (lambda()
+                       (require 'server)
+                       (unless (server-running-p)
+                         (server-start))
                        (require 'org-protocol)))
 
 (provide 'defaults)
