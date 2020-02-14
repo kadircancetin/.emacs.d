@@ -23,6 +23,15 @@
   "Open config file. (probably this file)"
   (interactive) (find-file "~/.emacs.d/config"))
 
+(defun kadir/find-experimental-config ()
+  ;; source: https://github.com/KaratasFurkan/.emacs.d
+  "Open config file. (probably this file)"
+  (interactive) (find-file "~/.emacs.d/experimental.el"))
+
+(defun kadir/open-scratch-buffer ()
+  (interactive)
+  (switch-to-buffer "*scratch*"))
+
 (defun kadir/find-inbox ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
   "Open config file. (probably this file)"

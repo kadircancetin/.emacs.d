@@ -38,12 +38,15 @@
  :prefix "öo"
  ("i"                 . kadir/find-inbox)
  ("c"                 . kadir/find-config)
+ ("e"                 . kadir/find-experimental-config)
+ ("s"                 . kadir/open-scratch-buffer)
  ("a"                 . org-agenda))
 
 (bind-keys
  :prefix-map kadir/helm
  :prefix "öh"
- ("a"                 . helm-apropos))
+ ("a"                 . helm-apropos)
+ ("e"                 . helm-emmet))
 
 (bind-keys
  :prefix-map kadir/bookmark

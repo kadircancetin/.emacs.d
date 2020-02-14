@@ -26,7 +26,6 @@
               ("f" . forward-char)
               ("b" . backward-char)
               ("h" . nov-next-document)
-              ("l"  . nov-previous-document))
-  )
+              ("l"  . nov-previous-document)))
 
 (use-package darkroom)

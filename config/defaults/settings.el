@@ -20,7 +20,7 @@
 (setq-default ring-bell-function      'ignore ; shutdown rings
               inhibit-startup-message  t      ; disable startup messages
               initial-scratch-message  nil    ; disable startup messages
-              initial-major-mode      'text-mode ; initial buffer text-mode
+              initial-major-mode      'emacs-lisp-mode ; initial buffer 
               mark-ring-max            128    ; increatese mark-ring
               column-number-mode       t      ; show column number on modeline
               default-buffer-file-coding-system 'utf-8-unix
