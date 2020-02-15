@@ -40,11 +40,12 @@
 (use-package company
   :init
   (setq-default company-dabbrev-downcase nil)
-  (setq company-idle-delay         0
-        company-dabbrev-downcase   0
+  (setq company-idle-delay         0.15
+        company-dabbrev-downcase   nil
         company-minimum-prefix-length 1
         ;; company-echo-delay 0                ; remove annoying blinking
         company-tooltip-align-annotations 't)
+
   :defer 0.1
   :bind ((:map company-active-map
                ([return] . nil)
@@ -60,9 +61,10 @@
 
   (progn
     (setq company-backends nil)
+    (add-to-list 'company-backends '(company-dabbrev))
     (add-to-list 'company-backends '(company-yasnippet
-                                     :with
-                                     company-dabbrev
+                                     ;; :with
+                                     ;; company-dabbrev
                                      :separate
                                      ;; company-tabnine
                                      company-files))
@@ -208,15 +210,6 @@
 
 (use-package sudo-edit
   :commands (sudo-edit))
-
-
-(use-package dired-subtree
-  :after dired
-  :defer nil
-  :config
-  (bind-keys :map dired-mode-map
-             ("i" . dired-subtree-insert)
-             (";" . dired-subtree-remove)))
 
 
 (use-package wakatime-mode
