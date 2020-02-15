@@ -25,7 +25,10 @@
               ("p" . previous-line)
               ("f" . forward-char)
               ("b" . backward-char)
-              ("h" . nov-next-document)
-              ("l"  . nov-previous-document)))
+              ("h" . nov-previous-document)
+              ("l" . nov-next-document)
+              ("c" . google-translate-at-point)
+              )
+  )
 
 (use-package darkroom)
