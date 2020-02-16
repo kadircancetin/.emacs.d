@@ -32,3 +32,9 @@
   )
 
 (use-package darkroom)
+
+(use-package devdocs
+  :init
+  ;; disabled devdocs-alist because of sometimes I search from
+  ;; framework but it search in the major mode
+  (setq devdocs-alist nil))
