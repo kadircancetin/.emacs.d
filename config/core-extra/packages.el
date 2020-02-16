@@ -40,8 +40,11 @@
 (use-package company
   :init
   (setq-default company-dabbrev-downcase nil)
-  (setq company-idle-delay         0.15
+
+  (setq company-idle-delay         0
+        company-tooltip-idle-delay 0
         company-dabbrev-downcase   nil
+        company-tooltip-offset-display 'lines
         company-minimum-prefix-length 1
         ;; company-echo-delay 0                ; remove annoying blinking
         company-tooltip-align-annotations 't)
@@ -60,17 +63,21 @@
   (global-company-mode 1)
 
   (progn
-    (setq company-backends nil)
-    (add-to-list 'company-backends '(company-dabbrev))
-    (add-to-list 'company-backends '(company-yasnippet
-                                     ;; :with
-                                     ;; company-dabbrev
-                                     :separate
-                                     ;; company-tabnine
-                                     company-files))
-
-    (add-to-list 'company-backends '(company-capf))
-    (prin1 company-backends)
+    (setq company-backends
+          '(;; company-bbdb
+            ;; company-semantic
+            ;; company-clang
+            ;; company-xcode
+            ;; company-cmake
+            company-capf
+            company-files
+            (company-dabbrev-code company-gtags company-etags
+                                  company-keywords)
+            ;; company-oddmuse
+            ;; company-tabnine
+            ;; company-yasnippet
+            company-dabbrev))
+    ;; (prin1 company-backends)
     )
 
   (load-file (expand-file-name "company-try-hard.el" user-emacs-directory))
