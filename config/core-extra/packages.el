@@ -170,16 +170,30 @@
     (setq lsp-ui-doc-enable t
           lsp-ui-doc-use-childframe t
           lsp-ui-doc-position 'top
+          lsp-ui-doc-alignment 'window
           lsp-ui-doc-include-signature t
-          lsp-ui-sideline-enable nil
+          lsp-ui-doc-delay 0.1
+          ;; lsp-ui-doc-max-width 150
+          ;; lsp-ui-doc-max-height 10
+          lsp-ui-sideline-enable t
+          lsp-ui-sideline-update-mode 'point
+          lsp-ui-sideline-delay 0.1
+          lsp-ui-sideline-diagnostic-max-line-length 50
+          lsp-ui-sideline-diagnostic-max-lines 10
+
           lsp-ui-flycheck-enable t
           lsp-ui-flycheck-list-position 'right
           lsp-ui-flycheck-live-reporting nil  ; daha az sıklıkla flycheck
           lsp-ui-peek-enable t
           lsp-ui-peek-list-width 60
-          lsp-ui-peek-peek-height 25))
-  (use-package company-lsp
+          lsp-ui-peek-peek-height 20)
     :config
+    (require 'lsp-ui-sideline)
+    (add-hook 'lsp-mode-hook 'lsp-ui-sideline-mode)
+    )
+  (use-package company-lsp
+    :init
+    (setq company-lsp-enable-snippet nil)
     (push 'company-lsp company-backends)))
 
 
