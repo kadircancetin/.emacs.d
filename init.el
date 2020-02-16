@@ -35,6 +35,7 @@
 (require 'k_colors)
 (require 'k_elisp)
 (require 'k_java)
+(require 'k_dired)
 
 ;; all global bindings
 (require 'binds)

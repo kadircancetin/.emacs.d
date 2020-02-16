@@ -70,8 +70,7 @@
 (use-package stripe-buffer
   :config
   (set-face-attribute 'stripe-highlight nil :background "#333335")
+  :hook ((org-mode . turn-on-stripe-table-mode)))
 
-  :hook ((org-mode . turn-on-stripe-table-mode)
-         (dired-mode-hook stripe-listify-buffer)))
-
+
 (provide 'k_theme)

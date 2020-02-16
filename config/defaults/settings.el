@@ -64,8 +64,6 @@
 ;; ;; -SmoothScroll
 
 
-(setq-default dired-listing-switches "-lha") ; make dired human readble
-
 (setq-default indent-tabs-mode nil       ; space instead of tabs
               tab-width 4                ; 4 space for tab
               show-trailing-whitespace nil) ; showing empty whitespaces
