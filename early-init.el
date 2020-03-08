@@ -30,29 +30,32 @@
 (scroll-bar-mode -1)
 (fringe-mode 4)                  ; my laptop screen is not full hd :(
 
-;; (set-face-attribute 'default nil :family "Source Code Pro" :height
-;;                     80 :weight 'normal)
+
+;; FONT SETTINGS
+(defvar kadir/default-font-size 70)
 
-;; (set-face-attribute 'default nil :family "fira code" :height 75
-;; :weight 'normal)
+;; (set-face-attribute 'default nil :family "Source Code Pro" :height 80 :weight 'normal)
+;; (set-face-attribute 'default nil :family "fira code" :height
+;;                     75 :weight 'normal)
 
-(defvar kadir/default-font-size 75)
-
-(set-face-attribute 'default nil :family "fira code" :height
+(set-face-attribute 'default nil :family "Monoid" :height
                     kadir/default-font-size :weight 'normal)
+
+;; (set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro"
+;;                     :italic t) ; this is some minor bug on documentation
+
 ;; to finding the available string names
-;; (message
-;;  (mapconcat (quote identity)
-;;             (sort (font-family-list) #'string-lessp) "\n"))
+;; (prin1 (mapconcat'identity
+;;         (sort (seq-filter (apply-partially #'s-matches?
+;;                                            ".*mono.*"
+;;                                            ) (font-family-list))
+;;               #'string-lessp) "  \n  "))
 
-(set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro"
-                    :italic t)
-
+
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (load-theme 'wombat t)
 
-
-
+
 (setq window-divider-default-places t
       window-divider-default-bottom-width 1
       window-divider-default-right-width 1)
@@ -60,6 +63,7 @@
 (window-divider-mode 1)
 
 
+
 (when (file-exists-p
        "~/.emacs.d/elpa/benchmark-init-20150905.938/benchmark-init.elc"
        )
