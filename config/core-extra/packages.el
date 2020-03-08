@@ -132,6 +132,26 @@
     :config
     (projectile-mode 1)))
 
+(use-package helm-swoop
+  :init
+  (setq helm-swoop-speed-or-color t
+        helm-swoop-split-window-function 'display-buffer
+        helm-swoop-min-overlay-length 0
+        helm-swoop-use-fuzzy-match t)
+  :bind (
+         :map isearch-mode-map
+         ("M-s" . helm-swoop-from-isearch)
+         :map helm-swoop-map
+         ("M-s" . helm-multi-swoop-all-from-helm-swoop)
+         :map helm-swoop-edit-map
+         ("C-c C-c" . helm-swoop--edit-complete)
+         ("C-c C-k" . helm-swoop--edit-cancel))
+  :config
+  (set-face-attribute 'helm-swoop-target-line-face nil :background "black" :foreground nil
+                      :inverse-video nil
+                      ;; :extend t
+                      )
+  (set-face-attribute 'helm-swoop-target-word-face nil :inherit 'lazy-highlight :foreground nil))
 
 (use-package ace-window
   :defer t

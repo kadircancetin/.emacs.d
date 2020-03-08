@@ -1,3 +1,18 @@
+(defun kadir/isearch-region (&optional not-regexp no-recursive-edit)
+  ;; cloned from: https://www.reddit.com/r/emacs/comments/b7yjje/isearch_region_search/
+  "If a region is active, make this the isearch default search pattern."
+  (interactive "P\np")
+  (when (use-region-p)
+    (let ((search (buffer-substring-no-properties
+                   (region-beginning)
+                   (region-end))))
+      (setq deactivate-mark t)
+      (isearch-yank-string search))))
+
+(advice-add 'isearch-forward-regexp :after 'kadir/isearch-region)
+(advice-add 'isearch-forward :after 'kadir/isearch-region)
+
+
 (defun kadir/delete-file-and-buffer ()
   ;; based on https://gist.github.com/hyOzd/23b87e96d43bca0f0b52 which
   ;; is based on http://emacsredux.com/blog/2013/04/03/delete-file-and-buffer/

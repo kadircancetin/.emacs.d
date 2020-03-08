@@ -17,7 +17,6 @@
  :prefix "ö"
  ("ö"                 . (lambda()(interactive)(insert "ö")))
  ("l"                 . goto-last-change)
- ("r"                 . helm-rg)
  ("a"                 . kadir/helm-do-ag-project-root-or-current-dir)
  ("t"                 . hs-toggle-hiding)
  ("y"                 . yas-insert-snippet)
@@ -54,7 +53,9 @@
  :prefix-map kadir/helm
  :prefix "öh"
  ("a"                 . helm-apropos)
- ("e"                 . helm-emmet))
+ ("e"                 . helm-emmet)
+ ("r"                 . helm-rg)
+ ("s"                 . helm-swoop))
 
 (bind-keys
  :prefix-map kadir/bookmark
