@@ -8,14 +8,16 @@
 ;; source: https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq load-prefer-newer noninteractive)
+(defvar gc-cons-threshold-orginal gc-cons-threshold)
 (setq gc-cons-percentage 0.6)
 (setq gc-cons-threshold most-positive-fixnum)
-(setq file-name-handler-alist-original file-name-handler-alist)
+
+(defvar file-name-handler-alist-original file-name-handler-alist)
 (setq file-name-handler-alist nil)
 (run-with-idle-timer
  1.5 nil
  (lambda ()
-   (setq gc-cons-threshold (* 1024 1024 20))
+   (setq gc-cons-threshold gc-cons-threshold-orginal) ;; default
    (setq file-name-handler-alist file-name-handler-alist-original)
    (makunbound 'gc-cons-threshold-original)
    (makunbound 'file-name-handler-alist-original)
@@ -35,11 +37,12 @@
 (defvar kadir/default-font-size 70)
 
 ;; (set-face-attribute 'default nil :family "Source Code Pro" :height 80 :weight 'normal)
-;; (set-face-attribute 'default nil :family "fira code" :height
-;;                     75 :weight 'normal)
+(set-face-attribute 'default nil :family "Source Code Pro" :height 75 :weight 'normal)
+;;       (set-face-attribute 'default nil :family "fira code" :height 75 :weight 'normal)
+;; (set-face-attribute 'default nil :family "fira code" :height 71 :weight 'normal)
 
-(set-face-attribute 'default nil :family "Monoid" :height
-                    kadir/default-font-size :weight 'normal)
+;; (set-face-attribute 'default nil :family "Monoid" :height
+;;                     kadir/default-font-size :weight 'normal)
 
 ;; (set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro"
 ;;                     :italic t) ; this is some minor bug on documentation
