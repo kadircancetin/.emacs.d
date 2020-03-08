@@ -11,6 +11,7 @@
         (global-set-key (kbd key) value)))
 
 
+
 (bind-keys
  :prefix-map kadir/custom
  :prefix "ö"
@@ -20,10 +21,17 @@
  ("a"                 . kadir/helm-do-ag-project-root-or-current-dir)
  ("t"                 . hs-toggle-hiding)
  ("y"                 . yas-insert-snippet)
- ("d"                 . deadgrep)
+ ;; ("d"                 . deadgrep)
  ("c"                 . (lambda()(interactive)(org-capture nil "t")))
  ("j"                 . dumb-jump-go))
 
+(bind-keys
+ :prefix-map kadir/django
+ :prefix "öd"
+ ("m"                 . (lambda() (interactive)
+                          (let ((helm-rg-default-glob-string "models.py"))
+                            (helm-rg "class model " ))))
+ )
 (bind-keys
  :prefix-map kadir/window
  :prefix "öw"

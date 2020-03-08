@@ -1,11 +1,6 @@
 * TODO List
-- company tabnine ayarları vs MatthewZMD de gayet iyi.
 - symbol-overlay dene (auto highltt yerine)
-- org mode capture gibi bişiler.
-- magit todo da exclude etme olayı. bazı dosyalar büyük olunca çok
-  fena patlıyor
 - https://github.com/lewang/ws-butler
-- https://github.com/smihica/emmet-mode
 - (x-ray) package https://www.emacswiki.org/emacs/XrayPackage#toc4
 - https://oremacs.com/2017/12/27/company-numbers/
 - http://wikemacs.org/wiki/Whitespace-mode   - empty lineların bulunup silinmesi

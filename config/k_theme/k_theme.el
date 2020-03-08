@@ -50,8 +50,9 @@
         ;; relative-to-project
         doom-modeline-buffer-file-name-style 'relative-from-project)
 
-  (set-face-attribute 'mode-line nil :height 80)
-  (set-face-attribute 'mode-line-inactive nil :height 80)
+  (set-face-attribute 'mode-line nil :height kadir/default-font-size)
+  (set-face-attribute 'mode-line-inactive nil :height
+                      kadir/default-font-size)
   (doom-modeline-mode 1))
 
 

@@ -11,7 +11,6 @@
 
 (setq echo-keystrokes 0.1)
 
-
 (setq auto-revert-interval 2
       auto-revert-check-vc-info t
       global-auto-revert-non-file-buffers t
@@ -112,3 +111,5 @@
                                       file-name-history
                                       extended-command-history
                                       command-history))
+
+(setq read-process-output-max (* 1024 1024))

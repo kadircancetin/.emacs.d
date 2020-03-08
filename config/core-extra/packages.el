@@ -165,6 +165,7 @@
   (use-package flycheck)
   (flymake-mode 0)
   (flycheck-mode 1)
+
   (use-package lsp-ui
     :init
     (setq lsp-ui-doc-enable t
@@ -181,20 +182,21 @@
           lsp-ui-sideline-diagnostic-max-line-length 50
           lsp-ui-sideline-diagnostic-max-lines 10
 
+          lsp-prefer-capf t
           lsp-ui-flycheck-enable t
           lsp-ui-flycheck-list-position 'right
           lsp-ui-flycheck-live-reporting nil  ; daha az sıklıkla flycheck
           lsp-ui-peek-enable t
           lsp-ui-peek-list-width 60
-          lsp-ui-peek-peek-height 20)
+          lsp-ui-peek-peek-height 20
+          lsp-idle-delay 0.500
+          )
     :config
     (require 'lsp-ui-sideline)
     (add-hook 'lsp-mode-hook 'lsp-ui-sideline-mode)
-    )
-  (use-package company-lsp
-    :init
-    (setq company-lsp-enable-snippet nil)
-    (push 'company-lsp company-backends)))
+    (use-package helm-lsp)
+    )  
+  )
 
 
 (use-package yasnippet
@@ -211,6 +213,7 @@
            "rg -S --no-heading --color=never --line-number --max-columns 200"))
 (use-package helm-rg
   :init (setq helm-rg-default-directory 'git-root
+              ;; helm-rg-default-glob-string "models.py"
               helm-rg--extra-args '("--max-columns" "200")
               helm-rg-input-min-search-chars 1))
 (use-package deadgrep)

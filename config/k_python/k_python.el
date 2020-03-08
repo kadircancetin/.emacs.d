@@ -1,3 +1,5 @@
+;; pip install python-language-server[all]; pip uninstall autopep8 yapf; pip install pyls-isort pyls-black;
+
 ;; TODO: flycheck otomatik aktif oluyor
 ;; lazy load for linter
 (use-package projectile  :commands (projectile-project-root))
@@ -41,19 +43,20 @@
                   (lambda ()
                     (interactive)
                     (message "mk")
-                    (setq company-backends nil)
-                    (add-to-list 'company-backends '(
-                                                     ;; company-tabnine
-                                                     ;; :separate
-                                                     company-yasnippet
-                                                     ))
-
-                    (add-to-list 'company-backends '(company-capf
-                                                     :with
-                                                     company-dabbrev
-                                                     :separate
-                                                     company-files
-                                                     ))
+                    (setq company-backends
+                          '(;; company-bbdb
+                            ;; company-semantic
+                            ;; company-clang
+                            ;; company-xcode
+                            ;; company-cmake
+                            company-capf
+                            company-files
+                            (company-dabbrev-code company-gtags company-etags
+                                                  company-keywords)
+                            ;; company-oddmuse
+                            ;; company-tabnine
+                            ;; company-yasnippet
+                            company-dabbrev))
                     (prin1 company-backends)
                     )))
 
@@ -83,6 +86,28 @@
     (setq kadir/python-auto-indent t)
     (add-hook 'before-save-hook #'eglot-format-buffer)
     (message "Enabled: Eglot indent")))
+
 
+(defun kadir/django/find-models()
+  (interactive)
+  (let ((helm-rg-default-glob-string "models.py"))
+    (helm-rg "class model " )))
+
+(defun kadir/django/find-urls()
+  (interactive)
+  ;; (find-file (concat (projectile-project-root)
+  ;;                    (nth (-(length (split-string
+  ;;                                    (projectile-project-root) "/"))
+  ;;                           2)
+  ;;                         (split-string (projectile-project-root) "/"))
+  ;;                    "/urls.py"
+  ;;                    ))
+  (let ((helm-rg-default-glob-string "urls.py"))
+    (helm-rg "" )))
+
+(defun kadir/django/find-settings()
+  (interactive)
+  (let ((helm-rg-default-glob-string "settings.py"))
+    (helm-rg "")))
 
 (provide 'k_python)
