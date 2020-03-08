@@ -40,7 +40,6 @@
 
 (set-face-attribute 'default nil :family "fira code" :height
                     kadir/default-font-size :weight 'normal)
-(global-display-fill-column-indicator-mode)
 ;; to finding the available string names
 ;; (message
 ;;  (mapconcat (quote identity)

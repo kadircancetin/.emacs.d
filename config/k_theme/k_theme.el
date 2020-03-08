@@ -1,3 +1,12 @@
+(setq display-fill-column-indicator-character ?|)
+(setq-default fill-column 99)
+(set-face-attribute 'fill-column-indicator nil
+                    :background nil
+                    :foreground "#212026")
+(add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
+
+
+
 (defun kadir/lsp-set-colors()
   (set-face-attribute 'highlight nil
                       :underline t :weight 'bold :background nil :foreground nil)
@@ -51,8 +60,7 @@
         doom-modeline-buffer-file-name-style 'relative-from-project)
 
   (set-face-attribute 'mode-line nil :height kadir/default-font-size)
-  (set-face-attribute 'mode-line-inactive nil :height
-                      kadir/default-font-size)
+  (set-face-attribute 'mode-line-inactive nil :height kadir/default-font-size)
   (doom-modeline-mode 1))
 
 

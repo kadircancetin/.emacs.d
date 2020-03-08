@@ -77,7 +77,6 @@
 
 ;; (setq completion-styles '(basic flex))
 
-(setq-default set-fill-column 90)
 
 ;; back up
 
