@@ -8,7 +8,7 @@
 ;; source: https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq load-prefer-newer noninteractive)
-(defvar gc-cons-threshold-orginal gc-cons-threshold)
+(defvar gc-cons-threshold-orginal most-positive-fixnum)
 (setq gc-cons-percentage 0.6)
 (setq gc-cons-threshold most-positive-fixnum)
 
@@ -22,7 +22,14 @@
    (makunbound 'gc-cons-threshold-original)
    (makunbound 'file-name-handler-alist-original)
    (message "gc-cons-threshold and file-name-handler-alist restored")))
-;; (add-hook 'post-gc-hook (lambda () (message "*GC active*") ))
+
+
+;; run garbage collectin by hand when
+;; 1) every focus out of the emacs run
+;; 2) every 10 minutes wait the 1 second idle time and run
+(add-hook 'focus-out-hook (lambda() (garbage-collect)))
+(run-with-timer nil (* 10 60) (lambda () (run-with-idle-timer 1 nil 'garbage-collect)))
+(add-hook 'post-gc-hook (lambda () (message "*GC active*") ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq package-enable-at-startup nil)
