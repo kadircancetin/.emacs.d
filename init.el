@@ -24,10 +24,12 @@
 
 ;; extra big features
 (require 'k_treemacs)
+(require 'k_company)
 
 ;; programing languages and major modes
 (require 'k_html)
 (require 'k_python)
+(require 'k_clang)
 (require 'k_js)
 (require 'k_org)
 (require 'k_dotfiles)
@@ -36,6 +38,8 @@
 (require 'k_elisp)
 (require 'k_java)
 (require 'k_dired)
+(require 'k_eglot_posframe_help)
+
 
 ;; all global bindings
 (require 'binds)
@@ -43,3 +47,4 @@
 (when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
   (load-file (expand-file-name "experimental.el" user-emacs-directory))
   (message "EXPERIMENTAL EL LOADED"))
+(put 'narrow-to-region 'disabled nil)
