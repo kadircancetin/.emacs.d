@@ -39,6 +39,7 @@
   (define-key org-mode-map (kbd "C-a") 'mwim-beginning-of-code-or-line)
   (setq org-src-tab-acts-natively t) ; intent code blocks with its major modes
   (setq org-src-window-setup 'current-window) ; edit code on same window
+  (setq org-ellipsis "  ↴" )
   (setq org-src-fontify-natively t)
   (setq org-startup-indented t)
   (setq org-agenda-files (apply 'append

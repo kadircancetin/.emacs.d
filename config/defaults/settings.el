@@ -49,8 +49,8 @@
 ;; ;; SmoothScroll
 ;; ;; Vertical Scroll
 (setq scroll-step 1)
-(setq scroll-margin 3)
-(setq scroll-conservatively 101)
+(setq scroll-margin 2)
+(setq scroll-conservatively 1000)
 (setq scroll-up-aggressively 0.01)
 (setq scroll-down-aggressively 0.01)
 (setq auto-window-vscroll nil)

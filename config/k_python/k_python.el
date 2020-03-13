@@ -2,6 +2,8 @@
 
 ;; TODO: flycheck otomatik aktif oluyor
 ;; lazy load for linter
+(setq python-indent-guess-indent-offset-verbose nil)
+
 (use-package projectile  :commands (projectile-project-root))
 
 
@@ -109,5 +111,6 @@
   (interactive)
   (let ((helm-rg-default-glob-string "settings.py"))
     (helm-rg "")))
+
 
 (provide 'k_python)
