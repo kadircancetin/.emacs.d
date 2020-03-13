@@ -37,64 +37,6 @@
                              'ahs-idle-function)))
 
 
-(use-package company
-  :init
-  (setq-default company-dabbrev-downcase nil)
-
-  (setq company-idle-delay         0
-        company-tooltip-idle-delay 0
-        company-dabbrev-downcase   nil
-        company-tooltip-offset-display 'lines
-        company-minimum-prefix-length 1
-        ;; company-echo-delay 0                ; remove annoying blinking
-        company-tooltip-align-annotations 't)
-
-  :defer 0.1
-  :bind ((:map company-active-map
-               ([return] . nil)
-               ("RET" . nil)
-               ("TAB" . company-complete-selection)
-               ("<tab>" . company-complete-selection)
-               ("C-n" . company-select-next)
-               ("C-p" . company-select-previous))
-         (:map company-mode-map ("C-." . helm-company)))
-  :config
-  ;; (use-package company-tabnine :defer nil)
-  (global-company-mode 1)
-
-  (progn
-    (setq company-backends
-          '(;; company-bbdb
-            ;; company-semantic
-            ;; company-clang
-            ;; company-xcode
-            ;; company-cmake
-            company-capf
-            company-files
-            (company-dabbrev-code company-gtags company-etags
-                                  company-keywords)
-            ;; company-oddmuse
-            ;; company-tabnine
-            ;; company-yasnippet
-            company-dabbrev))
-    ;; (prin1 company-backends)
-    )
-
-  (load-file (expand-file-name "company-try-hard.el" user-emacs-directory))
-  )
-
-(use-package company-quickhelp
-  :after (company)
-  :init
-  (company-quickhelp-mode)
-  (setq company-quickhelp-max-lines 20
-        company-quickhelp-delay     nil)
-  :bind (:map company-active-map ("M-h"
-                                  . company-quickhelp-manual-begin)))
-
-(use-package helm-company)
-
-
 (use-package helm
   :defer 0.15
   :init
@@ -106,7 +48,6 @@
         (use-package helm-descbinds
           :init
           (fset 'describe-bindings 'helm-descbinds))))
-
   (setq helm-boring-buffer-regexp-list (list
                                         (rx "` ")
                                         (rx "*helm")
