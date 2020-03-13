@@ -39,6 +39,7 @@
 (require 'k_java)
 (require 'k_dired)
 (require 'k_eglot_posframe_help)
+(eglot-posframe-activate)
 
 
 ;; all global bindings

@@ -1,87 +1,80 @@
-(setq posframe-arghandler #'my-posframe-arghandler)
-(defun my-posframe-arghandler (buffer-or-name arg-name value)
-  (let ((info '(:internal-border-width 1 :internal-border-color "white")))
-    (or (plist-get info arg-name) value)))
-
-
 (require 'eglot)
 (require 'thingatpt)
+(require 'posframe)
+
 
 (defvar eglot-posframe-buffer " *my-posframe-buffer*")
 
-(defvar-local last-post-command-position 0
-  "Holds the cursor position from the last run of post-command-hooks.")
+(defvar-local eglot-posframe--waiting-qoue-empty-p nil "")
+(defvar-local eglot-posframe--active-p nil "")
+(defvar-local eglot-posframe--last-word "" "")
+
 
-(defvar-local waiting-run nil "")
-(defvar-local is-activated nil "")
-(defvar-local last-word "" "")
-(defvar-local last-buffer "" "")
-
-(defun kadir/quickhelp-position(&rest rest)
+(defun eglot-posframe--frame-position(&rest rest)
   (if (and (< (car (window-absolute-pixel-position)) 200)
            (< (cdr (window-absolute-pixel-position)) 200))
       '(5 . 16005)
     '(5 . 5)))
 
-(defun eglot-help-at-point-postframe()
-  "Request \"hover\" information for the thing at point."
+(defun eglot-posframe--activate ()
+  (when (and (eglot-managed-p)
+             (not (equal (thing-at-point 'word) eglot-posframe--last-word))
+             (not eglot-posframe--waiting-qoue-empty-p))
+    (setq eglot-posframe--last-word (thing-at-point 'word))
+    (setq eglot-posframe--waiting-qoue-empty-p t)
+    (run-with-idle-timer 0.4 nil (lambda()
+                                   (condition-case nil (eglot-posframe-help-at-point)
+                                     (error nil))))))
+
+
+
+(defun eglot-posframe-help-at-point()
+  ""
   (interactive)
+  (setq eglot-posframe--waiting-qoue-empty-p nil)
   (posframe-hide eglot-posframe-buffer)
 
   (eglot--dbind
       ((Hover) contents range)
       (jsonrpc-request (eglot--current-server-or-lose) :textDocument/hover
                        (eglot--TextDocumentPositionParams))
+    
+    (when (seq-empty-p contents) (posframe-hide eglot-posframe-buffer))
 
-    (let ((err nil))
-      (when (seq-empty-p contents)
-        (posframe-hide eglot-posframe-buffer)
-        (setq err t))
+    
+    (let ((blurb (eglot--hover-info contents range))
+          (sym (thing-at-point 'symbol)))
+      (with-current-buffer (get-buffer-create eglot-posframe-buffer)
+        (erase-buffer)
+        (insert blurb)))
 
-      (when (not err)
-        (let ((blurb (eglot--hover-info contents range))
-              (sym (thing-at-point 'symbol)))
-          (with-current-buffer (get-buffer-create eglot-posframe-buffer)
-            (erase-buffer)
-            (insert blurb)))
+    (when (posframe-workable-p)
+      (get-buffer-create eglot-posframe-buffer)
+      (posframe-show eglot-posframe-buffer
+                     :poshandler 'eglot-posframe--frame-position
+                     :internal-border-color "white"
+                     :height 20))))
 
-        (when (posframe-workable-p)
-          (get-buffer-create eglot-posframe-buffer)
-          (posframe-show eglot-posframe-buffer
-                         :poshandler 'kadir/quickhelp-position
-                         ;; :position '(0 . 0)
-                         :internal-border-color "white"
-                         ))))))
-
-(defun do-stuff-if-moved-post-command ()
-  (when (eglot-managed-p)
-    (unless (equal (thing-at-point 'word) last-word)
-      (setq last-word (thing-at-point 'word))
-
-      (run-with-idle-timer 0.4 nil (lambda()
-                                     (condition-case nil (eglot-help-at-point-postframe)
-                                       (error nil)))))))
-
-(defun kadir/tmp()
+(defun eglot-posframe-activate()
   (interactive)
-
-  (if is-activated
+  (if eglot-posframe--active-p
       (progn
         (posframe-hide eglot-posframe-buffer)
         (message "kapat")
-        (remove-hook 'post-command-hook 'do-stuff-if-moved-post-command)
-        (setq is-activated nil))
+        (remove-hook 'post-command-hook 'eglot-posframe--activate)
+        (setq eglot-posframe--active-p nil))
     (message "aç")
-    (add-hook 'post-command-hook 'do-stuff-if-moved-post-command)
-    (setq is-activated t)
-    )
-  )
-(kadir/tmp)
+    (add-hook 'post-command-hook 'eglot-posframe--activate)
+    (setq eglot-posframe--active-p t)))
 
 
-(defun my-keyboard-quit-advice (fn &rest args)
+(defun eglot-posframe-close-help (&rest args)
+  (interactive)
   (posframe-hide eglot-posframe-buffer))
 
-(advice-add 'keyboard-quit :around #'my-keyboard-quit-advice)
+
+
+
+(advice-add 'keyboard-quit :before #'eglot-posframe-close-help)
 
 (provide 'k_eglot_posframe_help)
