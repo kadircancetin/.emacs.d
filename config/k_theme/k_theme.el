@@ -1,3 +1,6 @@
+;; you can get colors from: https://paletton.com/#uid=7370K0kmls6cSGiiavGqRoEtFj-
+;; base color: #2d9574
+
 (setq display-fill-column-indicator-character ?|)
 (setq-default fill-column 99)
 (set-face-attribute 'fill-column-indicator nil
@@ -6,6 +9,10 @@
 (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
 
 
+
+(setq org-priority-faces '((?A . (:foreground "#DE4347" :weight 'bold :height 1.2))
+                           (?B . (:foreground "#E09644" :height 1.1))
+                           (?C . (:foreground "#2d9574" :height 1.0))))
 
 (defun kadir/lsp-set-colors()
   (set-face-attribute 'highlight nil
