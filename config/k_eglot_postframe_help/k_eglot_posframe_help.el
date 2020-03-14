@@ -5,16 +5,20 @@
 
 (defvar eglot-posframe-buffer " *my-posframe-buffer*")
 (defvar eglot-posframe--last-buffer nil "")
+(defvar eglot-posframe--posframe nil "")
+(defvar eglot-posframe--idle-timer 0.2 "")
 
-(defvar-local eglot-posframe--waiting-qoue-empty-p nil "")
+ (defvar-local eglot-posframe--waiting-qoue-empty-p nil "")
 (defvar-local eglot-posframe--active-p nil "")
 (defvar-local eglot-posframe--last-word "" "")
 
 
 (defun eglot-posframe--frame-position(&rest rest)
-  (if (and (< (car (window-absolute-pixel-position)) 200)
-           (< (cdr (window-absolute-pixel-position)) 200))
-      '(5 . 16005)
+  (if (and (< (cdr (window-absolute-pixel-position)) 200))
+      (let ((ret '(0 . 0)))
+        (setcar ret (+ (car (window-absolute-pixel-position)) 0))
+        (setcdr ret (* (cdr (window-absolute-pixel-position)) 2))
+        ret)
     '(5 . 5)))
 
 (defun eglot-posframe--postcommand-hook ()
@@ -24,9 +28,9 @@
     (setq eglot-posframe--last-word (thing-at-point 'word)
           eglot-posframe--waiting-qoue-empty-p t)
 
-    (run-with-idle-timer 0.4 nil (lambda()
-                                   (condition-case nil (eglot-posframe-help-at-point)
-                                     (error nil)))))
+    (run-with-idle-timer eglot-posframe--idle-timer nil (lambda()
+                                                          (condition-case nil (eglot-posframe-help-at-point)
+                                                            (error nil)))))
   ;;
   (unless (and (eq eglot-posframe--last-buffer (current-buffer))
                (not (eq (current-buffer) (get-buffer eglot-posframe-buffer))))
@@ -61,11 +65,12 @@
 
     (when (posframe-workable-p)
       (get-buffer-create eglot-posframe-buffer)
-      (posframe-show eglot-posframe-buffer
-                     :poshandler 'eglot-posframe--frame-position
-                     :internal-border-color "white"
-                     :internal-border-width 3
-                     :height 20))))
+      (setq eglot-posframe--posframe
+            (posframe-show eglot-posframe-buffer
+                           :poshandler 'eglot-posframe--frame-position
+                           :internal-border-color "white"
+                           :internal-border-width 3
+                           :height 20)))))
 
 (defun eglot-posframe-activate()
   (interactive)
@@ -88,3 +93,6 @@
 (advice-add 'keyboard-quit :before #'eglot-posframe-close-help)
 
 (provide 'k_eglot_posframe_help)
+
+
+
