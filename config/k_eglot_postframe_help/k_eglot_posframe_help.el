@@ -4,6 +4,7 @@
 
 
 (defvar eglot-posframe-buffer " *my-posframe-buffer*")
+(defvar eglot-posframe--last-buffer nil "")
 
 (defvar-local eglot-posframe--waiting-qoue-empty-p nil "")
 (defvar-local eglot-posframe--active-p nil "")
@@ -16,21 +17,30 @@
       '(5 . 16005)
     '(5 . 5)))
 
-(defun eglot-posframe--activate ()
+(defun eglot-posframe--postcommand-hook ()
   (when (and (eglot-managed-p)
              (not (equal (thing-at-point 'word) eglot-posframe--last-word))
              (not eglot-posframe--waiting-qoue-empty-p))
-    (setq eglot-posframe--last-word (thing-at-point 'word))
-    (setq eglot-posframe--waiting-qoue-empty-p t)
+    (setq eglot-posframe--last-word (thing-at-point 'word)
+          eglot-posframe--waiting-qoue-empty-p t)
+
     (run-with-idle-timer 0.4 nil (lambda()
                                    (condition-case nil (eglot-posframe-help-at-point)
-                                     (error nil))))))
-
+                                     (error nil)))))
+  ;;
+  (unless (and (eq eglot-posframe--last-buffer (current-buffer))
+               (not (eq (current-buffer) (get-buffer eglot-posframe-buffer))))
+    (setq eglot-posframe--last-buffer (current-buffer))
+    (eglot-posframe-close-help)))
 
 
 (defun eglot-posframe-help-at-point()
   ""
   (interactive)
+
+  (unless eglot-posframe--active-p
+    (eglot--error ""))
+  
   (setq eglot-posframe--waiting-qoue-empty-p nil)
   (posframe-hide eglot-posframe-buffer)
 
@@ -39,8 +49,9 @@
       (jsonrpc-request (eglot--current-server-or-lose) :textDocument/hover
                        (eglot--TextDocumentPositionParams))
     
-    (when (seq-empty-p contents) (posframe-hide eglot-posframe-buffer))
-
+    (when (seq-empty-p contents)
+      (posframe-hide eglot-posframe-buffer)
+      (eglot--error "No hover info here"))
     
     (let ((blurb (eglot--hover-info contents range))
           (sym (thing-at-point 'symbol)))
@@ -53,6 +64,7 @@
       (posframe-show eglot-posframe-buffer
                      :poshandler 'eglot-posframe--frame-position
                      :internal-border-color "white"
+                     :internal-border-width 3
                      :height 20))))
 
 (defun eglot-posframe-activate()
@@ -61,18 +73,16 @@
       (progn
         (posframe-hide eglot-posframe-buffer)
         (message "kapat")
-        (remove-hook 'post-command-hook 'eglot-posframe--activate)
+        (remove-hook 'post-command-hook 'eglot-posframe--postcommand-hook)
         (setq eglot-posframe--active-p nil))
     (message "aç")
-    (add-hook 'post-command-hook 'eglot-posframe--activate)
+    (add-hook 'post-command-hook 'eglot-posframe--postcommand-hook)
     (setq eglot-posframe--active-p t)))
 
 
 (defun eglot-posframe-close-help (&rest args)
   (interactive)
   (posframe-hide eglot-posframe-buffer))
-
-
 
 
 (advice-add 'keyboard-quit :before #'eglot-posframe-close-help)
