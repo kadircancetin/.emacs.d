@@ -97,8 +97,9 @@
 (use-package ace-window
   :defer t
   :init
-  (setq aw-keys '(?a ?s ?n ?o ?p ?f ?p ?k ?l)
-        aw-scope 'frame))
+  (setq
+   ;; aw-keys '(?a ?s ?n ?o ?p ?f ?p ?k ?l)
+   aw-scope 'frame))
 
 
 (use-package wrap-region

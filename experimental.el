@@ -89,6 +89,14 @@ the web page, don't go to that buffer."
 
 (global-set-key (kbd "M-o") 'other-window-if-not-eaf)
 
+(defun delete-window-and-split-with-browser()
+  (interactive)
+  (delete-other-windows)
+  (display-buffer kadir/web-develop-bufer-name)
+  (resize-window-width 9))
+
+(global-set-key (kbd "C-x 1") 'delete-window-and-split-with-browser)
+
 
 ;; some functions that commented
 
