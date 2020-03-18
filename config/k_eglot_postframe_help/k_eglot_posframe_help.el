@@ -93,6 +93,3 @@
 (advice-add 'keyboard-quit :before #'eglot-posframe-close-help)
 
 (provide 'k_eglot_posframe_help)
-
-
-

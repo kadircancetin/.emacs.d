@@ -60,10 +60,10 @@
               :internal-border-color "white"
               :no-properties nil))
 
-  (setq posframe-arghandler #'my-posframe-arghandler)
-  (defun my-posframe-arghandler (buffer-or-name arg-name value)
-    (let ((info '(:internal-border-width 1 :internal-border-color "white")))
-      (or (plist-get info arg-name) value)))
+  ;; (setq posframe-arghandler #'my-posframe-arghandler)
+  ;; (defun my-posframe-arghandler (buffer-or-name arg-name value)
+  ;;   (let ((info '(:internal-border-width 1 :internal-border-color "white")))
+  ;;     (or (plist-get info arg-name) value)))
 
   :bind
   (:map company-posframe-active-map
