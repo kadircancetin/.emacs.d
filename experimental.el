@@ -1,22 +1,3 @@
-(use-package deft
-  :defer nil
-  :custom
-  (deft-recursive t)
-  (deft-use-filter-string-for-filename t)
-  (deft-default-extension "org")
-  (deft-directory "~/org/")
-  (deft-use-filename-as-title t))
-
-
-;; (defhydra hydra-zoom (global-map "<f2>")
-;;   "zoom"
-;;   ("g" text-scale-increase "in")
-;;   ("l" text-scale-decrease "out"))
-
-
-(global-set-key (kbd "C-c d d") 'deft)
-
-
 (use-package nov
   :init
   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
@@ -41,10 +22,12 @@
 
 (use-package eaf
   :load-path "/usr/share/emacs/site-lisp/eaf"
+  :defer 5
   :demand t
 
   :init
-  (setq browse-url-browser-function 'eaf-open-browser)
+  ;; (setq browse-url-browser-function 'eaf-open-browser) ;; make eaf as a emacs deafult browser
+
   (defalias 'browse-web #'eaf-open-browser)
 
   :custom
@@ -65,8 +48,9 @@
 
 
 ;; örnek html kullanımı
-(defvar kadir/web-develop-bufer-name "reload" "")
-(setq kadir/web-develop-bufer-name "reload")
+(defvar kadir/web-develop-bufer-name "Esthetic Hair Turkey | Hair Transplant Clinic in Turkey" "")
+(setq kadir/web-develop-bufer-name "Esthetic Hair Turkey | Hair Transplant Clinic in Turkey")
+
 (defun eaf-reload-page (event)
   (with-selected-window (display-buffer kadir/web-develop-bufer-name)
     (eaf-proxy-refresh_page))
@@ -74,7 +58,10 @@
 
 (cl-loop for element in (directory-files-recursively "~/eht/templates" "")
          do (file-notify-add-watch element '(change) 'eaf-reload-page))
+(cl-loop for element in (directory-files-recursively "~/eht/assets/css" "")
+         do (file-notify-add-watch element '(change) 'eaf-reload-page))
 
+(file-notify-add-watch "~/eht/assets/bulma-0.7.2/mystyles.css" '(change) 'eaf-reload-page)
 (file-notify-add-watch "~/eht/assets/bulma-0.7.2/mystyles.css" '(change) 'eaf-reload-page)
 
 
@@ -88,6 +75,7 @@ the web page, don't go to that buffer."
     (other-window 1)))
 
 (global-set-key (kbd "M-o") 'other-window-if-not-eaf)
+(global-set-key (kbd "M-O") 'other-window)
 
 (defun delete-window-and-split-with-browser()
   (interactive)
@@ -106,3 +94,84 @@ the web page, don't go to that buffer."
 
 ;; (cl-loop for element in (directory-files-recursively "~/eht/assets" "")
 ;;          do (file-notify-add-watch element '(change) 'eaf-reload-page))
+
+;; python interpreter
+
+(setq-default python-shell-interpreter "ipython"
+              python-shell-interpreter-args "-i")
+
+;; org-roam
+(use-package org-roam
+  :init
+  (require 'org-roam-protocol)
+  (setq org-roam-buffer-width 0.5)
+
+  (eval-after-load 'org-roam
+    '(defun org-roam--find-file (file)
+       "override method because sometimes find-file can't get the true window"
+       (other-window 1)
+       (message "kadir")
+       (find-file file))
+    )
+
+  (defun kadir/org-roam-disable-activate-roam (funct extra_arg_p &rest args)
+    "It close roam backlink page, run function, open backlink page"
+    (interactive "P")
+    (pcase (org-roam-buffer--visibility)
+      ('visible
+       (delete-window (get-buffer-window org-roam-buffer))
+
+       (if extra_arg_p
+           (funcall funct args)
+         (funcall funct))
+
+       (org-roam))
+
+      ((or 'exists 'none)
+       (progn
+
+         (if extra_arg_p
+             (funcall funct args)
+           (funcall funct))
+
+         (org-roam-buffer--get-create)))))
+
+  (defun kadir/org-roam-dailies-today (&rest args)
+    "override org-roam-dailies because of the new frame bug?? ı dont know is it bug or something"
+    (interactive)
+    (kadir/org-roam-disable-activate-roam 'org-roam-dailies-today nil args))
+
+  (defun kadir/org-roam-insert (&rest args)
+    "override org-roam-dailies because of the new frame bug?? ı dont know is it bug or something"
+    (interactive "P")
+    (kadir/org-roam-disable-activate-roam 'org-roam-insert t args))
+
+  
+  :hook 
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory "~/Dropbox/org-roam/")
+  :bind (:map org-roam-mode-map
+              (("ö r l" . org-roam)
+               ("ö r f" . org-roam-find-file)
+               ("ö r t" . kadir/org-roam-dailies-today)
+               ("ö r g" . org-roam-show-graph))
+              :map org-mode-map
+              (("ö r i" . kadir/org-roam-insert))))
+
+;; company org-roam
+(let ((default-directory "~/.emacs.d/gits/"))
+  (normal-top-level-add-subdirs-to-load-path))
+(require 'company-org-roam)
+(push 'company-org-roam company-backends)
+
+;; deft for find somethings
+(use-package deft
+  :defer nil
+  :custom
+  (deft-recursive t)
+  (deft-use-filter-string-for-filename t)
+  (deft-default-extension "org")
+  (deft-directory "~/Dropbox/org-roam/")
+  (deft-use-filename-as-title nil))
+

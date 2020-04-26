@@ -31,10 +31,14 @@
     (other-frame 0)))
 
 
+(use-package org-pomodoro)
+
 (use-package org
   :bind
   (:map org-mode-map
-        ("M-." . elisp-slime-nav-find-elisp-thing-at-point))
+        ("M-." . org-open-at-point)
+        ("M-," . org-mark-ring-goto)
+        )
   :config
   (define-key org-mode-map (kbd "C-a") 'mwim-beginning-of-code-or-line)
   (setq org-src-tab-acts-natively t) ; intent code blocks with its major modes
@@ -102,4 +106,7 @@
  'append)
 
 
+
+
 (provide 'k_org)
+
