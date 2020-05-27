@@ -107,6 +107,8 @@
   :config
   (wrap-region-add-wrapper "<>" "</>" "#" 'rjsx-mode)
   (wrap-region-add-wrapper "#+begin_src emacs-lisp\n  " "\n#+end_src" "*" 'org-mode)
+  (wrap-region-add-wrapper "{% trans \"" "\"  %}" "*" 'web-mode)
+  (wrap-region-add-wrapper "<p>" "</p>" "!" 'web-mode)
   (wrap-region-add-wrapper "=" "=" "=" 'org-mode)
   (wrap-region-global-mode t))
 
@@ -198,6 +200,15 @@
   :commands (sudo-edit))
 
 
+(use-package activity-watch-mode
+  :if (executable-find "aw-qt")
+  :defer 5
+  :config
+  (setq activity-watch-pulse-time 5)
+
+  (add-hook 'prog-mode-hook 'activity-watch-mode)
+  (message "activity watch enabled"))
+
 (use-package wakatime-mode
   :if (executable-find "wakatime")
   :defer 5

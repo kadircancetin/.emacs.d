@@ -8,7 +8,7 @@
 ;; source: https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq load-prefer-newer noninteractive)
-(defvar gc-cons-threshold-orginal most-positive-fixnum)
+(defvar gc-cons-threshold-orginal 800000)
 (setq gc-cons-percentage 0.6)
 (setq gc-cons-threshold most-positive-fixnum)
 

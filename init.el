@@ -49,3 +49,4 @@
   (load-file (expand-file-name "experimental.el" user-emacs-directory))
   (message "EXPERIMENTAL EL LOADED"))
 (put 'narrow-to-region 'disabled nil)
+(put 'upcase-region 'disabled nil)

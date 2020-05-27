@@ -51,7 +51,7 @@
                                  (lambda (directory)
                                    (directory-files-recursively
                                     directory org-agenda-file-regexp))
-                                 '("~/org"))))  ;; recursively get org files
+                                 '("~/Dropbox/org-roam"))))  ;; recursively get org files
 
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "~/org/inbox.org" "Inbox")
@@ -104,8 +104,10 @@
  `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)"
     1 'org-checkbox-done-text prepend))
  'append)
+
 
-
+(use-package ox-reveal)
+(require 'ox-reveal)
 
 
 (provide 'k_org)

@@ -118,22 +118,17 @@ the web page, don't go to that buffer."
     "It close roam backlink page, run function, open backlink page"
     (interactive "P")
     (pcase (org-roam-buffer--visibility)
+
       ('visible
        (delete-window (get-buffer-window org-roam-buffer))
-
-       (if extra_arg_p
-           (funcall funct args)
-         (funcall funct))
-
-       (org-roam))
+       (if extra_arg_p (funcall funct args) (funcall funct))
+       (pcase (org-roam-buffer--visibility)
+         ((or 'exists 'none)
+          (org-roam))))
 
       ((or 'exists 'none)
        (progn
-
-         (if extra_arg_p
-             (funcall funct args)
-           (funcall funct))
-
+         (if extra_arg_p (funcall funct args) (funcall funct))
          (org-roam-buffer--get-create)))))
 
   (defun kadir/org-roam-dailies-today (&rest args)
@@ -175,3 +170,67 @@ the web page, don't go to that buffer."
   (deft-directory "~/Dropbox/org-roam/")
   (deft-use-filename-as-title nil))
 
+
+(add-hook 'after-save-hook (lambda()
+                             (interactive)
+                             (when (equal (buffer-file-name) "/home/kadir/bitirme_tezi/sunum.org")
+                               (org-reveal-export-to-html)
+                               )))
+
+(use-package ein
+  :init
+  (setq ein:output-area-inlined-images t))
+
+;;;;;;;;;;;;;;;;;;;
+
+(autoload 'matlab-mode "matlab" "Matlab Editing Mode" t)
+(add-to-list
+ 'auto-mode-alist
+ '("\\.m$" . matlab-mode)
+ '("\\.mlx" . matlab-mode)
+ )
+(setq matlab-indent-function t)
+(setq matlab-shell-command "matlab")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'auto-mode-alist '("\\.scss\\'" . sass-mode))
+(global-set-key (kbd "C-c k") 'web-mode-element-close)
+
+;;;;;;;;;;;;;;,,;;;;;;;;;;;;;;
+
+(add-to-list 'eglot-server-programs '((tex-mode context-mode texinfo-mode bibtex-mode)
+                                      . ("digestif")))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq doc-view-continuous t)
+
+
+(use-package pdf-tools
+  ;; :load-path "/usr/share/emacs/site-lisp/pdf-tools/pdf-tools.el"
+  :defer nil
+  ;; :demand t
+  :config
+  ;; initialise
+  (pdf-tools-install)
+  ;; open pdfs scaled to fit page
+  (setq-default pdf-view-display-size 'fit-page)
+  ;; automatically annotate highlights
+  (setq pdf-annot-activate-created-annotations t)
+  ;; use normal isearch
+  (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward))
+
+
+(use-package org-roam-server
+  :ensure t)
+
+
+(use-package buffer-flip
+  :ensure t
+  :bind  (("M-<SPC>" . buffer-flip)
+          :map buffer-flip-map
+          ( "M-<SPC>" .   buffer-flip-forward) 
+          ( "M-S-<SPC>" . buffer-flip-backward) 
+          ( "M-g" .     buffer-flip-abort))
+  :config
+  (setq buffer-flip-skip-patterns
+        '("^\\*helm\\b"
+          "^\\*swiper\\*$")))
