@@ -3,6 +3,8 @@
 ;; TODO: flycheck otomatik aktif oluyor
 ;; lazy load for linter
 (setq python-indent-guess-indent-offset-verbose nil)
+(setq-default python-shell-interpreter "ipython"
+              python-shell-interpreter-args "-i")
 
 (use-package projectile  :commands (projectile-project-root))
 
@@ -88,6 +90,11 @@
     (setq kadir/python-auto-indent t)
     (add-hook 'before-save-hook #'eglot-format-buffer)
     (message "Enabled: Eglot indent")))
+
+
+(use-package ein
+  :init
+  (setq ein:output-area-inlined-images t))
 
 
 (defun kadir/django/find-models()

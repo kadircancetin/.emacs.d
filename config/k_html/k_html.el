@@ -1,5 +1,6 @@
 (use-package web-mode
   :init
+  (global-set-key (kbd "C-c k") 'web-mode-element-close) ;; TODO: make mode map
   (setq css-indent-offset 2
         web-mode-markup-indent-offset 2
         web-mode-css-indent-offset 2
@@ -28,5 +29,8 @@
 (use-package helm-emmet
   :after helm emmet web-mode)
 
+(use-package sass-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\.scss\\'" . sass-mode)))
 
 (provide 'k_html)
