@@ -6,8 +6,8 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; cleaning init.el (another file for custom-set-variables etc.)
-(setq-default custom-file (concat user-emacs-directory "custom.el"))
-(load-file  (concat user-emacs-directory "custom.el"))
+;; (setq-default custom-file (concat user-emacs-directory "custom.el"))
+;; (load-file  (concat user-emacs-directory "custom.el"))
 
 (setq echo-keystrokes 0.1)
 
