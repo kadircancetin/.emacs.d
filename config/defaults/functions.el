@@ -137,6 +137,13 @@
                        (error "You need more than 1 window to execute this function!"))))
   (message "%s" h)
   (window-resize nil (- (truncate (* (/ h 12.0) (frame-height))) (window-total-height)) nil))
+
+
+(defun kadir/align-comments-region (beginning end)
+  "Align comments in region."
+  (interactive "*r")
+  (align-regexp beginning end (concat "\\(\\s-*\\)"
+                                      (regexp-quote comment-start))))
 
 ;; (defun kadir/save-config-async()
 ;;   ""
