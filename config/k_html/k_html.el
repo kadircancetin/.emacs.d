@@ -33,4 +33,10 @@
   :init
   (add-to-list 'auto-mode-alist '("\\.scss\\'" . sass-mode)))
 
+(use-package auto-rename-tag
+  :init
+  (add-hook 'web-mode-hook (lambda() (auto-rename-tag-mode t)))
+  )
+
+
 (provide 'k_html)
