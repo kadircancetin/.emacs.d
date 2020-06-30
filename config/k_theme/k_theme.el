@@ -89,4 +89,8 @@
   :hook ((org-mode . turn-on-stripe-table-mode)))
 
 
+;; (set-face-attribute 'avy-goto-char-timer-face  nil :background "blue" :foreground "white")
+;; (set-face-attribute 'avy-lead-face  nil :background "yellow" :foreground "black")
+
+
 (provide 'k_theme)
