@@ -13,6 +13,19 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+
+(use-package no-littering)
+(require 'no-littering)
+
+(setq auto-save-file-name-transforms
+      `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+(setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+(if (file-exists-p custom-file)
+    (load-file custom-file))
+(add-to-list 'yas-snippet-dirs
+             (expand-file-name "snippets" user-emacs-directory))
+
+
 (require 'use-package-ensure)
 (setq use-package-always-ensure t
       use-package-always-defer t
@@ -75,5 +88,6 @@
                        (unless (server-running-p)
                          (server-start))
                        (require 'org-protocol)))
+
 
 (provide 'defaults)
