@@ -14,6 +14,11 @@
   (package-install 'use-package))
 
 
+(require 'use-package-ensure)
+(setq use-package-always-ensure t
+      use-package-always-defer t
+      use-package-expand-minimally t)
+
 (use-package no-littering)
 (require 'no-littering)
 
@@ -24,13 +29,7 @@
     (load-file custom-file))
 (add-to-list 'yas-snippet-dirs
              (expand-file-name "snippets" user-emacs-directory))
-
 
-(require 'use-package-ensure)
-(setq use-package-always-ensure t
-      use-package-always-defer t
-      use-package-expand-minimally t)
-
 
 (use-package auto-package-update
   :if (not (daemonp))

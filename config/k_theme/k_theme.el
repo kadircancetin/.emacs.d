@@ -7,25 +7,10 @@
                     :background nil
                     :foreground "#212026")
 (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
-
-
-
+
 (setq org-priority-faces '((?A . (:foreground "#DE4347" :weight 'bold :height 1.2))
                            (?B . (:foreground "#E09644" :height 1.1))
                            (?C . (:foreground "#2d9574" :height 1.0))))
-
-(defun kadir/lsp-set-colors()
-  (set-face-attribute 'highlight nil
-                      :underline t :weight 'bold :background nil :foreground nil)
-  (set-face-attribute 'lsp-face-highlight-read nil
-                      :underline t :weight 'bold :background nil :foreground nil)
-  (set-face-attribute 'lsp-face-highlight-write nil
-                      :underline t :weight 'bold :background nil :foreground nil)
-  (set-face-attribute 'lsp-face-highlight-textual nil
-                      :underline t :weight 'bold :background nil :foreground nil)
-  ;; (set-face-attribute 'rjsx-tag nil
-  ;;                     :underline nil :weight 'normal :background nil :foreground nil)
-  )
 
 
 
@@ -38,7 +23,37 @@
         :init
         (setq-default spacemacs-theme-comment-italic t
                       spacemacs-theme-org-height nil)
-        (load-theme 'spacemacs-dark t))
+        (load-theme 'spacemacs-dark t)
+        (let ((custom--inhibit-theme-enable nil))
+          (custom-theme-set-faces
+           'spacemacs-dark
+           ;; diff-hl
+           '(diff-hl-insert ((t (:background "#29422d" :foreground "#67b11d"))))
+           '(diff-hl-change ((t (:background "#2d4252" :foreground "#4f97d7"))))
+           '(diff-hl-delete ((t (:background "#512e31" :foreground "#f2241f"))))
+
+           ;; ahs
+           '(ahs-plugin-defalt-face       ((t (:underline t :weight bold :background nil :foreground nil))))
+           '(ahs-definition-face          ((t (:underline t :weight bold :background nil :foreground nil))))
+           '(ahs-face                     ((t (:underline t :weight bold :background nil :foreground nil))))
+           '(ahs-plugin-whole-buffer-face ((t (:underline t :weight bold :background nil
+                                                          :foreground nil))))
+
+           ;; lsp
+           '(highlight nil      ((t (:underline t :weight 'bold :background nil :foreground nil))))
+           '(lsp-face-highlight ((t (:underline t :weight 'bold :background nil :foreground nil))))
+           '(lsp-face-highlight ((t (:underline t :weight 'bold :background nil :foreground nil))))
+           '(lsp-face-highlight ((t (:underline t :weight 'bold :background nil :foreground nil))))
+
+           ;; stripe-highlight
+           '(stripe-highlight ((t (:background "#333335"))))
+           
+           )
+          )
+        )
+      ;; (set-face-attribute 'avy-goto-char-timer-face  nil :background "blue" :foreground "white")
+      ;; (set-face-attribute 'avy-lead-face  nil :background "yellow" :foreground "black")
+
 
       ;; (use-package doom-themes
       ;;   :custom-face
@@ -71,26 +86,9 @@
   (doom-modeline-mode 1))
 
 
-(defun kadir/ahs-set-colors()
-  (set-face-attribute 'ahs-plugin-defalt-face nil
-                      :underline t :weight 'bold :background nil :foreground nil)
-  (set-face-attribute 'ahs-definition-face nil
-                      :underline t :weight 'bold :background nil :foreground nil)
-  (set-face-attribute 'ahs-face nil
-                      :underline t :weight 'bold :background nil :foreground nil)
-  (set-face-attribute 'ahs-plugin-whole-buffer-face nil
-                      :underline t :weight 'bold :background nil :foreground nil)
-  )
-
-
 (use-package stripe-buffer
   :config
-  (set-face-attribute 'stripe-highlight nil :background "#333335")
   :hook ((org-mode . turn-on-stripe-table-mode)))
-
-
-;; (set-face-attribute 'avy-goto-char-timer-face  nil :background "blue" :foreground "white")
-;; (set-face-attribute 'avy-lead-face  nil :background "yellow" :foreground "black")
 
 
 (provide 'k_theme)

@@ -27,7 +27,6 @@
 (use-package auto-highlight-symbol
   :defer t
   :config
-  (kadir/ahs-set-colors)
   (setq ahs-case-fold-search nil
         ahs-default-range 'ahs-range-display
         ahs-idle-interval 0.2
@@ -122,7 +121,6 @@
 
 (use-package lsp-mode
   :config
-  (kadir/lsp-set-colors)
   (setq  lsp-enable-snippet nil
          lsp-prefer-flymake nil)
   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
