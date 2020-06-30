@@ -1,34 +1,8 @@
+(load-file (expand-file-name "config/k_org/functions.el" user-emacs-directory))
+
 (use-package htmlize)
 (use-package org-bullets)
 (use-package org-web-tools)
-
-(defun kadir/org-screenshot ()
-  ;; fork from: https://delta.re/org-screenshot/
-  "Take a screenshot into a time stamped unique-named file in the
-    same directory as the org-buffer and insert a link to this file."
-  (interactive)
-  (when (eq major-mode 'org-mode)
-    (suspend-frame)
-    (org-display-inline-images)
-    (setq filename
-          (concat
-           (make-temp-name
-            (concat (file-name-nondirectory (buffer-file-name))
-                    "_imgs/"
-                    (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
-    (unless (file-exists-p (file-name-directory filename))
-      (make-directory (file-name-directory filename)))
-                                        ; take screenshot
-    (if (eq system-type 'darwin)
-        (call-process "screencapture" nil nil nil "-i" filename))
-    (if (eq system-type 'gnu/linux)
-        (call-process "import" nil nil nil filename))
-                                        ; insert into file if correctly taken
-    (if (file-exists-p filename)
-        (insert (concat "[[file:" filename "]]")))
-    (org-remove-inline-images)
-    (org-display-inline-images)
-    (other-frame 0)))
 
 
 (use-package org-pomodoro)
@@ -37,8 +11,7 @@
   :bind
   (:map org-mode-map
         ("M-." . org-open-at-point)
-        ("M-," . org-mark-ring-goto)
-        )
+        ("M-," . org-mark-ring-goto))
   :config
   (define-key org-mode-map (kbd "C-a") 'mwim-beginning-of-code-or-line)
   (setq org-src-tab-acts-natively t) ; intent code blocks with its major modes
@@ -107,8 +80,18 @@
 
 
 (use-package ox-reveal)
-(require 'ox-reveal)
+;; (require 'ox-reveal)
 
+
+(use-package deft
+  :defer nil
+  :custom
+  (deft-recursive t)
+  (deft-use-filter-string-for-filename t)
+  (deft-default-extension "org")
+  (deft-directory "~/Dropbox/org-roam/")
+  (deft-use-filename-as-title nil))
+
+(load-file (expand-file-name "config/k_org/roam.el" user-emacs-directory))
 
 (provide 'k_org)
-
