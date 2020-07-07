@@ -1,5 +1,7 @@
 ;; org-roam
 (use-package org-roam
+  :commands (org-roam org-roam-mode-map org-roam-find-file)
+  :defer 1.1
   :init
   (setq org-roam-buffer-width 0.4)
   (setq org-roam-buffer-no-delete-other-windows t)
@@ -13,18 +15,11 @@
     )
 
   :hook 
-  (after-init . org-roam-mode)
+  (org-mode . org-roam-mode)
   :custom
   (org-roam-directory "~/Dropbox/org-roam/")
   :config
-  (require 'org-roam-protocol)
-  :bind (:map org-roam-mode-map
-              (("ö r l" . org-roam)
-               ("ö r f" . org-roam-find-file)
-               ("ö r t" . kadir/org-roam-dailies-today)
-               ("ö r g" . org-roam-show-graph))
-              :map org-mode-map
-              (("ö r i" . kadir/org-roam-insert))))
+  (require 'org-roam-protocol))
 
 ;; company org-roam
 ;; (let ((default-directory "~/.emacs.d/gits/"))

@@ -27,7 +27,7 @@
                                  '("~/Dropbox/org-roam"))))  ;; recursively get org files
 
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/org/inbox.org" "Inbox")
+        '(("t" "Todo" entry (file+headline "~/Dropbox/org-roam/20200503174932-inbox.org" "Inbox")
            "* TODO %?\n  Added: \%u\n  \%a")
           ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
            "* %?\n  Entered on %U\n  %i\n  %a")

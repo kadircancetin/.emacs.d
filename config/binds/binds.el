@@ -66,6 +66,14 @@
  ("p"                 . bm-previous)
  ("a"                 . helm-bm))
 
+(bind-keys
+ :prefix-map kadir/roam
+ :prefix "ör"
+ ("l"                 . org-roam)
+ ("f"                 . org-roam-find-file)
+ ("t"                 . kadir/org-roam-dailies-today)
+ ("i"                 . kadir/org-roam-insert)
+ ("g"                 . org-roam-show-graph))
 
 (kadir/bind
  '(;; editing
