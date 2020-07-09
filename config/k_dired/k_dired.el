@@ -49,8 +49,8 @@
                ))
   :config
 
-  (when (package-installed-p 'stripe-buffer)
-    (add-hook 'dired-mode-hook 'stripe-listify-buffer))
+  ;; (when (package-installed-p 'stripe-buffer)
+  ;;   (add-hook 'dired-mode-hook 'stripe-listify-buffer)) ;; TODO: fix this
 
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
   )
