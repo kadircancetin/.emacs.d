@@ -77,7 +77,7 @@ translation it is possible to get suggestion."
   (setq which-key-idle-delay 0.8))
 
 
-(use-package benchmark-init :ensure t)
+;; (use-package benchmark-init :ensure t) ;; TODO: activate
 
 
 ;; NOTE: very long emacs shutdown time when it is activated

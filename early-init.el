@@ -75,9 +75,10 @@
 
 
 (when (file-exists-p
-       "~/.emacs.d/elpa/benchmark-init-20150905.938/benchmark-init.elc"
+       "~/.emacs.d/elpa2/benchmark-init-20150905.938/benchmark-init.elc"
        )
   ;; TODO: get the from file whithout the version.
   (load-file
-   "~/.emacs.d/elpa/benchmark-init-20150905.938/benchmark-init.elc")
+   "~/.emacs.d/elpa2/benchmark-init-20150905.938/benchmark-init.elc")
+  (benchmark-init/activate)
   (add-hook 'after-init-hook 'benchmark-init/deactivate))

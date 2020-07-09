@@ -1,22 +1,33 @@
 
 (require 'package)
-(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                    (not (gnutls-available-p))))
-       (proto (if no-ssl "http" "https")))
-  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t))
 
-(package-initialize)
+;; - =M-x straight-pull-all=: update all packages.
+;; - =M-x straight-normalize-all=: restore all packages (remove local edits)
+;; - =M-x straight-freeze-versions= and =M-x straight-thaw-versions= are like =pip
+;; freeze requirements.txt= and =pip install -r requirements.txt=
+;; - To tell straight.el that you want to use the version of Org shipped with
+;; Emacs, rather than cloning the upstream repository:
+;; (Note: ":tangle no")
 
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-;; installing the use-package automatically if it is not installed
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+(setq straight-check-for-modifications '(watch-files find-when-checking))
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 
-(require 'use-package-ensure)
-(setq use-package-always-ensure t
-      use-package-always-defer t
+(setq use-package-always-defer t
       use-package-expand-minimally t)
 
 (use-package no-littering)

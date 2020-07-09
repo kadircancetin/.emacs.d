@@ -224,10 +224,12 @@
            helm-ag-base-command
            "rg -S --no-heading --color=never --line-number --max-columns 200"))
 (use-package helm-rg
-  :init (setq helm-rg-default-directory 'git-root
-              ;; helm-rg-default-glob-string "models.py"
-              helm-rg--extra-args '("--max-columns" "200")
-              helm-rg-input-min-search-chars 1))
+  ;; NOTE: source codda değişiklik yaptım
+  ;;(helm-make-source "ripgrep" 'helm-source-async ;; helm-grep-ag-class
+  :init
+  (setq helm-rg-default-directory 'git-root
+        helm-rg--extra-args '("--max-columns" "200")
+        helm-rg-input-min-search-chars 1))
 (use-package deadgrep)
 
 

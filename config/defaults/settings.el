@@ -26,7 +26,7 @@
               kill-ring-max            256    ; increatese kill-ring history
               search-whitespace-regexp ".*?"  ; make isearch more fuzzy like
               ;; require-final-newline    t
-              ;; vc-follow-symlinks       t
+              vc-follow-symlinks       t
               )
 
 (setq winner-boring-buffers

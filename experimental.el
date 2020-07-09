@@ -39,3 +39,26 @@
 
 ;; (global-set-key (kbd "C-q") 'avy-goto-char-timer)
 
+;; (use-package selectrum)
+;; (use-package selectrum-prescient-mode)
+;; (use-package prescient)
+
+;; (selectrum-mode +1)
+;; (selectrum-prescient-mode +1)
+;; (prescient-persist-mode +1)
+
+;; (setq selectrum-num-candidates-displayed 20
+;;       selectrum-fix-minibuffer-height t
+;;       selectrum-count-style 'current/matches
+;;       selectrum-show-indices nil
+;;       )
+;; (setq projectile-completion-system 'default)
+
+
+;; (defun recentf-open-files+ ()
+;;   "Use `completing-read' to open a recent file."
+;;   (interactive)
+;;   (let ((files (mapcar 'abbreviate-file-name recentf-list)))
+;;     (find-file (completing-read "Find recent file: " files nil t))))
+
+(straight-use-package 'esup)

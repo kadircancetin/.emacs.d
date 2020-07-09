@@ -37,7 +37,7 @@
 ;; PACKAGES
 
 (use-package dired
-  :ensure nil
+  :straight (:type built-in)
   :bind (:map dired-mode-map
               (("O" . browse-url-of-dired-file)
                ("RET" . kadir/dired-smart-open)

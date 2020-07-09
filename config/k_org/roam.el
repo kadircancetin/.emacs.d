@@ -27,5 +27,4 @@
 ;; (require 'company-org-roam)
 ;; (push 'casfmpany-org-roam company-backends)
 
-(use-package org-roam-server
-  :ensure t)
+(use-package org-roam-server)

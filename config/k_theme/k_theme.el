@@ -19,6 +19,7 @@
       (disable-theme 'wombat)
       (global-hl-line-mode 1)        ; highlight your cusor line. don't lost.
 
+      (straight-use-package 'spacemacs-theme)
       (use-package spacemacs-theme
         :init
         (setq-default spacemacs-theme-comment-italic t
