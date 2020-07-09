@@ -6,3 +6,8 @@
   (if (projectile-project-p)
       (helm-do-ag-project-root)
     (helm-do-ag default-directory)))
+
+(defun kadir/long-lsp-find ()
+  (interactive)
+  (let ((lsp-response-timeout 20))
+    (lsp-ui-peek-find-definitions)))

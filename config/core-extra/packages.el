@@ -119,6 +119,7 @@
   (:map eglot-mode-map("C-c DEL" . 'eglot-help-at-point)))  ; TODO: change keybind
 
 
+(use-package flycheck)
 (use-package lsp-mode
   :config
   ;; (setq lsp-enable-snippet nil)
@@ -128,8 +129,8 @@
   ;; lsp-eldoc-render-all nil                                                      ???????
   ;; lsp-enable-indentation t                                                      
   (setq
-   lsp-log-io t
-   lsp-print-performance t
+   ;; lsp-log-io t
+   ;; lsp-print-performance t
    lsp-enable-snippet nil
    
    lsp-enable-folding nil ;; hiç kullanmadığım için
@@ -140,27 +141,33 @@
    lsp-eldoc-enable-hover nil ;; hover genelde yavaş çalışıyor TODO: pyls illa hover açıyor gibi
    lsp-enable-symbol-highlighting nil
    
-   lsp-response-timeout 5 ;; TODO: is it true way?
+   lsp-response-timeout 10 ;; TODO: is it true way?
    lsp-signature-auto-activate nil
    lsp-signature-render-documentation nil
    ;; lsp-signature-doc-lines 5
 
-   ;; lsp-prefer-capf nil ;;                       TODO:                                    ?????????????
+   ;; lsp-prefer-capf nil ;;                       TODO:
+   ;; ?????????????
+
+
+   ;;;;;;;;;;;;;;;;;;;;;;;;;
+   ;; get from doom emacs
+   ;;;;;;;;;;;;;;;;;;;;;;;;;
+   lsp-enable-links nil
+   ;; Potentially slow
+   lsp-enable-file-watchers nil
+   lsp-enable-text-document-color nil
+   lsp-enable-semantic-highlighting nil
+   ;; Don't modify our code without our permission
+   lsp-enable-indentation nil
+   lsp-enable-on-type-formatting nil
+   ;; capf is the preferred completion mechanism for lsp-mode now
+   lsp-prefer-capf t
    
    )
   
-  ;; lsp-lens-auto-enable nil                                                      
-  ;; lsp-lens-debounce-interval 0.2                                                
-  ;; lsp-symbol-highlighting-skip-current nil                                      
-  ;; lsp-file-watch-threshold 1000                                                 
-
-  ;; lsp-prefer-capf t
-  ;; lsp-idle-delay 0.500
-     ;;;;;;;;;;;;;;
-  
   
   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-  (use-package flycheck)
   (flymake-mode 0)
   (flycheck-mode 1)
 
@@ -193,7 +200,7 @@
     (setq lsp-ui-flycheck-list-position 'bottom)
     
     (setq lsp-ui-sideline-enable t                                     
-          lsp-ui-sideline-ignore-duplicate nil                         
+          lsp-ui-sideline-ignore-duplicate t
           lsp-ui-sideline-show-symbol t                                
           lsp-ui-sideline-show-hover nil                               
           lsp-ui-sideline-show-diagnostics t                           

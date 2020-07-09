@@ -1,5 +1,4 @@
 (use-package lsp-java
-  :after lsp
   :bind (:map java-mode-map
               ("M-." . lsp-ui-peek-find-definitions)
               ("C-c C-n" . flycheck-next-error)
