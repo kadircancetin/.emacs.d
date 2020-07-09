@@ -12,7 +12,7 @@
 (defvar kadir/python-auto-indent t
   "If non-nil python auto indentation on save.")
 
-(defvar kadir/python-lsp-eglot 'eglot
+(defvar kadir/python-lsp-eglot 'lsp-mode
   "If not `eglot' emacs use `lsp-mode' for language server.")
 
 (if kadir/python-auto-indent
