@@ -238,7 +238,6 @@
                (("C-x 4 C-m" . magit-diff-visit-file-other-window))))
   :config
   (use-package magit-todos
-    :defer nil
     :init
     (magit-todos-mode 1)
     (magit-todos-branch-list-toggle)))

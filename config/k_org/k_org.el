@@ -84,7 +84,6 @@
 
 
 (use-package deft
-  :defer nil
   :custom
   (deft-recursive t)
   (deft-use-filter-string-for-filename t)

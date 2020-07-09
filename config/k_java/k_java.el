@@ -1,5 +1,4 @@
 (use-package lsp-java
-  :defer nil
   :after lsp
   :bind (:map java-mode-map
               ("M-." . lsp-ui-peek-find-definitions)

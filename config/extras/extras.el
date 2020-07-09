@@ -102,7 +102,6 @@ translation it is possible to get suggestion."
 
 (use-package pdf-tools
   ;; :load-path "/usr/share/emacs/site-lisp/pdf-tools/pdf-tools.el"
-  :defer nil
   ;; :demand t
   :config
   ;; initialise
