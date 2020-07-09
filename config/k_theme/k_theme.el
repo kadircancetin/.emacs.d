@@ -41,19 +41,32 @@
                                                           :foreground nil))))
 
            ;; lsp
-           '(highlight nil      ((t (:underline t :weight 'bold :background nil :foreground nil))))
-           '(lsp-face-highlight ((t (:underline t :weight 'bold :background nil :foreground nil))))
-           '(lsp-face-highlight ((t (:underline t :weight 'bold :background nil :foreground nil))))
-           '(lsp-face-highlight ((t (:underline t :weight 'bold :background nil :foreground nil))))
+           '(highlight nil      ((t (:underline t :weight bold :background nil :foreground nil))))
+           '(lsp-face-highlight ((t (:underline t :weight bold :background nil :foreground nil))))
+           '(lsp-face-highlight ((t (:underline t :weight bold :background nil :foreground nil))))
+           '(lsp-face-highlight ((t (:underline t :weight bold :background nil :foreground nil))))
 
            ;; stripe-highlight
            '(stripe-highlight ((t (:background "#333335"))))
-           
+
+           ;; helm-rg
+           ;; '(helm-match  ((t (:foreground "red" :weight bold :background nil :height 1.05))))
            )
           )
         )
-      ;; (set-face-attribute 'avy-goto-char-timer-face  nil :background "blue" :foreground "white")
-      ;; (set-face-attribute 'avy-lead-face  nil :background "yellow" :foreground "black")
+
+      (defun kadir/helm-rg-before (&rest r)
+        (setq helm-match-orj-background (face-attribute 'helm-match :background))
+        (setq helm-match-orj-foreground (face-attribute 'helm-match :foreground))
+        (setq helm-match-orj-weight (face-attribute 'helm-match :weight))
+        (set-face-attribute 'helm-match  nil :background nil :foreground "#f2241f" :weight 'bold))
+
+      (defun kadir/helm-rg-after (&rest r)
+        (set-face-attribute 'helm-match  nil :background helm-match-orj-background :foreground helm-match-orj-foreground :weight
+                            helm-match-orj-weight))
+
+      (advice-add 'helm-rg :before #'kadir/helm-rg-before)
+      (advice-add 'helm-rg :after #'kadir/helm-rg-after)
 
 
       ;; (use-package doom-themes

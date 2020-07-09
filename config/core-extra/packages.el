@@ -241,8 +241,9 @@
   :config
   (use-package magit-todos
     :init
-    (magit-todos-mode 1)
-    (magit-todos-branch-list-toggle)))
+    ;; (magit-todos-mode 1)
+    ;; (magit-todos-branch-list-toggle)
+    ))
 
 
 (use-package sudo-edit
