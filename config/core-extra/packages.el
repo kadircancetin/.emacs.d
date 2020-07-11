@@ -4,6 +4,8 @@
 
 
 (use-package undo-tree
+  :init
+  (setq undo-tree-auto-save-history t)
   :defer 0.2
   :config
   (global-undo-tree-mode))
@@ -20,8 +22,12 @@
   :config
   (shackle-mode 1)
   (setq shackle-rules
-        '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.4)))
+        '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.4)
+          ("\\`\\*helpful.*?\\*\\'" :regexp t :align t :size 0.4)))
   (add-to-list 'shackle-rules '(help-mode :align t :size 0.4 :select t)))
+
+
+(use-package helpful)
 
 
 (use-package auto-highlight-symbol

@@ -61,4 +61,3 @@
 ;;   (let ((files (mapcar 'abbreviate-file-name recentf-list)))
 ;;     (find-file (completing-read "Find recent file: " files nil t))))
 
-(straight-use-package 'esup)
