@@ -12,12 +12,12 @@
 (defvar kadir/python-auto-indent t
   "If non-nil python auto indentation on save.")
 
-(defvar kadir/python-lsp-eglot 'lsp-mode
+(defvar kadir/python-lsp-eglot 'eglot
   "If not `eglot' emacs use `lsp-mode' for language server.")
 
-(if kadir/python-auto-indent
-    (add-hook 'before-save-hook #'eglot-format-buffer)
-  (remove-hook 'before-save-hook #'eglot-format-buffer nil))
+;; (if kadir/python-auto-indent
+;;     (add-hook 'before-save-hook #'eglot-format-buffer)
+;;   (remove-hook 'before-save-hook #'eglot-format-buffer nil))
 
 
 (use-package python
@@ -28,12 +28,23 @@
   :bind (:map python-mode-map
               ("C-c C-n" . flymake-goto-next-error)
               ("C-c C-p" . flymake-goto-prev-error)
-              ("M-ı" . eglot-format-buffer)
+              ("M-ı" . lsp-format-buffer)
                                         ;  M-ı used for indet all
                                         ;  the buffer. But in
                                         ;  python I use language
                                         ;  server for that.
-              ("M-." . xref-find-definitions)))
+              ("M-." . xref-find-definitions))
+  :config
+  (cond
+   ((eq kadir/python-lsp-eglot 'eglot)
+    (progn
+      (define-key python-mode-map (kbd "C-c C-n") #'flymake-goto-next-error)
+      (define-key python-mode-map (kbd "C-c C-n") #'flymake-goto-prev-error)))
+   ((eq kadir/python-lsp-eglot 'lsp-mode)
+    (progn
+      (define-key python-mode-map (kbd "C-c C-n") #'flycheck-next-error)
+      (define-key python-mode-map (kbd "C-c C-n") #'flycheck-previous-error))))
+  )
 
 (defun kadir/configure-python ()
   (if (eq kadir/python-lsp-eglot 'eglot)
@@ -78,18 +89,33 @@
   (kadir/configure-python))
 
 
-(defun kadir/python-toggle-auto-format ()
-  "Auto format while saveing from lsp mode is activate or deactivate."
-  (interactive)
+(defun kadir/python--eglot-indent-toggle()
   (if kadir/python-auto-indent
       (progn
         (remove-hook 'before-save-hook #'eglot-format-buffer nil)
         (setq kadir/python-auto-indent nil)
-        (message "Disabled: Eglot indent")
-        )
+        (message "Disabled: Eglot indent"))
     (setq kadir/python-auto-indent t)
     (add-hook 'before-save-hook #'eglot-format-buffer)
-    (message "Enabled: Eglot indent")))
+    (message "Enabled: Eglot indent"))
+  )
+(defun kadir/python--lsp-indent-toggle()
+  (if kadir/python-auto-indent
+      (progn
+        (remove-hook 'before-save-hook #'lsp-format-buffer nil)
+        (setq kadir/python-auto-indent nil)
+        (message "Disabled: Lsp indent"))
+    (setq kadir/python-auto-indent t)
+    (add-hook 'before-save-hook #'lsp-format-buffer)
+    (message "Enabled: Lsp indent"))
+  )
+
+(defun kadir/python-toggle-auto-format ()
+  "Auto format while saveing from lsp mode is activate or deactivate."
+  (interactive)
+  (if (eq kadir/python-lsp-eglot 'eglot)
+      (kadir/python--eglot-indent-toggle)
+    (kadir/python--lsp-indent-toggle)))
 
 
 (use-package ein
