@@ -39,6 +39,10 @@
 (scroll-bar-mode -1)
 (fringe-mode 4)                  ; my laptop screen is not full hd :(
 
+
+(setq load-prefer-newer t)       ; somehow dangers but when createing package, I need this
+(setq frame-resize-pixelwise t)
+
 
 ;; FONT SETTINGS
 (defvar kadir/default-font-size 70)
