@@ -52,6 +52,11 @@
   "Open config file. (probably this file)"
   (interactive) (find-file "~/Dropbox/org-roam/20200503174932-inbox.org"))
 
+(defun kadir/find-dashboard ()
+  ;; source: https://github.com/KaratasFurkan/.emacs.d
+  "Open config file. (probably this file)"
+  (interactive) (switch-to-buffer "*dashboard*"))
+
 (defun kadir/comment-or-self-insert (&optional beg end)
   "If region active comment-or-uncomment work,
      otherwise (self-insert /)"

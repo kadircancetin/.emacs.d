@@ -122,7 +122,7 @@
   ;; :config
   ;; (add-to-list 'eglot-server-programs '((js-mode) "typescript-language-server" "--stdio"))
   :bind
-  (:map eglot-mode-map("C-c DEL" . 'eglot-help-at-point)))  ; TODO: change keybind
+  (:map eglot-mode-map("C-c C-d" . 'eglot-help-at-point)))  ; TODO: change keybind
 
 
 (use-package flycheck)
@@ -131,22 +131,22 @@
   ;; (setq lsp-enable-snippet nil)
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;,
 
-  
+
   ;; lsp-eldoc-render-all nil                                                      ???????
-  ;; lsp-enable-indentation t                                                      
+  ;; lsp-enable-indentation t
   (setq
    ;; lsp-log-io t
    ;; lsp-print-performance t
    lsp-enable-snippet nil
-   
+
    lsp-enable-folding nil ;; hiç kullanmadığım için
-   lsp-enable-semantic-highlighting nil   ;; bi işe yaradığını görmedim                                       
+   lsp-enable-semantic-highlighting nil   ;; bi işe yaradığını görmedim
    lsp-progress-via-spinner nil ;; gereksiz gibi
    lsp-auto-execute-action nil ;; anlamadım ama tehlikeli geldi :D
-   
+
    lsp-eldoc-enable-hover nil ;; hover genelde yavaş çalışıyor TODO: pyls illa hover açıyor gibi
    lsp-enable-symbol-highlighting nil
-   
+
    lsp-response-timeout 10 ;; TODO: is it true way?
    lsp-signature-auto-activate nil
    lsp-signature-render-documentation nil
@@ -169,23 +169,23 @@
    lsp-enable-on-type-formatting nil
    ;; capf is the preferred completion mechanism for lsp-mode now
    lsp-prefer-capf t
-   
+
    )
-  
-  
+
+
   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
   (flymake-mode 0)
   (flycheck-mode 1)
 
   (use-package lsp-ui
     :init
-    
+
     (setq lsp-ui-doc-enable t
           lsp-ui-doc-header t
           lsp-ui-doc-include-signature t
           lsp-ui-doc-position 'bottom
           lsp-ui-doc-alignment 'window
-          lsp-ui-doc-border "white"                 
+          lsp-ui-doc-border "white"
           lsp-ui-doc-max-width 100
           lsp-ui-doc-max-height 10
           lsp-ui-doc-use-childframe t
@@ -193,34 +193,34 @@
           lsp-ui-doc-delay 0.2
           lsp-ui-doc-winum-ignore t)
 
-    (setq lsp-ui-imenu-enable t                          
-          lsp-ui-imenu-kind-position 'top                
+    (setq lsp-ui-imenu-enable t
+          lsp-ui-imenu-kind-position 'top
           lsp-ui-imenu-colors '("deep sky blue" "green3")
-          lsp-ui-imenu-window-width 0                    
+          lsp-ui-imenu-window-width 0
           lsp-ui-imenu--custom-mode-line-format nil)
-    (setq lsp-ui-peek-enable t          
-          lsp-ui-peek-show-directory t  
-          lsp-ui-peek-peek-height 30    
-          lsp-ui-peek-list-width 50     
+    (setq lsp-ui-peek-enable t
+          lsp-ui-peek-show-directory t
+          lsp-ui-peek-peek-height 30
+          lsp-ui-peek-list-width 50
           lsp-ui-peek-fontify 'always)
     (setq lsp-ui-flycheck-list-position 'bottom)
-    
-    (setq lsp-ui-sideline-enable t                                     
+
+    (setq lsp-ui-sideline-enable t
           lsp-ui-sideline-ignore-duplicate t
-          lsp-ui-sideline-show-symbol t                                
-          lsp-ui-sideline-show-hover nil                               
-          lsp-ui-sideline-show-diagnostics t                           
-          lsp-ui-sideline-show-code-actions t                          
-          lsp-ui-sideline-update-mode 'point                           
-          lsp-ui-sideline-delay 0.2                                    
-          lsp-ui-sideline-diagnostic-max-lines 20                      
-          lsp-ui-sideline-diagnostic-max-line-length 100               
+          lsp-ui-sideline-show-symbol t
+          lsp-ui-sideline-show-hover nil
+          lsp-ui-sideline-show-diagnostics t
+          lsp-ui-sideline-show-code-actions t
+          lsp-ui-sideline-update-mode 'point
+          lsp-ui-sideline-delay 0.2
+          lsp-ui-sideline-diagnostic-max-lines 20
+          lsp-ui-sideline-diagnostic-max-line-length 100
           lsp-ui-sideline-actions-kind-regex "quickfix.*\\|refactor.*")
     :config
     (require 'lsp-ui-sideline)
     (add-hook 'lsp-mode-hook 'lsp-ui-sideline-mode)
     (use-package helm-lsp)
-    )  
+    )
   )
 
 

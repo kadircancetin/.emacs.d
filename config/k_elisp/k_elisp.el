@@ -1,5 +1,5 @@
 (add-hook 'emacs-lisp-mode-hook 'auto-highlight-symbol-mode)
-;; (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
+(add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
 (add-hook 'emacs-lisp-mode-hook 'auto-fill-mode)
 (add-hook 'emacs-lisp-mode-hook 'highlight-quoted-mode)
 
@@ -24,12 +24,19 @@
 
 (use-package elisp-mode
   :straight (:type built-in)
-  :bind (:map emacs-lisp-mode-map
-              ("M-." . elisp-def)
-              ("C-c M-." . elisp-slime-nav-find-elisp-thing-at-point)
-              ("C-c DEL" . helpful-at-point)
-              ("C-c C-d" . elisp-slime-nav-describe-elisp-thing-at-point)
-              ("C-c C-n" . flycheck-next-error)
-              ("C-c C-p" . flycheck-previous-error)))
+  :bind (
+         :map emacs-lisp-mode-map
+         ("M-."     .  (lambda ()
+                         (interactive)
+                         (call-interactively
+                          (when (eq (condition-case nil (elisp-def) (error nil)) nil)
+                            (message "drop to slime nav")
+                            elisp-slime-nav-find-elisp-thing-at-point
+                            ))))
+         ("C-c M-." . elisp-slime-nav-find-elisp-thing-at-point)
+         ("C-c DEL" . helpful-at-point)
+         ("C-c C-d" . elisp-slime-nav-describe-elisp-thing-at-point)
+         ("C-c C-n" . flycheck-next-error)
+         ("C-c C-p" . flycheck-previous-error)))
 
-(provide 'k_elisp)
+  (provide 'k_elisp)

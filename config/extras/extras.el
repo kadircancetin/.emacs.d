@@ -123,8 +123,8 @@ translation it is possible to get suggestion."
   :ensure t
   :bind  (("M-<SPC>" . buffer-flip)
           :map buffer-flip-map
-          ( "M-<SPC>" .   buffer-flip-forward) 
-          ( "M-S-<SPC>" . buffer-flip-backward) 
+          ( "M-<SPC>" .   buffer-flip-forward)
+          ( "M-S-<SPC>" . buffer-flip-backward)
           ( "C-g" .     buffer-flip-abort)
           ( "M-g" .     buffer-flip-abort)
           )

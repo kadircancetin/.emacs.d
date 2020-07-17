@@ -89,7 +89,7 @@
          (require 'hideshow)
          (add-hook 'prog-mode-hook 'hs-minor-mode))))
 
-(run-with-idle-timer 1 nil 
+(run-with-idle-timer 1 nil
                      (lambda () (async-bytecomp-package-mode 1)))
 
 (run-with-idle-timer 0.75 nil

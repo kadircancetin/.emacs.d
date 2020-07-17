@@ -47,6 +47,7 @@
  ("c"                 . kadir/find-config)
  ("e"                 . kadir/find-experimental-config)
  ("s"                 . kadir/open-scratch-buffer)
+ ("d"                 . kadir/find-dashboard)
  ("a"                 . org-agenda))
 
 (bind-keys
@@ -83,7 +84,10 @@
    ("/"               . kadir/comment-or-self-insert)
    ("C-t"             . er/expand-region)
    ("C-M-SPC"         . goto-last-change)
-   
+
+   ;; doc
+   ("C-c DEL"         . devdocs-search)
+
    ;; MC
    ("C-M-n"           . mc/mark-next-like-this)
    ("C-M-p"           . mc/mark-previous-like-this)
