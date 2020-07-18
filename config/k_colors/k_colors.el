@@ -20,7 +20,8 @@
   :defer 1
   :config
   (global-diff-hl-mode 1)
-  (diff-hl-flydiff-mode 0))
+  (setq diff-hl-flydiff-delay 2)
+  (diff-hl-flydiff-mode 1))
 
 (use-package color-identifiers-mode
   :defer 1
