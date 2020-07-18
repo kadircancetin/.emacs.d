@@ -252,6 +252,8 @@
   :bind ((:map magit-status-mode-map
                (("C-x 4 C-m" . magit-diff-visit-file-other-window))))
   :config
+  :init
+  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   (use-package magit-todos
     :init
     ;; (magit-todos-mode 1)
