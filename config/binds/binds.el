@@ -48,7 +48,7 @@
  ("e"                 . kadir/find-experimental-config)
  ("s"                 . kadir/open-scratch-buffer)
  ("d"                 . kadir/find-dashboard)
- ("a"                 . org-agenda))
+ ("a"                 . kadir/agenda))
 
 (bind-keys
  :prefix-map kadir/helm

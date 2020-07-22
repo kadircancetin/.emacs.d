@@ -13,7 +13,7 @@
 ;; enabling winner-mode. And install and load the `use-package'.
 (require 'defaults)
 
-;; appriance and UI 
+;; appriance and UI
 (require 'k_theme)
 
 

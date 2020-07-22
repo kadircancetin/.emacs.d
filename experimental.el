@@ -97,12 +97,13 @@
   (setq typo-suggest-default-search-method 'datamuse))
 
 ;; (setq company-backends '(typo-suggest-company))
-(setq company-backends '(;;typo-suggest-company
-                         company-restclient
-                         company-capf company-files
-                         (company-dabbrev-code company-gtags company-etags company-keywords)
-                         company-dabbrev ))
 
+;; (setq company-backends '(;;typo-suggest-company
+;;                          company-restclient
+;;                          company-capf company-files
+;;                          (company-dabbrev-code company-gtags company-etags company-keywords)
+;;                          company-dabbrev
+;;                          typo-suggest-company))
 
 (global-set-key (kbd "M-ü") 'typo-suggest-helm)
 (global-set-key (kbd "C-c 3") 'hippie-expand)
@@ -166,3 +167,143 @@
 ;;         :action '(("Insert" . insert)))
 ;;       :buffer "*helm test*"
 ;;       :input "kad")
+
+;; (use-package god-mode)
+;; (god-mode)
+
+;; (global-set-key (kbd "C-ü") #'god-mode-all)
+;; (global-set-key (kbd "ü") #'god-mode-all)
+;; (setq god-mode-enable-function-key-translation nil)
+
+;; (defun my-god-mode-update-cursor ()
+;;   (setq cursor-type (if (or god-local-mode buffer-read-only)
+;;                         'box
+;;                       'bar)))
+
+;; (add-hook 'god-mode-enabled-hook #'my-god-mode-update-cursor)
+;; (add-hook 'god-mode-disabled-hook #'my-god-mode-update-cursor)
+
+(use-package modalka
+  :init
+  ;; (modalka-global-mode 1)
+
+  (add-to-list 'modalka-excluded-modes '('magit-status-mode
+                                         'helm-mode))
+
+
+  (global-set-key (kbd "<return>") #'modalka-global-mode)
+  (setq modalka-cursor-type '(hbar . 2)) ;; (setq-default cursor-type '(bar . 1))
+
+  (advice-add 'self-insert-command
+              :before
+              (lambda (&rest r)
+                (when (and (bound-and-true-p modalka-global-mode)
+                           (cdr r))
+                  (error "MODALKA MODALKA MODALKA MODALKA MODALKA MODALKA MODALKA"))))
+  (progn
+    ;; general
+    (modalka-define-kbd "g" "C-g")
+
+    ;; kill - yank
+    (modalka-define-kbd "Y" "M-y")
+    (modalka-define-kbd "w" "M-w")
+    (modalka-define-kbd "k" "C-k")
+    (modalka-define-kbd "y" "C-y")
+    ;; (modalka-define-kbd "SPC" "C-SPC")
+
+    ;; goto source - pop
+    (modalka-define-kbd "." "M-.")
+    (modalka-define-kbd "," "M-,")
+
+    ;; editing
+    (modalka-define-kbd "m" "C-m")
+    (modalka-define-kbd "d" "C-d")
+    (modalka-define-kbd "o" "C-o")
+    (modalka-define-kbd "h" "<DEL>")
+    (modalka-define-kbd "u" "C-_")
+    (modalka-define-kbd "U" "M-_")
+
+    ;; movement
+    (modalka-define-kbd "a" "C-a")
+    (modalka-define-kbd "b" "C-b")
+    (modalka-define-kbd "e" "C-e")
+    (modalka-define-kbd "f" "C-f")
+    (modalka-define-kbd "n" "C-n")
+    (modalka-define-kbd "p" "C-p")
+
+    ;; viewving
+    (modalka-define-kbd "l" "C-l")
+    (modalka-define-kbd "v" "C-v")
+    (modalka-define-kbd "V" "M-v")
+
+    ;; file
+    (modalka-define-kbd "xs" "C-x C-s")
+
+    ;; window
+    (modalka-define-kbd "0" "C-x 0")
+    (modalka-define-kbd "1" "C-x 1")
+    (modalka-define-kbd "2" "C-x 2")
+    (modalka-define-kbd "3" "C-x 3")
+    (modalka-define-kbd "4." "C-x 4")
+
+    ;; buffer
+    (modalka-define-kbd "xk" "C-x C-k")
+    (modalka-define-kbd "<SPC>" "M-<SPC>")
+
+    ;;;;;;;;;;;;;; major modes ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; elisp
+    (modalka-define-kbd "xe" "C-x C-e")))
+
+(use-package dired-sidebar)
+
+(use-package org-super-agenda
+  :init
+  (org-super-agenda-mode)
+
+  :config
+  (setq org-agenda-sorting-strategy '(priority-down))
+
+
+  (defun kadir/agenda()
+    (interactive)
+    (setq org-super-agenda-groups
+          '(
+            (:name "Çokomelli" :and (:scheduled nil :priority "A"))
+
+            ;; OTHERS for file grouping
+            (:name "HİPO" :and (:file-path ".*hipo.*"))
+
+            ;; general groups
+            (:name "Önemli" :and (:scheduled nil :priority "B"))
+            (:name "EMACS" :and (:scheduled nil :tag "emacs"))
+            (:name "Estheticana" :and (:scheduled nil :file-path ".*estheticana.org"))
+
+            ;; OTHERS for file grouping
+            (:name "Refile" :scheduled nil :file-path ".*inbox.org")
+
+            ;; OTHErS for time grouping
+            (:name "TOMORROW" :scheduled future :order 10)
+            (:name "Feature" :scheduled today :time-grid t)))
+
+    (let ((org-agenda-span 'day))
+      (org-agenda nil "n")))
+  )
+
+
+
+(use-package smart-jump)
+(smart-jump-register :modes 'python-mode
+                     :jump-fn 'xref-find-definitions
+                     :pop-fn 'xref-pop-marker-stack
+                     :refs-fn 'xref-find-references
+                     :should-jump t
+                     :heuristic 'error
+                     :async nil
+                     :order 1)
+(smart-jump-register :modes 'python-mode
+                     :jump-fn 'dumb-jump-go
+                     :pop-fn 'smart-jump-simple-find-references
+                     :should-jump t
+                     :heuristic 'point
+                     :async nil
+                     :order 2)

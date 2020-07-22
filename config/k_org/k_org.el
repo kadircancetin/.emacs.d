@@ -19,13 +19,21 @@
   (setq org-ellipsis "  ↴" )
   (setq org-src-fontify-natively t)
   (setq org-startup-indented t)
-  (setq org-agenda-files (apply 'append
-                                (mapcar
-                                 (lambda (directory)
-                                   (directory-files-recursively
-                                    directory org-agenda-file-regexp))
-                                 '("~/Dropbox/org-roam"))))  ;; recursively get org files
+  ;; (setq org-agenda-files (apply 'append
+  ;;                               (mapcar
+  ;;                                (lambda (directory)
+  ;;                                  (directory-files-recursively
+  ;;                                   directory org-agenda-file-regexp))
+  ;;                                '("~/Dropbox/org-roam"))))  ;; recursively get org files
 
+  (setq org-agenda-files '(
+                           "~/Dropbox/org-roam/20200503174932-inbox.org"
+                           "~/Dropbox/org-roam/20200720113959-hipo.org"
+                           "~/Dropbox/org-roam/20200427011023-emacs_config.org"
+                           "~/Dropbox/org-roam/20200420162944-org_mode.org"
+                           "~/Dropbox/org-roam/20200509175158-estheticana.org"
+
+                           ))
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "~/Dropbox/org-roam/20200503174932-inbox.org" "Inbox")
            "* TODO %?\n  Added: \%u\n  \%a")
@@ -38,12 +46,12 @@
            entry (file+headline "inbox.org" "Inbox")
            "* %? [[%:link][%:description]] \n  Captured On: %u")
           ))
-  
+
   (setq org-catch-invisible-edits    'show-and-error
         org-cycle-separator-lines    0
-        org-agenda-start-day         "-0d"
-        org-agenda-span              20
-        org-agenda-start-on-weekday  nil
+        ;; org-agenda-start-day         "-0d"
+        ;; org-agenda-span              20
+        ;; org-agenda-start-on-weekday  nil
         org-link-frame-setup         '((vm . vm-visit-folder-other-frame)
                                        (vm-imap . vm-visit-imap-folder-other-frame)
                                        (gnus . org-gnus-no-new-news)
