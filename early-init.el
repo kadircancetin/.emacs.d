@@ -55,8 +55,8 @@
 ;; (set-face-attribute 'default nil :family "Monoid" :height
 ;;                     kadir/default-font-size :weight 'normal)
 
-;; (set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro"
-;;                     :italic t) ; this is some minor bug on documentation
+(set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro"
+                    :italic t :weight 'bold) ; this is some minor bug on documentation
 
 ;; to finding the available string names
 ;; (prin1 (mapconcat'identity
