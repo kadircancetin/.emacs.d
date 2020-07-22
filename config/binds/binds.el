@@ -137,9 +137,6 @@
    ;; magit
    ("C-x g"           . magit-status)
 
-   ;; treemacs
-   ("M-0"             . treemacs)
-
    ;; fonts
    ("C-+"                . text-scale-increase)
    ("C--"                . text-scale-decrease)

@@ -23,7 +23,6 @@
 (require 'extras)
 
 ;; extra big features
-(require 'k_treemacs)
 (require 'k_company)
 
 ;; programing languages and major modes
