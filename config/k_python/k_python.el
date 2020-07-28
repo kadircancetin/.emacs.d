@@ -68,6 +68,13 @@
                                                          ))
 
         (use-package company-jedi)
+        (use-package jedi-core
+          :init
+          (setq jedi:complete-on-dot t
+                jedi:install-imenu t  ;; TODO: helm semantic or imenu
+                )
+
+          )
 
         (add-hook 'eglot-managed-mode-hook
                   (lambda ()
