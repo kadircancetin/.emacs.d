@@ -311,3 +311,5 @@
                        :heuristic 'point
                        :async nil
                        :order 2))
+
+(use-package pony-mode)

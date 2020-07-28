@@ -1,4 +1,14 @@
 ;; pip install python-language-server[all]; pip uninstall autopep8 yapf; pip install pyls-isort pyls-black;
+;; ((nil (eglot-workspace-configuration . ((pyls . ((configurationSources . ["flake8"])))))))
+
+
+;; ((nil (eglot-workspace-configuration . ((pyls :configurationSources ["flake8"]
+;;                                               :plugins (
+;;                                                         :jedi_completion (:enabled nil)
+;;                                                         :mccabe (:threshold 8)
+;;                                                         ))))))
+
+
 
 ;; TODO: flycheck otomatik aktif oluyor
 ;; lazy load for linter
@@ -33,7 +43,9 @@
                                         ;  the buffer. But in
                                         ;  python I use language
                                         ;  server for that.
-              ("M-." . xref-find-definitions))
+              ("M-." . xref-find-definitions)
+              ("M-ş" . xref-find-references)
+              )
   :config
   (cond
    ((eq kadir/python-lsp-eglot 'eglot)
@@ -52,19 +64,22 @@
         (eglot-ensure)
         (setq-default eglot-ignored-server-capabilites '(:documentHighlightProvider
                                                          :hoverProvider
-                                                         :signatureHelpProvider))
+                                                         ;; :signatureHelpProvider
+                                                         ))
+
+        (use-package company-jedi)
 
         (add-hook 'eglot-managed-mode-hook
                   (lambda ()
                     (interactive)
-                    (message "mk")
                     (setq company-backends
                           '(;; company-bbdb
                             ;; company-semantic
                             ;; company-clang
                             ;; company-xcode
                             ;; company-cmake
-                            company-capf
+                            ;; company-capf ;; NOTE: remove the eglot defaults
+                            company-jedi    ;; NOTE: instead of eglot defaulats
                             company-files
                             (company-dabbrev-code company-gtags company-etags
                                                   company-keywords)

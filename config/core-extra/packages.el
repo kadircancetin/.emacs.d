@@ -118,11 +118,29 @@
   (wrap-region-global-mode t))
 
 
+;; (setq-default eglot-workspace-configuration
+;;               '((:pyls . ((:configurationSources . ["flake8"])
+;;                           (:plugins .
+;;                                     ((:flake8 . ((:enabled . t)
+;;                                                  (:exclude . "*.pyi")))
+;;                                      (:pyls_mypy . ((:enabled . t)
+;;                                                     (:live_mode . nil)
+;;                                                     (:strict . t)))))))
+;;                 (:gopls . ((:usePlaceholders . t)
+;;                            (:completeUnimported . t)))))
+
+(use-package helm-xref
+  :defer nil
+  )
+
 (use-package eglot
   ;; :config
   ;; (add-to-list 'eglot-server-programs '((js-mode) "typescript-language-server" "--stdio"))
   :bind
-  (:map eglot-mode-map("C-c C-d" . 'eglot-help-at-point)))  ; TODO: change keybind
+  (:map eglot-mode-map("C-c C-d" . 'eglot-help-at-point))
+  :init
+  (require 'helm-xref)
+  )  ; TODO: change keybind
 
 
 (use-package flycheck)
@@ -253,7 +271,7 @@
                (("C-x 4 C-m" . magit-diff-visit-file-other-window))))
   :config
   :init
-  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
+  ;; (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   (use-package magit-todos
     :init
     ;; (magit-todos-mode 1)
