@@ -42,5 +42,38 @@
   (vhl/define-extension 'undo-tree 'undo-tree-yank 'undo-tree-move)
   (vhl/install-extension 'undo-tree))
 
+(use-package prism
+  :straight (prism :type git :host github :repo "alphapapa/prism.el")
+  :defer t
+  :hook ((emacs-lisp-mode . prism-mode) ;; (json-mode . prism-mode)
+         )
+  :config
+  ;; TODO call after theme load
+  (prism-set-colors :num 16
+    :desaturations (cl-loop for i from 0 below 16
+                            collect (* i 1))
+    :lightens (cl-loop for i from 0 below 16
+                       collect (* i 1))
+    :comments-fn
+    (lambda (color)
+      (prism-blend color
+                   "#2d9574" 0.5))
+    :strings-fn
+    (lambda (color)
+      (prism-blend color "#2d9574" 0))
+
+    :colors (list
+             "#bf6bc7"  ;; pembe
+             "#4f97e7"  ;; blue
+             "#c2c2c2"  ;; base
+             "#b1951d"  ;; yellow
+             ))
+  )
+
+
+(use-package rainbow-blocks)
+
+
+
 
 (provide 'k_colors)

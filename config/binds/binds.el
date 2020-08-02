@@ -22,6 +22,7 @@
  ("y"                 . yas-insert-snippet)
  ;; ("d"                 . deadgrep)
  ("c"                 . (lambda()(interactive)(org-capture nil "t")))
+ ("ç"                 . (lambda() (interactive) (eval-buffer) (message "eval") (save-buffer)))
  ("j"                 . dumb-jump-go))
 
 (bind-keys
@@ -39,6 +40,12 @@
  ("h"                 . resize-window-height)
  )
 
+(bind-keys
+ :prefix-map kadir/imenu
+ :prefix "öi"
+ ("a"                 . helm-imenu-in-all-buffers)
+ ("i"                 . helm-imenu)
+ )
 
 (bind-keys
  :prefix-map kadir/open

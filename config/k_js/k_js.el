@@ -17,6 +17,8 @@
   )
 
 
+(use-package json-mode)
+
 (use-package js2-mode
   :init
   (setq js2-basic-offset 2

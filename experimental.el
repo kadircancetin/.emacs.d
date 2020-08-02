@@ -94,7 +94,8 @@
              )
   :init
   (require 'typo-suggest)
-  (setq typo-suggest-default-search-method 'datamuse))
+  (setq typo-suggest-default-search-method 'datamuse)
+  )
 
 ;; (setq company-backends '(typo-suggest-company))
 
@@ -313,3 +314,24 @@
                        :order 2))
 
 (use-package pony-mode)
+
+
+(use-package shr-tag-pre-highlight
+  :ensure t
+  :after shr
+  :config
+  (add-to-list 'shr-external-rendering-functions
+               '(pre . shr-tag-pre-highlight))
+  (when (version< emacs-version "26")
+    (with-eval-after-load 'eww
+      (advice-add 'eww-display-html :around
+                  'eww-display-html--override-shr-external-rendering-functions))))
+
+
+(use-package su
+  :straight (su
+             :type git
+             :host github
+             :repo "PythonNut/su.el")
+  :init
+  (su-mode +1))
