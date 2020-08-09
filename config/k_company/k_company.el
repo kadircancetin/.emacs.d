@@ -1,6 +1,6 @@
 (use-package company
   :init
-  (setq-default company-idle-delay 0.4
+  (setq-default company-idle-delay 0
                 company-minimum-prefix-length 1
 
                 company-tooltip-idle-delay 0

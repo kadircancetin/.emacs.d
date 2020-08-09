@@ -45,8 +45,9 @@
 (use-package prism
   :straight (prism :type git :host github :repo "alphapapa/prism.el")
   :defer t
-  :hook ((emacs-lisp-mode . prism-mode) ;; (json-mode . prism-mode)
-         )
+  ;; :hook (
+  ;;        (emacs-lisp-mode . prism-mode) ;; (json-mode . prism-mode)
+  ;;        )
   :config
   ;; TODO call after theme load
   (prism-set-colors :num 16

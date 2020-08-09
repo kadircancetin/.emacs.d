@@ -1,13 +1,5 @@
-(load-file (expand-file-name "config/k_org/functions.el" user-emacs-directory))
-
-(use-package htmlize)
-(use-package org-bullets)
-(use-package org-web-tools)
-
-
-(use-package org-pomodoro)
-
 (use-package org
+  :straight (:type built-in)
   :bind
   (:map org-mode-map
         ("M-." . org-open-at-point)
@@ -19,6 +11,7 @@
   (setq org-ellipsis "  ↴" )
   (setq org-src-fontify-natively t)
   (setq org-startup-indented t)
+  (setq org-hide-emphasis-markers t)
   ;; (setq org-agenda-files (apply 'append
   ;;                               (mapcar
   ;;                                (lambda (directory)
@@ -63,6 +56,18 @@
 (add-hook 'org-mode-hook (lambda() (toggle-truncate-lines 1)))
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (setq org-bullets-bullet-list '("✿" "⁖" "." "." "." "."))
+
+(load-file (expand-file-name "config/k_org/functions.el" user-emacs-directory))
+
+
+(use-package htmlize)
+(use-package org-bullets)
+(use-package org-web-tools)
+
+
+(use-package org-pomodoro)
+
+
 
 
 ;;; Capture settings
