@@ -1,7 +1,8 @@
 * Architecture
 #+BEGIN_SRC markdown
-  1) [boot]
-  2) [def-confs]-------(if -fo flag)----->  3) [fo-confs]
+  boot
+    |
+  def-confs  -------(if -fo flag)----->  fo-confs
         |
         |
         |

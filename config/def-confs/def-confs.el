@@ -1,92 +1,134 @@
-;; - =M-x straight-pull-all=: update all packages.
-;; - =M-x straight-normalize-all=: restore all packages (remove local edits)
-;; - =M-x straight-freeze-versions= and =M-x straight-thaw-versions= are like =pip
-;; freeze requirements.txt= and =pip install -r requirements.txt=
-;; - To tell straight.el that you want to use the version of Org shipped with
-;; Emacs, rather than cloning the upstream repository:
-;; (Note: ":tangle no")
-
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-(setq straight-check-for-modifications '(watch-files find-when-checking))
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
+(setq-default user-full-name "Kadir Can Çetin")
+(setq-default user-mail-address "kadircancetin@gmail.com")
 
 
-(setq use-package-always-defer t
-      use-package-expand-minimally t)
-
-(use-package no-littering)
-(require 'no-littering)
-
-(setq auto-save-file-name-transforms
-      `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
-(setq custom-file (no-littering-expand-etc-file-name "custom.el"))
-(if (file-exists-p custom-file)
-    (load-file custom-file))
-(add-to-list 'yas-snippet-dirs
-             (expand-file-name "snippets" user-emacs-directory))
-
-
-;; (use-package auto-package-update
-;;   :if (not (daemonp))
-;;   :custom
-;;   (auto-package-update-interval 7) ;; in days
-;;   (auto-package-update-prompt-before-update t)
-;;   (auto-package-update-delete-old-versions t)
-;;   (auto-package-update-hide-results t)
-;;   :config
-;;   (auto-package-update-maybe))
-
-
-(savehist-mode 1)
-
 (run-with-idle-timer
  0.15 nil  ;; defer
  (lambda ()
    (progn
      ;; (display-battery-mode 1)
      (blink-cursor-mode -1)
-
      (display-time-mode 1)
-     (delete-selection-mode 1)      ; writing when ther is selected, delete the selected part
-     (show-paren-mode 1)            ; shows matching parentheses
-     (winner-mode 1)                ; provide undo, redo your window layout
-     (global-subword-mode 1)        ; make camel-case usable with word shorcuts
-     (save-place-mode 1)            ; save cursor position for next file opening, and restore it
+     (delete-selection-mode 1)        ; writing when ther is selected, delete the selected part
+     (show-paren-mode 1)              ; shows matching parentheses
+     (winner-mode 1)                  ; provide undo, redo your window layout
+     (global-subword-mode 1)          ; make camel-case usable with word shorcuts
+     (save-place-mode 1)              ; save cursor position for next file opening, and restore it
      (global-prettify-symbols-mode 1) ; lambda to cool lambda character
      (global-auto-revert-mode 1)      ; auto revert
      (global-auto-composition-mode 1))))
 
+(run-with-idle-timer
+ 1 nil
+ (lambda ()
+   (progn
+     (require 'hideshow)
+     (add-hook 'prog-mode-hook 'hs-minor-mode))))
+
+(run-with-idle-timer 5 nil
+                     (lambda() (require 'server)
+                       (unless (server-running-p)
+                         (server-start))
+                       (require 'org-protocol)))
 
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
-(run-with-idle-timer
- 0.20 nil
- (lambda () (progn
-         (require 'hideshow)
-         (add-hook 'prog-mode-hook 'hs-minor-mode))))
+
+;; for lsp: https://github.com/hlissner/doom-emacs/pull/2590
+(setq-default read-process-output-max (* 1024 1024))
 
 
+
+(setq-default echo-keystrokes 0.1)                    ; I think for wichkey. I don't remember.
 
-(run-with-idle-timer 0.75 nil
-                     (lambda()
-                       (require 'server)
-                       (unless (server-running-p)
-                         (server-start))
-                       (require 'org-protocol)))
+(setq-default auto-revert-interval 2
+              auto-revert-check-vc-info t
+              global-auto-revert-non-file-buffers t
+              auto-revert-verbose nil)
+
+(setq-default ring-bell-function      'ignore ; shutdown rings
+              inhibit-startup-message  t      ; disable startup messages
+              initial-scratch-message  nil    ; disable startup messages
+              initial-major-mode      'text-mode ; initial buffer
+              mark-ring-max            128    ; increatese mark-ring
+              column-number-mode       t      ; show column number on modeline
+              default-buffer-file-coding-system 'utf-8-unix
+              kill-ring-max            256    ; increatese kill-ring history
+              search-whitespace-regexp ".*?"  ; make isearch more fuzzy like
+              ;; require-final-newline    t
+              vc-follow-symlinks       t)
+
+(setq-default winner-boring-buffers '("*Completions*" "*Compile-Log*" "*inferior-lisp*" "*Fuzzy Completions*" "*Apropos*" "*Help*" "*cvs*" "*Buffer List*" "*Ibuffer*" "*esh command on file*"))
+
+(defalias 'yes-or-no-p 'y-or-n-p)   ; short yes no question when emacs ask
+
+;; ;; SmoothScroll
+;; ;; Vertical Scroll
+(setq-default scroll-step 1
+              scroll-margin 2
+              scroll-conservatively 1000
+              scroll-up-aggressively 0.01
+              scroll-down-aggressively 0.01
+              auto-window-vscroll nil
+              fast-but-imprecise-scrolling nil
+              mouse-wheel-scroll-amount '(1 ((shift) . 1))
+              mouse-wheel-progressive-speed nil)
+
+;; Horizontal Scroll
+;; (setq hscroll-step 3
+;;       hscroll-margin 3)
+
+
+(setq-default indent-tabs-mode nil       ; space instead of tabs
+              tab-width 4                ; 4 space for tab
+              show-trailing-whitespace nil) ; showing empty whitespaces
+
+(setq-default whitespace-newline -1 whitespace-line -1 whitespace-trailing -1)
+
+(setq-default max-mini-window-height   1
+              resize-mini-windows      nil
+              message-truncate-lines   t)  ; set and try to force mini buffer should be mini
+
+
+(setq hs-isearch-open t)
+
+;; (setq completion-styles '(basic flex))
+;; (setq completion-styles '(basic partial-completion emacs22))
+
+;; back up
+
+;; source: https://emacs.stackexchange.com/questions/33/put-all-backups-into-one-backup-folder
+(let ((backup-dir "~/emacs/backups")
+      (auto-saves-dir "~/emacs/auto-saves/"))
+  (dolist (dir (list backup-dir auto-saves-dir))
+    (when (not (file-directory-p dir))
+      (make-directory dir t)))
+  (setq-default backup-directory-alist `(("." . ,backup-dir))
+                auto-save-file-name-transforms `((".*" ,auto-saves-dir t))
+                auto-save-list-file-prefix (concat auto-saves-dir ".saves-")
+                tramp-backup-directory-alist `((".*" . ,backup-dir))
+                tramp-auto-save-directory auto-saves-dir))
+
+(setq-default backup-by-copying t    ; Don't delink hardlinks
+              delete-old-versions t  ; Clean up the backups
+              version-control t      ; Use version numbers on backups,
+              kept-new-versions 5    ; keep some new versions
+              kept-old-versions 2)   ; and some old ones, too
+
+
+
+;; persistant history
+(savehist-mode 1)
+
+(setq-default history-length t)
+(setq-default history-delete-duplicates t)
+(setq-default savehist-additional-variables '(savehist-minibuffer-history-variables
+                                              helm-M-x-input-history
+                                              minibuffer-history
+                                              file-name-history
+                                              extended-command-history
+                                              command-history))
 
 (defun kadir/isearch-region (&optional not-regexp no-recursive-edit)
   ;; cloned from: https://www.reddit.com/r/emacs/comments/b7yjje/isearch_region_search/
@@ -102,10 +144,9 @@
 (advice-add 'isearch-forward-regexp :after 'kadir/isearch-region)
 (advice-add 'isearch-forward :after 'kadir/isearch-region)
 
-
 (defun kadir/delete-file-and-buffer ()
-  ;; based on https://gist.github.com/hyOzd/23b87e96d43bca0f0b52 which
-  ;; is based on http://emacsredux.com/blog/2013/04/03/delete-file-and-buffer/
+  ;; based on https://gist.github.com/hyOzd/23b87e96d43bca0f0b52 which is based on
+  ;; http://emacsredux.com/blog/2013/04/03/delete-file-and-buffer/
   "Kill the current buffer and deletes the file it is visiting."
   (interactive)
   (let ((filename (buffer-file-name)))
@@ -123,6 +164,7 @@
     (erase-buffer)
     (eshell-send-input)))
 
+
 (defun kadir/find-config ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
   "Open config file. (probably this file)"
@@ -133,10 +175,6 @@
   "Open config file. (probably this file)"
   (interactive) (find-file "~/.emacs.d/experimental.el"))
 
-(defun kadir/open-scratch-buffer ()
-  (interactive)
-  (switch-to-buffer "*scratch*"))
-
 (defun kadir/find-inbox ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
   "Open config file. (probably this file)"
@@ -146,6 +184,11 @@
   ;; source: https://github.com/KaratasFurkan/.emacs.d
   "Open config file. (probably this file)"
   (interactive) (switch-to-buffer "*dashboard*"))
+
+
+(defun kadir/open-scratch-buffer ()
+  (interactive)
+  (switch-to-buffer "*scratch*"))
 
 (defun kadir/comment-or-self-insert (&optional beg end)
   "If region active comment-or-uncomment work,
@@ -167,17 +210,6 @@
      directory. Working and testing only on the linux systems."
   (interactive)
   (start-process "*shellout*" nil "terminator"))
-
-
-(defun spacemacs//helm-hide-minibuffer-maybe ()
-  "Hide minibuffer in Helm session if we use the header line as input field."
-  (when (with-helm-buffer helm-echo-input-in-header-line)
-    (let ((ov (make-overlay (point-min) (point-max) nil nil t)))
-      (overlay-put ov 'window (selected-window))
-      (overlay-put ov 'face
-                   (let ((bg-color (face-background 'default nil)))
-                     `(:background ,bg-color :foreground ,bg-color)))
-      (setq-local cursor-type nil))))
 
 (defun kadir/split-and-follow-horizontally ()
   "Split window below and follow."
@@ -240,133 +272,5 @@
   (align-regexp beginning end (concat "\\(\\s-*\\)"
                                       (regexp-quote comment-start))))
 
-;; (defun kadir/save-config-async()
-;;   ""
-;;   (interactive)
-;;   (when (equal (buffer-file-name) config-org)
-;;     (use-package async)
-;;     (async-start
-;;      (lambda ()
-;;        (require 'org)
-;;        ;; note: ~/emacsleri değikenden al
-;;        (org-babel-tangle-file "~/.emacs.d/README.org" "~/.emacs.d/README.el"))
-;;      (lambda(result)
-;;        (message "tangled saved files to: %s" result)))))
-;; (add-hook 'after-save-hook 'kadir/save-config-async)
-(setq user-full-name "Kadir Can Çetin")
-(setq user-mail-address "kadircancetin@gmail.com")
-
-;; default emacs settings
-
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-;; cleaning init.el (another file for custom-set-variables etc.)
-;; (setq-default custom-file (concat user-emacs-directory "custom.el"))
-;; (load-file  (concat user-emacs-directory "custom.el"))
-
-(setq echo-keystrokes 0.1)
-
-(setq auto-revert-interval 2
-      auto-revert-check-vc-info t
-      global-auto-revert-non-file-buffers t
-      auto-revert-verbose nil)
-
-(setq-default ring-bell-function      'ignore ; shutdown rings
-              inhibit-startup-message  t      ; disable startup messages
-              initial-scratch-message  nil    ; disable startup messages
-              initial-major-mode      'text-mode ; initial buffer
-              mark-ring-max            128    ; increatese mark-ring
-              column-number-mode       t      ; show column number on modeline
-              default-buffer-file-coding-system 'utf-8-unix
-              kill-ring-max            256    ; increatese kill-ring history
-              search-whitespace-regexp ".*?"  ; make isearch more fuzzy like
-              ;; require-final-newline    t
-              vc-follow-symlinks       t
-              )
-
-(setq winner-boring-buffers
-      '("*Completions*"
-        "*Compile-Log*"
-        "*inferior-lisp*"
-        "*Fuzzy Completions*"
-        "*Apropos*"
-        "*Help*"
-        "*cvs*"
-        "*Buffer List*"
-        "*Ibuffer*"
-        "*esh command on file*"))
-
-
-;; short yes no question when emacs ask
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-
-;; ;; SmoothScroll
-;; ;; Vertical Scroll
-(setq scroll-step 1)
-(setq scroll-margin 2)
-(setq scroll-conservatively 1000)
-(setq scroll-up-aggressively 0.01)
-(setq scroll-down-aggressively 0.01)
-(setq auto-window-vscroll nil)
-(setq fast-but-imprecise-scrolling nil)
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
-(setq mouse-wheel-progressive-speed nil)
-;; ;; Horizontal Scroll
-(setq hscroll-step 3)
-(setq hscroll-margin 3)
-;; ;; -SmoothScroll
-
-
-(setq-default indent-tabs-mode nil       ; space instead of tabs
-              tab-width 4                ; 4 space for tab
-              show-trailing-whitespace nil) ; showing empty whitespaces
-
-(setq-default whitespace-newline -1 whitespace-line -1 whitespace-trailing -1)
-
-(setq-default max-mini-window-height   1
-              resize-mini-windows      nil
-              message-truncate-lines   t)  ; set and try to force mini buffer should be mini
-
-
-(setq hs-isearch-open t)
-
-;; (setq completion-styles '(basic flex))
-;; (setq completion-styles '(basic partial-completion emacs22))
-
-;; back up
-
-;; source: https://emacs.stackexchange.com/questions/33/put-all-backups-into-one-backup-folder
-(let ((backup-dir "~/emacs/backups")
-      (auto-saves-dir "~/emacs/auto-saves/"))
-  (dolist (dir (list backup-dir auto-saves-dir))
-    (when (not (file-directory-p dir))
-      (make-directory dir t)))
-  (setq-default backup-directory-alist `(("." . ,backup-dir))
-                auto-save-file-name-transforms `((".*" ,auto-saves-dir t))
-                auto-save-list-file-prefix (concat auto-saves-dir ".saves-")
-                tramp-backup-directory-alist `((".*" . ,backup-dir))
-                tramp-auto-save-directory auto-saves-dir))
-
-(setq-default backup-by-copying t    ; Don't delink hardlinks
-              delete-old-versions t  ; Clean up the backups
-              version-control t      ; Use version numbers on backups,
-              kept-new-versions 5    ; keep some new versions
-              kept-old-versions 2)   ; and some old ones, too
-
-
-
-;; persistant history
-
-(setq history-length t)
-(setq history-delete-duplicates t)
-(setq savehist-additional-variables '(savehist-minibuffer-history-variables
-                                      helm-M-x-input-history
-                                      minibuffer-history
-                                      file-name-history
-                                      extended-command-history
-                                      command-history))
-
-(setq read-process-output-max (* 1024 1024))
 
 (provide 'def-confs)

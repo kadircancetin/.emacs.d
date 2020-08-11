@@ -1,19 +1,18 @@
 (when (version< emacs-version "27")
   (load-file (expand-file-name "early-init.el" user-emacs-directory)))
-
 
-(let ((default-directory "~/.emacs.d/config/"))
-  (normal-top-level-add-subdirs-to-load-path))
+
+(add-to-list 'load-path "~/.emacs.d/config/def-confs")
+(require 'def-confs)
+
 
 (defvar kadir/emacs-fast-open (member "-fo" command-line-args))
 (setq command-line-args (delete "-fo" command-line-args))
 
-
-(require 'def-confs)
-
-
-
 (when (not kadir/emacs-fast-open)
+  (let ((default-directory "~/.emacs.d/config/"))
+    (normal-top-level-add-subdirs-to-load-path))
+
   (run-with-idle-timer 1 nil (lambda () (async-bytecomp-package-mode 1)))
 
   (defvar bootstrap-version)
