@@ -1,3 +1,9 @@
+(defvar kadir/helm-extras nil
+  "There is some packages which could be used with helm but not necassary.")
+
+
+
+
 (use-package multiple-cursors)
 (use-package mwim)
 (use-package goto-chg)
@@ -143,7 +149,16 @@
   )  ; TODO: change keybind
 
 
-(use-package flycheck)
+(use-package flycheck
+  ;; :init
+  ;; (flycheck-define-checker proselint   "A linter for prose."
+  ;;                          :command ("proselint" source-inplace)
+  ;;                          :error-patterns
+  ;;                          ((warning line-start (file-name) ":" line ":" column ": "
+  ;;                                    (id (one-or-more (not (any " "))))
+  ;;                                    (message) line-end))
+  ;;                          :modes (text-mode markdown-mode gfm-mode org-mode))
+  )
 (use-package lsp-mode
   :config
   ;; (setq lsp-enable-snippet nil)
@@ -269,14 +284,29 @@
   :commands (magit-status)
   :bind ((:map magit-status-mode-map
                (("C-x 4 C-m" . magit-diff-visit-file-other-window))))
+  ;; :hook
+  ;; (magit-status-mode . (lambda () (interactive)(magit-margin-toggle))
+  ;;                    ;; (magit-status-mode . magit-margin-toggle-detail)
+  ;;                    )
   :config
+
+  (add-to-list 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
+  (add-hook 'magit-diff-mode-hook (lambda () (flyspell-mode 1)) 100)
+
+  ;; :hook
+  ;; (magit-status-mode-hook . 'flyspell-mode-on)
   :init
+  ;; (add-hook 'magit-diff-mode-hook (lambda () (other-window 1)(flyspell-mode 1)) -100)
   ;; (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   (use-package magit-todos
     :init
+    ;; (require 'magit-todos)
     ;; (magit-todos-mode 1)
     ;; (magit-todos-branch-list-toggle)
     ))
+
+
+
 
 
 (use-package sudo-edit

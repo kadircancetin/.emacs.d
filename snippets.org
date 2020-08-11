@@ -1,0 +1,9 @@
+* Finding all mono fonts
+
+#+begin_src emacs-lisp
+  (prin1 (mapconcat'identity
+        (sort (seq-filter (apply-partially #'s-matches?
+                                           ".*mono.*"
+                                           ) (font-family-list))
+              #'string-lessp) "  \n  "))
+#+end_src

@@ -257,38 +257,38 @@
 
 (use-package dired-sidebar)
 
-(use-package org-super-agenda
-  :init
-  (org-super-agenda-mode)
+;; (use-package org-super-agenda
+;;   :init
+;;   (org-super-agenda-mode)
 
-  :config
-  (setq org-agenda-sorting-strategy '(priority-down))
+;;   :config
+;;   (setq org-agenda-sorting-strategy '(priority-down))
 
 
-  (defun kadir/agenda()
-    (interactive)
-    (setq org-super-agenda-groups
-          '(
-            (:name "Çokomelli" :and (:scheduled nil :priority "A"))
+;;   (defun kadir/agenda()
+;;     (interactive)
+;;     (setq org-super-agenda-groups
+;;           '(
+;;             (:name "Çokomelli" :and (:scheduled nil :priority "A"))
 
-            ;; OTHERS for file grouping
-            (:name "HİPO" :and (:file-path ".*hipo.*"))
+;;             ;; OTHERS for file grouping
+;;             (:name "HİPO" :and (:file-path ".*hipo.*"))
 
-            ;; general groups
-            (:name "Önemli" :and (:scheduled nil :priority "B"))
-            (:name "EMACS" :and (:scheduled nil :tag "emacs"))
-            (:name "Estheticana" :and (:scheduled nil :file-path ".*estheticana.org"))
+;;             ;; general groups
+;;             (:name "Önemli" :and (:scheduled nil :priority "B"))
+;;             (:name "EMACS" :and (:scheduled nil :tag "emacs"))
+;;             (:name "Estheticana" :and (:scheduled nil :file-path ".*estheticana.org"))
 
-            ;; OTHERS for file grouping
-            (:name "Refile" :scheduled nil :file-path ".*inbox.org")
+;;             ;; OTHERS for file grouping
+;;             (:name "Refile" :scheduled nil :file-path ".*inbox.org")
 
-            ;; OTHErS for time grouping
-            (:name "TOMORROW" :scheduled future :order 10)
-            (:name "Feature" :scheduled today :time-grid t)))
+;;             ;; OTHErS for time grouping
+;;             (:name "TOMORROW" :scheduled future :order 10)
+;;             (:name "Feature" :scheduled today :time-grid t)))
 
-    (let ((org-agenda-span 'day))
-      (org-agenda nil "n")))
-  )
+;;     (let ((org-agenda-span 'day))
+;;       (org-agenda nil "n")))
+;;   )
 
 
 
@@ -335,3 +335,7 @@
              :repo "PythonNut/su.el")
   :init
   (su-mode +1))
+
+
+(use-package org-web-tools)
+(use-package darkroom)

@@ -2,11 +2,14 @@
 ;; ((nil (eglot-workspace-configuration . ((pyls . ((configurationSources . ["flake8"])))))))
 
 
-;; ((nil (eglot-workspace-configuration . ((pyls :configurationSources ["flake8"]
+;; (
+;;  (nil (eglot-workspace-configuration . ((pyls :configurationSources ["flake8"]
 ;;                                               :plugins (
 ;;                                                         :jedi_completion (:enabled nil)
 ;;                                                         :mccabe (:threshold 8)
-;;                                                         ))))))
+;;                                                         )))))
+;;  (nil (flycheck-flake8rc . ".flake8"))
+;;  )
 
 
 
@@ -30,14 +33,31 @@
 ;;   (remove-hook 'before-save-hook #'eglot-format-buffer nil))
 
 
+(defun k_python--flycheck-settings()
+  (setq eglot-stay-out-of '(flymake))
+  (flymake-mode 0)
+  (flycheck-mode 1)
+  (setq flycheck-indication-mode 'right-fringe)
+  (setq flycheck-display-errors-delay 0)
+  (setq flycheck-idle-change-delay 0.5)
+  (setq flycheck-idle-buffer-switch-delay 0.2)
+  (setq flycheck-check-syntax-automatically '(save
+                                              idle-change
+                                              mode-enabled))
+  (add-to-list 'flycheck-disabled-checkers 'python-pylint)
+  (add-to-list 'flycheck-disabled-checkers 'python-pycompile)
+  (add-to-list 'flycheck-disabled-checkers 'python-mypy))
+
 (use-package python
   :init
   (use-package pyvenv)
   (add-hook 'python-mode-hook 'auto-highlight-symbol-mode)
   (add-hook 'python-mode-hook 'activate-venv-configure-python)
+  (add-hook 'python-mode-hook 'k_python--flycheck-settings)
+
   :bind (:map python-mode-map
-              ("C-c C-n" . flymake-goto-next-error)
-              ("C-c C-p" . flymake-goto-prev-error)
+              ("C-c C-n" . flycheck-next-error)
+              ("C-c C-p" . flycheck-previous-error)
               ("M-ı" . lsp-format-buffer)
                                         ;  M-ı used for indet all
                                         ;  the buffer. But in
@@ -47,11 +67,17 @@
               ("M-ş" . xref-find-references)
               )
   :config
+  ;; (add-to-list 'flycheck-disabled-checkers 'python-flake8)
+
+
   (cond
-   ((eq kadir/python-lsp-eglot 'eglot)
+   ((eq kadir/python-lsp-eglot 'eglot) ; wtf
     (progn
-      (define-key python-mode-map (kbd "C-c C-n") #'flymake-goto-next-error)
-      (define-key python-mode-map (kbd "C-c C-n") #'flymake-goto-prev-error)))
+      ;; (define-key python-mode-map (kbd "C-c C-n") #'flymake-goto-next-error)
+      ;; (define-key python-mode-map (kbd "C-c C-n") #'flymake-goto-prev-error))
+      (define-key python-mode-map (kbd "C-c C-n") #'flycheck-next-error)
+      (define-key python-mode-map (kbd "C-c C-n") #'flycheck-previous-error)))
+
    ((eq kadir/python-lsp-eglot 'lsp-mode)
     (progn
       (define-key python-mode-map (kbd "C-c C-n") #'flycheck-next-error)
@@ -66,15 +92,12 @@
                                                          :hoverProvider
                                                          ;; :signatureHelpProvider
                                                          ))
-
         (use-package company-jedi)
         (use-package jedi-core
           :init
           (setq jedi:complete-on-dot t
                 jedi:install-imenu t  ;; TODO: helm semantic or imenu
-                )
-
-          )
+                ))
 
         (add-hook 'eglot-managed-mode-hook
                   (lambda ()
@@ -94,8 +117,10 @@
                             ;; company-tabnine
                             ;; company-yasnippet
                             company-dabbrev))
-                    (prin1 company-backends)
-                    )))
+                    (flymake-mode 0)
+                    (prin1 company-backends))))
+
+
 
     (lsp)
     (remove-hook 'python-mode-hook #'auto-highlight-symbol-mode)))
