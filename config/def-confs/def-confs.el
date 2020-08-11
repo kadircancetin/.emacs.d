@@ -63,8 +63,7 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)   ; short yes no question when emacs ask
 
-;; ;; SmoothScroll
-;; ;; Vertical Scroll
+;; ;; SmoothScroll - Vertical
 (setq-default scroll-step 1
               scroll-margin 2
               scroll-conservatively 1000
@@ -91,7 +90,7 @@
               message-truncate-lines   t)  ; set and try to force mini buffer should be mini
 
 
-(setq hs-isearch-open t)
+(setq-default hs-isearch-open t)
 
 ;; (setq completion-styles '(basic flex))
 ;; (setq completion-styles '(basic partial-completion emacs22))
@@ -129,6 +128,7 @@
                                               file-name-history
                                               extended-command-history
                                               command-history))
+
 
 (defun kadir/isearch-region (&optional not-regexp no-recursive-edit)
   ;; cloned from: https://www.reddit.com/r/emacs/comments/b7yjje/isearch_region_search/
@@ -186,7 +186,7 @@
   (interactive) (switch-to-buffer "*dashboard*"))
 
 
-(defun kadir/open-scratch-buffer ()
+(defun kadir/find-scratch-buffer ()
   (interactive)
   (switch-to-buffer "*scratch*"))
 

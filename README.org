@@ -1,25 +1,25 @@
 * Architecture
 #+BEGIN_SRC text
-    boot
-     |
-  def-confs  -------(if -fo flag)----->  fo-confs
-     |
-     |
-     |
-     |
+  early_init.el
+       |
+   def-confs.el   -------(if -fo flag)----->   fo-confs.el
+       |
+       |
+       |
+       |
 ......
 ......
 ......
 #+END_SRC
 
-** Boot
+** early_init.el
 Everything in early_init.el.
 - Boot performance improvements like garbage collection settings.
 - Some early UI customization for speed up opening and robust startup screen.
 
-** (def-confs) -> Default Configurations
+** def-confs.el - Default Configurations
 Default emacs settings and keybings which I set no whether happends.
 - Except major-mode settings like org-mode.
 
-** (fo-configs) -> Fast Open Configs
+** fo-configs.el - Fast Open Configurations
 Ido-mode like default emacs packages loading. I will not use them as a my primary configs but for fast oppen, it is good solitions.

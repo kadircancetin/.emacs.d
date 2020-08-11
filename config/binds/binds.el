@@ -53,7 +53,7 @@
  ("i"                 . kadir/find-inbox)
  ("c"                 . kadir/find-config)
  ("e"                 . kadir/find-experimental-config)
- ("s"                 . kadir/open-scratch-buffer)
+ ("s"                 . kadir/find-scratch-buffer)
  ("d"                 . kadir/find-dashboard)
  ("a"                 . kadir/agenda))
 
