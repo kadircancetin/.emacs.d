@@ -1,4 +1,5 @@
 ;; org-roam
+
 (use-package org-roam
   :commands (org-roam org-roam-mode-map org-roam-find-file)
   :defer 1.1
@@ -14,7 +15,7 @@
        (find-file file))
     )
 
-  :hook 
+  :hook
   (org-mode . org-roam-mode)
   :custom
   (org-roam-directory "~/Dropbox/org-roam/")

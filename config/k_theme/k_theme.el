@@ -1,5 +1,6 @@
 ;; you can get colors from: https://paletton.com/#uid=7370K0kmls6cSGiiavGqRoEtFj-
 ;; base color: #2d9574
+(defvar kadir/default-font-size 75)
 
 (setq display-fill-column-indicator-character ?|)
 (setq-default fill-column 99)
@@ -32,6 +33,9 @@
            '(diff-hl-insert ((t (:background "#29422d" :foreground "#67b11d"))))
            '(diff-hl-change ((t (:background "#2d4252" :foreground "#4f97d7"))))
            '(diff-hl-delete ((t (:background "#512e31" :foreground "#f2241f"))))
+           '(flyspell-duplicate ((t (:underline t :weight bold :background "#2d4252" :foreground nil))))
+           '(flyspell-incorrect ((t (:underline t :weight bold :background "#2d4252" :foreground nil))))
+
 
            ;; ahs
            '(ahs-plugin-defalt-face       ((t (:underline t :weight bold :background nil :foreground nil))))

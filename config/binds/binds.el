@@ -93,7 +93,7 @@
    ("C-M-SPC"         . goto-last-change)
 
    ;; doc
-   ("C-c DEL"         . devdocs-search)
+   ;; ("C-c DEL"         . devdocs-search)
 
    ;; MC
    ("C-M-n"           . mc/mark-next-like-this)

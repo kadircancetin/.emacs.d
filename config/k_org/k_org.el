@@ -8,7 +8,8 @@
   (define-key org-mode-map (kbd "C-a") 'mwim-beginning-of-code-or-line)
   (setq org-src-tab-acts-natively t) ; intent code blocks with its major modes
   (setq org-src-window-setup 'current-window) ; edit code on same window
-  (setq org-ellipsis "  ↴" )
+  ;; (setq org-ellipsis "  ↴" )
+  (setq org-ellipsis "  ..." )
   (setq org-src-fontify-natively t)
   (setq org-startup-indented t)
   (setq org-hide-emphasis-markers t)
@@ -29,7 +30,7 @@
                            ))
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "~/Dropbox/org-roam/20200503174932-inbox.org" "Inbox")
-           "* TODO %?\n  Added: \%u\n  \%a")
+           "* TODO %?\nAdded: \%u\n  \%a")
           ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
            "* %?\n  Entered on %U\n  %i\n  %a")
           ("p" "Protocol"
