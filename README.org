@@ -1,14 +1,17 @@
-* TODO List
-- symbol-overlay dene (auto highltt yerine)
-- https://github.com/lewang/ws-butler
-- (x-ray) package https://www.emacswiki.org/emacs/XrayPackage#toc4
-- https://oremacs.com/2017/12/27/company-numbers/
-- http://wikemacs.org/wiki/Whitespace-mode   - empty lineların bulunup silinmesi
-- org async https://github.com/astahlman/ob-async
-- pdf-tools
-- org
-  - https://github.com/mtekman/org-tanglesync.el#from-external-file-push-to-tangled-block
-  - https://github.com/astahlman/ob-async
-- key-corde mode
-- https://github.com/lassik/emacs-format-all-the-code  (format all languages)
-- https://github.com/manateelazycat/company-english-helper
+* Architecture
+#+BEGIN_SRC markdown
+  |-----------| -> open emacs with  --fast-config parameter
+  |           |
+  | def-confs | -> default configurations
+  | boot      | -> early_init.el
+
+#+END_SRC
+
+** Boot
+Everything in early_init.el.
+- Boot performance improvements like garbage collection settings.
+- Some early UI customization for speed up opening and robust startup screen.
+
+** (def-confs) -> Default Configurations
+All default emacs configurations. Include keybindings, styling, set variables and so on.
+- except major-mode settings like org-mode and so on.

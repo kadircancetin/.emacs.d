@@ -1,69 +1,43 @@
-;; from doom-emacs early-init el. I don't know what it is and I don't
-;; get any speed up whit that but they claim resizing frame is very
-;; problem thing so I added that
 (setq frame-inhibit-implied-resize t)
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; startup optimization
 ;; source: https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setq load-prefer-newer noninteractive)
-(defvar gc-cons-threshold-orginal (* 1024 1024 20))
-(setq gc-cons-percentage 0.6)
+(defvar gc-cons-threshold-orginal (* 1024 1024 100))
+(setq gc-cons-percentage 0.8)
 (setq gc-cons-threshold most-positive-fixnum)
 
 (defvar file-name-handler-alist-original file-name-handler-alist)
 (setq file-name-handler-alist nil)
 (run-with-idle-timer
- 1.5 nil
+ 3 nil
  (lambda ()
-   (setq gc-cons-threshold gc-cons-threshold-orginal) ;; default
+   (setq gc-cons-threshold gc-cons-threshold-orginal)
    (setq file-name-handler-alist file-name-handler-alist-original)
    (makunbound 'gc-cons-threshold-original)
    (makunbound 'file-name-handler-alist-original)
    (message "gc-cons-threshold and file-name-handler-alist restored")))
-
-
-;; run garbage collectin by hand when
-;; 1) every focus out of the emacs run
-;; 2) every 10 minutes wait the 1 second idle time and run
-(add-hook 'focus-out-hook (lambda() (garbage-collect)))
-(run-with-timer nil (* 10 60) (lambda () (run-with-idle-timer 1 nil 'garbage-collect)))
-;; (add-hook 'post-gc-hook (lambda () (message "*GC active*") ))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setq package-enable-at-startup nil)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(fringe-mode 4)                  ; my laptop screen is not full hd :(
-
-
-(setq load-prefer-newer t)       ; somehow dangers but when createing package, I need this
+(fringe-mode 4)
 (setq frame-resize-pixelwise t)
 
 
-;; FONT SETTINGS
-(defvar kadir/default-font-size 70)
+(setq load-prefer-newer t)       ; somehow dangers but when createing package, I need this
 
-;; (set-face-attribute 'default nil :family "Source Code Pro" :height 80 :weight 'normal)
+
 (set-face-attribute 'default nil :family "Source Code Pro" :height 75 :weight 'normal)
-;;       (set-face-attribute 'default nil :family "fira code" :height 75 :weight 'normal)
-;; (set-face-attribute 'default nil :family "fira code" :height 71 :weight 'normal)
-
-;; (set-face-attribute 'default nil :family "Monoid" :height
-;;                     kadir/default-font-size :weight 'normal)
-
-(set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro"
-                    :italic t :weight 'bold) ; this is some minor bug on documentation
-
-;; to finding the available string names
-;; (prin1 (mapconcat'identity
-;;         (sort (seq-filter (apply-partially #'s-matches?
-;;                                            ".*mono.*"
-;;                                            ) (font-family-list))
-;;               #'string-lessp) "  \n  "))
+(set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro" :italic t :weight 'bold)
+;; (set-face-attribute 'default nil :family "fira code" :height 75 :weight 'normal)
+;; (set-face-attribute 'default nil :family "Monoid" :height kadir/default-font-size :weight 'normal)
 
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -75,14 +49,3 @@
       window-divider-default-right-width 1)
 (set-face-attribute 'window-divider nil :foreground "#4C4262")
 (window-divider-mode 1)
-
-
-
-(when (file-exists-p
-       "~/.emacs.d/elpa2/benchmark-init-20150905.938/benchmark-init.elc"
-       )
-  ;; TODO: get the from file whithout the version.
-  (load-file
-   "~/.emacs.d/elpa2/benchmark-init-20150905.938/benchmark-init.elc")
-  (benchmark-init/activate)
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))

@@ -1,21 +1,61 @@
 (when (version< emacs-version "27")
-  ;; early-init.el comes from emacs 27. so if your emacs older than, we need to load it by
-  ;; regular way
   (load-file (expand-file-name "early-init.el" user-emacs-directory)))
 
-(defvar kadir/helm-extras nil
-  "There is some packages which could be used with helm but not necassary.")
-
-(let ((default-directory "~/.emacs.d/config"))
+(let ((default-directory "~/.emacs.d/config/"))
   (normal-top-level-add-subdirs-to-load-path))
 
-;; `defaults' configure the defaults settings of the emacs. Like
-;; enabling winner-mode. And install and load the `use-package'.
-(require 'defaults)
+
+(require 'def-confs)
+
+
+
+;; - =M-x straight-pull-all=: update all packages.
+;; - =M-x straight-normalize-all=: restore all packages (remove local edits)
+;; - =M-x straight-freeze-versions= and =M-x straight-thaw-versions= are like =pip
+;; freeze requirements.txt= and =pip install -r requirements.txt=
+;; - To tell straight.el that you want to use the version of Org shipped with
+;; Emacs, rather than cloning the upstream repository:
+;; (Note: ":tangle no")
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(setq straight-check-for-modifications '(watch-files find-when-checking))
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
+
+
+(setq use-package-always-defer t
+      use-package-expand-minimally t)
+
+(use-package no-littering)
+(require 'no-littering)
+
+(setq auto-save-file-name-transforms
+      `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+(setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+(if (file-exists-p custom-file)
+    (load-file custom-file))
+(add-to-list 'yas-snippet-dirs
+             (expand-file-name "snippets" user-emacs-directory))
+
+
+
+
+
 
 ;; appriance and UI
 (require 'k_theme)
-
 
 ;; additinaol core features (like lsp) and extra packages
 
@@ -44,8 +84,18 @@
 ;; all global bindings
 (require 'binds)
 
+(load-file "~/dev-org-docs/dev-org-docs.el")
+
 (when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
   (load-file (expand-file-name "experimental.el" user-emacs-directory))
   (message "EXPERIMENTAL EL LOADED"))
+
+;; run garbage collectin by hand when
+;; 1) every focus out of the emacs run
+;; 2) every 10 minutes wait the 1 second idle time and run
+(add-hook 'focus-out-hook (lambda() (garbage-collect)))
+(run-with-timer nil (* 10 60) (lambda () (run-with-idle-timer 1 nil 'garbage-collect)))
+
+
 (put 'narrow-to-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
