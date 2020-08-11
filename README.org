@@ -1,9 +1,11 @@
 * Architecture
 #+BEGIN_SRC markdown
-  |-----------| -> open emacs with  --fast-config parameter
-  |           |
-  | def-confs | -> default configurations
-  | boot      | -> early_init.el
+  1) [boot]
+  2) [def-confs]-------(if -fo flag)----->  3) [fo-confs]
+        |
+        |
+        |
+        |
 
 #+END_SRC
 
@@ -13,5 +15,8 @@ Everything in early_init.el.
 - Some early UI customization for speed up opening and robust startup screen.
 
 ** (def-confs) -> Default Configurations
-All default emacs configurations. Include keybindings, styling, set variables and so on.
-- except major-mode settings like org-mode and so on.
+Default emacs settings and keybings which I set no whether happends.
+- Except major-mode settings like org-mode.
+
+** (fo-configs) -> Fast Open Configs
+Ido-mode like default emacs packages loading. I will not use them as a my primary configs but for fast oppen, it is good solitions.

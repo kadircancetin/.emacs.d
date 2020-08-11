@@ -133,5 +133,5 @@ translation it is possible to get suggestion."
         '("^\\*helm\\b"
           "^\\*swiper\\*$")))
 
-
+(global-page-break-lines-mode 1) ; ^L to visual line
 (provide 'extras)

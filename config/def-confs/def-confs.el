@@ -65,7 +65,6 @@
      (winner-mode 1)                ; provide undo, redo your window layout
      (global-subword-mode 1)        ; make camel-case usable with word shorcuts
      (save-place-mode 1)            ; save cursor position for next file opening, and restore it
-     (global-page-break-lines-mode 1) ; ^L to visual line
      (global-prettify-symbols-mode 1) ; lambda to cool lambda character
      (global-auto-revert-mode 1)      ; auto revert
      (global-auto-composition-mode 1))))
@@ -80,8 +79,7 @@
          (require 'hideshow)
          (add-hook 'prog-mode-hook 'hs-minor-mode))))
 
-(run-with-idle-timer 1 nil
-                     (lambda () (async-bytecomp-package-mode 1)))
+
 
 (run-with-idle-timer 0.75 nil
                      (lambda()
