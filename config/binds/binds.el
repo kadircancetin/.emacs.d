@@ -1,15 +1,4 @@
 (require 'cl)
-
-(keyboard-translate ?\C-h ?\C-?)
-(keyboard-translate ?\C-? ?\C-h)
-
-
-(defun kadir/bind (args)
-  (loop for (key . value) in args
-        collect (cons value key)
-        do
-        (global-set-key (kbd key) value)))
-
 
 
 (bind-keys

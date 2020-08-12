@@ -245,6 +245,8 @@
      (global-set-key (kbd (car arg)) (cdr arg)))
    args))
 
+(keyboard-translate ?\C-? ?\C-h)
+(keyboard-translate ?\C-h ?\C-?)
 
 (kadir/bind
  '(;; editing
@@ -267,7 +269,6 @@
    ;; fonts
    ("C-+"             . text-scale-increase)
    ("C--"             . text-scale-decrease)
-   ("C-c c"           . (lambda()(interactive)(org-capture nil "t")))
-   )
- )
+   ("C-c c"           . (lambda()(interactive)(org-capture nil "t")))))
+
 (provide 'def-confs)

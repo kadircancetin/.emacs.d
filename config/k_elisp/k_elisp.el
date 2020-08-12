@@ -1,3 +1,4 @@
+;; gunzip -r /usr/local/share/emacs/27.0.50/lisp
 (add-hook 'emacs-lisp-mode-hook 'auto-highlight-symbol-mode)
 (add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
 (add-hook 'emacs-lisp-mode-hook 'auto-fill-mode)
