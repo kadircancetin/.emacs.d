@@ -18,49 +18,12 @@
   (let ((default-directory "~/.emacs.d/config/"))
     (normal-top-level-add-subdirs-to-load-path))
 
-  (run-with-idle-timer 1 nil (lambda () (async-bytecomp-package-mode 1)))
-
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-        (bootstrap-version 5))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-           'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage))
-
-  (setq straight-check-for-modifications '(watch-files find-when-checking))
-  (straight-use-package 'use-package)
-  (setq straight-use-package-by-default t)
-
-  
-  (setq use-package-always-defer t
-        use-package-expand-minimally t)
-  
-  (use-package no-littering)
-  (require 'no-littering)
-
-  (setq auto-save-file-name-transforms
-        `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
-  (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
-  (if (file-exists-p custom-file)
-      (load-file custom-file))
-  (add-to-list 'yas-snippet-dirs
-               (expand-file-name "snippets" user-emacs-directory))
-  
-
-
-
+  (require 'k-packaging)
 
   ;; appriance and UI
   (require 'k_theme)
 
   ;; additinaol core features (like lsp) and extra packages
-
   (require 'core-extra)
   (require 'extras)
 
@@ -77,10 +40,11 @@
   (require 'k_rest)
   (require 'k_colors)
   (require 'k_elisp)
+
   ;; (require 'k_java)
   (require 'k_dired)
-  (require 'k_eglot_posframe_help)
-  (eglot-posframe-activate)
+  ;; (require 'k_eglot_posframe_help)
+  ;; (eglot-posframe-activate)
 
 
   ;; all global bindings
@@ -101,4 +65,6 @@
 
   (put 'narrow-to-region 'disabled nil)
   (put 'upcase-region 'disabled nil)
+  (run-with-idle-timer 1 nil (lambda () (async-bytecomp-package-mode 1)))
+
   )

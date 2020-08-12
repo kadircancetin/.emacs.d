@@ -14,9 +14,7 @@
 
 ** early_init.el
 - Boot performance (ex: grabadge collection, startup ui configurations)
-- Some variables:
-  - kadir/emacs-fast-open fast-open
-  - kadir/default-font-size
+- Some variables defining like =kadir/emacs-fast-open fast-open= or =kadir/default-font-size=.
 
 ** def-confs.el - Default Configurations
 Default Emacs settings, keybindings and function. Without any package.
@@ -25,5 +23,5 @@ Default Emacs settings, keybindings and function. Without any package.
 ** fo-configs.el - Fast Open Configurations
 Ido-mode like default emacs packages loading. I will not use them as a my primary configurations but for fast oppen, it is good solutions.
 
-** k-packageing.el - Pacage initializing
-Load use-package, straight.el
+** k-packaging.el - Pacage Initializing
+It has package installers (=straight.el=, =use-pacakge=), very generic packaging packages (like =no-littering=).
