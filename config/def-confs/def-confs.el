@@ -2,44 +2,43 @@
 (setq-default user-mail-address "kadircancetin@gmail.com")
 
 
+;; Deffered activation minor modes
 (run-with-idle-timer
  0.15 nil  ;; defer
- (lambda ()
-   (progn
-     ;; (display-battery-mode 1)
-     (blink-cursor-mode -1)
-     (display-time-mode 1)
-     (delete-selection-mode 1)        ; writing when ther is selected, delete the selected part
-     (show-paren-mode 1)              ; shows matching parentheses
-     (winner-mode 1)                  ; provide undo, redo your window layout
-     (global-subword-mode 1)          ; make camel-case usable with word shorcuts
-     (save-place-mode 1)              ; save cursor position for next file opening, and restore it
-     (global-prettify-symbols-mode 1) ; lambda to cool lambda character
-     (global-auto-revert-mode 1)      ; auto revert
-     (global-auto-composition-mode 1))))
+ (lambda () (progn
+         ;; (display-battery-mode 1)
+         (savehist-mode 1)
+         (blink-cursor-mode -1)
+         (display-time-mode 1)
+         (delete-selection-mode 1)        ; writing when ther is selected, delete the selected part
+         (show-paren-mode 1)              ; shows matching parentheses
+         (winner-mode 1)                  ; provide undo, redo your window layout
+         (global-subword-mode 1)          ; make camel-case usable with word shorcuts
+         (save-place-mode 1)              ; save cursor position for next file opening, and restore it
+         (global-prettify-symbols-mode 1) ; lambda to cool lambda character
+         (global-auto-revert-mode 1)      ; auto revert
+         (global-auto-composition-mode 1))))
 
 (run-with-idle-timer
  1 nil
- (lambda ()
-   (progn
-     (require 'hideshow)
-     (add-hook 'prog-mode-hook 'hs-minor-mode))))
+ (lambda () (progn
+         (require 'hideshow)
+         (add-hook 'prog-mode-hook 'hs-minor-mode))))
 
+
+(require 'server)
 (run-with-idle-timer 5 nil
-                     (lambda() (require 'server)
+                     (lambda()
                        (unless (server-running-p)
                          (server-start))
                        (require 'org-protocol)))
 
 
+;; Hooks
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 
-;; for lsp: https://github.com/hlissner/doom-emacs/pull/2590
-(setq-default read-process-output-max (* 1024 1024))
-
-
-
+;; Setting general default variables
 (setq-default echo-keystrokes 0.1)                    ; I think for wichkey. I don't remember.
 
 (setq-default auto-revert-interval 2
@@ -47,79 +46,47 @@
               global-auto-revert-non-file-buffers t
               auto-revert-verbose nil)
 
-(setq-default ring-bell-function      'ignore ; shutdown rings
-              inhibit-startup-message  t      ; disable startup messages
-              initial-scratch-message  nil    ; disable startup messages
+(setq-default ring-bell-function      'ignore    ; shutdown rings
+              inhibit-startup-message  t         ; disable startup messages
+              initial-scratch-message  nil       ; disable startup messages
               initial-major-mode      'text-mode ; initial buffer
-              mark-ring-max            128    ; increatese mark-ring
-              column-number-mode       t      ; show column number on modeline
+              mark-ring-max            128       ; increatese mark-ring
+              column-number-mode       t         ; show column number on modeline
               default-buffer-file-coding-system 'utf-8-unix
-              kill-ring-max            256    ; increatese kill-ring history
-              search-whitespace-regexp ".*?"  ; make isearch more fuzzy like
+              kill-ring-max            256       ; increatese kill-ring history
+              search-whitespace-regexp ".*?"     ; make isearch more fuzzy like
               ;; require-final-newline    t
               vc-follow-symlinks       t)
 
 (setq-default winner-boring-buffers '("*Completions*" "*Compile-Log*" "*inferior-lisp*" "*Fuzzy Completions*" "*Apropos*" "*Help*" "*cvs*" "*Buffer List*" "*Ibuffer*" "*esh command on file*"))
 
-(defalias 'yes-or-no-p 'y-or-n-p)   ; short yes no question when emacs ask
-
-;; ;; SmoothScroll - Vertical
-(setq-default scroll-step 1
-              scroll-margin 2
-              scroll-conservatively 1000
-              scroll-up-aggressively 0.01
-              scroll-down-aggressively 0.01
-              auto-window-vscroll nil
-              fast-but-imprecise-scrolling nil
-              mouse-wheel-scroll-amount '(1 ((shift) . 1))
-              mouse-wheel-progressive-speed nil)
-
-;; Horizontal Scroll
-;; (setq hscroll-step 3
-;;       hscroll-margin 3)
-
-
-(setq-default indent-tabs-mode nil       ; space instead of tabs
-              tab-width 4                ; 4 space for tab
-              show-trailing-whitespace nil) ; showing empty whitespaces
-
-(setq-default whitespace-newline -1 whitespace-line -1 whitespace-trailing -1)
+(setq-default indent-tabs-mode nil          ; space instead of tabs
+              tab-width 4                   ; 4 space for tab
+              show-trailing-whitespace nil  ; showing empty whitespaces
+              whitespace-newline -1
+              whitespace-line -1
+              whitespace-trailing -1)
 
 (setq-default max-mini-window-height   1
               resize-mini-windows      nil
               message-truncate-lines   t)  ; set and try to force mini buffer should be mini
-
 
 (setq-default hs-isearch-open t)
-
 ;; (setq completion-styles '(basic flex))
 ;; (setq completion-styles '(basic partial-completion emacs22))
-
+
+
 ;; back up
-
-;; source: https://emacs.stackexchange.com/questions/33/put-all-backups-into-one-backup-folder
-(let ((backup-dir "~/emacs/backups")
-      (auto-saves-dir "~/emacs/auto-saves/"))
-  (dolist (dir (list backup-dir auto-saves-dir))
-    (when (not (file-directory-p dir))
-      (make-directory dir t)))
-  (setq-default backup-directory-alist `(("." . ,backup-dir))
-                auto-save-file-name-transforms `((".*" ,auto-saves-dir t))
-                auto-save-list-file-prefix (concat auto-saves-dir ".saves-")
-                tramp-backup-directory-alist `((".*" . ,backup-dir))
-                tramp-auto-save-directory auto-saves-dir))
-
 (setq-default backup-by-copying t    ; Don't delink hardlinks
               delete-old-versions t  ; Clean up the backups
               version-control t      ; Use version numbers on backups,
               kept-new-versions 5    ; keep some new versions
-              kept-old-versions 2)   ; and some old ones, too
+              kept-old-versions 5)   ; and some old ones, too
 
+;; Performance improvements
+(setq-default read-process-output-max (* 1024 1024)) ;; for lsp: https://github.com/hlissner/doom-emacs/pull/2590
 
-
 ;; persistant history
-(savehist-mode 1)
-
 (setq-default history-length t)
 (setq-default history-delete-duplicates t)
 (setq-default savehist-additional-variables '(savehist-minibuffer-history-variables
@@ -128,6 +95,20 @@
                                               file-name-history
                                               extended-command-history
                                               command-history))
+(defalias 'yes-or-no-p 'y-or-n-p)   ; short yes no question when emacs ask
+
+;; ;; SmoothScroll
+(setq-default scroll-step 1
+              scroll-margin 2
+              ;;hscroll-step 3        ; horizontal disabled
+              ;;hscroll-margin 3      ; horizontal disabled
+              scroll-conservatively 1000
+              scroll-up-aggressively 0.01
+              scroll-down-aggressively 0.01
+              auto-window-vscroll nil
+              fast-but-imprecise-scrolling nil
+              mouse-wheel-scroll-amount '(1 ((shift) . 1))
+              mouse-wheel-progressive-speed nil)
 
 
 (defun kadir/isearch-region (&optional not-regexp no-recursive-edit)
@@ -143,26 +124,6 @@
 
 (advice-add 'isearch-forward-regexp :after 'kadir/isearch-region)
 (advice-add 'isearch-forward :after 'kadir/isearch-region)
-
-(defun kadir/delete-file-and-buffer ()
-  ;; based on https://gist.github.com/hyOzd/23b87e96d43bca0f0b52 which is based on
-  ;; http://emacsredux.com/blog/2013/04/03/delete-file-and-buffer/
-  "Kill the current buffer and deletes the file it is visiting."
-  (interactive)
-  (let ((filename (buffer-file-name)))
-    (if filename
-        (when (y-or-n-p (concat "Do you really want to delete file " filename " ?"))
-          (delete-file filename)
-          (message "Deleted file %s." filename)
-          (kill-buffer))
-      (message "Not a file visiting buffer!"))))
-
-(defun eshell/clear ()
-  "Clear the eshell buffer. Type clear on eshell"
-  ;; source: https://emacs.stackexchange.com/questions/12503/how-to-clear-the-eshell
-  (let ((inhibit-read-only t))
-    (erase-buffer)
-    (eshell-send-input)))
 
 
 (defun kadir/find-config ()
@@ -186,6 +147,19 @@
   (interactive) (switch-to-buffer "*dashboard*"))
 
 
+(defun kadir/delete-file-and-buffer ()
+  ;; based on https://gist.github.com/hyOzd/23b87e96d43bca0f0b52 which is based on
+  ;; http://emacsredux.com/blog/2013/04/03/delete-file-and-buffer/
+  "Kill the current buffer and deletes the file it is visiting."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (if filename
+        (when (y-or-n-p (concat "Do you really want to delete file " filename " ?"))
+          (delete-file filename)
+          (message "Deleted file %s." filename)
+          (kill-buffer))
+      (message "Not a file visiting buffer!"))))
+
 (defun kadir/find-scratch-buffer ()
   (interactive)
   (switch-to-buffer "*scratch*"))
@@ -239,13 +213,6 @@
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) nil)))
 
-(defun kadir/hide-fold-defs ()
-  "Folds the all functions in python"
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (hs-hide-level 2)))
-
 (defun resize-window-width (w)
   ;; source: https://github.com/MatthewZMD/.emacs.d
   "Resizes the window width based on W."
@@ -255,7 +222,6 @@
   (message "%s" w)
   (window-resize nil (- (truncate (* (/ w 12.0) (frame-width))) (window-total-width)) t))
 
-;; Resizes the window height based on the input
 (defun resize-window-height (h)
   ;; source: https://github.com/MatthewZMD/.emacs.d
   "Resizes the window height based on H."
@@ -264,7 +230,6 @@
                        (error "You need more than 1 window to execute this function!"))))
   (message "%s" h)
   (window-resize nil (- (truncate (* (/ h 12.0) (frame-height))) (window-total-height)) nil))
-
 
 (defun kadir/align-comments-region (beginning end)
   "Align comments in region."
@@ -272,5 +237,37 @@
   (align-regexp beginning end (concat "\\(\\s-*\\)"
                                       (regexp-quote comment-start))))
 
+
 
+(defun kadir/bind (args)
+  (mapcar
+   (lambda (arg)
+     (global-set-key (kbd (car arg)) (cdr arg)))
+   args))
+
+
+(kadir/bind
+ '(;; editing
+   ("C-w"             . spacemacs/backward-kill-word-or-region)
+   ("/"               . kadir/comment-or-self-insert)
+
+   ;; window-buffer
+   ("M-o"             . other-window)
+   ("M-u"             . winner-undo)
+   ("C-x k"           . (lambda () (interactive) (kill-buffer (current-buffer))))
+   ("M-ı"             . (lambda() (interactive) (indent-region (point-min) (point-max))))
+   ("C-x 2"           . kadir/split-and-follow-horizontally)
+   ("C-x 3"           . kadir/split-and-follow-vertically)
+   ("M-<SPC>"         . kadir/last-buffer)
+
+   ;; shortcuts
+   ("C-x *"           . kadir/open-thunar)
+   ("C-x -"           . kadir/open-terminator)
+
+   ;; fonts
+   ("C-+"             . text-scale-increase)
+   ("C--"             . text-scale-decrease)
+   ("C-c c"           . (lambda()(interactive)(org-capture nil "t")))
+   )
+ )
 (provide 'def-confs)

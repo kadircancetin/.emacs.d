@@ -9,6 +9,10 @@
 (defvar kadir/emacs-fast-open (member "-fo" command-line-args))
 (setq command-line-args (delete "-fo" command-line-args))
 
+(when kadir/emacs-fast-open
+  (add-to-list 'load-path "~/.emacs.d/config/fo-defs")
+  (require 'fo-defs))
+
 (when (not kadir/emacs-fast-open)
   (let ((default-directory "~/.emacs.d/config/"))
     (normal-top-level-add-subdirs-to-load-path))

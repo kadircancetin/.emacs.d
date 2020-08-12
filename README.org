@@ -13,13 +13,11 @@
 #+END_SRC
 
 ** early_init.el
-Everything in early_init.el.
-- Boot performance improvements like garbage collection settings.
-- Some early UI customization for speed up opening and robust startup screen.
+- Boot performance (ex: grabadge collection, startup ui configurations)
 
 ** def-confs.el - Default Configurations
-Default emacs settings and keybings which I set no whether happends.
+Default Emacs settings, keybindings and function. Without any package.
 - Except major-mode settings like org-mode.
 
 ** fo-configs.el - Fast Open Configurations
-Ido-mode like default emacs packages loading. I will not use them as a my primary configs but for fast oppen, it is good solitions.
+Ido-mode like default emacs packages loading. I will not use them as a my primary configurations but for fast oppen, it is good solutions.
