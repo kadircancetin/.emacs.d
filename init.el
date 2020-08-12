@@ -1,7 +1,6 @@
 (when (version< emacs-version "27")
   (load-file (expand-file-name "early-init.el" user-emacs-directory)))
 
-
 (defvar kadir/emacs-fast-open) ;; gets from early-init.el
 
 
@@ -9,12 +8,11 @@
 (require 'def-confs)
 
 
-(when kadir/emacs-fast-open
+(defun k/init-emacs-fo()
   (add-to-list 'load-path "~/.emacs.d/config/fo-defs")
   (require 'fo-defs))
 
-
-(when (not kadir/emacs-fast-open)
+(defun k/init-emacs-full ()
   (let ((default-directory "~/.emacs.d/config/"))
     (normal-top-level-add-subdirs-to-load-path))
 
@@ -46,7 +44,6 @@
   ;; (require 'k_eglot_posframe_help)
   ;; (eglot-posframe-activate)
 
-
   ;; all global bindings
   (require 'binds)
 
@@ -56,12 +53,9 @@
     (load-file (expand-file-name "experimental.el" user-emacs-directory))
     (message "EXPERIMENTAL EL LOADED"))
 
-  ;; run garbage collectin by hand when
-  ;; 1) every focus out of the emacs run
-  ;; 2) every 10 minutes wait the 1 second idle time and run
-  (add-hook 'after-focus-out-hook (lambda() (garbage-collect)))
-  (run-with-timer nil (* 10 60) (lambda () (run-with-idle-timer 1 nil 'garbage-collect)))
+  (put 'narrow-to-region 'disabled nil))
 
-
-  (put 'narrow-to-region 'disabled nil)
-  (put 'upcase-region 'disabled nil))
+
+(if kadir/emacs-fast-open
+    (k/init-emacs-fo)
+  (k/init-emacs-full))

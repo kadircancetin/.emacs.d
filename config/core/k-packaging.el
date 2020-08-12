@@ -12,6 +12,7 @@
   (load bootstrap-file nil 'nomessage))
 
 (setq-default straight-check-for-modifications '(watch-files find-when-checking))
+
 (straight-use-package 'use-package)
 (setq-default straight-use-package-by-default t)
 
@@ -19,9 +20,8 @@
               use-package-expand-minimally t)
 
 
-(use-package no-littering)
+(straight-use-package 'no-littering)
 (require 'no-littering)
-
 (setq auto-save-file-name-transforms
       `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 (setq custom-file (no-littering-expand-etc-file-name "custom.el"))

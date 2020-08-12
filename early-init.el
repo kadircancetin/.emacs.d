@@ -7,12 +7,11 @@
 
 (defun k/set-garbage-collection()
   "source: https://emacs.stackexchange.com/questions/34342/"
-  (setq load-prefer-newer noninteractive)
   (defvar gc-cons-threshold-orginal (* 1024 1024 100))
+  (defvar file-name-handler-alist-original file-name-handler-alist)
+
   (setq gc-cons-percentage 0.8)
   (setq gc-cons-threshold most-positive-fixnum)
-
-  (defvar file-name-handler-alist-original file-name-handler-alist)
   (setq file-name-handler-alist nil)
   (run-with-idle-timer
    3 nil
@@ -21,7 +20,10 @@
      (setq file-name-handler-alist file-name-handler-alist-original)
      (makunbound 'gc-cons-threshold-original)
      (makunbound 'file-name-handler-alist-original)
-     (message "gc-cons-threshold and file-name-handler-alist restored"))))
+     (message "gc-cons-threshold and file-name-handler-alist restored")))
+
+  (add-hook 'after-focus-out-hook (lambda() (garbage-collect)))
+  (run-with-timer nil (* 10 60) (lambda () (run-with-idle-timer 1 nil 'garbage-collect))))
 
 (defun k/set-init-package-disabling ()
   (setq package-enable-at-startup nil)
@@ -52,7 +54,6 @@
   (set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro" :italic t :weight 'bold))
 
 
-
 (k/set-garbage-collection)
 (k/set-init-package-disabling)
 (k/set-init-ui)
