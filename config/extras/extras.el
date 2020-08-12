@@ -134,4 +134,5 @@ translation it is possible to get suggestion."
           "^\\*swiper\\*$")))
 
 (global-page-break-lines-mode 1) ; ^L to visual line
+(run-with-idle-timer 1 nil (lambda () (async-bytecomp-package-mode 1)))
 (provide 'extras)

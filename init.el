@@ -64,7 +64,4 @@
 
 
   (put 'narrow-to-region 'disabled nil)
-  (put 'upcase-region 'disabled nil)
-  (run-with-idle-timer 1 nil (lambda () (async-bytecomp-package-mode 1)))
-
-  )
+  (put 'upcase-region 'disabled nil))
