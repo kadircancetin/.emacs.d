@@ -124,6 +124,8 @@
 
 (advice-add 'isearch-forward-regexp :after 'kadir/isearch-region)
 (advice-add 'isearch-forward :after 'kadir/isearch-region)
+(advice-add 'isearch-backward-regexp :after 'kadir/isearch-region)
+(advice-add 'isearch-backward :after 'kadir/isearch-region)
 
 
 (defun kadir/find-config ()

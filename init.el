@@ -2,17 +2,18 @@
   (load-file (expand-file-name "early-init.el" user-emacs-directory)))
 
 
+(defvar kadir/emacs-fast-open) ;; gets from early-init.el
+
+
 (add-to-list 'load-path "~/.emacs.d/config/def-confs")
 (require 'def-confs)
 
 
-(defvar kadir/emacs-fast-open (member "-fo" command-line-args))
-(setq command-line-args (delete "-fo" command-line-args))
-
 (when kadir/emacs-fast-open
   (add-to-list 'load-path "~/.emacs.d/config/fo-defs")
   (require 'fo-defs))
 
+
 (when (not kadir/emacs-fast-open)
   (let ((default-directory "~/.emacs.d/config/"))
     (normal-top-level-add-subdirs-to-load-path))
