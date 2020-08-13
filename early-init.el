@@ -30,26 +30,28 @@
   ;; (setq load-prefer-newer t)
   (setq load-prefer-newer noninteractive))
 
+(defun k/set-init--window-devider ()
+  (setq window-divider-default-places t
+        window-divider-default-bottom-width 1
+        window-divider-default-right-width 1)
+  (window-divider-mode 1))
+
 (defun k/set-init-ui()
   "Initialize UI. Mostly because of if theese settings in here, startup is faster"
   (load-theme 'wombat t)
   (fringe-mode 4)
-  (window-divider-mode 1)
-
   (setq frame-inhibit-implied-resize t)              ;; doom says it increse speedup
   (setq frame-resize-pixelwise t)                    ;; for terminal
   (push '(menu-bar-lines . 0) default-frame-alist)   ;; (menu-bar-mode -1)
   (push '(tool-bar-lines . 0) default-frame-alist)   ;; (tool-bar-mode -1)
   (push '(vertical-scroll-bars) default-frame-alist) ;; (scroll-bar-mode -1)
 
+  (k/set-init--window-devider)
+
   (when (not kadir/emacs-fast-open)
     (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
-  (setq window-divider-default-places t
-        window-divider-default-bottom-width 1
-        window-divider-default-right-width 1)
   (set-face-attribute 'window-divider nil :foreground "#4C4262")
-
   (set-face-attribute 'default nil :family "Source Code Pro" :height kadir/default-font-size :weight 'normal)
   (set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro" :italic t :weight 'bold))
 
