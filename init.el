@@ -17,6 +17,7 @@
     (normal-top-level-add-subdirs-to-load-path))
 
   (require 'k-packaging)
+  (require 'extra-majors)
 
   ;; appriance and UI
   (require 'k_theme)
@@ -34,8 +35,6 @@
   (require 'k_clang)
   (require 'k_js)
   (require 'k_org)
-  (require 'k_dotfiles)
-  (require 'k_rest)
   (require 'k_colors)
   (require 'k_elisp)
 

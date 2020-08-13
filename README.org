@@ -3,13 +3,22 @@
   early_init.el
        |
    def-confs.el   -------(if -fo flag)----->   fo-confs.el
-       |
-       |
-       |
-       |
- k-packaging.el
-......
-......
+       |                                           |
+       |                                           |
+       |                                           |
+ k-packaging.el                                    |
+       |                                           |
+       |                                           |
+ extra-majors.el                                   |
+       |                                           |
+       |                                           |
+  k-<major>.el    -------(loads)---------->  k-<major>-defaults.el
+  k-<major>.el    -------(loads)---------->  k-<major>-defaults.el
+      ...                                         ...
+       |                                           |
+       |                                           |
+       |                                           |
+   START EMACS                                START EMACS
 #+END_SRC
 
 ** early_init.el
@@ -24,4 +33,9 @@ Default Emacs settings, keybindings and function. Without any package.
 Ido-mode like default emacs packages loading. I will not use them as a my primary configurations but for fast oppen, it is good solutions.
 
 ** k-packaging.el - Pacage Initializing
-It has package installers (=straight.el=, =use-pacakge=), very generic packaging packages (like =no-littering=).
+It has package installers (=straight.el=, =use-pacakge=), or very generic packages (=no-littering=).
+
+** extra-majors.el
+Extra file related major modes (like magit has major modes but it is not file related major mode).
+- Except directly extended major modes (like web-mode is extended directly html mode or js2-mode extended directly js mode).
+- =restclient=, =json-mode=, =saas-mode=, =yaml-mode=, =docker-compose-mode=, =dockefile-mode=, =pdf-tools=, =ein=, =terraform-mode=

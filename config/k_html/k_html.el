@@ -1,16 +1,13 @@
 (use-package web-mode
   :init
-  (global-set-key (kbd "C-c k") 'web-mode-element-close) ;; TODO: make mode map
-  (setq css-indent-offset 2
-        web-mode-markup-indent-offset 2
-        web-mode-css-indent-offset 2
-        web-mode-code-indent-offset 2
-        web-mode-attr-indent-offset 2
-        web-mode-engines-alist '(("django"    . "\\.html\\'"))
-
-        web-mode-enable-current-element-highlight t
-        web-mode-enable-current-column-highlight t
-        )
+  (setq-default css-indent-offset 2
+                web-mode-markup-indent-offset 2
+                web-mode-css-indent-offset 2
+                web-mode-code-indent-offset 2
+                web-mode-attr-indent-offset 2
+                web-mode-engines-alist '(("django"    . "\\.html\\'"))
+                web-mode-enable-current-element-highlight t
+                web-mode-enable-current-column-highlight t)
   (add-hook 'mhtml-mode 'web-mode)
   (add-hook 'web-mode-hook 'toggle-truncate-lines)
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
@@ -32,10 +29,6 @@
 
 (use-package helm-emmet
   :after helm emmet web-mode)
-
-(use-package sass-mode
-  :init
-  (add-to-list 'auto-mode-alist '("\\.scss\\'" . sass-mode)))
 
 (use-package auto-rename-tag
   :init

@@ -165,11 +165,6 @@
     (kadir/python--lsp-indent-toggle)))
 
 
-(use-package ein
-  :init
-  (setq ein:output-area-inlined-images t))
-
-
 (defun kadir/django/find-models()
   (interactive)
   (let ((helm-rg-default-glob-string "models.py"))
