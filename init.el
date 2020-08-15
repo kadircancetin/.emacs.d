@@ -18,24 +18,23 @@
 
   (require 'k-packaging)
   (require 'extra-majors)
+  (require 'core-extra)     ;; TODO
+  (require 'k-colors-mode)  ;; NOTE: eğer bi satır üstte olursa eglot patlıyor. neden
 
-  ;; appriance and UI
   (require 'k_theme)
-
-  ;; additinaol core features (like lsp) and extra packages
-  (require 'core-extra)
   (require 'extras)
 
   ;; extra big features
   (require 'k_company)
 
   ;; programing languages and major modes
+  (require 'k-clojure)
   (require 'k_html)
   (require 'k_python)
   (require 'k_clang)
   (require 'k_js)
   (require 'k_org)
-  (require 'k_colors)
+
   (require 'k_elisp)
 
   ;; (require 'k_java)
@@ -47,6 +46,10 @@
   (require 'binds)
 
   (load-file "~/dev-org-docs/dev-org-docs.el")
+  (setq dev-org-docs-mode-docs
+        '((python-mode . (django~3.0 django_rest_framework python~3.7))
+          (clojure-mode . (clojure~1.10))
+          ))
 
   (when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
     (load-file (expand-file-name "experimental.el" user-emacs-directory))

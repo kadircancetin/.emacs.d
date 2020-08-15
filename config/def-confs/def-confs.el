@@ -41,6 +41,8 @@
 ;; Setting general default variables
 (setq-default echo-keystrokes 0.1)                    ; I think for wichkey. I don't remember.
 
+(setq-default show-paren-when-point-inside-paren t)
+
 (setq-default auto-revert-interval 2
               auto-revert-check-vc-info t
               global-auto-revert-non-file-buffers t

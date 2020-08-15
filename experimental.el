@@ -1,3 +1,5 @@
+(require 'use-package)
+
 ;; (use-package selectrum)
 ;; (use-package selectrum-prescient-mode)
 ;; (use-package prescient)
@@ -28,105 +30,82 @@
 (global-set-key (kbd "M-ü") 'typo-suggest-helm)
 
 
+(require 'dash)
+
+(defun kadir/activate-gode-mode-when (orig-fun &rest args)
+  (god-local-mode 1))
 
 
-(use-package modalka
+(use-package god-mode
   :init
-  ;; (modalka-global-mode 1)
+  (god-mode-all)
+  ;; (setq god-exempt-major-modes nil) ;; enable for all mode but I don't know it is good or bad
+  ;; (setq god-exempt-predicates nil)
 
-  (add-to-list 'modalka-excluded-modes '('magit-status-mode
-                                         'helm-mode))
+  ;; enableing god mode
+  (global-set-key (kbd "<escape>") #'god-local-mode)
+  (global-set-key (kbd "<return>") #'god-local-mode)
+  (advice-add 'other-window :before 'kadir/activate-gode-mode-when)
+
+  ;; styling
+  ;; (setq modalka-cursor-type '(hbar . 2)) ;; (setq-default cursor-type '(bar . 1))
+  (defun my-god-mode-update-cursor ()
+    (setq cursor-type (if (or god-local-mode buffer-read-only)
+                          'box
+                        'bar)))
+  (add-hook 'god-mode-enabled-hook #'my-god-mode-update-cursor)
+  (add-hook 'god-mode-disabled-hook #'my-god-mode-update-cursor)
+
+  ;; some editingtings
+  (global-set-key (kbd "C-x C-1") #'delete-other-windows)
+  (global-set-key (kbd "C-x C-2") #'kadir/split-and-follow-horizontally)
+  (global-set-key (kbd "C-x C-3") #'kadir/split-and-follow-vertically)
+  (global-set-key (kbd "C-x C-0") #'delete-window)
+  (global-set-key (kbd "C-c C-h") #'helpful-at-point)
+
+  ;; fixes
+  (define-key god-local-mode-map (kbd "h") #'backward-delete-char-untabify)
 
 
-  (global-set-key (kbd "<return>") #'modalka-global-mode)
-  (setq modalka-cursor-type '(hbar . 2)) ;; (setq-default cursor-type '(bar . 1))
+  (defun kadir/no-ctrl-on-godmode (orig-fun &rest args)
+    (if god-local-mode
+        (message "YOU ARE IN GOD-MODE IDIOT")
+      (apply orig-fun args)))
+  (let ((keys "abcçdefgğhıijklmnoöprsştuüvyz")
+        (key nil)
+        (tmp nil))
+    (setq keys (--map (setq key (concat "C-" (char-to-string it))) (mapcar 'identity keys)))
+    (dolist (key keys)
+      (setq tmp (lookup-key (current-global-map) (kbd key)))
+      (when tmp ; (advice-add tmp :around 'kadir/no-ctrl-on-godmode)
+        )))
 
-  (advice-add 'self-insert-command
-              :before
-              (lambda (&rest r)
-                (when (and (bound-and-true-p modalka-global-mode)
-                           (cdr r))
-                  (error "MODALKA MODALKA MODALKA MODALKA MODALKA MODALKA MODALKA"))))
-  (progn
-    ;; general
-    (modalka-define-kbd "g" "C-g")
-    ;; kill - yank
-    (modalka-define-kbd "Y" "M-y")
-    (modalka-define-kbd "w" "M-w")
-    (modalka-define-kbd "k" "C-k")
-    (modalka-define-kbd "y" "C-y")
-    ;; (modalka-define-kbd "SPC" "C-SPC")
-    ;; goto source - pop
-    (modalka-define-kbd "." "M-.")
-    (modalka-define-kbd "," "M-,")
-    ;; editing
-    (modalka-define-kbd "m" "C-m")
-    (modalka-define-kbd "d" "C-d")
-    (modalka-define-kbd "o" "C-o")
-    (modalka-define-kbd "h" "<DEL>")
-    (modalka-define-kbd "u" "C-_")
-    (modalka-define-kbd "U" "M-_")
-    ;; movement
-    (modalka-define-kbd "a" "C-a")
-    (modalka-define-kbd "b" "C-b")
-    (modalka-define-kbd "e" "C-e")
-    (modalka-define-kbd "f" "C-f")
-    (modalka-define-kbd "n" "C-n")
-    (modalka-define-kbd "p" "C-p")
-    ;; viewving
-    (modalka-define-kbd "l" "C-l")
-    (modalka-define-kbd "v" "C-v")
-    (modalka-define-kbd "V" "M-v")
-    ;; file
-    (modalka-define-kbd "xs" "C-x C-s")
-    ;; window
-    (modalka-define-kbd "0" "C-x 0")
-    (modalka-define-kbd "1" "C-x 1")
-    (modalka-define-kbd "2" "C-x 2")
-    (modalka-define-kbd "3" "C-x 3")
-    (modalka-define-kbd "4." "C-x 4")
-    ;; buffer
-    (modalka-define-kbd "xk" "C-x C-k")
-    (modalka-define-kbd "<SPC>" "M-<SPC>")
-    ;;;;;;;;;;;;;; major modes ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ;; elisp
-    (modalka-define-kbd "xe" "C-x C-e")))
+  ;; extra binds
+  (define-key god-local-mode-map (kbd "z") #'repeat)
+  (define-key god-local-mode-map (kbd "h") #'backward-delete-char-untabify)
+  (define-key god-local-mode-map (kbd "u") #'undo-tree-undo)
+  (define-key god-local-mode-map (kbd "C-S-U") #'undo-tree-redo)
+  ;; (require 'god-mode-isearch)
+  ;; (define-key isearch-mode-map (kbd "<return>") #'god-mode-isearch-activate)
+  ;; (define-key god-mode-isearch-map (kbd "<return>") #'god-mode-isearch-disable)
+
+
+  )
+
+;; (use-package paredit
+;;   :init
+;;   (add-hook 'emacs-lisp-mode-hook #'paredit-mode))
+
+;;   (remove-hook 'emacs-lisp-mode-hook #'paredit-mode)
+
 
 (use-package dired-sidebar)
 
 
-(use-package smart-jump
-  :defer 1
-  :init
-  (setq smart-jump-default-mode-list 'python-mode)
+
+(use-package ivy
   :config
-  (smart-jump-register :modes 'python-mode
-                       :jump-fn 'xref-find-definitions
-                       :pop-fn 'xref-pop-marker-stack
-                       :refs-fn 'xref-find-references
-                       :should-jump t
-                       :heuristic 'error
-                       :async nil
-                       :order 1)
-  (smart-jump-register :modes 'python-mode
-                       :jump-fn 'dumb-jump-go
-                       :pop-fn 'xref-pop-marker-stack
-                       :should-jump t
-                       :heuristic 'point
-                       :async nil
-                       :order 2))
-
-(use-package pony-mode)
-
-
-(use-package su
-  :straight (su
-             :type git
-             :host github
-             :repo "PythonNut/su.el")
-  :init
-  (su-mode +1))
-
+  (ivy-mode t))
 
 (use-package org-web-tools)
 (use-package darkroom)

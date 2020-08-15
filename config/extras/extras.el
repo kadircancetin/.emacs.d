@@ -34,8 +34,10 @@
         shell-pop-window-size 40))
 
 
-(use-package bm)
-(use-package helm-bm)
+;; (use-package bm
+;;   :config
+;;   (use-package helm-bm)
+;;   )
 
 
 (use-package dumb-jump

@@ -1,77 +1,85 @@
 (require 'cl)
+(require 'dash)
+
 
+(defvar k-binds-map (make-sparse-keymap))
 
-(bind-keys
- :prefix-map kadir/custom
- :prefix "ö"
- ("ö"                 . (lambda()(interactive)(insert "ö")))
- ("l"                 . goto-last-change)
- ("a"                 . kadir/helm-do-ag-project-root-or-current-dir)
- ("t"                 . hs-toggle-hiding)
- ("y"                 . yas-insert-snippet)
- ;; ("d"                 . deadgrep)
- ("c"                 . (lambda()(interactive)(org-capture nil "t")))
- ("ç"                 . (lambda() (interactive) (eval-buffer) (message "eval") (save-buffer)))
- ("j"                 . dumb-jump-go))
+(defun k-bind-both-god-and-normal (key-map)
+  (define-key k-binds-map (kbd (concat "ö" (car key-map))) (cdr key-map))
 
-(bind-keys
- :prefix-map kadir/django
- :prefix "öd"
- ("m"                 . (lambda() (interactive)
-                          (let ((helm-rg-default-glob-string "models.py"))
-                            (helm-rg "class model " ))))
- )
-(bind-keys
- :prefix-map kadir/window
- :prefix "öw"
- ("s"                 . ace-swap-window)
- ("w"                 . resize-window-width)
- ("h"                 . resize-window-height)
- )
+  (let ((key (car key-map)))
+    (setq key (concat "C-" (mapconcat #'char-to-string (mapcar 'identity key) " C-")))
+    (message key)
 
-(bind-keys
- :prefix-map kadir/imenu
- :prefix "öi"
- ("a"                 . helm-imenu-in-all-buffers)
- ("i"                 . helm-imenu)
- )
+    (define-key k-binds-map (kbd (concat "C-ö " key)) (cdr key-map))))
 
-(bind-keys
- :prefix-map kadir/open
- :prefix "öo"
- ("i"                 . kadir/find-inbox)
- ("c"                 . kadir/find-config)
- ("e"                 . kadir/find-experimental-config)
- ("s"                 . kadir/find-scratch-buffer)
- ("d"                 . kadir/find-dashboard)
- ("a"                 . kadir/agenda))
 
-(bind-keys
- :prefix-map kadir/helm
- :prefix "öh"
- ("a"                 . helm-apropos)
- ("e"                 . helm-emmet)
- ("r"                 . helm-rg)
- ("s"                 . helm-swoop))
+(defvar tuslar
+  '(("ö"                 . (lambda()(interactive)(insert "ö")))
+    ("l"                 . goto-last-change)
+    ("a"                 . kadir/helm-do-ag-project-root-or-current-dir)
+    ("t"                 . hs-toggle-hiding)
+    ("y"                 . yas-insert-snippet)
+    ;; ("d"                 . deadgrep)
+    ("c"                 . (lambda()(interactive)(org-capture nil "t")))
+    ("ç"                 . (lambda() (interactive) (eval-buffer) (message "eval") (save-buffer)))
+    ("j"                 . dumb-jump-go)
 
-(bind-keys
- :prefix-map kadir/bookmark
- :prefix "öb"
- ("t"                 . bm-toggle)
- ("b"                 . bm-toggle)
- ("n"                 . bm-next)
- ("p"                 . bm-previous)
- ("a"                 . helm-bm))
+    ;; D
+    ("dm"                 . (lambda() (interactive)
+                              (let ((helm-rg-default-glob-string "models.py"))
+                                (helm-rg "class model " ))))
 
-(bind-keys
- :prefix-map kadir/roam
- :prefix "ör"
- ("l"                 . org-roam)
- ("f"                 . org-roam-find-file)
- ("t"                 . kadir/org-roam-dailies-today)
- ("i"                 . kadir/org-roam-insert)
- ("g"                 . org-roam-show-graph))
+    ;; W
+    ("ws"                 . ace-swap-window)
+    ("ww"                 . resize-window-width)
+    ("wh"                 . resize-window-height)
 
+    ;; ;; İ
+    ("ia"                 . helm-imenu-in-all-buffers)
+    ("ii"                 . helm-imenu)
+
+    ;; o
+    ("oi"                 . kadir/find-inbox)
+    ("oc"                 . kadir/find-config)
+    ("oe"                 . kadir/find-experimental-config)
+    ("os"                 . kadir/find-scratch-buffer)
+    ("od"                 . kadir/find-dashboard)
+    ("oa"                 . kadir/agenda)
+
+
+    ;; h
+    ("ha"                 . helm-apropos)
+    ("he"                 . helm-emmet)
+    ("hr"                 . helm-rg)
+    ("hs"                 . helm-swoop)
+
+    ;; b
+    ("bt"                 . bm-toggle)
+    ("bb"                 . bm-toggle)
+    ("bn"                 . bm-next)
+    ("bp"                 . bm-previous)
+    ("ba"                 . helm-bm)
+
+    ;; r
+    ("rl"                 . org-roam)
+    ("rf"                 . org-roam-find-file)
+    ("rt"                 . kadir/org-roam-dailies-today)
+    ("ri"                 . kadir/org-roam-insert)
+    ("rg"                 . org-roam-show-graph)))
+
+
+
+(define-minor-mode k-binds-mode
+  ""
+  t "m" k-binds-map
+  (--map (k-bind-both-god-and-normal it) tuslar)
+  (if k-binds-mode
+      (message "oldu mu amk"))
+  )
+
+(k-binds-mode 1)
+
 (kadir/bind
  '(;; editing
    ("C-w"             . spacemacs/backward-kill-word-or-region)
@@ -139,6 +147,7 @@
    ("C-c c"                 . (lambda()(interactive)(org-capture nil "t")))
    )
  )
+
 
 
 (provide 'binds)

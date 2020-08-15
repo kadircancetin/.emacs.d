@@ -11,6 +11,8 @@
 
 
 (use-package json-mode)
+(use-package json-navigator
+  :after json-mode)
 
 
 (use-package company-restclient
