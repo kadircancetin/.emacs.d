@@ -1,3 +1,4 @@
+(require 'use-package)
 ;; pip install python-language-server[all]; pip uninstall autopep8 yapf; pip install pyls-isort pyls-black;
 ;; ((nil (eglot-workspace-configuration . ((pyls . ((configurationSources . ["flake8"])))))))
 
