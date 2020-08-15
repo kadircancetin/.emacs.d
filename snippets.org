@@ -7,3 +7,38 @@
                                            ) (font-family-list))
               #'string-lessp) "  \n  "))
 #+end_src
+* smart?? garp collect
+
+#+begin_src emacs-lisp
+(defun k/garp_collect()
+  (interactive)
+  (while 1
+    (progn
+      (message "try gc")
+      (sleep-for 0.1)
+      (setq gc-cons-threshold-original 200)
+      (garbage-collect)
+      (setq gc-cons-threshold-original (* 1024 1024 20)))))
+
+#+end_src
+* eshell
+#+begin_src emacs-lisp
+  (defun eshell/clear ()
+  "Clear the eshell buffer. Type clear on eshell"
+  ;; source: https://emacs.stackexchange.com/questions/12503/how-to-clear-the-eshell
+  (let ((inhibit-read-only t))
+    (erase-buffer)
+    (eshell-send-input)))
+#+end_src
+
+* hide show
+#+begin_src emacs-lisp
+
+(defun kadir/hide-fold-defs ()
+  "Folds the all functions in python"
+  (interactive)
+  (save-excursion
+    (require 'hideshow)
+    (goto-char (point-min))
+    (hs-hide-level 2)))
+#+end_src

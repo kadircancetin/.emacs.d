@@ -51,7 +51,6 @@
 (use-package python
   :init
   (use-package pyvenv)
-  (add-hook 'python-mode-hook 'auto-highlight-symbol-mode)
   (add-hook 'python-mode-hook 'activate-venv-configure-python)
   (add-hook 'python-mode-hook 'k_python--flycheck-settings)
 
@@ -123,7 +122,30 @@
 
 
     (lsp)
-    (remove-hook 'python-mode-hook #'auto-highlight-symbol-mode)))
+    ))
+
+(use-package smart-jump
+  :defer 1
+  :init  (setq smart-jump-default-mode-list 'python-mode)
+  :config
+  (smart-jump-register :modes 'python-mode
+                       :jump-fn 'xref-find-definitions
+                       :pop-fn 'xref-pop-marker-stack
+                       :refs-fn 'xref-find-references
+                       :should-jump t
+                       :heuristic 'error
+                       :async nil
+                       :order 1)
+  (smart-jump-register :modes 'python-mode
+                       :jump-fn 'dumb-jump-go
+                       :pop-fn 'xref-pop-marker-stack
+                       :should-jump t
+                       :heuristic 'point
+                       :async nil
+                       :order 2))
+
+(use-package pony-mode)
+
 
 (defun activate-venv-configure-python ()
   "source: https://github.com/jorgenschaefer/pyvenv/issues/51"
@@ -163,11 +185,6 @@
   (if (eq kadir/python-lsp-eglot 'eglot)
       (kadir/python--eglot-indent-toggle)
     (kadir/python--lsp-indent-toggle)))
-
-
-(use-package ein
-  :init
-  (setq ein:output-area-inlined-images t))
 
 
 (defun kadir/django/find-models()

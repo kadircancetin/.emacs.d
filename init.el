@@ -1,51 +1,63 @@
 (when (version< emacs-version "27")
-  ;; early-init.el comes from emacs 27. so if your emacs older than, we need to load it by
-  ;; regular way
   (load-file (expand-file-name "early-init.el" user-emacs-directory)))
 
-(defvar kadir/helm-extras nil
-  "There is some packages which could be used with helm but not necassary.")
+(defvar kadir/emacs-fast-open) ;; gets from early-init.el
 
-(let ((default-directory "~/.emacs.d/config"))
-  (normal-top-level-add-subdirs-to-load-path))
+
+(add-to-list 'load-path "~/.emacs.d/config/def-confs")
+(require 'def-confs)
 
-;; `defaults' configure the defaults settings of the emacs. Like
-;; enabling winner-mode. And install and load the `use-package'.
-(require 'defaults)
+
+(defun k/init-emacs-fo()
+  (add-to-list 'load-path "~/.emacs.d/config/fo-defs")
+  (require 'fo-defs))
 
-;; appriance and UI
-(require 'k_theme)
+(defun k/init-emacs-full ()
+  (let ((default-directory "~/.emacs.d/config/"))
+    (normal-top-level-add-subdirs-to-load-path))
 
+  (require 'k-packaging)
+  (require 'extra-majors)
+  (require 'core-extra)     ;; TODO
+  (require 'k-colors-mode)  ;; NOTE: eğer bi satır üstte olursa eglot patlıyor. neden
 
-;; additinaol core features (like lsp) and extra packages
+  (require 'k_theme)
+  (require 'extras)
 
-(require 'core-extra)
-(require 'extras)
+  ;; extra big features
+  (require 'k_company)
 
-;; extra big features
-(require 'k_company)
+  ;; programing languages and major modes
+  (require 'k-clojure)
+  (require 'k_html)
+  (require 'k_python)
+  (require 'k_clang)
+  (require 'k_js)
+  (require 'k_org)
 
-;; programing languages and major modes
-(require 'k_html)
-(require 'k_python)
-(require 'k_clang)
-(require 'k_js)
-(require 'k_org)
-(require 'k_dotfiles)
-(require 'k_rest)
-(require 'k_colors)
-(require 'k_elisp)
-;; (require 'k_java)
-(require 'k_dired)
-(require 'k_eglot_posframe_help)
-(eglot-posframe-activate)
+  (require 'k_elisp)
 
+  ;; (require 'k_java)
+  (require 'k_dired)
+  ;; (require 'k_eglot_posframe_help)
+  ;; (eglot-posframe-activate)
 
-;; all global bindings
-(require 'binds)
+  ;; all global bindings
+  (require 'binds)
 
-(when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
-  (load-file (expand-file-name "experimental.el" user-emacs-directory))
-  (message "EXPERIMENTAL EL LOADED"))
-(put 'narrow-to-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
+  (load-file "~/dev-org-docs/dev-org-docs.el")
+  (setq dev-org-docs-mode-docs
+        '((python-mode . (django~3.0 django_rest_framework python~3.7))
+          (clojure-mode . (clojure~1.10))
+          ))
+
+  (when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
+    (load-file (expand-file-name "experimental.el" user-emacs-directory))
+    (message "EXPERIMENTAL EL LOADED"))
+
+  (put 'narrow-to-region 'disabled nil))
+
+
+(if kadir/emacs-fast-open
+    (k/init-emacs-fo)
+  (k/init-emacs-full))
