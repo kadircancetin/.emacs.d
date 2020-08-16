@@ -1,6 +1,6 @@
 ;; you can get colors from: https://paletton.com/#uid=7370K0kmls6cSGiiavGqRoEtFj-
 ;; base color: #2d9574
-(defvar kadir/default-font-size 75)
+(defvar kadir/default-font-size)
 
 (setq display-fill-column-indicator-character ?|)
 (setq-default fill-column 99)

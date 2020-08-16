@@ -30,11 +30,21 @@
 (global-set-key (kbd "M-ü") 'typo-suggest-helm)
 
 
-(require 'dash)
 
+(if (and (fboundp 'native-comp-available-p)
+         (native-comp-available-p))
+    (message "Native compilation is available")
+  (message "Native complation is *not* available"))
+
+(if (functionp 'json-serialize)
+    (message "Native JSON is available")
+  (message "Native JSON is *not* available"))
+
+(setq-default comp-deferred-compilation t)
+
+(require 'dash)
 (defun kadir/activate-gode-mode-when (orig-fun &rest args)
   (god-local-mode 1))
-
 
 (use-package god-mode
   :init
@@ -103,7 +113,6 @@
 ;; (use-package paredit
 ;;   :init
 ;;   (add-hook 'emacs-lisp-mode-hook #'paredit-mode))
-
 ;;   (remove-hook 'emacs-lisp-mode-hook #'paredit-mode)
 
 

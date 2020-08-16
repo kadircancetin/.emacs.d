@@ -1,8 +1,4 @@
-(defvar kadir/helm-extras nil
-  "There is some packages which could be used with helm but not necassary.")
-
-
-
+(require 'use-package)
 
 (use-package multiple-cursors)
 (use-package mwim)
@@ -28,7 +24,7 @@
   :config
   (shackle-mode 1)
   (setq shackle-rules
-        '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.4)
+        '(;; ("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.4)
           ("\\`\\*helpful.*?\\*\\'" :regexp t :align t :size 0.4)))
   (add-to-list 'shackle-rules '(help-mode :align t :size 0.4 :select t)))
 
@@ -36,47 +32,49 @@
 (use-package helpful)
 
 
-(use-package auto-highlight-symbol
-  :defer t
-  :config
-  (setq ahs-case-fold-search nil
-        ahs-default-range 'ahs-range-display
-        ahs-idle-interval 0.2
-        ahs-inhibit-face-list nil)
-  (setq ahs-idle-timer
-        (run-with-idle-timer ahs-idle-interval t
-                             'ahs-idle-function)))
+(defun spacemacs//helm-hide-minibuffer-maybe ()
+  "Hide minibuffer in Helm session if we use the header line as input field."
+  (when (with-helm-buffer helm-echo-input-in-header-line)
+    (let ((ov (make-overlay (point-min) (point-max) nil nil t)))
+      (overlay-put ov 'window (selected-window))
+      (overlay-put ov 'face
+                   (let ((bg-color (face-background 'default nil)))
+                     `(:background ,bg-color :foreground ,bg-color)))
+      (setq-local cursor-type nil))))
 
-
+(use-package helm-posframe
+  :straight (:host github :repo "KaratasFurkan/helm-posframe")
+  :after helm
+  :custom
+  (helm-display-header-line nil)
+  (helm-echo-input-in-header-line t)
+  (helm-posframe-border-color "gray")
+  (helm-posframe-parameters '((left-fringe . 5)
+                              (right-fringe . 5)))
+  :init
+  (helm-posframe-enable))
+
 (use-package helm
   :defer 0.15
   :init
-  (if kadir/helm-extras
-      (progn
-        (use-package helm-dash
-          :commands helm-dash)
-        (use-package helm-describe-modes)
-        (use-package helm-descbinds
-          :init
-          (fset 'describe-bindings 'helm-descbinds))))
-  (setq helm-boring-buffer-regexp-list (list
-                                        (rx "` ")
-                                        (rx "*helm")
-                                        (rx "*lsp")
-                                        (rx "*Eglot")
-                                        (rx "*Echo Area")
-                                        (rx "*Minibuf")))
-  (setq  helm-ff-search-library-in-sexp        t
-         helm-echo-input-in-header-line        t
-         ;; helm-completion-style                  '(basic flex)
-         helm-buffers-fuzzy-matching           t
-         helm-candidate-number-limit           500
-         helm-display-function                 'pop-to-buffer)
+  (use-package helm-describe-modes)
+  (setq-default helm-boring-buffer-regexp-list (list
+                                                (rx "` ")
+                                                (rx "*helm")
+                                                (rx "*lsp")
+                                                (rx "*Eglot")
+                                                (rx "*Echo Area")
+                                                (rx "*Minibuf")))
+  (setq-default  helm-ff-search-library-in-sexp        t
+                 helm-echo-input-in-header-line        t
+                 ;; helm-completion-style                  '(basic flex)
+                 helm-buffers-fuzzy-matching           t
+                 helm-candidate-number-limit           500
+                 helm-display-function                 'pop-to-buffer)
   :config
-  (helm-mode 1)
-  ;; i thing it load the default helm, shortcuts which I never use.
-  (add-hook 'helm-minibuffer-set-up-hook
-            'spacemacs//helm-hide-minibuffer-maybe))
+  (helm-mode 1) ;; i thing it load the default helm, shortcuts which I never use.
+  (add-hook 'helm-minibuffer-set-up-hook 'spacemacs//helm-hide-minibuffer-maybe))
+
 (use-package projectile
   :defer 1
   :init
@@ -124,41 +122,17 @@
   (wrap-region-global-mode t))
 
 
-;; (setq-default eglot-workspace-configuration
-;;               '((:pyls . ((:configurationSources . ["flake8"])
-;;                           (:plugins .
-;;                                     ((:flake8 . ((:enabled . t)
-;;                                                  (:exclude . "*.pyi")))
-;;                                      (:pyls_mypy . ((:enabled . t)
-;;                                                     (:live_mode . nil)
-;;                                                     (:strict . t)))))))
-;;                 (:gopls . ((:usePlaceholders . t)
-;;                            (:completeUnimported . t)))))
-
 (use-package helm-xref
-  :defer nil
-  )
+  :after (eglot))
 
 (use-package eglot
-  ;; :config
   ;; (add-to-list 'eglot-server-programs '((js-mode) "typescript-language-server" "--stdio"))
   :bind
-  (:map eglot-mode-map("C-c C-d" . 'eglot-help-at-point))
-  :init
-  (require 'helm-xref)
-  )  ; TODO: change keybind
+  (:map eglot-mode-map("C-c C-d" . 'eglot-help-at-point)))
 
 
-(use-package flycheck
-  ;; :init
-  ;; (flycheck-define-checker proselint   "A linter for prose."
-  ;;                          :command ("proselint" source-inplace)
-  ;;                          :error-patterns
-  ;;                          ((warning line-start (file-name) ":" line ":" column ": "
-  ;;                                    (id (one-or-more (not (any " "))))
-  ;;                                    (message) line-end))
-  ;;                          :modes (text-mode markdown-mode gfm-mode org-mode))
-  )
+(use-package flycheck)
+
 (use-package lsp-mode
   :config
   ;; (setq lsp-enable-snippet nil)
@@ -213,42 +187,42 @@
   (use-package lsp-ui
     :init
 
-    (setq lsp-ui-doc-enable t
-          lsp-ui-doc-header t
-          lsp-ui-doc-include-signature t
-          lsp-ui-doc-position 'bottom
-          lsp-ui-doc-alignment 'window
-          lsp-ui-doc-border "white"
-          lsp-ui-doc-max-width 100
-          lsp-ui-doc-max-height 10
-          lsp-ui-doc-use-childframe t
-          lsp-ui-doc-use-webkit nil
-          lsp-ui-doc-delay 0.2
-          lsp-ui-doc-winum-ignore t)
+    (setq-default lsp-ui-doc-enable t
+                  lsp-ui-doc-header t
+                  lsp-ui-doc-include-signature t
+                  lsp-ui-doc-position 'bottom
+                  lsp-ui-doc-alignment 'window
+                  lsp-ui-doc-border "white"
+                  lsp-ui-doc-max-width 100
+                  lsp-ui-doc-max-height 10
+                  lsp-ui-doc-use-childframe t
+                  lsp-ui-doc-use-webkit nil
+                  lsp-ui-doc-delay 0.2
+                  lsp-ui-doc-winum-ignore t)
 
-    (setq lsp-ui-imenu-enable t
-          lsp-ui-imenu-kind-position 'top
-          lsp-ui-imenu-colors '("deep sky blue" "green3")
-          lsp-ui-imenu-window-width 0
-          lsp-ui-imenu--custom-mode-line-format nil)
-    (setq lsp-ui-peek-enable t
-          lsp-ui-peek-show-directory t
-          lsp-ui-peek-peek-height 30
-          lsp-ui-peek-list-width 50
-          lsp-ui-peek-fontify 'always)
-    (setq lsp-ui-flycheck-list-position 'bottom)
+    (setq-default lsp-ui-imenu-enable t
+                  lsp-ui-imenu-kind-position 'top
+                  lsp-ui-imenu-colors '("deep sky blue" "green3")
+                  lsp-ui-imenu-window-width 0
+                  lsp-ui-imenu--custom-mode-line-format nil)
+    (setq-default lsp-ui-peek-enable t
+                  lsp-ui-peek-show-directory t
+                  lsp-ui-peek-peek-height 30
+                  lsp-ui-peek-list-width 50
+                  lsp-ui-peek-fontify 'always)
+    (setq-default lsp-ui-flycheck-list-position 'bottom)
 
-    (setq lsp-ui-sideline-enable t
-          lsp-ui-sideline-ignore-duplicate t
-          lsp-ui-sideline-show-symbol t
-          lsp-ui-sideline-show-hover nil
-          lsp-ui-sideline-show-diagnostics t
-          lsp-ui-sideline-show-code-actions t
-          lsp-ui-sideline-update-mode 'point
-          lsp-ui-sideline-delay 0.2
-          lsp-ui-sideline-diagnostic-max-lines 20
-          lsp-ui-sideline-diagnostic-max-line-length 100
-          lsp-ui-sideline-actions-kind-regex "quickfix.*\\|refactor.*")
+    (setq-default lsp-ui-sideline-enable t
+                  lsp-ui-sideline-ignore-duplicate t
+                  lsp-ui-sideline-show-symbol t
+                  lsp-ui-sideline-show-hover nil
+                  lsp-ui-sideline-show-diagnostics t
+                  lsp-ui-sideline-show-code-actions t
+                  lsp-ui-sideline-update-mode 'point
+                  lsp-ui-sideline-delay 0.2
+                  lsp-ui-sideline-diagnostic-max-lines 20
+                  lsp-ui-sideline-diagnostic-max-line-length 100
+                  lsp-ui-sideline-actions-kind-regex "quickfix.*\\|refactor.*")
     :config
     (require 'lsp-ui-sideline)
     (add-hook 'lsp-mode-hook 'lsp-ui-sideline-mode)
@@ -262,7 +236,7 @@
   :commands (yas-insert-snippet yas-insert-snippet)
   :config
   (use-package yasnippet-snippets   :defer nil)
-  (yas-global-mode))
+  (yas-global-mode 0))
 
 
 (use-package helm-ag
@@ -307,19 +281,15 @@
 
 
 
-(use-package sudo-edit
-  :commands (sudo-edit))
+(use-package su
+  :straight (su
+             :type git
+             :host github
+             :repo "PythonNut/su.el")
+  :init
+  (su-mode +1))
 
 
-(use-package activity-watch-mode
-  :if (executable-find "aw-qt")
-  :defer 5
-  :config
-  (setq activity-watch-pulse-time 5)
-
-  (add-hook 'prog-mode-hook 'activity-watch-mode)
-  (message "activity watch enabled"))
-
 (use-package wakatime-mode
   :if (executable-find "wakatime")
   :defer 5

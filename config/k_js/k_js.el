@@ -17,7 +17,6 @@
   )
 
 
-(use-package json-mode)
 
 (use-package js2-mode
   :init
