@@ -299,11 +299,9 @@
   ;; (add-hook 'magit-diff-mode-hook (lambda () (other-window 1)(flyspell-mode 1)) -100)
   ;; (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
   (use-package magit-todos
-    :init
-    ;; (require 'magit-todos)
-    ;; (magit-todos-mode 1)
-    ;; (magit-todos-branch-list-toggle)
-    ))
+    :commands helm-magit-todos
+
+    :hook (magit-mode . magit-todos-mode)))
 
 
 

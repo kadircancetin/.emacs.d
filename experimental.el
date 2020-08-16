@@ -45,14 +45,21 @@
   ;; enableing god mode
   (global-set-key (kbd "<escape>") #'god-local-mode)
   (global-set-key (kbd "<return>") #'god-local-mode)
+  (global-set-key (kbd "ğ") #'god-local-mode)
+  (global-set-key (kbd "ş") #'god-local-mode)
+  (define-key isearch-mode-map (kbd "ş") #'god-local-mode)
+
   (advice-add 'other-window :before 'kadir/activate-gode-mode-when)
 
   ;; styling
   ;; (setq modalka-cursor-type '(hbar . 2)) ;; (setq-default cursor-type '(bar . 1))
   (defun my-god-mode-update-cursor ()
+    (interactive)
+    (message "mka")
     (setq cursor-type (if (or god-local-mode buffer-read-only)
                           'box
                         'bar)))
+
   (add-hook 'god-mode-enabled-hook #'my-god-mode-update-cursor)
   (add-hook 'god-mode-disabled-hook #'my-god-mode-update-cursor)
 
@@ -62,6 +69,7 @@
   (global-set-key (kbd "C-x C-3") #'kadir/split-and-follow-vertically)
   (global-set-key (kbd "C-x C-0") #'delete-window)
   (global-set-key (kbd "C-c C-h") #'helpful-at-point)
+  (global-set-key (kbd "C-x C-k") (lambda nil (interactive) (kill-buffer (current-buffer))))
 
   ;; fixes
   (define-key god-local-mode-map (kbd "h") #'backward-delete-char-untabify)
@@ -109,3 +117,7 @@
 
 (use-package org-web-tools)
 (use-package darkroom)
+
+
+
+(use-package define-word)
