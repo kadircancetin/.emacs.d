@@ -1,6 +1,9 @@
 (defvar kadir/emacs-fast-open (member "-fo" command-line-args))
 (setq command-line-args (delete "-fo" command-line-args))
 
+(defvar kadir/emacs-open-with-doom (member "-doom" command-line-args))
+(setq command-line-args (delete "-doom" command-line-args))
+
 (defvar kadir/default-font-size 75)
 (when kadir/emacs-fast-open (setq kadir/default-font-size 95))
 
@@ -56,6 +59,7 @@
   (set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro" :italic t :weight 'bold))
 
 
-(k/set-garbage-collection)
-(k/set-init-package-disabling)
-(k/set-init-ui)
+(when (not kadir/emacs-open-with-doom)
+  (k/set-garbage-collection)
+  (k/set-init-package-disabling)
+  (k/set-init-ui))

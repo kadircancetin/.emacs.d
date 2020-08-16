@@ -1,11 +1,20 @@
-(when (version< emacs-version "27")
-  (load-file (expand-file-name "early-init.el" user-emacs-directory)))
+(defvar kadir/emacs-fast-open)
+(defvar kadir/emacs-open-with-doom)
 
-(defvar kadir/emacs-fast-open) ;; gets from early-init.el
+
+(defun k/init-doom()
+  (add-to-list 'load-path "~/.emacs.d_doom")
+  (load "~/.emacs.d_doom/early-init.el")
+  (load "~/.emacs.d_doom/init.el"))
 
 
-(add-to-list 'load-path "~/.emacs.d/config/def-confs")
-(require 'def-confs)
+(defun k/init-def-confs ()
+  (when (version< emacs-version "27")
+    (load-file (expand-file-name "early-init.el" user-emacs-directory)))
+
+
+  (add-to-list 'load-path "~/.emacs.d/config/def-confs")
+  (require 'def-confs))
 
 
 (defun k/init-emacs-fo()
@@ -58,6 +67,11 @@
   (put 'narrow-to-region 'disabled nil))
 
 
-(if kadir/emacs-fast-open
-    (k/init-emacs-fo)
-  (k/init-emacs-full))
+(if kadir/emacs-open-with-doom
+    (k/init-doom)
+
+  (progn
+    (k/init-def-confs)
+    (if kadir/emacs-fast-open
+        (k/init-emacs-fo)
+      (k/init-emacs-full))))
