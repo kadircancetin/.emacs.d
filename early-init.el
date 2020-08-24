@@ -41,7 +41,7 @@
 
 (defun k/set-init-ui()
   "Initialize UI. Mostly because of if theese settings in here, startup is faster"
-  (load-theme 'wombat t)
+  ;; (load-theme 'wombat t)
   (fringe-mode 4)
   (setq frame-inhibit-implied-resize t)              ;; doom says it increse speedup
   (setq frame-resize-pixelwise t)                    ;; for terminal

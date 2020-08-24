@@ -12,7 +12,6 @@
   (when (version< emacs-version "27")
     (load-file (expand-file-name "early-init.el" user-emacs-directory)))
 
-
   (add-to-list 'load-path "~/.emacs.d/config/def-confs")
   (require 'def-confs))
 
@@ -28,7 +27,9 @@
   (require 'k-packaging)
   (require 'extra-majors)
   (require 'core-extra)     ;; TODO
+
   (require 'k-colors-mode)  ;; NOTE: eğer bi satır üstte olursa eglot patlıyor. neden
+  (require 'k-format)
 
   (require 'k_theme)
   (require 'extras)

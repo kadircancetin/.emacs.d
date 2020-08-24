@@ -47,18 +47,18 @@
   (setq-default ein:output-area-inlined-images t))
 
 
-(use-package pdf-tools
+  ;;(use-package pdf-tools
   ;; :load-path "/usr/share/emacs/site-lisp/pdf-tools/pdf-tools.el"
   ;; :demand t
-  :mode ("\\.pdf\\'" . pdf-view-mode)
-  :commands pdf-tools-install
-  :config
-  (pdf-tools-install) ;; initialise
-  (setq-default pdf-view-display-size 'fit-page)   ;; open pdfs scaled to fit page
-  ;; automatically annotate highlights
-  (setq-default pdf-annot-activate-created-annotations t)
-  ;; use normal isearch
-  (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward))
+  ;; :mode ("\\.pdf\\'" . pdf-view-mode)
+  ;; :commands pdf-tools-install
+  ;; :config
+  ;; (pdf-tools-install) ;; initialise
+  ;; (setq-default pdf-view-display-size 'fit-page)   ;; open pdfs scaled to fit page
+  ;; ;; automatically annotate highlights
+  ;; (setq-default pdf-annot-activate-created-annotations t)
+  ;; ;; use normal isearch
+  ;; (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward))
 
 
 

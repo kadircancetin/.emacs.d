@@ -48,6 +48,8 @@
 
 (use-package god-mode
   :init
+  (setq-default cursor-type 'bar)
+
   (god-mode-all)
   ;; (setq god-exempt-major-modes nil) ;; enable for all mode but I don't know it is good or bad
   ;; (setq god-exempt-predicates nil)
@@ -60,12 +62,13 @@
   (define-key isearch-mode-map (kbd "ş") #'god-local-mode)
 
   (advice-add 'other-window :before 'kadir/activate-gode-mode-when)
+  (advice-remove 'other-window 'kadir/activate-gode-mode-when)
 
   ;; styling
   ;; (setq modalka-cursor-type '(hbar . 2)) ;; (setq-default cursor-type '(bar . 1))
   (defun my-god-mode-update-cursor ()
     (interactive)
-    (message "mka")
+
     (setq cursor-type (if (or god-local-mode buffer-read-only)
                           'box
                         'bar)))
@@ -103,6 +106,7 @@
   (define-key god-local-mode-map (kbd "h") #'backward-delete-char-untabify)
   (define-key god-local-mode-map (kbd "u") #'undo-tree-undo)
   (define-key god-local-mode-map (kbd "C-S-U") #'undo-tree-redo)
+  (define-key god-local-mode-map (kbd "/") #'kadir/comment-or-self-insert)
   ;; (require 'god-mode-isearch)
   ;; (define-key isearch-mode-map (kbd "<return>") #'god-mode-isearch-activate)
   ;; (define-key god-mode-isearch-map (kbd "<return>") #'god-mode-isearch-disable)
@@ -119,7 +123,6 @@
 (use-package dired-sidebar)
 
 
-
 (use-package ivy
   :config
   (ivy-mode t))
@@ -127,6 +130,9 @@
 (use-package org-web-tools)
 (use-package darkroom)
 
+(use-package helm-mode-manager :defer nil)
+
+(yas-global-mode 1)
 
 
 (use-package define-word)

@@ -1,11 +1,10 @@
 ;; gunzip -r /usr/local/share/emacs/27.0.50/lisp
-(add-hook 'emacs-lisp-mode-hook 'flycheck-mode)
 (add-hook 'emacs-lisp-mode-hook 'auto-fill-mode)
 (add-hook 'emacs-lisp-mode-hook 'highlight-quoted-mode)
 
 
-(setq-default flycheck-emacs-lisp-load-path 'inherit)
-(setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+;; (setq-default flycheck-emacs-lisp-load-path 'inherit)
+;; (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
 
 (use-package highlight-quoted)
 (use-package elisp-def)
@@ -31,12 +30,14 @@
                          (call-interactively
                           (when (eq (condition-case nil (elisp-def) (error nil)) nil)
                             (message "drop to slime nav")
-                            elisp-slime-nav-find-elisp-thing-at-point
+                            (call-interactively 'elisp-slime-nav-find-elisp-thing-at-point)
                             ))))
          ("C-c M-." . elisp-slime-nav-find-elisp-thing-at-point)
          ("C-c DEL" . helpful-at-point)
          ("C-c C-d" . elisp-slime-nav-describe-elisp-thing-at-point)
          ("C-c C-n" . flycheck-next-error)
-         ("C-c C-p" . flycheck-previous-error)))
+         ("C-c C-p" . flycheck-previous-error)
+         )
+  )
 
-  (provide 'k_elisp)
+(provide 'k_elisp)

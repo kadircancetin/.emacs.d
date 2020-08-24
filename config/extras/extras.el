@@ -41,10 +41,15 @@
 
 
 (use-package dumb-jump
+  :straight(:no-native-compile t)
+  :after helm
   :init
-  (setq dumb-jump-prefer-searcher 'rg
-        dumb-jump-force-searcher  'rg
-        dumb-jump-selector 'helm))
+  (setq-default dumb-jump-prefer-searcher 'rg
+                dumb-jump-force-searcher  'rg
+                dumb-jump-selector 'popup)
+  (setq-default dumb-jump-aggressive t)
+
+  )
 
 
 
@@ -123,5 +128,6 @@ translation it is possible to get suggestion."
           "^\\*swiper\\*$")))
 
 (global-page-break-lines-mode 1) ; ^L to visual line
-(run-with-idle-timer 1 nil (lambda () (async-bytecomp-package-mode 1)))
+
+;; (run-with-idle-timer 1 nil (lambda () (async-bytecomp-package-mode 0)))
 (provide 'extras)

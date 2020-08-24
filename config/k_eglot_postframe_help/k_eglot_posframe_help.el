@@ -44,7 +44,7 @@
 
   (unless eglot-posframe--active-p
     (eglot--error ""))
-  
+
   (setq eglot-posframe--waiting-qoue-empty-p nil)
   (posframe-hide eglot-posframe-buffer)
 
@@ -52,11 +52,11 @@
       ((Hover) contents range)
       (jsonrpc-request (eglot--current-server-or-lose) :textDocument/hover
                        (eglot--TextDocumentPositionParams))
-    
+
     (when (seq-empty-p contents)
       (posframe-hide eglot-posframe-buffer)
       (eglot--error "No hover info here"))
-    
+
     (let ((blurb (eglot--hover-info contents range))
           (sym (thing-at-point 'symbol)))
       (with-current-buffer (get-buffer-create eglot-posframe-buffer)
@@ -92,4 +92,4 @@
 
 (advice-add 'keyboard-quit :before #'eglot-posframe-close-help)
 
-(provide 'k_eglot_posframe_help)
+;; (provide 'k_eglot_posframe_help)

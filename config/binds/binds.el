@@ -75,8 +75,7 @@
   t "m" k-binds-map
   (--map (k-bind-both-god-and-normal it) tuslar)
   (if k-binds-mode
-      (message "oldu mu amk"))
-  )
+      (message "Binds")))
 
 (k-binds-mode 1)
 
@@ -105,7 +104,7 @@
    ("M-o"             . other-window)
    ("M-u"             . winner-undo)
    ("C-x k"           . (lambda () (interactive) (kill-buffer (current-buffer))))
-   ("M-ı"             . (lambda() (interactive) (indent-region (point-min) (point-max))))
+   ("M-ı"             . kadir/format-buffer)
    ("C-x 2"           . kadir/split-and-follow-horizontally)
    ("C-x 3"           . kadir/split-and-follow-vertically)
    ("C-x o"           . ace-window)
@@ -131,6 +130,8 @@
    ;; undo-tree
    ("M-_"             . undo-tree-redo)
    ("C-_"             . undo-tree-undo)
+   ("C-u"             . undo-tree-undo)
+   ("s-u"             . undo-tree-redo)
 
    ;; bm
    ("C-x C-m"         . bm-toggle)

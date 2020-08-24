@@ -8,8 +8,9 @@
         ;; ("C-c C-p" . flymake-goto-prev-error)
         ;; ("M-ı" . eglot-format-buffer))
         ("M-ı" . lsp-format-buffer)
-        ("C-c C-n" . flycheck-next-error)
-        ("C-c C-p" . flycheck-previous-error))
+        ;; ("C-c C-n" . flycheck-next-error)
+        ;; ("C-c C-p" . flycheck-previous-error)
+        )
   :config
   ;; (setq-default eglot-ignored-server-capabilites '(:documentHighlightProvider
   ;;                                                  :hoverProvider

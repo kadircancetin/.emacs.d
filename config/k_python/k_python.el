@@ -14,9 +14,8 @@
 
 
 
-;; TODO: flycheck otomatik aktif oluyor
 ;; lazy load for linter
-(setq python-indent-guess-indent-offset-verbose nil)
+(setq-default python-indent-guess-indent-offset-verbose nil)
 (setq-default python-shell-interpreter "ipython"
               python-shell-interpreter-args "-i")
 
@@ -26,7 +25,7 @@
 (defvar kadir/python-auto-indent t
   "If non-nil python auto indentation on save.")
 
-(defvar kadir/python-lsp-eglot 'eglot
+(defvar kadir/python-lsp-eglot 'lsp-mode
   "If not `eglot' emacs use `lsp-mode' for language server.")
 
 ;; (if kadir/python-auto-indent
@@ -34,101 +33,106 @@
 ;;   (remove-hook 'before-save-hook #'eglot-format-buffer nil))
 
 
-(defun k_python--flycheck-settings()
-  (setq eglot-stay-out-of '(flymake))
-  (flymake-mode 0)
-  (flycheck-mode 1)
-  (setq flycheck-indication-mode 'right-fringe)
-  (setq flycheck-display-errors-delay 0)
-  (setq flycheck-idle-change-delay 0.5)
-  (setq flycheck-idle-buffer-switch-delay 0.2)
-  (setq flycheck-check-syntax-automatically '(save
-                                              idle-change
-                                              mode-enabled))
-  (add-to-list 'flycheck-disabled-checkers 'python-pylint)
-  (add-to-list 'flycheck-disabled-checkers 'python-pycompile)
-  (add-to-list 'flycheck-disabled-checkers 'python-mypy))
-
-(use-package python
-  :init
-  (use-package pyvenv)
-  (add-hook 'python-mode-hook 'activate-venv-configure-python)
-  (add-hook 'python-mode-hook 'k_python--flycheck-settings)
-
-  :bind (:map python-mode-map
-              ("C-c C-n" . flycheck-next-error)
-              ("C-c C-p" . flycheck-previous-error)
-              ("M-ı" . lsp-format-buffer)
-                                        ;  M-ı used for indet all
-                                        ;  the buffer. But in
-                                        ;  python I use language
-                                        ;  server for that.
-              ("M-." . xref-find-definitions)
-              ("M-ş" . xref-find-references)
-              )
-  :config
-  ;; (add-to-list 'flycheck-disabled-checkers 'python-flake8)
-
-
-  (cond
-   ((eq kadir/python-lsp-eglot 'eglot) ; wtf
-    (progn
-      ;; (define-key python-mode-map (kbd "C-c C-n") #'flymake-goto-next-error)
-      ;; (define-key python-mode-map (kbd "C-c C-n") #'flymake-goto-prev-error))
-      (define-key python-mode-map (kbd "C-c C-n") #'flycheck-next-error)
-      (define-key python-mode-map (kbd "C-c C-n") #'flycheck-previous-error)))
-
-   ((eq kadir/python-lsp-eglot 'lsp-mode)
-    (progn
-      (define-key python-mode-map (kbd "C-c C-n") #'flycheck-next-error)
-      (define-key python-mode-map (kbd "C-c C-n") #'flycheck-previous-error))))
-  )
-
 (defun kadir/configure-python ()
   (if (eq kadir/python-lsp-eglot 'eglot)
-      (progn
-        (eglot-ensure)
-        (setq-default eglot-ignored-server-capabilites '(:documentHighlightProvider
-                                                         :hoverProvider
-                                                         ;; :signatureHelpProvider
-                                                         ))
-        (use-package company-jedi)
-        (use-package jedi-core
-          :init
-          (setq jedi:complete-on-dot t
+      (kadir/python-eglot-start)
+    (kadir/python-lsp-start)))
+
+(defun kadir/enable-flycheck-poython()
+  (interactive)
+  (message "try flycheck")
+  (use-package flycheck)
+  (require 'flycheck)
+  (setq lsp-diagnostic-package :none)
+  (flymake-mode-off)
+  (global-flycheck-mode 1)
+  (setq flycheck-disabled-checkers '(python-mypy python-pylint))
+  (flycheck-select-checker 'python-flake8))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package python
+  :straight (:type built-in)
+  :bind (:map python-mode-map
+              ;; ("C-c C-n" . flymake-goto-next-error)
+              ;; ("C-c C-p" . flymake-goto-prev-error)
+              ("C-c C-n" . flycheck-next-error)
+              ("C-c C-p" . flycheck-previous-error)
+              ("C-c C-d" . lsp-describe-thing-at-point))
+  :hook
+  ((python-mode . activate-venv-configure-python)
+   (python-mode . kadir/configure-python)
+   (python-mode . kadir/enable-flycheck-poython)))
+
+
+(use-package pyvenv)
+(use-package company-jedi)
+(use-package jedi-core
+  :init
+  (setq-default jedi:complete-on-dot t
                 jedi:install-imenu t  ;; TODO: helm semantic or imenu
                 ))
+(use-package lsp-pyright
+  :init
+  (setq-default lsp-pyright-auto-import-completions nil
+                lsp-pyright-disable-organize-imports t
+                )
 
-        (add-hook 'eglot-managed-mode-hook
-                  (lambda ()
-                    (interactive)
-                    (setq company-backends
-                          '(;; company-bbdb
-                            ;; company-semantic
-                            ;; company-clang
-                            ;; company-xcode
-                            ;; company-cmake
-                            ;; company-capf ;; NOTE: remove the eglot defaults
-                            company-jedi    ;; NOTE: instead of eglot defaulats
-                            company-files
-                            (company-dabbrev-code company-gtags company-etags
-                                                  company-keywords)
-                            ;; company-oddmuse
-                            ;; company-tabnine
-                            ;; company-yasnippet
-                            company-dabbrev))
-                    (flymake-mode 0)
-                    (prin1 company-backends))))
+  :straight (:host github :repo "emacs-lsp/lsp-pyright"))
+
+(defun kadir/python-lsp-start()
+  (require 'lsp-pyright)
+  (lsp)
+  (setq-default company-backends '(company-capf company-jedi)))
+
+(defun kadir/python-eglot-start()
+  (interactive)
+  (require 'company-jedi)
+  (eglot-ensure)
+  (setq-default eglot-ignored-server-capabilites '(:documentHighlightProvider
+                                                   :hoverProvider
+                                                   ;; :signatureHelpProvider
+                                                   ))
 
 
+  (add-hook 'eglot-managed-mode-hook
+            (lambda ()
+              (interactive)
+              (setq company-backends
+                    '(;; company-bbdb
+                      ;; company-semantic
+                      ;; company-clang
+                      ;; company-xcode
+                      ;; company-cmake
+                      company-capf ;; NOTE: remove the eglot defaults
+                      company-jedi    ;; NOTE: instead of eglot defaulats
+                      company-files
+                      (company-dabbrev-code company-gtags company-etags
+                                            company-keywords)
+                      ;; company-oddmuse
+                      ;; company-tabnine
+                      ;; company-yasnippet
+                      company-dabbrev))
+              (prin1 company-backends))))
 
-    (lsp)
-    ))
+
+(defun kadir/lsp-jump-maybe()
+  (interactive)
+  (if lsp-mode
+      (lsp-find-definition)
+    nil))
 
 (use-package smart-jump
   :defer 1
   :init  (setq smart-jump-default-mode-list 'python-mode)
   :config
+  (smart-jump-register :modes 'python-mode
+                       :jump-fn 'kadir/lsp-jump-maybe
+                       :pop-fn 'xref-pop-marker-stack
+                       :refs-fn 'xref-find-references
+                       :should-jump nil
+                       :heuristic 'error
+                       :async nil
+                       :order 1)
   (smart-jump-register :modes 'python-mode
                        :jump-fn 'xref-find-definitions
                        :pop-fn 'xref-pop-marker-stack
@@ -138,25 +142,43 @@
                        :async nil
                        :order 1)
   (smart-jump-register :modes 'python-mode
+                       :jump-fn 'jedi:goto-definition
+                       :pop-fn 'jedi:goto-definition-pop-marker
+                       :refs-fn 'xref-find-references
+                       :should-jump nil
+                       :heuristic 'error
+                       :async nil
+                       :order 3)
+  (smart-jump-register :modes 'python-mode
                        :jump-fn 'dumb-jump-go
                        :pop-fn 'xref-pop-marker-stack
                        :should-jump t
                        :heuristic 'point
                        :async nil
-                       :order 2))
+                       :order 4))
 
 (use-package pony-mode)
-
 
 (defun activate-venv-configure-python ()
   "source: https://github.com/jorgenschaefer/pyvenv/issues/51"
   (interactive)
-  (let* ((pdir (projectile-project-root)) (pfile (concat pdir ".venv")))
-    (if (file-exists-p pfile)
-        (pyvenv-workon (with-temp-buffer
-                         (insert-file-contents pfile)
-                         (nth 0 (split-string (buffer-string)))))))
-  (kadir/configure-python))
+
+  (let* (
+         (pdir (projectile-project-root))
+         (pfile (concat pdir ".venv"))
+         (ploc nil)
+         )
+
+
+    (when (file-exists-p pfile)
+      (setq ploc (with-temp-buffer
+                   (insert-file-contents pfile)
+                   (nth 0 (split-string (buffer-string)))))
+      (message "PLOC %s" ploc)
+      (setq lsp-pyright-venv-path ploc)
+      (pyvenv-workon ploc))))
+
+
 
 
 (defun kadir/python--eglot-indent-toggle()
@@ -209,6 +231,5 @@
   (interactive)
   (let ((helm-rg-default-glob-string "settings.py"))
     (helm-rg "")))
-
 
 (provide 'k_python)

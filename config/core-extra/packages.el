@@ -1,5 +1,28 @@
 (require 'use-package)
 
+(use-package helm
+  :straight(:no-native-compile t)
+  :defer 0.15
+  :init
+  (use-package helm-describe-modes)
+  (setq-default helm-boring-buffer-regexp-list (list
+                                                (rx "` ")
+                                                (rx "*helm")
+                                                (rx "*lsp")
+                                                (rx "*Eglot")
+                                                (rx "*Echo Area")
+                                                (rx "*Minibuf")))
+  (setq-default  helm-ff-search-library-in-sexp        t
+                 helm-echo-input-in-header-line        t
+                 ;; helm-completion-style                  '(basic flex)
+                 helm-buffers-fuzzy-matching           t
+                 helm-candidate-number-limit           500
+                 helm-display-function                 'pop-to-buffer)
+  :config
+  (helm-mode 1) ;; i thing it load the default helm, shortcuts which I never use.
+  (add-hook 'helm-minibuffer-set-up-hook 'spacemacs//helm-hide-minibuffer-maybe))
+
+
 (use-package multiple-cursors)
 (use-package mwim)
 (use-package goto-chg)
@@ -24,7 +47,7 @@
   :config
   (shackle-mode 1)
   (setq shackle-rules
-        '(;; ("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.4)
+        '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.4)
           ("\\`\\*helpful.*?\\*\\'" :regexp t :align t :size 0.4)))
   (add-to-list 'shackle-rules '(help-mode :align t :size 0.4 :select t)))
 
@@ -42,38 +65,17 @@
                      `(:background ,bg-color :foreground ,bg-color)))
       (setq-local cursor-type nil))))
 
-(use-package helm-posframe
-  :straight (:host github :repo "KaratasFurkan/helm-posframe")
-  :after helm
-  :custom
-  (helm-display-header-line nil)
-  (helm-echo-input-in-header-line t)
-  (helm-posframe-border-color "gray")
-  (helm-posframe-parameters '((left-fringe . 5)
-                              (right-fringe . 5)))
-  :init
-  (helm-posframe-enable))
-
-(use-package helm
-  :defer 0.15
-  :init
-  (use-package helm-describe-modes)
-  (setq-default helm-boring-buffer-regexp-list (list
-                                                (rx "` ")
-                                                (rx "*helm")
-                                                (rx "*lsp")
-                                                (rx "*Eglot")
-                                                (rx "*Echo Area")
-                                                (rx "*Minibuf")))
-  (setq-default  helm-ff-search-library-in-sexp        t
-                 helm-echo-input-in-header-line        t
-                 ;; helm-completion-style                  '(basic flex)
-                 helm-buffers-fuzzy-matching           t
-                 helm-candidate-number-limit           500
-                 helm-display-function                 'pop-to-buffer)
-  :config
-  (helm-mode 1) ;; i thing it load the default helm, shortcuts which I never use.
-  (add-hook 'helm-minibuffer-set-up-hook 'spacemacs//helm-hide-minibuffer-maybe))
+;; (use-package helm-posframe
+;;   :straight (:host github :repo "KaratasFurkan/helm-posframe")
+;;   :after helm
+;;   :custom
+;;   (helm-display-header-line nil)
+;;   (helm-echo-input-in-header-line t)
+;;   (helm-posframe-border-color "gray")
+;;   (helm-posframe-parameters '((left-fringe . 5)
+;;                               (right-fringe . 5)))
+;;   :init
+;;   (helm-posframe-enable))
 
 (use-package projectile
   :defer 1
@@ -131,7 +133,7 @@
   (:map eglot-mode-map("C-c C-d" . 'eglot-help-at-point)))
 
 
-(use-package flycheck)
+;; (use-package flycheck)
 
 (use-package lsp-mode
   :config
@@ -162,7 +164,6 @@
    ;; lsp-prefer-capf nil ;;                       TODO:
    ;; ?????????????
 
-
    ;;;;;;;;;;;;;;;;;;;;;;;;;
    ;; get from doom emacs
    ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -180,54 +181,54 @@
    )
 
 
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-  (flymake-mode 0)
-  (flycheck-mode 1)
+  ;; (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  ;; (flymake-mode 0)
+  ;; (flycheck-mode 1)
 
-  (use-package lsp-ui
-    :init
+  ;; (use-package lsp-ui
+  ;;   :init
 
-    (setq-default lsp-ui-doc-enable t
-                  lsp-ui-doc-header t
-                  lsp-ui-doc-include-signature t
-                  lsp-ui-doc-position 'bottom
-                  lsp-ui-doc-alignment 'window
-                  lsp-ui-doc-border "white"
-                  lsp-ui-doc-max-width 100
-                  lsp-ui-doc-max-height 10
-                  lsp-ui-doc-use-childframe t
-                  lsp-ui-doc-use-webkit nil
-                  lsp-ui-doc-delay 0.2
-                  lsp-ui-doc-winum-ignore t)
+  ;;   (setq-default lsp-ui-doc-enable nil
+  ;;                 lsp-ui-doc-header t
+  ;;                 lsp-ui-doc-include-signature t
+  ;;                 lsp-ui-doc-position 'bottom
+  ;;                 lsp-ui-doc-alignment 'window
+  ;;                 lsp-ui-doc-border "white"
+  ;;                 lsp-ui-doc-max-width 100
+  ;;                 lsp-ui-doc-max-height 10
+  ;;                 lsp-ui-doc-use-childframe t
+  ;;                 lsp-ui-doc-use-webkit nil
+  ;;                 lsp-ui-doc-delay 0
+  ;;                 lsp-ui-doc-winum-ignore t)
 
-    (setq-default lsp-ui-imenu-enable t
-                  lsp-ui-imenu-kind-position 'top
-                  lsp-ui-imenu-colors '("deep sky blue" "green3")
-                  lsp-ui-imenu-window-width 0
-                  lsp-ui-imenu--custom-mode-line-format nil)
-    (setq-default lsp-ui-peek-enable t
-                  lsp-ui-peek-show-directory t
-                  lsp-ui-peek-peek-height 30
-                  lsp-ui-peek-list-width 50
-                  lsp-ui-peek-fontify 'always)
-    (setq-default lsp-ui-flycheck-list-position 'bottom)
+  ;;   (setq-default lsp-ui-imenu-enable t
+  ;;                 lsp-ui-imenu-kind-position 'top
+  ;;                 lsp-ui-imenu-colors '("deep sky blue" "green3")
+  ;;                 lsp-ui-imenu-window-width 0
+  ;;                 lsp-ui-imenu--custom-mode-line-format nil)
+  ;;   (setq-default lsp-ui-peek-enable t
+  ;;                 lsp-ui-peek-show-directory t
+  ;;                 lsp-ui-peek-peek-height 30
+  ;;                 lsp-ui-peek-list-width 50
+  ;;                 lsp-ui-peek-fontify 'always)
+  ;;   (setq-default lsp-ui-flycheck-list-position 'bottom)
 
-    (setq-default lsp-ui-sideline-enable t
-                  lsp-ui-sideline-ignore-duplicate t
-                  lsp-ui-sideline-show-symbol t
-                  lsp-ui-sideline-show-hover nil
-                  lsp-ui-sideline-show-diagnostics t
-                  lsp-ui-sideline-show-code-actions t
-                  lsp-ui-sideline-update-mode 'point
-                  lsp-ui-sideline-delay 0.2
-                  lsp-ui-sideline-diagnostic-max-lines 20
-                  lsp-ui-sideline-diagnostic-max-line-length 100
-                  lsp-ui-sideline-actions-kind-regex "quickfix.*\\|refactor.*")
-    :config
-    (require 'lsp-ui-sideline)
-    (add-hook 'lsp-mode-hook 'lsp-ui-sideline-mode)
-    (use-package helm-lsp)
-    )
+  ;;   (setq-default lsp-ui-sideline-enable nil
+  ;;                 lsp-ui-sideline-ignore-duplicate t
+  ;;                 lsp-ui-sideline-show-symbol t
+  ;;                 lsp-ui-sideline-show-hover nil
+  ;;                 lsp-ui-sideline-show-diagnostics t
+  ;;                 lsp-ui-sideline-show-code-actions t
+  ;;                 lsp-ui-sideline-update-mode 'point
+  ;;                 lsp-ui-sideline-delay 0.2
+  ;;                 lsp-ui-sideline-diagnostic-max-lines 20
+  ;;                 lsp-ui-sideline-diagnostic-max-line-length 100
+  ;;                 lsp-ui-sideline-actions-kind-regex "quickfix.*\\|refactor.*")
+  ;;   :config
+  ;;   (require 'lsp-ui-sideline)
+  ;;   (add-hook 'lsp-mode-hook 'lsp-ui-sideline-mode)
+  ;;   (use-package helm-lsp)
+  ;;   )
   )
 
 

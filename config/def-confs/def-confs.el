@@ -69,9 +69,9 @@
               whitespace-line -1
               whitespace-trailing -1)
 
-(setq-default max-mini-window-height   1
-              resize-mini-windows      nil
-              message-truncate-lines   t)  ; set and try to force mini buffer should be mini
+;; (setq-default max-mini-window-height   10
+;;               resize-mini-windows      t
+;;               message-truncate-lines   t)  ; set and try to force mini buffer should be mini
 
 (setq-default hs-isearch-open t)
 ;; (setq completion-styles '(basic flex))

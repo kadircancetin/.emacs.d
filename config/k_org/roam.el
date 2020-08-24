@@ -1,8 +1,9 @@
 ;; org-roam
 
 (use-package org-roam
+  :straight(:no-native-compile t) ;; dont know why but native compile breaks the roam.
+  :defer nil
   :commands (org-roam org-roam-mode-map org-roam-find-file)
-  :defer 1.1
   :init
   (setq org-roam-buffer-width 0.4)
   (setq org-roam-buffer-no-delete-other-windows t)
