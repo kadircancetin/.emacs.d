@@ -133,9 +133,25 @@
   (:map eglot-mode-map("C-c C-d" . 'eglot-help-at-point)))
 
 
-;; (use-package flycheck)
+(use-package flycheck
+  :bind
+  (:map flycheck-mode-map
+        (("C-c C-n" . flycheck-next-error)
+         ("C-c C-p" . flycheck-previous-error)
+         )))
+
+(use-package lsp-ui
+  :after lsp-mode
+  :custom
+  (lsp-ui-doc-position 'top)
+  (lsp-ui-sideline-delay 0.5)
+  (lsp-ui-doc-delay 1.5)
+  (lsp-ui-peek-fontify 'always)
+  )
 
 (use-package lsp-mode
+  :bind
+  (:map lsp-mode-map (("M-." . lsp-ui-peek-find-definitions)))
   :config
   ;; (setq lsp-enable-snippet nil)
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;,

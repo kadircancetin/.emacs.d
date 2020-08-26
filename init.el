@@ -12,6 +12,9 @@
   (when (version< emacs-version "27")
     (load-file (expand-file-name "early-init.el" user-emacs-directory)))
 
+  ;; environmetal varibles
+  (setq exec-path (append exec-path '("/home/kadir/go/bin")))
+
   (add-to-list 'load-path "~/.emacs.d/config/def-confs")
   (require 'def-confs))
 
@@ -39,6 +42,7 @@
 
   ;; programing languages and major modes
   (require 'k-clojure)
+  (require 'k-go)
   (require 'k_html)
   (require 'k_python)
   (require 'k_clang)

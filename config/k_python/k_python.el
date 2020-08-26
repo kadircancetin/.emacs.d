@@ -41,7 +41,6 @@
 (defun kadir/enable-flycheck-poython()
   (interactive)
   (message "try flycheck")
-  (use-package flycheck)
   (require 'flycheck)
   (setq lsp-diagnostic-package :none)
   (flymake-mode-off)

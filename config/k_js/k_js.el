@@ -8,8 +8,6 @@
 
 (use-package js
   :bind (:map js-mode-map
-              ;; ("C-c C-n" . flycheck-next-error)
-              ;; ("C-c C-p" . flycheck-previous-error)
               ("M-." . lsp-ui-peek-find-definitions))
   :config
   (add-hook 'js-mode-hook #'lsp)
