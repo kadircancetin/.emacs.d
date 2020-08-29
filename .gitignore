@@ -1,8 +1,8 @@
-elpa
-elpa2
-elpa3
 quelpa
 etc
 var
 README.el
 straight
+history
+auto-save-list/
+eln-cache/
