@@ -311,5 +311,4 @@
   :if (executable-find "wakatime")
   :defer 5
   :config
-  (add-hook 'prog-mode-hook 'wakatime-mode)
   (message "waka activated"))

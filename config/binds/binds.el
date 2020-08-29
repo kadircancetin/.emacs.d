@@ -54,6 +54,12 @@
     ("hr"                 . helm-rg)
     ("hs"                 . helm-swoop)
 
+    ;; hh
+    ("hha"                . hs-hide-all)
+    ("hhs"                . hs-show-all)
+    ("hho"                . (lambda () (interactive) (hs-hide-level 1)))
+    ("hht"                . (lambda () (interactive) (hs-hide-level 2)))
+
     ;; b
     ("bt"                 . bm-toggle)
     ("bb"                 . bm-toggle)
@@ -152,3 +158,5 @@
 
 
 (provide 'binds)
+
+;;; binds.el ends here

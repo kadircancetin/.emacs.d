@@ -97,6 +97,5 @@
 
 
 (k-colors-global-mode 1)
-(add-hook 'prog-mode-hook #'k-colors-mode)
 
 (provide 'k-colors-mode)

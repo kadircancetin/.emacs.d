@@ -4,7 +4,7 @@
   (setq-default company-idle-delay 0
                 company-minimum-prefix-length 1
 
-                company-tooltip-idle-delay nil
+                company-tooltip-idle-delay 0
                 company-tooltip-limit      7
                 company-tooltip-minimum-width 35
                 company-tooltip-margin     1

@@ -29,7 +29,7 @@
 (set-face-attribute 'fill-column-indicator nil
                     :background nil
                     :foreground "#212026")
-(add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
+
 
 
 (setq-default org-priority-faces '((?A . (:foreground "#DE4347" :weight 'bold :height 1.2))

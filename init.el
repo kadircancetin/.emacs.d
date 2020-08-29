@@ -31,6 +31,7 @@
   (require 'extra-majors)
   (require 'core-extra)     ;; TODO
 
+  (require 'k-langs)
   (require 'k-colors-mode)  ;; NOTE: eğer bi satır üstte olursa eglot patlıyor. neden
   (require 'k-format)
 

@@ -134,5 +134,4 @@
 
 (yas-global-mode 1)
 
-
-(use-package define-word)
+;;; experimental.el ends here
