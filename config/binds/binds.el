@@ -38,6 +38,7 @@
     ;; ;; İ
     ("ia"                 . helm-imenu-in-all-buffers)
     ("ii"                 . helm-imenu)
+    ("it"                 . typo-suggest-ivy)
 
     ;; o
     ("oi"                 . kadir/find-inbox)
@@ -53,6 +54,7 @@
     ("he"                 . helm-emmet)
     ("hr"                 . helm-rg)
     ("hs"                 . helm-swoop)
+    ("ht"                 . typo-suggest-helm)
 
     ;; hh
     ("hha"                . hs-hide-all)

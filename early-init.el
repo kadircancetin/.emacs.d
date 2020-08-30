@@ -29,6 +29,7 @@
   (run-with-timer nil (* 10 60) (lambda () (run-with-idle-timer 1 nil 'garbage-collect))))
 
 (defun k/set-init-package-disabling ()
+  (setq-default comp-deferred-compilation t)
   (setq package-enable-at-startup nil)
   ;; (setq load-prefer-newer t)
   (setq load-prefer-newer noninteractive))

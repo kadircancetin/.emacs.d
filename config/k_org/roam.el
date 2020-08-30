@@ -1,32 +1,24 @@
 ;; org-roam
-
 (use-package org-roam
-  :straight(:no-native-compile t) ;; dont know why but native compile breaks the roam.
+  :straight ( :no-native-compile t :no-byte-compile t) ;; dont know why but native compile breaks the roam.
   :defer nil
   :commands (org-roam org-roam-mode-map org-roam-find-file)
   :init
   (setq org-roam-buffer-width 0.4)
   (setq org-roam-buffer-no-delete-other-windows t)
-
-  (eval-after-load 'org-roam
-    '(defun org-roam--find-file (file)
-       "override method because sometimes find-file can't get the true window"
-       (other-window 1)
-       (message "kadir")
-       (find-file file))
-    )
-
   :hook
   (org-mode . org-roam-mode)
+  (org-roam-mode . kadir/roam-hook)
   :custom
   (org-roam-directory "~/Dropbox/org-roam/")
   :config
   (require 'org-roam-protocol))
 
-;; company org-roam
-;; (let ((default-directory "~/.emacs.d/gits/"))
-;;   (normal-top-level-add-subdirs-to-load-path))
-;; (require 'company-org-roam)
-;; (push 'casfmpany-org-roam company-backends)
+(use-package company-org-roam
+  :init
+  (defun kadir/roam-hook()
+    (push 'company-org-roam company-backends))
+  )
 
-(use-package org-roam-server)
+(use-package org-roam-server
+  :straight ( :no-native-compile t :no-byte-compile t))

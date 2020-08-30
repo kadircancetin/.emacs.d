@@ -1,6 +1,6 @@
 (defvar kadir/emacs-fast-open)
 (defvar kadir/emacs-open-with-doom)
-
+(setq-default straight-disable-native-compilation t)
 
 (defun k/init-doom()
   (add-to-list 'load-path "~/.emacs.d_doom")
@@ -15,12 +15,12 @@
   ;; environmetal varibles
   (setq exec-path (append exec-path '("/home/kadir/go/bin")))
 
-  (add-to-list 'load-path "~/.emacs.d/config/def-confs")
+  (add-to-list 'load-path "~/.emacs.d/config/def")
   (require 'def-confs))
 
 
 (defun k/init-emacs-fo()
-  (add-to-list 'load-path "~/.emacs.d/config/fo-defs")
+  (add-to-list 'load-path "~/.emacs.d/config/fo")
   (require 'fo-defs))
 
 (defun k/init-emacs-full ()
@@ -31,7 +31,6 @@
   (require 'extra-majors)
   (require 'core-extra)     ;; TODO
 
-  (require 'k-langs)
   (require 'k-colors-mode)  ;; NOTE: eğer bi satır üstte olursa eglot patlıyor. neden
   (require 'k-format)
 
@@ -42,6 +41,8 @@
   (require 'k_company)
 
   ;; programing languages and major modes
+  ;; languages
+  (require 'k-langs)
   (require 'k-clojure)
   (require 'k-go)
   (require 'k_html)
@@ -55,7 +56,6 @@
   ;; (require 'k_java)
   (require 'k_dired)
   ;; (require 'k_eglot_posframe_help)
-  ;; (eglot-posframe-activate)
 
   ;; all global bindings
   (require 'binds)

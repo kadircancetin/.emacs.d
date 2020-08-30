@@ -57,6 +57,7 @@
   :defer 1
   :config
   (global-anzu-mode 1))
+
 (use-package google-translate
   :init
   (setq google-translate-default-source-language "auto"

@@ -1,4 +1,5 @@
 (require 'use-package)
+
 (use-package company
   :init
   (setq-default company-idle-delay 0
@@ -28,7 +29,7 @@
                ("<tab>" . company-complete-selection)
                ("C-n" . company-select-next)
                ("C-p" . company-select-previous))
-         ;; (:map company-mode-map ("C-." . helm-company))
+         (:map company-mode-map ("C-." . helm-company))
          )
   :config
   ;; (use-package company-tabnine :defer nil)
@@ -40,7 +41,7 @@
 
 (use-package helm-company)
 
-;; (use-package company-statistics
-;;   :hook (company-mode . company-statistics-mode))
+(use-package company-statistics
+  :hook (company-mode . company-statistics-mode))
 
 (provide 'k_company)

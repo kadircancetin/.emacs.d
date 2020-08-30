@@ -1,33 +1,12 @@
 (require 'use-package)
-
-;; (use-package selectrum)
-;; (use-package selectrum-prescient-mode)
-;; (use-package prescient)
-
-;; (selectrum-mode +1)
-;; (selectrum-prescient-mode +1)
-;; (prescient-persist-mode +1)
-
-;; (setq selectrum-num-candidates-displayed 20
-;;       selectrum-fix-minibuffer-height t
-;;       selectrum-count-style 'current/matches
-;;       selectrum-show-indices nil
-;;       )
-;; (setq projectile-completion-system 'default)
+
+;; (global-set-key (kbd "M-ü") '(lambda () (interactive)(save-buffer)(eval-buffer)(typo-suggest-helm)))
 
 
 (use-package typo-suggest
-  :straight (typo-suggest
-             :type git
-             :host github
-             :repo "kadircancetin/typo-suggest"
-             :branch "develop"
-             )
+  :defer 0.1
   :init
-  (require 'typo-suggest)
-  (setq typo-suggest-default-search-method 'datamuse))
-
-(global-set-key (kbd "M-ü") 'typo-suggest-helm)
+  (setq typo-suggest-timeout 10))
 
 
 
@@ -40,7 +19,6 @@
     (message "Native JSON is available")
   (message "Native JSON is *not* available"))
 
-(setq-default comp-deferred-compilation t)
 
 (require 'dash)
 (defun kadir/activate-gode-mode-when (orig-fun &rest args)
@@ -123,9 +101,7 @@
 (use-package dired-sidebar)
 
 
-(use-package ivy
-  :config
-  (ivy-mode t))
+(use-package ivy)
 
 (use-package org-web-tools)
 (use-package darkroom)
@@ -135,3 +111,4 @@
 (yas-global-mode 1)
 
 ;;; experimental.el ends here
+(use-package request)
