@@ -1,11 +1,15 @@
 ;; org-roam
 (use-package org-roam
-  :straight ( :no-native-compile t :no-byte-compile t) ;; dont know why but native compile breaks the roam.
+  :straight (
+             :no-native-compile t
+             :no-byte-compile t
+             ) ;; dont know why but native compile breaks the roam.
   :defer nil
   :commands (org-roam org-roam-mode-map org-roam-find-file)
   :init
   (setq org-roam-buffer-width 0.4)
   (setq org-roam-buffer-no-delete-other-windows t)
+  (setq org-roam-db-gc-threshold most-positive-fixnum)
   :hook
   (org-mode . org-roam-mode)
   (org-roam-mode . kadir/roam-hook)
