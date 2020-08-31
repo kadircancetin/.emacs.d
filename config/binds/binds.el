@@ -72,8 +72,8 @@
     ;; r
     ("rl"                 . org-roam)
     ("rf"                 . org-roam-find-file)
-    ("rt"                 . kadir/org-roam-dailies-today)
-    ("ri"                 . kadir/org-roam-insert)
+    ("rt"                 . org-roam-dailies-today)
+    ("ri"                 . org-roam-insert)
     ("rg"                 . org-roam-show-graph)))
 
 

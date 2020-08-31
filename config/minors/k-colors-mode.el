@@ -79,6 +79,7 @@
     (highlight-symbol-nav-mode 0)))
 
 (define-minor-mode k-colors-global-mode
+  ;; TODO: rename, it is not k-colors's global mode. it is different
   "Some cool color features for programing."
   :lighter "colors-G"
   :global t
