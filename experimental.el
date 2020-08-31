@@ -33,9 +33,6 @@
   ;; (setq god-exempt-predicates nil)
 
   ;; enableing god mode
-  (global-set-key (kbd "<escape>") #'god-local-mode)
-  (global-set-key (kbd "<return>") #'god-local-mode)
-  (global-set-key (kbd "ğ") #'god-local-mode)
   (global-set-key (kbd "ş") #'god-local-mode)
   (define-key isearch-mode-map (kbd "ş") #'god-local-mode)
 
@@ -88,8 +85,6 @@
   ;; (require 'god-mode-isearch)
   ;; (define-key isearch-mode-map (kbd "<return>") #'god-mode-isearch-activate)
   ;; (define-key god-mode-isearch-map (kbd "<return>") #'god-mode-isearch-disable)
-
-
   )
 
 ;; (use-package paredit
