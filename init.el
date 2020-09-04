@@ -1,6 +1,6 @@
 (defvar kadir/emacs-fast-open)
 (defvar kadir/emacs-open-with-doom)
-(setq-default straight-disable-native-compilation t)
+(setq comp-deferred-compilation nil)
 
 (defun k/init-doom()
   (add-to-list 'load-path "~/.emacs.d_doom")
@@ -70,6 +70,7 @@
     (load-file (expand-file-name "experimental.el" user-emacs-directory))
     (message "EXPERIMENTAL EL LOADED"))
 
+  (put 'upcase-region 'disabled nil)
   (put 'narrow-to-region 'disabled nil))
 
 

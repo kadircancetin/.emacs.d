@@ -43,8 +43,6 @@
   (message "try flycheck")
   (require 'flycheck)
   (setq lsp-diagnostic-package :none)
-  (flymake-mode-off)
-  (global-flycheck-mode 1)
   (setq flycheck-disabled-checkers '(python-mypy python-pylint))
   (flycheck-select-checker 'python-flake8))
 
@@ -64,12 +62,12 @@
 
 
 (use-package pyvenv)
-(use-package company-jedi)
-(use-package jedi-core
-  :init
-  (setq-default jedi:complete-on-dot t
-                jedi:install-imenu t  ;; TODO: helm semantic or imenu
-                ))
+;; (use-package company-jedi)
+;; (use-package jedi-core
+;;   :init
+;;   (setq-default jedi:complete-on-dot t
+;;                 jedi:install-imenu t  ;; TODO: helm semantic or imenu
+;;                 ))
 (use-package lsp-pyright
   :init
   (setq-default lsp-pyright-auto-import-completions nil
@@ -81,11 +79,11 @@
 (defun kadir/python-lsp-start()
   (require 'lsp-pyright)
   (lsp)
-  (setq-default company-backends '(company-capf company-jedi)))
+  (setq-default company-backends '(company-capf)))
 
 (defun kadir/python-eglot-start()
   (interactive)
-  (require 'company-jedi)
+  ;; (require 'company-jedi)
   (eglot-ensure)
   (setq-default eglot-ignored-server-capabilites '(:documentHighlightProvider
                                                    :hoverProvider
@@ -103,7 +101,7 @@
                       ;; company-xcode
                       ;; company-cmake
                       company-capf ;; NOTE: remove the eglot defaults
-                      company-jedi    ;; NOTE: instead of eglot defaulats
+                      ;; company-jedi    ;; NOTE: instead of eglot defaulats
                       company-files
                       (company-dabbrev-code company-gtags company-etags
                                             company-keywords)
@@ -140,14 +138,14 @@
                        :heuristic 'error
                        :async nil
                        :order 1)
-  (smart-jump-register :modes 'python-mode
-                       :jump-fn 'jedi:goto-definition
-                       :pop-fn 'jedi:goto-definition-pop-marker
-                       :refs-fn 'xref-find-references
-                       :should-jump nil
-                       :heuristic 'error
-                       :async nil
-                       :order 3)
+  ;; (smart-jump-register :modes 'python-mode
+  ;;                      :jump-fn 'jedi:goto-definition
+  ;;                      :pop-fn 'jedi:goto-definition-pop-marker
+  ;;                      :refs-fn 'xref-find-references
+  ;;                      :should-jump nil
+  ;;                      :heuristic 'error
+  ;;                      :async nil
+  ;;                      :order 3)
   (smart-jump-register :modes 'python-mode
                        :jump-fn 'dumb-jump-go
                        :pop-fn 'xref-pop-marker-stack

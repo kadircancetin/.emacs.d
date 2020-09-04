@@ -10,6 +10,7 @@
                 web-mode-enable-current-column-highlight t)
   (add-hook 'mhtml-mode 'web-mode)
   (add-hook 'web-mode-hook 'toggle-truncate-lines)
+  (add-hook 'web-mode-hook 'kadir/deactivate-flycheck)
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
 
 (use-package emmet-mode
@@ -32,8 +33,7 @@
 
 (use-package auto-rename-tag
   :init
-  (add-hook 'web-mode-hook (lambda() (auto-rename-tag-mode t)))
-  )
+  (add-hook 'web-mode-hook (lambda() (auto-rename-tag-mode t))))
 
 
 (provide 'k_html)

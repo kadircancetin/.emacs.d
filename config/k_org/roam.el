@@ -2,7 +2,6 @@
 (use-package org-roam
   :straight (
              :no-native-compile t
-             :no-byte-compile t
              ) ;; dont know why but native compile breaks the roam.
   :defer nil
   :commands (org-roam org-roam-mode-map org-roam-find-file)

@@ -4,6 +4,7 @@
 
 (use-package python-black
   :defer 0.5)
+(use-package py-isort)
 
 (setq k (current-window-configuration))
 (defun format-all--save-line-number (thunk)
@@ -25,7 +26,7 @@
   (interactive)
   (cond
    ((eq major-mode 'web-mode) (indent-region (point-min) (point-max)))
-   ((eq major-mode 'python-mode) (python-black))
+   ((eq major-mode 'python-mode) (python-black)(py-isort-buffer))
    ((eq major-mode 'go-mode) (gofmt))
    ((eq major-mode 'sass-mode) (css-mode) (format-all-buffer)(sass-mode))
 
