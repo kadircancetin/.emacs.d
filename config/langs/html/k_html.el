@@ -35,5 +35,11 @@
   :init
   (add-hook 'web-mode-hook (lambda() (auto-rename-tag-mode t))))
 
+
+(use-package sass-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\.scss\\'" . sass-mode))
+  (add-hook 'sass-mode-hook 'kadir/deactivate-flycheck)
+  )
 
 (provide 'k_html)

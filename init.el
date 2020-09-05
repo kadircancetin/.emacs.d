@@ -39,6 +39,7 @@
 
   ;; extra big features
   (require 'k_company)
+  (require 'k-eshell)
 
   ;; programing languages and major modes
   ;; languages

@@ -111,7 +111,22 @@
               fast-but-imprecise-scrolling nil
               mouse-wheel-scroll-amount '(1 ((shift) . 1))
               mouse-wheel-progressive-speed nil)
+
+(defconst 1mb 1048576)
+(defconst 20mb 20971520)
+(defconst 30mb 31457280)
+(defconst 50mb 52428800)
 
+(defun fk/defer-garbage-collection ()
+  (message "full power")
+  (setq gc-cons-threshold most-positive-fixnum))
+
+(defun fk/restore-garbage-collction ()
+  (message "restore power")
+  (run-at-time 1 nil (lambda () (setq gc-cons-threshold 30mb))))
+
+(add-hook 'minibuffer-setup-hook 'fk/defer-garbage-collection)
+(add-hook 'minibuffer-exit-hook 'fk/restore-garbage-collection)
 
 (defun kadir/isearch-region (&optional not-regexp no-recursive-edit)
   ;; cloned from: https://www.reddit.com/r/emacs/comments/b7yjje/isearch_region_search/

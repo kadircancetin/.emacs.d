@@ -30,12 +30,7 @@
                ("C-c C-c" . 'kadir/restclient-send)
                ("C-c C-v" . 'restclient-http-send-current))))
 
-
-(use-package sass-mode
-  :init
-  (add-to-list 'auto-mode-alist '("\\.scss\\'" . sass-mode)))
 
-
 (use-package yaml-mode)
 (use-package docker-compose-mode :mode "docker-compose.*\.yml\\'")
 (use-package dockerfile-mode :mode "Dockerfile[a-zA-Z.-]*\\'")
