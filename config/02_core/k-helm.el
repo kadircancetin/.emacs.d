@@ -40,12 +40,13 @@
   (helm-mode 1)
   (add-hook 'helm-minibuffer-set-up-hook 'spacemacs//helm-hide-minibuffer-maybe)
 
-  (defun helm--collect-matches (src-list)
+  (defun kadir/helm--collect-matches (orig-fun src-list &rest args)
     (let ((matches
            (cl-loop for src in src-list
                     collect (helm-compute-matches src))))
       (unless (eq matches t) matches)))
 
+  (advice-add 'helm--collect-matches :around #'kadir/helm--collect-matches)
   ;; (setq helm-projectile-sources-list '(helm-source-projectile-buffers-list helm-source-projectile-projects))
   ;; (setq helm-projectile-sources-list 'helm-source-projectile-files-list)
   )
