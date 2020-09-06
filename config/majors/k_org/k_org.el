@@ -1,4 +1,4 @@
-(load-file (expand-file-name "config/k_org/functions.el" user-emacs-directory))
+(load-file (expand-file-name "config/majors/k_org/functions.el" user-emacs-directory))
 
 
 
@@ -66,7 +66,7 @@
 ;; (require 'ox-reveal)
 
 
-(load-file (expand-file-name "config/k_org/roam.el" user-emacs-directory))
+(load-file (expand-file-name "config/majors/k_org/roam.el" user-emacs-directory))
 
 
 (provide 'k_org)

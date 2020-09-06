@@ -79,8 +79,8 @@
 
 
 (define-minor-mode k-binds-mode
-  ""
-  t "m" k-binds-map
+  "t"
+  "t" "m" k-binds-map
   (--map (k-bind-both-god-and-normal it) tuslar)
   (if k-binds-mode
       (message "Binds")))

@@ -106,4 +106,42 @@
 (yas-global-mode 1)
 
 ;;; experimental.el ends here
-(use-package request)
+(defun test--get-suggestion-list(input)
+  (message "before sleep")
+  (sleep-for 1)
+  (message "w1")
+  (sleep-for 1)
+  (message "w2")
+  (sleep-for 1)
+  (message "w3")
+  (sleep-for 1)
+  (message "w4")
+  (sleep-for 1)
+  (message "w5")
+
+  (message "after sleep")
+  (when input
+    (list (length input))))
+
+(defun test-helm ()
+  (helm :sources (helm-build-sync-source "test"
+                   :match-dynamic t
+                   :candidates (lambda (&optional _) (test--get-suggestion-list helm-input)))))
+
+
+(global-set-key (kbd "M-ü") '(lambda () (interactive)(test-helm)))
+
+
+(defun disable-all-minors()
+  (let ((active-minor-modes nil))
+    (mapc (lambda (mode) (condition-case nil
+                        (if (and (symbolp mode) (symbol-value mode))
+                            (add-to-list 'active-minor-modes mode))
+                      (error nil)))
+          minor-mode-list)
+
+    (prin1 active-minor-modes)
+    (--map (condition-case nil
+               (funcall  it  0)
+             (error nil))
+           active-minor-modes)))

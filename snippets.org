@@ -42,3 +42,46 @@
     (goto-char (point-min))
     (hs-hide-level 2)))
 #+end_src
+* pdf tools
+#+BEGIN_SRC emacs-lisp
+  (use-package pdf-tools
+  :load-path "/usr/share/emacs/site-lisp/pdf-tools/pdf-tools.el"
+  :demand t
+  :mode ("\\.pdf\\'" . pdf-view-mode)
+  :commands pdf-tools-install
+  :config
+  (pdf-tools-install) ;; initialise
+  (setq-default pdf-view-display-size 'fit-page)   ;; open pdfs scaled to fit page
+  ;; automatically annotate highlights
+  (setq-default pdf-annot-activate-created-annotations t)
+  ;; use normal isearch
+  (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward))
+
+#+END_SRC
+* buffer flip
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package buffer-flip
+;;   :ensure t
+;;   :bind  (("M-<SPC>" . buffer-flip)
+;;           :map buffer-flip-map
+;;           ( "M-<SPC>" .   buffer-flip-forward)
+;;           ( "M-S-<SPC>" . buffer-flip-backward)
+;;           ( "C-g" .     buffer-flip-abort)
+;;           ( "M-g" .     buffer-flip-abort)
+;;           )
+;;   :config
+;;   (setq buffer-flip-skip-patterns
+;;         '("^\\*helm\\b"
+;;           "^\\*swiper\\*$")))
+
+#+END_SRC
+* which key
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :defer 3
+  :config
+  (which-key-mode)
+  (which-key-setup-side-window-bottom)
+  (setq which-key-idle-delay 0.4))
+
+#+END_SRC

@@ -15,7 +15,6 @@
   )
 
 
-
 (use-package js2-mode
   :init
   (setq js2-basic-offset 2
@@ -48,5 +47,9 @@
   (add-hook 'js2-mode-hook 'prettier-js-mode)
   ;; (add-hook 'web-mode-hook 'prettier-js-mode)
   (add-hook 'rjsx-mode 'prettier-js-mode))
+
+
+(use-package json-mode)
+
 
 (provide 'k_js)

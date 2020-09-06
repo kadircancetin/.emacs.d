@@ -229,4 +229,8 @@
   (let ((helm-rg-default-glob-string "settings.py"))
     (helm-rg "")))
 
+;; (use-package ein
+;;   :init
+;;   (setq-default ein:output-area-inlined-images t))
+
 (provide 'k_python)

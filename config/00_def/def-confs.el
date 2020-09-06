@@ -9,14 +9,15 @@
          ;; (display-battery-mode 1)
          (savehist-mode 1)
          (blink-cursor-mode -1)
-         (display-time-mode 1)
+         ;; (display-time-mode 1)
          (delete-selection-mode 1)        ; writing when ther is selected, delete the selected part
          (show-paren-mode 1)              ; shows matching parentheses
          (winner-mode 1)                  ; provide undo, redo your window layout
          (global-subword-mode 1)          ; make camel-case usable with word shorcuts
          (save-place-mode 1)              ; save cursor position for next file opening, and restore it
-         (global-prettify-symbols-mode 1) ; lambda to cool lambda character
-         (global-auto-revert-mode 1)      ; auto revert
+         ;; (global-prettify-symbols-mode 1) ; lambda to cool lambda character
+         ;; (global-auto-revert-mode nil)      ; auto revert
+         (column-number-mode 1)
          (global-auto-composition-mode 1))))
 
 (run-with-idle-timer
@@ -39,21 +40,15 @@
 
 
 ;; Setting general default variables
-(setq-default echo-keystrokes 0.1)                    ; I think for wichkey. I don't remember.
+(setq-default echo-keystrokes 0.1)
 
 (setq-default show-paren-when-point-inside-paren t)
-
-(setq-default auto-revert-interval 2
-              auto-revert-check-vc-info t
-              global-auto-revert-non-file-buffers t
-              auto-revert-verbose nil)
 
 (setq-default ring-bell-function      'ignore    ; shutdown rings
               inhibit-startup-message  t         ; disable startup messages
               initial-scratch-message  nil       ; disable startup messages
               initial-major-mode      'text-mode ; initial buffer
               mark-ring-max            128       ; increatese mark-ring
-              column-number-mode       t         ; show column number on modeline
               default-buffer-file-coding-system 'utf-8-unix
               kill-ring-max            256       ; increatese kill-ring history
               search-whitespace-regexp ".*?"     ; make isearch more fuzzy like
@@ -82,8 +77,7 @@
 (setq-default backup-by-copying t    ; Don't delink hardlinks
               delete-old-versions t  ; Clean up the backups
               version-control t      ; Use version numbers on backups,
-              kept-new-versions 5    ; keep some new versions
-              kept-old-versions 5)   ; and some old ones, too
+              )
 
 ;; Performance improvements
 (setq-default read-process-output-max (* 1024 1024)) ;; for lsp: https://github.com/hlissner/doom-emacs/pull/2590
@@ -102,8 +96,6 @@
 ;; ;; SmoothScroll
 (setq-default scroll-step 1
               scroll-margin 2
-              ;;hscroll-step 3        ; horizontal disabled
-              ;;hscroll-margin 3      ; horizontal disabled
               scroll-conservatively 1000
               scroll-up-aggressively 0.01
               scroll-down-aggressively 0.01
@@ -111,22 +103,7 @@
               fast-but-imprecise-scrolling nil
               mouse-wheel-scroll-amount '(1 ((shift) . 1))
               mouse-wheel-progressive-speed nil)
-
-(defconst 1mb 1048576)
-(defconst 20mb 20971520)
-(defconst 30mb 31457280)
-(defconst 50mb 52428800)
 
-(defun fk/defer-garbage-collection ()
-  (message "full power")
-  (setq gc-cons-threshold most-positive-fixnum))
-
-(defun fk/restore-garbage-collction ()
-  (message "restore power")
-  (run-at-time 1 nil (lambda () (setq gc-cons-threshold 30mb))))
-
-(add-hook 'minibuffer-setup-hook 'fk/defer-garbage-collection)
-(add-hook 'minibuffer-exit-hook 'fk/restore-garbage-collection)
 
 (defun kadir/isearch-region (&optional not-regexp no-recursive-edit)
   ;; cloned from: https://www.reddit.com/r/emacs/comments/b7yjje/isearch_region_search/

@@ -10,16 +10,26 @@
 
 (defun k/set-garbage-collection()
   "source: https://emacs.stackexchange.com/questions/34342/"
-  (defvar gc-cons-threshold-orginal (* 1024 1024 100))
+  (defconst k-gc (* 1024 1024 100))
+
+  (defun fk/defer-garbage-collection ()
+    (setq gc-cons-threshold most-positive-fixnum))
+
+  (defun fk/restore-garbage-collction ()
+    (run-at-time 1 nil (lambda () (setq gc-cons-threshold k-gc))))
+
+  (add-hook 'minibuffer-setup-hook 'fk/defer-garbage-collection)
+  (add-hook 'minibuffer-exit-hook 'fk/restore-garbage-collction)
+
   (defvar file-name-handler-alist-original file-name-handler-alist)
 
   (setq gc-cons-percentage 0.8)
-  (setq gc-cons-threshold most-positive-fixnum)
+  (fk/defer-garbage-collection)
   (setq file-name-handler-alist nil)
   (run-with-idle-timer
    3 nil
    (lambda ()
-     (setq gc-cons-threshold gc-cons-threshold-orginal)
+     (fk/restore-garbage-collction)
      (setq file-name-handler-alist file-name-handler-alist-original)
      (makunbound 'gc-cons-threshold-original)
      (makunbound 'file-name-handler-alist-original)
