@@ -38,7 +38,17 @@
                  )
   :config
   (helm-mode 1)
-  (add-hook 'helm-minibuffer-set-up-hook 'spacemacs//helm-hide-minibuffer-maybe))
+  (add-hook 'helm-minibuffer-set-up-hook 'spacemacs//helm-hide-minibuffer-maybe)
+
+  (defun helm--collect-matches (src-list)
+    (let ((matches
+           (cl-loop for src in src-list
+                    collect (helm-compute-matches src))))
+      (unless (eq matches t) matches)))
+
+  ;; (setq helm-projectile-sources-list '(helm-source-projectile-buffers-list helm-source-projectile-projects))
+  ;; (setq helm-projectile-sources-list 'helm-source-projectile-files-list)
+  )
 
 (use-package helm-projectile
   :config
