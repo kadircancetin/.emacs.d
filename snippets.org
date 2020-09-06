@@ -85,3 +85,14 @@
   (setq which-key-idle-delay 0.4))
 
 #+END_SRC
+* native
+#+BEGIN_SRC emacs-lisp
+  (if (and (fboundp 'native-comp-available-p)
+         (native-comp-available-p))
+    (message "Native compilation is available")
+  (message "Native complation is *NOTT* available"))
+
+(if (functionp 'json-serialize)
+    (message "Native JSON is available")
+  (message "Native JSON is *NOTT* available"))
+#+END_SRC

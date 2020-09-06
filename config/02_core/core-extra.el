@@ -1,5 +1,6 @@
 (require 'use-package)
 
+(use-package darkroom) ;; NOTE: do I realy need it
 (use-package deadgrep)
 (use-package multiple-cursors)
 (use-package mwim)
@@ -7,6 +8,7 @@
 (use-package projectile)
 (use-package ace-window)
 (use-package su :init (su-mode 1))
+(use-package ivy)
 
 (use-package undo-tree
   :defer 0.2
@@ -40,9 +42,8 @@
 (use-package yasnippet
   :init
   (use-package yasnippet-snippets)
-  :defer 2
-  :config
-  (yas-global-mode 0))
+  (yas-global-mode 1)
+  :defer 2)
 
 (use-package magit
   :defer t
@@ -61,7 +62,5 @@
   :init
   (setq google-translate-default-source-language "auto"
         google-translate-default-target-language "tr"))
-
-
 
 (provide 'core-extra)

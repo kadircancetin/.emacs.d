@@ -67,6 +67,6 @@
 
 
 (load-file (expand-file-name "config/majors/k_org/roam.el" user-emacs-directory))
-
+(use-package org-web-tools)
 
 (provide 'k_org)

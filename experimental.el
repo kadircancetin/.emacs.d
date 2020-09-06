@@ -1,29 +1,11 @@
 (require 'use-package)
 
-;; (global-set-key (kbd "M-ü") '(lambda () (interactive)(save-buffer)(eval-buffer)(typo-suggest-helm)))
-
-
 (use-package typo-suggest
   :defer 0.1
   :init
   (setq typo-suggest-timeout 10))
 
 
-
-(if (and (fboundp 'native-comp-available-p)
-         (native-comp-available-p))
-    (message "Native compilation is available")
-  (message "Native complation is *not* available"))
-
-(if (functionp 'json-serialize)
-    (message "Native JSON is available")
-  (message "Native JSON is *not* available"))
-
-
-(require 'dash)
-(defun kadir/activate-gode-mode-when (orig-fun &rest args)
-  (god-local-mode 1))
-
 (use-package god-mode
   :init
   (setq-default cursor-type 'bar)
@@ -36,14 +18,10 @@
   (global-set-key (kbd "ş") #'god-local-mode)
   (define-key isearch-mode-map (kbd "ş") #'god-local-mode)
 
-  (advice-add 'other-window :before 'kadir/activate-gode-mode-when)
-  (advice-remove 'other-window 'kadir/activate-gode-mode-when)
-
   ;; styling
   ;; (setq modalka-cursor-type '(hbar . 2)) ;; (setq-default cursor-type '(bar . 1))
   (defun my-god-mode-update-cursor ()
     (interactive)
-
     (setq cursor-type (if (or god-local-mode buffer-read-only)
                           'box
                         'bar)))
@@ -62,20 +40,6 @@
   ;; fixes
   (define-key god-local-mode-map (kbd "h") #'backward-delete-char-untabify)
 
-
-  (defun kadir/no-ctrl-on-godmode (orig-fun &rest args)
-    (if god-local-mode
-        (message "YOU ARE IN GOD-MODE IDIOT")
-      (apply orig-fun args)))
-  (let ((keys "abcçdefgğhıijklmnoöprsştuüvyz")
-        (key nil)
-        (tmp nil))
-    (setq keys (--map (setq key (concat "C-" (char-to-string it))) (mapcar 'identity keys)))
-    (dolist (key keys)
-      (setq tmp (lookup-key (current-global-map) (kbd key)))
-      (when tmp ; (advice-add tmp :around 'kadir/no-ctrl-on-godmode)
-        )))
-
   ;; extra binds
   (define-key god-local-mode-map (kbd "z") #'repeat)
   (define-key god-local-mode-map (kbd "h") #'backward-delete-char-untabify)
@@ -87,52 +51,38 @@
   ;; (define-key god-mode-isearch-map (kbd "<return>") #'god-mode-isearch-disable)
   )
 
-;; (use-package paredit
-;;   :init
-;;   (add-hook 'emacs-lisp-mode-hook #'paredit-mode))
-;;   (remove-hook 'emacs-lisp-mode-hook #'paredit-mode)
-
-
-(use-package dired-sidebar)
-
-
-(use-package ivy)
-
-(use-package org-web-tools)
-(use-package darkroom)
-
-(use-package helm-mode-manager :defer nil)
-
-(yas-global-mode 1)
 
 ;;; experimental.el ends here
-(defun test--get-suggestion-list(input)
-  (message "before sleep")
-  (sleep-for 1)
-  (message "w1")
-  (sleep-for 1)
-  (message "w2")
-  (sleep-for 1)
-  (message "w3")
-  (sleep-for 1)
-  (message "w4")
-  (sleep-for 1)
-  (message "w5")
 
-  (message "after sleep")
+
+
+
+(defun test--get-suggestion-list(input)
+  (message "sleep before")
+  (sleep-for 1)
+  (message "sleep after")
+
   (when input
     (list (length input))))
 
+;; (add-to-list 'helm-before-update-hook (lambda ()(message "HOOK** before update")))
+;; (add-to-list 'helm-after-update-hook (lambda ()(message "HOOK** after update")))
+
+(defun helm-update-source-p(source) t)
 (defun test-helm ()
-  (helm :sources (helm-build-sync-source "test"
-                   :match-dynamic t
-                   :candidates (lambda (&optional _) (test--get-suggestion-list helm-input)))))
+  (let ((helm-candidate-cache (make-hash-table :test 'equal)))
+    (helm :sources (helm-build-sync-source "test"
+                     :match-dynamic t
+                     :candidates (lambda () (test--get-suggestion-list helm-input))))))
 
+(setq-default helm-debug t
+              helm-debug-buffer "Debug Helm Log")
 
-(global-set-key (kbd "M-ü") '(lambda () (interactive)(test-helm)))
-
+;; (global-set-key (kbd "M-ü") '(lambda () (interactive) (condition-case nil (eval-buffer) (error nil))
+;;                                (test-helm)))
 
 (defun disable-all-minors()
+  (interactive)
   (let ((active-minor-modes nil))
     (mapc (lambda (mode) (condition-case nil
                         (if (and (symbolp mode) (symbol-value mode))
@@ -145,3 +95,5 @@
                (funcall  it  0)
              (error nil))
            active-minor-modes)))
+
+
