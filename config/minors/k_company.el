@@ -20,7 +20,6 @@
                 company-require-match 'never
 
                 company-auto-complete-chars nil)
-
   :defer 0.1
   :bind ((:map company-active-map
                ([return] . nil)
@@ -32,8 +31,11 @@
          (:map company-mode-map ("C-." . helm-company))
          )
   :config
-  ;; (use-package company-tabnine :defer nil)
   (global-company-mode 1)
+
+  ;; make company work on char deleteion
+  (add-to-list 'company-begin-commands 'backward-delete-char-untabify)
+
   (progn
     ;; https://emacs.stackexchange.com/questions/17537/best-company-backends-lists
     (load-file (expand-file-name "company-try-hard.el" user-emacs-directory))))

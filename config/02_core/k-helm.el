@@ -18,6 +18,8 @@
                      `(:background ,bg-color :foreground ,bg-color)))
       (setq-local cursor-type nil))))
 
+(use-package helm-mode-manager :defer nil)
+
 (use-package helm
   :defer 0.15
   :init
@@ -46,14 +48,18 @@
                     collect (helm-compute-matches src))))
       (unless (eq matches t) matches)))
 
-  (advice-add 'helm--collect-matches :around #'kadir/helm--collect-matches)
-  ;; (setq helm-projectile-sources-list '(helm-source-projectile-buffers-list helm-source-projectile-projects))
-  ;; (setq helm-projectile-sources-list 'helm-source-projectile-files-list)
-  )
+  (advice-add 'helm--collect-matches :around #'kadir/helm--collect-matches))
 
 (use-package helm-projectile
+  :hook
+  (projectile-mode . helm-projectile-on)
   :config
-  (projectile-mode 1))
+  (projectile-mode 1)
+  :custom
+  (helm-projectile-sources-list '(helm-source-projectile-buffers-list
+                                  helm-source-projectile-recentf-list
+                                  helm-source-projectile-files-list
+                                  helm-source-projectile-projects)))
 
 (use-package helm-ag
   :config (setq

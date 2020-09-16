@@ -62,12 +62,6 @@
 
 
 (use-package pyvenv)
-;; (use-package company-jedi)
-;; (use-package jedi-core
-;;   :init
-;;   (setq-default jedi:complete-on-dot t
-;;                 jedi:install-imenu t  ;; TODO: helm semantic or imenu
-;;                 ))
 (use-package lsp-pyright
   :init
   (setq-default lsp-pyright-auto-import-completions nil
@@ -83,7 +77,6 @@
 
 (defun kadir/python-eglot-start()
   (interactive)
-  ;; (require 'company-jedi)
   (eglot-ensure)
   (setq-default eglot-ignored-server-capabilites '(:documentHighlightProvider
                                                    :hoverProvider
@@ -138,14 +131,6 @@
                        :heuristic 'error
                        :async nil
                        :order 1)
-  ;; (smart-jump-register :modes 'python-mode
-  ;;                      :jump-fn 'jedi:goto-definition
-  ;;                      :pop-fn 'jedi:goto-definition-pop-marker
-  ;;                      :refs-fn 'xref-find-references
-  ;;                      :should-jump nil
-  ;;                      :heuristic 'error
-  ;;                      :async nil
-  ;;                      :order 3)
   (smart-jump-register :modes 'python-mode
                        :jump-fn 'dumb-jump-go
                        :pop-fn 'xref-pop-marker-stack
@@ -205,6 +190,17 @@
   (if (eq kadir/python-lsp-eglot 'eglot)
       (kadir/python--eglot-indent-toggle)
     (kadir/python--lsp-indent-toggle)))
+
+(defun kadir/python-remove-unused-imports()
+  ;; source
+  "Removes unused imports and unused variables with autoflake."
+  (interactive)
+  (if (executable-find "autoflake")
+      (progn
+        (shell-command (format "autoflake --remove-all-unused-imports -i %s"
+                               (shell-quote-argument (buffer-file-name))))
+        (revert-buffer t t t))
+    (warn "python-mode: Cannot find autoflake executable.")))
 
 
 (defun kadir/django/find-models()

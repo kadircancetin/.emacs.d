@@ -3,7 +3,9 @@
 (use-package format-all)
 
 (use-package python-black
-  :defer 0.5)
+  :defer 0.5
+  :custom (blacken-line-length 88))
+
 (use-package py-isort)
 
 (setq k (current-window-configuration))

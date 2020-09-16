@@ -3,7 +3,7 @@
 
 
 (use-package org
-  :straight (:type built-in)
+  ;; :straight (:type built-in)
   :init
   (kadir/beatiful-org-todo)
   (add-hook 'org-mode-hook 'kadir/org-mode-hooks)
@@ -24,7 +24,9 @@
                 org-src-fontify-natively    t
                 org-startup-indented        t
                 org-hide-emphasis-markers   t
-                org-default-notes-file      "~/org/inbox.org")
+                org-default-notes-file      "~/org/inbox.org"
+
+                org-eldoc-breadcrumb-separator " → ")
 
   (setq-default org-catch-invisible-edits   'show-and-error
                 org-cycle-separator-lines   2
@@ -53,7 +55,7 @@
            entry (file+headline "inbox.org" "Inbox")
            "* %? [[%:link][%:description]] \n  Captured On: %u"))))
 
-
+(use-package org-plus-contrib)
 
 (use-package org-bullets)
 

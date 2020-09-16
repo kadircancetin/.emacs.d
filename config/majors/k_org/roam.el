@@ -6,7 +6,7 @@
   :defer nil
   :commands (org-roam org-roam-mode-map org-roam-find-file)
   :init
-  (setq org-roam-buffer-width 0.4)
+  (setq org-roam-buffer-width 0.25)
   (setq org-roam-buffer-no-delete-other-windows t)
   (setq org-roam-db-gc-threshold most-positive-fixnum)
   :hook

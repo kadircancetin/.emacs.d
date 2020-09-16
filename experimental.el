@@ -9,7 +9,6 @@
 (use-package god-mode
   :init
   (setq-default cursor-type 'bar)
-
   (god-mode-all)
   ;; (setq god-exempt-major-modes nil) ;; enable for all mode but I don't know it is good or bad
   ;; (setq god-exempt-predicates nil)
@@ -51,49 +50,16 @@
   ;; (define-key god-mode-isearch-map (kbd "<return>") #'god-mode-isearch-disable)
   )
 
+(use-package hydra)
+(use-package org-fc
+  :straight
+  (org-fc
+   :type git :host github :repo "l3kn/org-fc"
+   :files (:defaults "contrib/*.el" "awk" "demo.org"))
+  :custom
+  (org-fc-directories '("~/Dropbox/org-roam/"))
+  :config
+  (require 'org-fc-hydra)
+  (require 'org-fc-keymap-hint))
 
 ;;; experimental.el ends here
-
-
-
-
-(defun test--get-suggestion-list(input)
-  (message "sleep before")
-  (sleep-for 1)
-  (message "sleep after")
-
-  (when input
-    (list (length input))))
-
-;; (add-to-list 'helm-before-update-hook (lambda ()(message "HOOK** before update")))
-;; (add-to-list 'helm-after-update-hook (lambda ()(message "HOOK** after update")))
-
-(defun helm-update-source-p(source) t)
-(defun test-helm ()
-  (let ((helm-candidate-cache (make-hash-table :test 'equal)))
-    (helm :sources (helm-build-sync-source "test"
-                     :match-dynamic t
-                     :candidates (lambda () (test--get-suggestion-list helm-input))))))
-
-(setq-default helm-debug t
-              helm-debug-buffer "Debug Helm Log")
-
-;; (global-set-key (kbd "M-ü") '(lambda () (interactive) (condition-case nil (eval-buffer) (error nil))
-;;                                (test-helm)))
-
-(defun disable-all-minors()
-  (interactive)
-  (let ((active-minor-modes nil))
-    (mapc (lambda (mode) (condition-case nil
-                        (if (and (symbolp mode) (symbol-value mode))
-                            (add-to-list 'active-minor-modes mode))
-                      (error nil)))
-          minor-mode-list)
-
-    (prin1 active-minor-modes)
-    (--map (condition-case nil
-               (funcall  it  0)
-             (error nil))
-           active-minor-modes)))
-
-
