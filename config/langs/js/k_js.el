@@ -52,4 +52,10 @@
 (use-package json-mode)
 
 
+(use-package vue-mode
+  :mode (("\\.vue\\'" . vue-mode))
+  :init
+  (add-hook 'vue-mode-hook 'flycheck-mode))
+
+
 (provide 'k_js)

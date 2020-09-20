@@ -61,5 +61,15 @@
   :config
   (require 'org-fc-hydra)
   (require 'org-fc-keymap-hint))
+
+(use-package dired-sidebar
+  :ensure t
+  :commands (dired-sidebar-toggle-sidebar)
+  :config
+  (add-hook 'mmm-mode-hook
+            (lambda ()
+              (set-face-background 'mmm-default-submode-face nil))))
+
 
-;;; experimental.el ends here
+
+(use-package syntactic-close)
