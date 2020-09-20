@@ -1,6 +1,5 @@
 (defvar kadir/emacs-fast-open)
 (defvar kadir/emacs-open-with-doom)
-(setq-default comp-deferred-compilation nil)
 
 (defun k/init-doom()
   (add-to-list 'load-path "~/.emacs.d_doom")
@@ -57,7 +56,9 @@
     (require 'binds)     ;; all global bindings
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (load-file "~/dev-org-docs/dev-org-docs.el")
+    (when (file-exists-p "~/dev-org-docs/dev-org-docs.el")
+      (load-file "~/dev-org-docs/dev-org-docs.el"))
+
     (setq dev-org-docs-mode-docs
           '((python-mode . (django~3.0 django_rest_framework python~3.7))
             (org-mode . (django~3.0 django_rest_framework python~3.7))

@@ -4,8 +4,8 @@
 (defvar kadir/emacs-open-with-doom (member "-doom" command-line-args))
 (setq command-line-args (delete "-doom" command-line-args))
 
-(defvar kadir/default-font-size 75)
-(when kadir/emacs-fast-open (setq kadir/default-font-size 95))
+(defvar kadir/default-font-size 120)
+(when kadir/emacs-fast-open (setq kadir/default-font-sizeş 130))
 
 
 (defun k/set-garbage-collection()
@@ -53,7 +53,7 @@
 (defun k/set-init-ui()
   "Initialize UI. Mostly because of if theese settings in here, startup is faster"
   ;; (load-theme 'wombat t)
-  (fringe-mode 4)
+  (fringe-mode 6)
   (setq frame-inhibit-implied-resize t)              ;; doom says it increse speedup
   (setq frame-resize-pixelwise t)                    ;; for terminal
   (push '(menu-bar-lines . 0) default-frame-alist)   ;; (menu-bar-mode -1)
