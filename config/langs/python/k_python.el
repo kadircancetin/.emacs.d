@@ -75,35 +75,6 @@
   (lsp)
   (setq-default company-backends '(company-capf)))
 
-(defun kadir/python-eglot-start()
-  (interactive)
-  (eglot-ensure)
-  (setq-default eglot-ignored-server-capabilites '(:documentHighlightProvider
-                                                   :hoverProvider
-                                                   ;; :signatureHelpProvider
-                                                   ))
-
-
-  (add-hook 'eglot-managed-mode-hook
-            (lambda ()
-              (interactive)
-              (setq company-backends
-                    '(;; company-bbdb
-                      ;; company-semantic
-                      ;; company-clang
-                      ;; company-xcode
-                      ;; company-cmake
-                      company-capf ;; NOTE: remove the eglot defaults
-                      ;; company-jedi    ;; NOTE: instead of eglot defaulats
-                      company-files
-                      (company-dabbrev-code company-gtags company-etags
-                                            company-keywords)
-                      ;; company-oddmuse
-                      ;; company-tabnine
-                      ;; company-yasnippet
-                      company-dabbrev))
-              (prin1 company-backends))))
-
 
 (defun kadir/lsp-jump-maybe()
   (interactive)
