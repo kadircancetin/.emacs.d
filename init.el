@@ -35,7 +35,7 @@
     (require 'k-eshell)
 
     (when (require 'k-minors)
-      (require 'k-colors-mode)  ;; NOTE: eğer bi satır üstte olursa eglot patlıyor. neden
+      (require 'k-colors-mode)
       (require 'k-format)
       (require 'k_theme))
 

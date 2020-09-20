@@ -95,7 +95,7 @@
 
 ;; ;; SmoothScroll
 (setq-default scroll-step 1
-              scroll-margin 2
+              scroll-margin 0
               scroll-conservatively 1000
               scroll-up-aggressively 0.01
               scroll-down-aggressively 0.01
