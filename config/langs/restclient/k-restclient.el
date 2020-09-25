@@ -1,7 +1,7 @@
 (defun kadir/restclient-send()
   (interactive)
   (restclient-http-send-current-stay-in-window)
-  (sleep-for 0.2)
+  (sleep-for 1)
   (other-window 1)
   (json-mode-beautify)
   (other-window -1)
