@@ -56,8 +56,18 @@
     (require 'binds)     ;; all global bindings
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
     (when (file-exists-p "~/dev-org-docs/dev-org-docs.el")
-      (load-file "~/dev-org-docs/dev-org-docs.el"))
+      (add-to-list 'load-path "~/dev-org-docs/")
+      (require 'dev-org-docs)
+      (global-set-key (kbd "M-ç") (lambda()(interactive) (dev-org-docs-search-at-point)))
+
+      (setq dev-org-docs-major-mode-doc-alist
+            '((python-mode . ("django~3.0" "django_rest_framework" "python~3.8"))
+              (html-mode . ("html"))
+              (web-mode . ("html" "css"))
+              (css-mode . ("css")))
+            ))
 
     (setq dev-org-docs-mode-docs
           '((python-mode . (django~3.0 django_rest_framework python~3.7))
