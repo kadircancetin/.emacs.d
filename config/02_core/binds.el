@@ -151,8 +151,8 @@
    ("C-x g"           . magit-status)
 
    ;; fonts
-   ("C-+"                . text-scale-increase)
-   ("C--"                . text-scale-decrease)
+   ("C-+"                . kadir/font-size-bigger)
+   ("C--"                . kadir/font-size-smaller)
    ("C-c c"                 . (lambda()(interactive)(org-capture nil "t")))
    )
  )
