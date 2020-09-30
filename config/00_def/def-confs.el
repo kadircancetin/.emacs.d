@@ -185,13 +185,21 @@
   "Split window below and follow."
   (interactive)
   (split-window-below)
-  (other-window 1))
+  (other-window 1)
+  (balance-windows))
 
 (defun kadir/split-and-follow-vertically ()
   "Split window below and follow."
   (interactive)
   (split-window-right)
-  (other-window 1))
+  (other-window 1)
+  (balance-windows))
+
+(defun kadir/delete-window ()
+  "Split window below and follow."
+  (interactive)
+  (delete-window)
+  (balance-windows))
 
 (defun spacemacs/backward-kill-word-or-region (&optional arg)
   "Calls `kill-region' when a region is active and
@@ -256,6 +264,7 @@
    ("M-ı"             . (lambda() (interactive) (indent-region (point-min) (point-max))))
    ("C-x 2"           . kadir/split-and-follow-horizontally)
    ("C-x 3"           . kadir/split-and-follow-vertically)
+   ("C-x 0"           . kadir/delete-window)
    ("M-<SPC>"         . kadir/last-buffer)
 
    ;; shortcuts
