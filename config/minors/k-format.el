@@ -4,7 +4,7 @@
 
 (use-package python-black
   :defer 0.5
-  :custom (blacken-line-length 88))
+  :custom (blacken-line-length 119))
 
 (use-package py-isort)
 

@@ -38,13 +38,14 @@
       (kadir/python-eglot-start)
     (kadir/python-lsp-start)))
 
-(defun kadir/enable-flycheck-poython()
+(defun kadir/enable-flycheck-python()
   (interactive)
   (message "try flycheck")
   (require 'flycheck)
   (setq lsp-diagnostic-package :none)
-  (setq flycheck-disabled-checkers '(python-mypy python-pylint))
-  (flycheck-select-checker 'python-flake8))
+  (setq lsp-diagnostics-provider :none)
+  (setq flycheck-disabled-checkers '(python-mypy python-flake8))
+  (flycheck-select-checker 'python-pylint))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package python
@@ -52,22 +53,19 @@
   :bind (:map python-mode-map
               ;; ("C-c C-n" . flymake-goto-next-error)
               ;; ("C-c C-p" . flymake-goto-prev-error)
-              ("C-c C-n" . flycheck-next-error)
-              ("C-c C-p" . flycheck-previous-error)
               ("C-c C-d" . lsp-describe-thing-at-point))
   :hook
-  ((python-mode . activate-venv-configure-python)
+  ((python-mode . kadir/enable-flycheck-python)
+   (python-mode . activate-venv-configure-python)
    (python-mode . kadir/configure-python)
-   (python-mode . kadir/enable-flycheck-poython)))
+   ))
 
 
 (use-package pyvenv)
 (use-package lsp-pyright
   :init
   (setq-default lsp-pyright-auto-import-completions nil
-                lsp-pyright-disable-organize-imports t
-                )
-
+                lsp-pyright-disable-organize-imports t)
   :straight (:host github :repo "emacs-lsp/lsp-pyright"))
 
 (defun kadir/python-lsp-start()

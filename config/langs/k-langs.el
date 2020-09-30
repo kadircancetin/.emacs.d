@@ -25,14 +25,16 @@
   (setq-default dumb-jump-aggressive t))
 
 
-(use-package lsp-ui
-  :after lsp-mode
-  :custom
-  (lsp-ui-doc-position 'top)
-  (lsp-ui-sideline-delay 0.5)
-  (lsp-ui-doc-delay 1.5)
-  (lsp-ui-peek-fontify 'always)
-  )
+;; (use-package lsp-ui
+;;   :after lsp-mode
+;;   :custom
+;;   (lsp-ui-doc-position 'top)
+;;   (lsp-ui-sideline-delay 0.5)
+;;   (lsp-ui-doc-delay 1.5)
+;;   (lsp-ui-peek-fontify 'always)
+;;   :bind
+;;   (:map lsp-mode-map (("M-." . lsp-ui-peek-find-definitions)))
+;;   )
 
 (use-package lsp-mode
   :init
@@ -40,14 +42,8 @@
     (interactive)
     (let ((lsp-response-timeout 20))
       (lsp-ui-peek-find-definitions)))
-  :bind
-  (:map lsp-mode-map (("M-." . lsp-ui-peek-find-definitions)))
   :config
-  ;; (setq lsp-enable-snippet nil)
-
-
   ;; lsp-eldoc-render-all nil                                                      ???????
-  ;; lsp-enable-indentation t
   (setq
    ;; lsp-log-io t
    ;; lsp-print-performance t
@@ -81,9 +77,7 @@
    lsp-enable-indentation nil
    lsp-enable-on-type-formatting nil
    ;; capf is the preferred completion mechanism for lsp-mode now
-   lsp-prefer-capf t
-
-   ))
+   lsp-prefer-capf t))
 
 (use-package helm-xref
   :after (eglot))
