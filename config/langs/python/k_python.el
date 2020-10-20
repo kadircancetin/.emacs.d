@@ -37,6 +37,7 @@
   (if (eq kadir/python-lsp-eglot 'eglot)
       (kadir/python-eglot-start)
     (kadir/python-lsp-start)))
+  (add-hook 'after-save-hook 'kadir/python-remove-unused-imports)
 
 (defun kadir/enable-flycheck-python()
   (interactive)
@@ -172,12 +173,14 @@
                      (executable-find "python")))
         (shell-command  "pip install autoflake flake8")))
 
-    (when (string-match "F401" (shell-command-to-string (format "flake8 --select F401 %s" file)))
-      (when (y-or-n-p "There is un used imports. Can i delete it")
-        (shell-command (format "autoflake --remove-all-unused-imports -i %s" file))
-        (revert-buffer t t t)))))
-
-(add-hook 'after-save-hook 'kadir/python-remove-unused-imports)
+    (let* ((process (start-process "find unused imports" nil
+                                   "bash" "-c" (format "flake8 --select F401 %s | wc -l" (buffer-file-name))))
+           (filter (lambda (process output)
+                     (unless (string= output "0\n")
+                       (when (y-or-n-p "There are unused imports. Do you want to remove them?")
+                         (shell-command (format "autoflake --remove-all-unused-imports -i %s" (buffer-file-name)))
+                         (revert-buffer t t t))))))
+      (set-process-filter process filter))))
 
 
 
