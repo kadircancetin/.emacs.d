@@ -96,3 +96,99 @@
     (message "Native JSON is available")
   (message "Native JSON is *NOTT* available"))
 #+END_SRC
+
+* python
+** some packages
+#+BEGIN_SRC emacs-lisp
+(use-package pony-mode)
+#+END_SRC
+
+** smartjump
+#+BEGIN_SRC emacs-lisp
+  (use-package smart-jump
+  :defer 1
+  ;; :init  (setq smart-jump-default-mode-list 'python-mode)
+  :config
+  (smart-jump-register :modes 'python-mode
+                       :jump-fn 'xref-find-definitions
+                       :pop-fn 'xref-pop-marker-stack
+                       :refs-fn 'xref-find-references
+                       :should-jump nil
+                       :heuristic 'error
+                       :async nil
+                       :order 1)
+  ;; (smart-jump-register :modes 'python-mode
+  ;;                      :jump-fn 'kadir/jedi:goto-definition
+  ;;                      :pop-fn 'jedi:goto-definition-pop-marker
+  ;;                      :refs-fn 'xref-find-references
+  ;;                      :should-jump t
+  ;;                      :heuristic 'error
+  ;;                      :async t
+  ;;                      :order 2)
+  ;; (smart-jump-register :modes 'python-mode
+  ;;                      :jump-fn 'xref-find-definitions
+  ;;                      :pop-fn 'xref-pop-marker-stack
+  ;;                      :refs-fn 'xref-find-references
+  ;;                      :should-jump t
+  ;;                      :heuristic 'error
+  ;;                      :async nil
+  ;;                      :order 3)
+  ;; (smart-jump-register :modes 'python-mode
+  ;;                      :jump-fn 'dumb-jump-go
+  ;;                      :pop-fn 'xref-pop-marker-stack
+  ;;                      :should-jump t
+  ;;                      :heuristic 'point
+  ;;                      :async nil
+  ;;                      :order 4)
+  )
+
+#+END_SRC
+
+** jedi
+#+BEGIN_SRC emacs-lisp
+  (use-package company-jedi)
+(use-package jedi-core
+  :init
+  (setq jedi:goto-definition-marker-ring-length 50)
+  (setq jedi:get-in-function-call-timeout 0)
+  (setq company-async-timeout 9.001)
+  :config
+
+
+  (defun kadir/jedi:goto-definition()
+    (interactive)
+    (ring-insert jedi:goto-definition--marker-ring (point-marker))
+    (jedi:goto-definition))
+
+  (defun kadir/python-curson-on-import-p()
+    (save-excursion (mwim-beginning-of-code-or-line) (looking-at ".*import.*")))
+
+  (defun jedi:goto-definition--callback (reply other-window)
+    (if (not reply)
+        (message "Definition not found.")
+      (setq jedi:goto-definition--cache reply)
+      (jedi:goto-definition--nth other-window t)
+
+      ;; kadir adds
+      (when (kadir/python-curson-on-import-p)
+        (jedi:goto-definition))))
+
+  (defun jedi:goto-definition-push-marker ()
+    "Push point onto goto-definition marker ring."
+    (when (not (kadir/python-curson-on-import-p))
+      (ring-insert jedi:goto-definition--marker-ring (point-marker))))
+
+
+  )
+
+
+(defun company-jedi-candidates (callback)
+  "Return company candidates with CALLBACK."
+  (deferred:nextc
+    (jedi:call-deferred 'complete)
+    (lambda (reply)
+      (message "%s" reply)
+      (let ((candidates (mapcar 'company-jedi-collect-candidates reply)))
+        (funcall callback candidates)))))
+
+#+END_SRC

@@ -28,7 +28,12 @@
   (interactive)
   (cond
    ((eq major-mode 'web-mode) (indent-region (point-min) (point-max)))
-   ((eq major-mode 'python-mode) (python-black)(py-isort-buffer))
+   ((eq major-mode 'python-mode)
+    (if (region-active-p)
+        (progn
+          (python-black-region (region-beginning) (region-end)))
+      (python-black)
+      (py-isort-buffer)))
    ((eq major-mode 'go-mode) (gofmt))
    ((eq major-mode 'sass-mode) (css-mode) (format-all-buffer)(sass-mode))
 

@@ -32,7 +32,7 @@
   (global-set-key (kbd "C-x C-1") #'delete-other-windows)
   (global-set-key (kbd "C-x C-2") #'kadir/split-and-follow-horizontally)
   (global-set-key (kbd "C-x C-3") #'kadir/split-and-follow-vertically)
-  (global-set-key (kbd "C-x C-0") #'delete-window)
+  (global-set-key (kbd "C-x C-0") #'kadir/delete-window)
   (global-set-key (kbd "C-c C-h") #'helpful-at-point)
   (global-set-key (kbd "C-x C-k") (lambda nil (interactive) (kill-buffer (current-buffer))))
 
@@ -50,17 +50,8 @@
   ;; (define-key god-mode-isearch-map (kbd "<return>") #'god-mode-isearch-disable)
   )
 
-(use-package hydra)
-(use-package org-fc
-  :straight
-  (org-fc
-   :type git :host github :repo "l3kn/org-fc"
-   :files (:defaults "contrib/*.el" "awk" "demo.org"))
-  :custom
-  (org-fc-directories '("~/Dropbox/org-roam/"))
-  :config
-  (require 'org-fc-hydra)
-  (require 'org-fc-keymap-hint))
+
+
 
 (use-package dired-sidebar
   :ensure t
@@ -97,3 +88,35 @@
   (defvar kadir/default-font-size)
   (setq kadir/default-font-size (+ kadir/default-font-size 10))
   (kadir/adjust-font-size kadir/default-font-size))
+
+
+
+(use-package company-tabnine
+  :defer 20
+  :config
+  (require 'company-tabnine)
+
+  (defun kadir/company-tabnine-disable()
+    (interactive)
+    (setq company-backends (remove 'company-tabnine company-backends)))
+
+  (defun kadir/company-tabnine-enable()
+    (interactive)
+    (add-to-list 'company-backends 'company-tabnine))
+
+  (setq company-tabnine--disable-next-transform nil)
+  (defun my-company--transform-candidates (func &rest args)
+    (if (not company-tabnine--disable-next-transform)
+        (apply func args)
+      (setq company-tabnine--disable-next-transform nil)
+      (car args)))
+
+  (defun my-company-tabnine (func &rest args)
+    (when (eq (car args) 'candidates)
+      (setq company-tabnine--disable-next-transform t))
+    (apply func args))
+
+  (advice-add #'company--transform-candidates :around #'my-company--transform-candidates)
+  (advice-add #'company-tabnine :around #'my-company-tabnine)
+
+  )
