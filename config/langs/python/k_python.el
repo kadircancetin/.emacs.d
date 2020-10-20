@@ -161,15 +161,24 @@
     (kadir/python--lsp-indent-toggle)))
 
 (defun kadir/python-remove-unused-imports()
-  ;; source
-  "Removes unused imports and unused variables with autoflake."
+  "Removes unused imports with autoflake."
   (interactive)
-  (if (executable-find "autoflake")
-      (progn
-        (shell-command (format "autoflake --remove-all-unused-imports -i %s"
-                               (shell-quote-argument (buffer-file-name))))
-        (revert-buffer t t t))
-    (warn "python-mode: Cannot find autoflake executable.")))
+
+  (let ((file (shell-quote-argument (buffer-file-name))))
+
+    (when (not (and (executable-find "autoflake") (executable-find "flake8")))
+      (when (y-or-n-p
+             (format "Can't find autoflake or flake8. Do you want to install on %s"
+                     (executable-find "python")))
+        (shell-command  "pip install autoflake flake8")))
+
+    (when (string-match "F401" (shell-command-to-string (format "flake8 --select F401 %s" file)))
+      (when (y-or-n-p "There is un used imports. Can i delete it")
+        (shell-command (format "autoflake --remove-all-unused-imports -i %s" file))
+        (revert-buffer t t t)))))
+
+(add-hook 'after-save-hook 'kadir/python-remove-unused-imports)
+
 
 
 (defun kadir/django/find-models()
