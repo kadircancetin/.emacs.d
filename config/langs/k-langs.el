@@ -1,7 +1,7 @@
 (when (executable-find "wakatime")
   (add-hook 'prog-mode-hook #'wakatime-mode))
 (add-hook 'prog-mode-hook #'hs-minor-mode)
-(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+;; (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 (add-hook 'prog-mode-hook #'k-colors-mode)
 (add-hook 'prog-mode-hook #'kadir/activate-flycheck)
 
@@ -80,7 +80,7 @@
    lsp-prefer-capf t))
 
 (use-package helm-xref
-  :after (eglot))
+  :defer 1)
 
 (use-package eglot
   ;; (add-to-list 'eglot-server-programs '((js-mode) "typescript-language-server" "--stdio"))

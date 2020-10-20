@@ -138,7 +138,6 @@
    ;; undo-tree
    ("M-_"             . undo-tree-redo)
    ("C-_"             . undo-tree-undo)
-   ("C-u"             . undo-tree-undo)
    ("s-u"             . undo-tree-redo)
 
    ;; bm
