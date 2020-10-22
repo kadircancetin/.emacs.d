@@ -181,6 +181,9 @@
   (interactive)
   (start-process "*shellout*" nil "terminator"))
 
+(defun kadir/kill-buffer()
+  (interactive) (kill-buffer (current-buffer)))
+
 (defun kadir/split-and-follow-horizontally ()
   "Split window below and follow."
   (interactive)
@@ -260,7 +263,7 @@
    ;; window-buffer
    ("M-o"             . other-window)
    ("M-u"             . winner-undo)
-   ("C-x k"           . (lambda () (interactive) (kill-buffer (current-buffer))))
+   ("C-x k"           . kadir/kill-buffer)
    ("M-ı"             . (lambda() (interactive) (indent-region (point-min) (point-max))))
    ("C-x 2"           . kadir/split-and-follow-horizontally)
    ("C-x 3"           . kadir/split-and-follow-vertically)

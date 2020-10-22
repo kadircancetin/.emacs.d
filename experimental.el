@@ -34,7 +34,7 @@
   (global-set-key (kbd "C-x C-3") #'kadir/split-and-follow-vertically)
   (global-set-key (kbd "C-x C-0") #'kadir/delete-window)
   (global-set-key (kbd "C-c C-h") #'helpful-at-point)
-  (global-set-key (kbd "C-x C-k") (lambda nil (interactive) (kill-buffer (current-buffer))))
+  (global-set-key (kbd "C-x C-k") #'kadir/kill-buffer)
 
   ;; fixes
   (define-key god-local-mode-map (kbd "h") #'backward-delete-char-untabify)
