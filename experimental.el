@@ -120,3 +120,52 @@
   (advice-add #'company-tabnine :around #'my-company-tabnine)
 
   )
+
+(use-package dap-mode
+  :init
+
+  (setq dap-auto-configure-features '(sessions locals controls tooltip))
+  (dap-mode 1)
+
+  ;; The modes below are optional
+
+  (dap-ui-mode 1)
+  ;; enables mouse hover support
+  (dap-tooltip-mode 1)
+  ;; use tooltips for mouse hover
+  ;; if it is not enabled `dap-mode' will use the minibuffer.
+  (tooltip-mode 1)
+  ;; displays floating panel with debug buttons
+  ;; requies emacs 26+
+  (dap-ui-controls-mode 1)
+
+  ;; python -m debugpy --listen 0:5678 --wait-for-client manage.py runserver 0:8000
+
+  (dap-register-debug-provider
+   "python"
+   (lambda (conf)
+     (plist-put conf :debugPort 5678)
+     (plist-put conf :host "localhost")
+     (plist-put conf :hostName "localhost")
+     (plist-put conf :debugServer 5678)
+     conf))
+
+  (dap-register-debug-template
+   "conf"
+   (list :type "python"
+         :request "attach"
+         :port 5678
+         :name "test"
+         :pathMappings
+         (list (ht
+                ("localRoot" "/home/kadir/bigescom-pro/")
+                ("remoteRoot" "/app/")
+                ))
+         :sourceMaps t))
+
+  (use-package hydra
+    :init
+    (require 'hydra))
+
+  (add-hook 'dap-stopped-hook
+            (lambda (arg) (call-interactively #'dap-hydra))))
