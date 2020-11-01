@@ -140,12 +140,6 @@
    ("C-_"             . undo-tree-undo)
    ("s-u"             . undo-tree-redo)
 
-   ;; bm
-   ("C-x C-m"         . bm-toggle)
-   ("C-x C-n"         . bm-next)
-   ("C-x C-p"         . bm-previous)
-   ("C-x C-a"         . helm-bm)
-
    ;; magit
    ("C-x g"           . magit-status)
 
