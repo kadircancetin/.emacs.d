@@ -1,6 +1,8 @@
 (defvar kadir/emacs-fast-open)
 (defvar kadir/emacs-open-with-doom)
 
+(setq comp-deferred-compilation nil)
+
 (defun k/init-doom()
   (add-to-list 'load-path "~/.emacs.d_doom")
   (load "~/.emacs.d_doom/early-init.el")
@@ -60,20 +62,15 @@
     (when (file-exists-p "~/dev-org-docs/dev-org-docs.el")
       (add-to-list 'load-path "~/dev-org-docs/")
       (require 'dev-org-docs)
-      (global-set-key (kbd "M-ç") (lambda()(interactive) (dev-org-docs-search-at-point)))
+      (require 'dev-org-docs-available-docs)
+
+      (global-set-key (kbd "C-c DEL") (lambda()(interactive) (dev-org-docs-search-at-point)))
 
       (setq dev-org-docs-major-mode-doc-alist
             '((python-mode . ("django~3.0" "django_rest_framework" "python~3.8"))
               (html-mode . ("html"))
               (web-mode . ("html" "css"))
-              (css-mode . ("css")))
-            ))
-
-    (setq dev-org-docs-mode-docs
-          '((python-mode . (django~3.0 django_rest_framework python~3.7))
-            (org-mode . (django~3.0 django_rest_framework python~3.7))
-            (emacs-lisp-mode . (django~3.0 django_rest_framework python~3.7))
-            (clojure-mode . (clojure~1.10))))
+              (css-mode . ("css")))))
 
     (when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
       (load-file (expand-file-name "experimental.el" user-emacs-directory))
