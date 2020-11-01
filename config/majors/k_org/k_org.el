@@ -15,7 +15,11 @@
   :bind (:map org-mode-map
               ("M-." . org-open-at-point)
               ("M-," . org-mark-ring-goto)
-              ("C-a" . mwim-beginning-of-code-or-line))
+              ("C-a" . mwim-beginning-of-code-or-line)
+              ("C-c ," . org-priority-up)
+              ("C-c s" . kadir/org-sort-by-priority)
+              ;; ("ö p d" . org-priority-down)
+              )
 
   :config
   (setq-default org-src-tab-acts-natively   t               ; intent code blocks with its major modes
@@ -25,7 +29,8 @@
                 org-startup-indented        t
                 org-hide-emphasis-markers   t
                 org-default-notes-file      "~/org/inbox.org"
-
+                org-startup-folded          'content
+                org-default-priority        ?C
                 org-eldoc-breadcrumb-separator " → ")
 
   (setq-default org-catch-invisible-edits   'show-and-error
@@ -36,7 +41,7 @@
                                               (file . find-file)   ;; just it changed
                                               (wl . wl-other-frame)))
 
-  (setq org-bullets-bullet-list '("✿" "⁖" "." "." "." "."))
+  (setq org-bullets-bullet-list '("✿" "⁖" "⁖" "." "." "."))
 
   ;; (setq org-agenda-files '("~/Dropbox/org-roam/20200503174932-inbox.org"))
   ;; org-agenda-start-day         "-0d"
@@ -44,8 +49,8 @@
   ;; org-agenda-start-on-weekday  nil
 
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/Dropbox/org-roam/20200503174932-inbox.org" "Inbox")
-           "* TODO %?\nAdded: \%u\n\%a")
+        '(("t" "Todo" entry (file "~/Dropbox/org-roam/20200503174932-inbox.org" )
+           "* %?\nAdded: \%u\n\%a")
           ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
            "* %?\n  Entered on %U\n  %i\n  %a")
           ("p" "Protocol"
@@ -54,6 +59,15 @@
           ("L" "Protocol Link"
            entry (file+headline "inbox.org" "Inbox")
            "* %? [[%:link][%:description]] \n  Captured On: %u"))))
+
+(use-package org-fancy-priorities
+  :custom
+  (org-fancy-priorities-list '("[!!!]" "[!!]" "[!]"))
+  (org-priority-faces '((?A . (:foreground "orangered2" :weight extrabold :height 1.3))  ; org-mode
+                        (?B . (:foreground "orange" :weight extrabold :height 1.3))
+                        (?C . (:foreground "Burlywood" :weight extrabold :height 1.3))))
+  :hook
+  (org-mode . org-fancy-priorities-mode))
 
 (use-package org-plus-contrib)
 

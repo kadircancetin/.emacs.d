@@ -4,18 +4,31 @@
 
 (use-package org-roam
   :straight (:no-native-compile t)
-  :commands (org-roam org-roam-mode-map org-roam-find-file)
   :init
-  (setq org-roam-buffer-width 0.25)
-  (setq org-roam-buffer-no-delete-other-windows t)
+  (setq org-roam-buffer-width 0.20)
+  (setq org-roam-buffer-position 'right)
   (setq org-roam-db-gc-threshold most-positive-fixnum)
+
   :hook
+  (org-mode . org-roam-mode)
   (org-roam-mode . kadir/roam-hook)
+
   :custom
   (org-roam-directory "~/Dropbox/org-roam/")
+
   :config
   (require 'org-roam-protocol)
-  (org-roam-mode 1))
+  (add-hook 'org-roam-backlinks-mode-hook 'kadir/darken-background)
+
+  (add-to-list
+   'window-buffer-change-functions
+   '(lambda (n) (interactive)
+      (when (or
+             (derived-mode-p 'org-mode)
+             (derived-mode-p 'minibuffer-inactive-mode) ;; for helm
+             )
+        (org-roam-buffer-deactivate)
+        (org-roam-buffer-activate)))))
 
 (use-package company-org-roam
   :straight (:no-native-compile t))

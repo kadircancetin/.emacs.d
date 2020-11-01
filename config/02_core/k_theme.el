@@ -19,6 +19,12 @@
             :around
             (lambda (fn theme &optional no-confirm no-enable)
               (funcall fn theme t)))
+
+(defun kadir/darken-background ()
+  ;; source: https://github.com/KaratasFurkan/.emacs.d
+  "Darken the background of the buffer."
+  (interactive)
+  (face-remap-add-relative 'default :background "#212026"))
 
 
 

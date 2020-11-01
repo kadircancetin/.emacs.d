@@ -45,6 +45,24 @@
       1 'org-checkbox-done-text prepend))
    'append))
 
+(defun kadir/org-sort-by-priority ()
+  ;; source: https://github.com/KaratasFurkan/.emacs.d
+  "Sort entries in level=2 by priority."
+  (interactive)
+  (org-map-entries (lambda () (condition-case nil
+                             (org-sort-entries nil ?p)
+                           (error nil)))
+                   "LEVEL=1")
+  (org-map-entries (lambda () (condition-case nil
+                             (org-sort-entries nil ?p)
+                           (error nil)))
+                   "LEVEL=2")
+  (org-map-entries (lambda () (condition-case nil
+                             (org-sort-entries nil ?p)
+                           (error nil)))
+                   "LEVEL=3")
+  (org-set-startup-visibility))
+
 (defun kadir/org-mode-hooks()
   ;; TODO: when change the kadir global think
   (global-hl-todo-mode 0)
