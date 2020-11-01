@@ -128,7 +128,6 @@
   (dap-mode 1)
 
   ;; The modes below are optional
-
   (dap-ui-mode 1)
   ;; enables mouse hover support
   (dap-tooltip-mode 1)
@@ -169,3 +168,12 @@
 
   (add-hook 'dap-stopped-hook
             (lambda (arg) (call-interactively #'dap-hydra))))
+
+
+(defun kadir/load-eaf()
+  (if (file-exists-p "/usr/share/emacs/site-lisp/eaf/eaf.el")
+      (progn
+        (add-to-list 'load-path "/usr/share/emacs/site-lisp/eaf/")
+        (require 'eaf)
+        )
+    (message "eaf is not installed")))

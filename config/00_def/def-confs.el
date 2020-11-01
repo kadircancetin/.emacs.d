@@ -27,9 +27,10 @@
          (add-hook 'prog-mode-hook 'hs-minor-mode))))
 
 
-(require 'server)
+
 (run-with-idle-timer 5 nil
                      (lambda()
+                       (require 'server)
                        (unless (server-running-p)
                          (server-start))
                        (require 'org-protocol)))
