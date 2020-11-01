@@ -1,39 +1,47 @@
 (require 'use-package)
-
 (use-package projectile  :commands (projectile-project-root))
 
-;;
+
+
 (setq-default python-indent-guess-indent-offset-verbose nil)
 (setq-default python-shell-interpreter "ipython"
               python-shell-interpreter-args "-i")
 
 
-
-(defun kadir/configure-python ()
-  (add-hook 'after-save-hook 'kadir/python-remove-unused-imports)
-  (kadir/python-lsp-start))
-
-(defun kadir/enable-flycheck-python()
-  (interactive)
-  (message "try flycheck")
-  (require 'flycheck)
-  (setq lsp-diagnostic-package :none)
-  (setq lsp-diagnostics-provider :none)
-  (setq flycheck-disabled-checkers '(python-mypy python-pylint))
-  (flycheck-select-checker 'python-flake8))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package python
   :straight (:type built-in)
   :bind (:map python-mode-map
-              ;; ("C-c C-n" . flymake-goto-next-error)
-              ;; ("C-c C-p" . flymake-goto-prev-error)
-              ("C-c C-d" . lsp-describe-thing-at-point))
+              ("C-c C-d" . lsp-describe-thing-at-point)
+              ("C-c C-f" . kadir/import-magic-ac-kapat))
   :hook
-  ((python-mode . kadir/enable-flycheck-python)
-   (python-mode . activate-venv-configure-python)
-   (python-mode . kadir/configure-python)
-   ))
+  ((python-mode . kadir/python-hook)))
+
+
+
+(defun kadir/python-hook()
+  (kadir/activate-venv)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (kadir/python-lsp-start)
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;; (require 'company-tabnine)
+  ;; (setq company-backends '(company-tabnine))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;; (use-package lsp-jedi)
+  ;; (lsp)
+  ;; (setq lsp-jedi-python-library-directories nil)
+  ;; (require 'lsp-jedi)
+  ;; (add-to-list 'lsp-disabled-clients 'pyls)
+  ;; (add-to-list 'lsp-enabled-clients 'jedi)
+
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;
+  (kadir/enable-flycheck-flake8-python)
+  (add-hook 'after-save-hook 'kadir/python-remove-unused-imports))
 
 
 (use-package pyvenv)
@@ -43,6 +51,29 @@
                 lsp-pyright-disable-organize-imports t)
   :straight (:host github :repo "emacs-lsp/lsp-pyright"))
 
+
+(use-package importmagic
+  :ensure t
+  :defer 4.5
+  :init
+  (defun kadir/import-magic-ac-kapat ()
+    (interactive)
+    (importmagic-mode 0)
+    (importmagic-mode 1)
+    (sleep-for 3)
+    (importmagic-fix-symbol-at-point)
+    (importmagic-mode 0)))
+
+
+
+(defun kadir/enable-flycheck-flake8-python()
+  (interactive)
+  (require 'flycheck)
+  (setq lsp-diagnostic-package :none)
+  (setq lsp-diagnostics-provider :none)
+  (setq flycheck-disabled-checkers '(python-mypy python-pylint))
+  (flycheck-select-checker 'python-flake8))
+
 (defun kadir/python-lsp-start()
   (interactive)
   (require 'lsp-pyright)
@@ -50,24 +81,13 @@
   (setq-default company-backends '(company-capf)))
 
 
-(defun kadir/lsp-jump-maybe()
-  (interactive)
-  (if lsp-mode
-      (lsp-find-definition)
-    nil))
-
-
-(defun activate-venv-configure-python ()
+(defun kadir/activate-venv ()
   "source: https://github.com/jorgenschaefer/pyvenv/issues/51"
   (interactive)
 
-  (let* (
-         (pdir (projectile-project-root))
+  (let* ((pdir (projectile-project-root))
          (pfile (concat pdir ".venv"))
-         (ploc nil)
-         )
-
-
+         (ploc nil))
     (when (file-exists-p pfile)
       (setq ploc (with-temp-buffer
                    (insert-file-contents pfile)
@@ -99,7 +119,6 @@
                          (revert-buffer t t t))))))
       (set-process-filter process filter))))
 
-
 
 (defun kadir/django/find-models()
   (interactive)
