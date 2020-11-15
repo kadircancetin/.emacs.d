@@ -187,7 +187,7 @@
   (setq font-lock-maximum-decoration 2)
   (revert-buffer)
   (k-colors-mode 0)
-  (k-colors-global-mode 0)
+  ;;(k-colors-global-mode 0)
   (auto-highlight-symbol-mode 1)
   (highlight-symbol-nav-mode 1)
 
@@ -199,4 +199,5 @@
   (setq font-lock-maximum-decoration t)
   (revert-buffer)
   (k-colors-mode 1)
-  (k-colors-global-mode 1))
+  ;,(k-colors-global-mode 1)
+  )
