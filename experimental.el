@@ -177,3 +177,21 @@
         (require 'eaf)
         )
     (message "eaf is not installed")))
+
+
+
+
+(defun kadir/fast-python()
+  (interactive)
+
+  (setq font-lock-maximum-decoration 2)
+  (revert-buffer)
+  (k-colors-mode 0)
+  (k-colors-global-mode 0)
+  (auto-highlight-symbol-mode 1)
+  (highlight-symbol-nav-mode 1)
+
+  (setq font-lock-maximum-decoration t)
+
+
+  )

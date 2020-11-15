@@ -88,3 +88,7 @@
     (if kadir/emacs-fast-open
         (k/init-emacs-fo)
       (k/init-emacs-full))))
+(put 'downcase-region 'disabled nil)
+
+(global-so-long-mode 1)
+(k-colors-global-mode 1)

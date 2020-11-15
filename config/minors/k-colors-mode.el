@@ -96,7 +96,4 @@
     (diff-hl-flydiff-mode 0)
     (volatile-highlights-mode 0)))
 
-
-(k-colors-global-mode 1)
-
 (provide 'k-colors-mode)
