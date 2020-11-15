@@ -8,7 +8,7 @@
   (setq org-roam-buffer-width 0.20)
   (setq org-roam-buffer-position 'right)
   (setq org-roam-db-gc-threshold most-positive-fixnum)
-  (setq org-roam-directory "~/Dropbox/org-roam/")
+  (setq org-roam-directory "/home/kadir/Dropbox/org-roam/")
 
   :hook
   (org-mode . org-roam-mode)

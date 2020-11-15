@@ -49,6 +49,8 @@
   :init
   (setq-default lsp-pyright-auto-import-completions nil
                 lsp-pyright-disable-organize-imports t)
+
+  (setq lsp-pyright-stub-path "/home/kadir/stubs/typings/")
   :straight (:host github :repo "emacs-lsp/lsp-pyright"))
 
 

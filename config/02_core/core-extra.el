@@ -45,12 +45,25 @@
   (yas-global-mode 1)
   :defer 2)
 
+
 (use-package magit
   :defer t
   :config
   (use-package magit-todos :hook (magit-mode . magit-todos-mode))
   (add-to-list 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
   (add-hook 'magit-diff-mode-hook (lambda () (flyspell-mode 1)) 100))
+
+(use-package forge
+  :after magit
+  :custom
+  (forge-create-pullreq-prefix "STAGING -")
+  :config
+  (defadvice magit-pull-from-upstream (after forge-pull activate)
+    (forge-pull))
+  (defadvice magit-fetch-all (after forge-pull activate)
+    (forge-pull)))
+
+
 
 (use-package wakatime-mode
   :if (executable-find "wakatime")
@@ -62,5 +75,7 @@
   :init
   (setq google-translate-default-source-language "auto"
         google-translate-default-target-language "tr"))
+
+
 
 (provide 'core-extra)

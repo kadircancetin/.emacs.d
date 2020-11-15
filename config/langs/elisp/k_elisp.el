@@ -18,6 +18,9 @@
   (advice-add 'describe-function-1 :after #'elisp-demos-advice-describe-function-1)
   (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update))
 
+(use-package helm-atoms
+  :straight (:host github :repo "dantecatalfamo/helm-atoms"))
+
 
 (defun kadir/emacs-lisp-mode-hook()
   (page-break-lines-mode 1)
