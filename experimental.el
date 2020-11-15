@@ -191,7 +191,12 @@
   (auto-highlight-symbol-mode 1)
   (highlight-symbol-nav-mode 1)
 
+  (setq font-lock-maximum-decoration t))
+
+(defun kadir/normal-python()
+  (interactive)
+
   (setq font-lock-maximum-decoration t)
-
-
-  )
+  (revert-buffer)
+  (k-colors-mode 1)
+  (k-colors-global-mode 1))
