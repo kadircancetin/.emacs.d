@@ -94,7 +94,6 @@
       (setq ploc (with-temp-buffer
                    (insert-file-contents pfile)
                    (nth 0 (split-string (buffer-string)))))
-      (message "PLOC %s" ploc)
       (setq lsp-pyright-venv-path ploc)
       (pyvenv-workon ploc))))
 

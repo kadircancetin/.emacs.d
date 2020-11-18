@@ -187,17 +187,50 @@
   (setq font-lock-maximum-decoration 2)
   (revert-buffer)
   (k-colors-mode 0)
-  ;;(k-colors-global-mode 0)
+  (flycheck-mode 0)
   (auto-highlight-symbol-mode 1)
   (highlight-symbol-nav-mode 1)
-
   (setq font-lock-maximum-decoration t))
 
 (defun kadir/normal-python()
   (interactive)
-
   (setq font-lock-maximum-decoration t)
   (revert-buffer)
   (k-colors-mode 1)
-  ;,(k-colors-global-mode 1)
-  )
+  (flycheck-mode 1))
+
+(global-set-key (kbd "M-:") 'xref-find-definitions-other-window)
+
+(setq jit-lock-defer-time 0.1
+      jit-lock-context-time 0.3
+      jit-lock-chunk-size 5000
+      jit-lock-stealth-time 2)
+
+;; tooltip-hide
+;;
+;; (
+;;  company-post-command
+;;  jit-lock--antiblink-post-command
+;;  yas--post-command-handler
+;;  flycheck-perform-deferred-syntax-check
+;;  flycheck-error-list-update-source
+;;  flycheck-error-list-highlight-errors
+;;  flycheck-maybe-display-error-at-point-soon
+;;  flycheck-hide-error-buffer
+;;  t
+;;  )
+(message "%s" pre-command-hook)
+(message "%s" post-command-hook)
+(defun eldoc-mode(&rest args)
+  ;; TODO: find who opens the eldoc on python and fix it. Not like that.
+  (message "no eldoc"))
+
+;; (defun tooltip-mode(&rest args)
+;;   ;; TODO: find who opens the eldoc on python and fix it. Not like that.
+;;   (message "no eldoc"))
+
+
+(defun tooltip-mode(&rest args)
+  (message "no tooltip mode"))
+
+;; TODO: (delq 'tooltip-hide pre-command-hook)

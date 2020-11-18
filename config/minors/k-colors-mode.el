@@ -28,7 +28,26 @@
 
 (use-package beacon
   :init
-  (setq-default beacon-color "#2FB90E"))
+  (setq-default beacon-color "#2FB90E")
+
+  ;; `beacon-blink' manually instead of activating `beacon-mode' to not
+  ;; calculate every time on post-command-hook if should beacon blink
+  (defadvice other-window (after blink activate)
+    (beacon-blink))
+  (defadvice winum-select-window-by-number (after blink activate)
+    (beacon-blink))
+  (defadvice scroll-up-command (after blink activate)
+    (beacon-blink))
+  (defadvice scroll-down-command (after blink activate)
+    (beacon-blink))
+  (defadvice recenter-top-bottom (after blink activate)
+    (beacon-blink))
+  (defadvice move-to-window-line-top-bottom (after blink activate)
+    (beacon-blink))
+  (defadvice ace-select-window (after blink activate)
+    (beacon-blink))
+  (defadvice ace-swap-window (after blink activate)
+    (beacon-blink)))
 
 (use-package volatile-highlights
   :config
@@ -86,13 +105,13 @@
   (if k-colors-global-mode
       (progn (global-hl-todo-mode 1)
              (global-diff-hl-mode 1)
-             (beacon-mode 1)
+             ;; (beacon-mode 1)  ;; beacon mode activating manually handled
              (diff-hl-flydiff-mode 1)
              (volatile-highlights-mode 1))
 
     (global-hl-todo-mode 0)
     (global-diff-hl-mode 0)
-    (beacon-mode 0)
+    ;; (beacon-mode 0)  ;; beacon mode activating manually handled
     (diff-hl-flydiff-mode 0)
     (volatile-highlights-mode 0)))
 

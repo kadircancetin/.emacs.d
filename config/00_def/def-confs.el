@@ -1,6 +1,8 @@
 (setq-default user-full-name "Kadir Can Çetin")
 (setq-default user-mail-address "kadircancetin@gmail.com")
+
 
+(global-eldoc-mode 0)
 
 ;; Deffered activation minor modes
 (run-with-idle-timer

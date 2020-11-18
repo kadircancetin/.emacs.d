@@ -40,10 +40,21 @@
   (wrap-region-global-mode t))
 
 (use-package yasnippet
-  :init
+  :defer 2
+  :config
+  (require 'helm)
   (use-package yasnippet-snippets)
   (yas-global-mode 1)
-  :defer 2)
+  (setq yas-keymap nil
+        yas-minor-mode-map nil)
+
+  (defadvice yas-insert-snippet (before yas-activate activate)
+    (yas-minor-mode 1))
+
+  (add-to-list 'helm-quit-hook
+               (lambda()
+                 (remove-hook 'post-command-hook #'yas--post-command-handler t)
+                 (remove-hook 'auto-fill-mode-hook #'yas--auto-fill-wrapper))))
 
 
 (use-package magit
