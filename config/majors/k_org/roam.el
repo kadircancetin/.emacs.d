@@ -5,7 +5,8 @@
   (setq jit-lock-defer-time nil
         jit-lock-context-time 0.5
         jit-lock-chunk-size 500
-        jit-lock-stealth-time nil))
+        jit-lock-stealth-time nil)
+  )
 
 (use-package org-roam
   :straight (:no-native-compile t)

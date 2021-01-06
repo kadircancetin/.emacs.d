@@ -249,6 +249,24 @@
   (align-regexp beginning end (concat "\\(\\s-*\\)"
                                       (regexp-quote comment-start))))
 
+(defun kadir/adjust-font-size(x)
+  (set-face-attribute 'default nil :height x)
+  (set-face-attribute 'mode-line nil :height x)
+  (set-face-attribute 'mode-line-inactive nil :height x)
+  (message "YENI SIZE: %d" x))
+
+(defun kadir/font-size-smaller()
+  (interactive)
+  (defvar kadir/default-font-size)
+  (setq kadir/default-font-size (- kadir/default-font-size 10))
+  (kadir/adjust-font-size kadir/default-font-size)
+  )
+
+(defun kadir/font-size-bigger()
+  (interactive)
+  (defvar kadir/default-font-size)
+  (setq kadir/default-font-size (+ kadir/default-font-size 10))
+  (kadir/adjust-font-size kadir/default-font-size))
 
 
 (defun kadir/bind (args)

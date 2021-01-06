@@ -1,4 +1,5 @@
 (require 'use-package)
+
 
 (use-package typo-suggest
   :defer 0.1
@@ -10,15 +11,13 @@
   :init
   (setq-default cursor-type 'bar)
   (god-mode-all)
-  ;; (setq god-exempt-major-modes nil) ;; enable for all mode but I don't know it is good or bad
-  ;; (setq god-exempt-predicates nil)
 
   ;; enableing god mode
   (global-set-key (kbd "ş") #'god-local-mode)
   (define-key isearch-mode-map (kbd "ş") #'god-local-mode)
 
   ;; styling
-  ;; (setq modalka-cursor-type '(hbar . 2)) ;; (setq-default cursor-type '(bar . 1))
+  ;; TODO: cursort type for terminal mode will could be good
   (defun my-god-mode-update-cursor ()
     (interactive)
     (setq cursor-type (if (or god-local-mode buffer-read-only)
@@ -38,19 +37,15 @@
 
   ;; fixes
   (define-key god-local-mode-map (kbd "h") #'backward-delete-char-untabify)
+  (define-key god-local-mode-map (kbd "/") #'kadir/comment-or-self-insert)
+  (define-key god-local-mode-map (kbd "d") #'delete-char)
+  (define-key god-local-mode-map (kbd "y") #'yank)
 
   ;; extra binds
-  (define-key god-local-mode-map (kbd "z") #'repeat)
   (define-key god-local-mode-map (kbd "h") #'backward-delete-char-untabify)
   (define-key god-local-mode-map (kbd "u") #'undo-tree-undo)
   (define-key god-local-mode-map (kbd "C-S-U") #'undo-tree-redo)
-  (define-key god-local-mode-map (kbd "/") #'kadir/comment-or-self-insert)
-  ;; (require 'god-mode-isearch)
-  ;; (define-key isearch-mode-map (kbd "<return>") #'god-mode-isearch-activate)
-  ;; (define-key god-mode-isearch-map (kbd "<return>") #'god-mode-isearch-disable)
-  )
-
-
+  (define-key god-local-mode-map (kbd "7") #'kadir/comment-or-self-insert))
 
 
 (use-package dired-sidebar
@@ -62,124 +57,24 @@
               (set-face-background 'mmm-default-submode-face nil))))
 
 
-
 (use-package syntactic-close)
 (global-set-key (kbd "M-m") 'syntactic-close)
 
 
 (use-package anki-editor)
+
 (use-package vc-msg)
+
 
-(defun kadir/adjust-font-size(x)
-  (set-face-attribute 'default nil :height x)
-  (set-face-attribute 'mode-line nil :height x)
-  (set-face-attribute 'mode-line-inactive nil :height x)
-  (message "YENI SIZE: %d" x))
-
-(defun kadir/font-size-smaller()
-  (interactive)
-  (defvar kadir/default-font-size)
-  (setq kadir/default-font-size (- kadir/default-font-size 10))
-  (kadir/adjust-font-size kadir/default-font-size)
-  )
-
-(defun kadir/font-size-bigger()
-  (interactive)
-  (defvar kadir/default-font-size)
-  (setq kadir/default-font-size (+ kadir/default-font-size 10))
-  (kadir/adjust-font-size kadir/default-font-size))
-
-
-
-(use-package company-tabnine
-  :defer 20
-  :config
-  (require 'company-tabnine)
-
-  (defun kadir/company-tabnine-disable()
-    (interactive)
-    (setq company-backends (remove 'company-tabnine company-backends)))
-
-  (defun kadir/company-tabnine-enable()
-    (interactive)
-    (add-to-list 'company-backends 'company-tabnine))
-
-  (setq company-tabnine--disable-next-transform nil)
-  (defun my-company--transform-candidates (func &rest args)
-    (if (not company-tabnine--disable-next-transform)
-        (apply func args)
-      (setq company-tabnine--disable-next-transform nil)
-      (car args)))
-
-  (defun my-company-tabnine (func &rest args)
-    (when (eq (car args) 'candidates)
-      (setq company-tabnine--disable-next-transform t))
-    (apply func args))
-
-  (advice-add #'company--transform-candidates :around #'my-company--transform-candidates)
-  (advice-add #'company-tabnine :around #'my-company-tabnine)
-
-  )
-
-(use-package dap-mode
-  :init
-
-  (setq dap-auto-configure-features '(sessions locals controls tooltip))
-  (dap-mode 1)
-
-  ;; The modes below are optional
-  (dap-ui-mode 1)
-  ;; enables mouse hover support
-  (dap-tooltip-mode 1)
-  ;; use tooltips for mouse hover
-  ;; if it is not enabled `dap-mode' will use the minibuffer.
-  (tooltip-mode 1)
-  ;; displays floating panel with debug buttons
-  ;; requies emacs 26+
-  (dap-ui-controls-mode 1)
-
-  ;; python -m debugpy --listen 0:5678 --wait-for-client manage.py runserver 0:8000
-
-  (dap-register-debug-provider
-   "python"
-   (lambda (conf)
-     (plist-put conf :debugPort 5678)
-     (plist-put conf :host "localhost")
-     (plist-put conf :hostName "localhost")
-     (plist-put conf :debugServer 5678)
-     conf))
-
-  (dap-register-debug-template
-   "conf"
-   (list :type "python"
-         :request "attach"
-         :port 5678
-         :name "test"
-         :pathMappings
-         (list (ht
-                ("localRoot" "/home/kadir/bigescom-pro/")
-                ("remoteRoot" "/app/")
-                ))
-         :sourceMaps t))
-
-  (use-package hydra
-    :init
-    (require 'hydra))
-
-  (add-hook 'dap-stopped-hook
-            (lambda (arg) (call-interactively #'dap-hydra))))
-
 
 (defun kadir/load-eaf()
   (if (file-exists-p "/usr/share/emacs/site-lisp/eaf/eaf.el")
       (progn
         (add-to-list 'load-path "/usr/share/emacs/site-lisp/eaf/")
-        (require 'eaf)
-        )
+        (require 'eaf))
     (message "eaf is not installed")))
 
-
-
+
 
 (defun kadir/fast-python()
   (interactive)
@@ -203,24 +98,9 @@
 
 (setq jit-lock-defer-time 0.1
       jit-lock-context-time 0.3
-      jit-lock-chunk-size 5000
+      jit-lock-chunk-size 1000
       jit-lock-stealth-time 2)
 
-;; tooltip-hide
-;;
-;; (
-;;  company-post-command
-;;  jit-lock--antiblink-post-command
-;;  yas--post-command-handler
-;;  flycheck-perform-deferred-syntax-check
-;;  flycheck-error-list-update-source
-;;  flycheck-error-list-highlight-errors
-;;  flycheck-maybe-display-error-at-point-soon
-;;  flycheck-hide-error-buffer
-;;  t
-;;  )
-(message "%s" pre-command-hook)
-(message "%s" post-command-hook)
 (defun eldoc-mode(&rest args)
   ;; TODO: find who opens the eldoc on python and fix it. Not like that.
   (message "no eldoc"))
@@ -234,3 +114,26 @@
   (message "no tooltip mode"))
 
 ;; TODO: (delq 'tooltip-hide pre-command-hook)
+
+
+(use-package plantuml-mode
+  :mode "\\.plantuml\\'"
+  :init
+  (setq plantuml-java-args (list "-Djava.awt.headless=true" "-jar") ;; somehow related to java-8 I think
+        plantuml-jar-path (concat no-littering-etc-directory "plantuml.jar")
+        plantuml-default-exec-mode 'jar
+        plantuml-indent-level 4))
+
+(use-package gitignore-mode
+  :mode "/\\.gitignore\\'")
+
+(use-package explain-pause-mode
+  :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
+  :init
+  (setq explain-pause-slow-too-long-ms 40
+        explain-pause-top-auto-refresh-interval 1
+        explain-pause-profile-slow-threshold 1
+        explain-pause-profile-saved-profiles 10))
+
+
+(global-auto-revert-mode 1)

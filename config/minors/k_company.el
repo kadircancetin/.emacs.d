@@ -44,6 +44,6 @@
 (use-package helm-company)
 
 (use-package company-statistics
-  :hook (company-mode . company-statistics-mode))
+  :hook (global-company-mode . company-statistics-mode))
 
 (provide 'k_company)

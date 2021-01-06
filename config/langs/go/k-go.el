@@ -31,9 +31,10 @@
 
 (defun kadir/go-mode-hook()
   "K."
-  (require 'lsp)
-  (require 'lsp-ui)
-  (lsp))
+  (eglot)
+  (yas-minor-mode 1)
+  (yas-minor-mode-on)
+  )
 
 (use-package go-mode
   :commands (go-mode)
@@ -49,13 +50,14 @@
 (defun kadir/go-run()
   (interactive)
   (save-buffer)
-  (with-current-buffer "*eshell*"
+  (with-current-buffer "Aweshell: ~/.emacs.d/config/langs/go/"
     (let ((inhibit-read-only t))
       (erase-buffer)
       (eshell-send-input))
     (eshell-return-to-prompt)
-    (insert "go run init.go")
+    (insert "go run variables.go")
     (eshell-send-input)))
-;; (define-key go-mode-map (kbd "C-c C-c") 'kadir/go-run)
+
+;; (define-key go-mode-map (kbd "ğ") 'kadir/go-run)
 
 (provide 'k-go)

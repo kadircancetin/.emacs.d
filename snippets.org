@@ -192,3 +192,92 @@
         (funcall callback candidates)))))
 
 #+END_SRC
+
+* Tabnine
+#+BEGIN_SRC emacs-lisp
+  (use-package company-tabnine
+    :defer 20
+    :config
+    (require 'company-tabnine)
+
+    (defun kadir/company-tabnine-disable()
+      (interactive)
+      (setq company-backends (remove 'company-tabnine company-backends)))
+
+    (defun kadir/company-tabnine-enable()
+      (interactive)
+      (add-to-list 'company-backends 'company-tabnine))
+
+    (setq company-tabnine--disable-next-transform nil)
+    (defun my-company--transform-candidates (func &rest args)
+      (if (not company-tabnine--disable-next-transform)
+          (apply func args)
+        (setq company-tabnine--disable-next-transform nil)
+        (car args)))
+
+    (defun my-company-tabnine (func &rest args)
+      (when (eq (car args) 'candidates)
+        (setq company-tabnine--disable-next-transform t))
+      (apply func args))
+
+    (advice-add #'company--transform-candidates :around #'my-company--transform-candidates)
+    (advice-add #'company-tabnine :around #'my-company-tabnine))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (require 'company-tabnine)
+  (setq company-backends '(company-tabnine))
+
+#+END_SRC
+
+* Dap mode
+#+BEGIN_SRC emacs-lisp
+(use-package dap-mode
+  :init
+
+  (setq dap-auto-configure-features '(sessions locals controls tooltip))
+  (dap-mode 1)
+
+  ;; The modes below are optional
+  (dap-ui-mode 1)
+  ;; enables mouse hover support
+  (dap-tooltip-mode 1)
+  ;; use tooltips for mouse hover
+  ;; if it is not enabled `dap-mode' will use the minibuffer.
+  (tooltip-mode 1)
+  ;; displays floating panel with debug buttons
+  ;; requies emacs 26+
+  (dap-ui-controls-mode 1)
+
+  ;; python -m debugpy --listen 0:5678 --wait-for-client manage.py runserver 0:8000
+
+  (dap-register-debug-provider
+   "python"
+   (lambda (conf)
+     (plist-put conf :debugPort 5678)
+     (plist-put conf :host "localhost")
+     (plist-put conf :hostName "localhost")
+     (plist-put conf :debugServer 5678)
+     conf))
+
+  (dap-register-debug-template
+   "conf"
+   (list :type "python"
+         :request "attach"
+         :port 5678
+         :name "test"
+         :pathMappings
+         (list (ht
+                ("localRoot" "/home/kadir/bigescom-pro/")
+                ("remoteRoot" "/app/")
+                ))
+         :sourceMaps t))
+
+  (use-package hydra
+    :init
+    (require 'hydra))
+
+  (add-hook 'dap-stopped-hook
+            (lambda (arg) (call-interactively #'dap-hydra))))
+
+#+END_SRC

@@ -70,7 +70,8 @@
             '((python-mode . ("django~3.0" "django_rest_framework" "python~3.8"))
               (html-mode . ("html"))
               (web-mode . ("html" "css"))
-              (css-mode . ("css")))))
+              (css-mode . ("css"))
+              (org-mode . ("django~3.0" "django_rest_framework" "python~3.8")))))
 
     (when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
       (load-file (expand-file-name "experimental.el" user-emacs-directory))
