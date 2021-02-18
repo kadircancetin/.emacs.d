@@ -42,7 +42,6 @@
 (use-package yasnippet
   :defer 2
   :custom
-  (use-package yasnippet-snippets)
   (yas-indent-line nil)
   (yas-inhibit-overlay-modification-protection t)
   :bind*
@@ -55,6 +54,7 @@
    ("<tab>" . (lambda () (interactive) (company-abort) (yas-next-field))))
   :config
   (yas-global-mode 1)
+  (use-package yasnippet-snippets)
   ;; (require 'helm)
   ;; (use-package yasnippet-snippets)
   ;; (setq yas-keymap nil

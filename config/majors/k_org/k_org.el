@@ -22,6 +22,7 @@
               )
 
   :config
+
   (setq-default org-src-tab-acts-natively   t               ; intent code blocks with its major modes
                 org-src-window-setup        'current-window ; edit code on same window
                 org-ellipsis                "  ..."         ;;"  ↴"
@@ -74,8 +75,25 @@
 (use-package org-bullets)
 
 (use-package org-kanban
-  :config
-  (add-hook 'before-save-hook 'org-update-all-dblocks))
+  :init
+  ;; (add-hook 'before-save-hook 'org-update-all-dblocks)
+  (defun kadir/start-org-kanban-auto-refresh()
+    (interactive)
+    ;; adding to before save hook
+    (add-hook 'before-save-hook (lambda()
+                                  (when (derived-mode-p 'org-mode)
+                                    (org-update-all-dblocks))))
+
+    ;; and auto refresh when it is not saved
+    (run-with-idle-timer
+     2.5 t
+     (lambda ()
+       (when (buffer-modified-p)
+         (org-update-all-dblocks)))))
+
+  (add-hook 'org-mode-hook 'kadir/start-org-kanban-auto-refresh))
+
+
 
 ;; import-export
 
