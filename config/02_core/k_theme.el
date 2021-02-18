@@ -51,8 +51,12 @@
      '(diff-hl-insert ((t (:background "#29422d" :foreground "#67b11d"))))
      '(diff-hl-change ((t (:background "#2d4252" :foreground "#4f97d7"))))
      '(diff-hl-delete ((t (:background "#512e31" :foreground "#f2241f"))))
-     '(flyspell-duplicate ((t (:underline t :weight bold :background "#2d4252" :foreground nil))))
-     '(flyspell-incorrect ((t (:underline t :weight bold :background "#2d4252" :foreground nil))))
+     '(flyspell-duplicate ((t (:underline (:style wave :color "Darkorange4")
+                                          :background nil
+                                          :foreground nil))))
+
+     '(flyspell-incorrect ((t (:underline (:style wave :color "Darkorange4")
+                                          :background nil :foreground nil))))
 
 
      ;; ahs
@@ -105,25 +109,25 @@
 
 
 (use-package doom-modeline
-             :defer 0.1
-             :config
-             (setq doom-modeline-bar-width         1
-                   doom-modeline-height            1
-                   doom-modeline-buffer-encoding   nil
-                   ;; doom-modeline-buffer-modification-icon t
-                   doom-modeline-vcs-max-length    20
-                   doom-modeline-icon              t
-                   ;; relative-to-project
-                   doom-modeline-buffer-file-name-style 'relative-from-project)
+  :defer 0.1
+  :config
+  (setq doom-modeline-bar-width         1
+        doom-modeline-height            1
+        doom-modeline-buffer-encoding   nil
+        ;; doom-modeline-buffer-modification-icon t
+        doom-modeline-vcs-max-length    20
+        doom-modeline-icon              t
+        ;; relative-to-project
+        doom-modeline-buffer-file-name-style 'relative-from-project)
 
-             (set-face-attribute 'mode-line nil :height kadir/default-font-size)
-             (set-face-attribute 'mode-line-inactive nil :height kadir/default-font-size)
-             (doom-modeline-mode 1))
+  (set-face-attribute 'mode-line nil :height kadir/default-font-size)
+  (set-face-attribute 'mode-line-inactive nil :height kadir/default-font-size)
+  (doom-modeline-mode 1))
 
 
 (use-package stripe-buffer
-             :config
-             :hook ((org-mode . turn-on-stripe-table-mode)))
+  :config
+  :hook ((org-mode . turn-on-stripe-table-mode)))
 
 
 (provide 'k_theme)

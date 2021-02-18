@@ -41,20 +41,31 @@
 
 (use-package yasnippet
   :defer 2
-  :config
-  (require 'helm)
+  :custom
   (use-package yasnippet-snippets)
+  (yas-indent-line nil)
+  (yas-inhibit-overlay-modification-protection t)
+  :bind*
+  (;; ("C-j" . yas-expand)
+   :map yas-minor-mode-map
+   ("TAB" . nil)
+   ("<tab>" . nil)
+   :map yas-keymap
+   ("TAB" . (lambda () (interactive) (company-abort) (yas-next-field)))
+   ("<tab>" . (lambda () (interactive) (company-abort) (yas-next-field))))
+  :config
   (yas-global-mode 1)
-  (setq yas-keymap nil
-        yas-minor-mode-map nil)
-
-  (defadvice yas-insert-snippet (before yas-activate activate)
-    (yas-minor-mode 1))
-
-  (add-to-list 'helm-quit-hook
-               (lambda()
-                 (remove-hook 'post-command-hook #'yas--post-command-handler t)
-                 (remove-hook 'auto-fill-mode-hook #'yas--auto-fill-wrapper))))
+  ;; (require 'helm)
+  ;; (use-package yasnippet-snippets)
+  ;; (setq yas-keymap nil
+  ;;       yas-minor-mode-map nil)
+  ;; (defadvice yas-insert-snippet (before yas-activate activate)
+  ;;   (yas-minor-mode 1))
+  ;; (add-to-list 'helm-quit-hook
+  ;;              (lambda()
+  ;;                (remove-hook 'post-command-hook #'yas--post-command-handler t)
+  ;;                (remove-hook 'auto-fill-mode-hook #'yas--auto-fill-wrapper)))
+  )
 
 
 (use-package magit

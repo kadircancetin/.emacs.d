@@ -19,8 +19,8 @@
   :bind
   (:map emmet-mode-keymap
         ([remap yas-expand] . emmet-expand-line)
-        ("M-n"  . emmet-next-edit-point)
-        ("M-p"  . emmet-prev-edit-point)
+        ;; ("M-n"  . emmet-next-edit-point)
+        ;; ("M-p"  . emmet-prev-edit-point)
         ("C-c p" . emmet-preview-mode))
   :config
   (set-face-attribute 'emmet-preview-input nil :inherit nil :box t :weight 'bold)

@@ -156,7 +156,7 @@
   (let ((filename (buffer-file-name)))
     (if filename
         (when (y-or-n-p (concat "Do you really want to delete file " filename " ?"))
-          (delete-file filename)
+          (delete-file filename t)
           (message "Deleted file %s." filename)
           (kill-buffer))
       (message "Not a file visiting buffer!"))))
@@ -220,10 +220,38 @@
       (call-interactively #'kill-region)
     (backward-kill-word arg)))
 
+;; (defun kadir/buffer-dublicate-p ()
+;;   (not (eq (length (cl-delete-duplicates (mapcar #'window-buffer (window-list))))
+;;            (length (window-list)))))
+
+;; (defun kadir/buffer-dublicate-alarm()
+;;   (when (and (kadir/buffer-dublicate-p))
+;;     (message "******************* DUBLICATE BUFFERSSSS ***************")))
+
+;; (add-hook 'buffer-list-update-hook 'kadir/buffer-dublicate-alarm)
+
+
 (defun kadir/last-buffer ()
-  "get last buffer which is not windowed"
+  "Get last buffer. If it is windowed, jump it"
   (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) nil)))
+
+  (switch-to-buffer (other-buffer (current-buffer) nil))
+  ;; (let* ((cur-buffer (current-buffer))
+  ;;        (normally-next-buffer (switch-to-buffer (other-buffer (current-buffer) nil)))
+  ;;        ;; then nil->t interestingp
+  ;;        (nexts-visible-buffer (find-buffer-visiting (buffer-file-name normally-next-buffer)))
+  ;;        (nexts-visible-window (when nexts-visible-buffer (get-buffer-window nexts-visible-buffer))))
+  ;;   (switch-to-buffer cur-buffer)
+
+  ;;   (cond
+  ;;    ;; ((eq my-buffer (window-buffer (selected-window)))
+  ;;    ;; (message "Visible and focused"))
+  ;;    ((get-buffer-window normally-next-buffer)
+  ;;     (select-window (get-buffer-window nexts-visible-buffer)))
+  ;;    (t
+  ;;     (switch-to-buffer normally-next-buffer))))
+  )
+
 
 (defun resize-window-width (w)
   ;; source: https://github.com/MatthewZMD/.emacs.d

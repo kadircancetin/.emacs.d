@@ -25,16 +25,24 @@
   (setq-default dumb-jump-aggressive t))
 
 
-;; (use-package lsp-ui
-;;   :after lsp-mode
-;;   :custom
-;;   (lsp-ui-doc-position 'top)
-;;   (lsp-ui-sideline-delay 0.5)
-;;   (lsp-ui-doc-delay 1.5)
-;;   (lsp-ui-peek-fontify 'always)
-;;   :bind
-;;   (:map lsp-mode-map (("M-." . lsp-ui-peek-find-definitions)))
-;;   )
+(defun kadir/lsp-ui-activate ()
+  (interactive)
+  (use-package lsp-ui
+    ;; :after lsp-mode
+    :custom
+    ;; DOC
+    (lsp-ui-doc-delay 10)
+    (lsp-ui-doc-position 'top)
+
+    ;; Others
+    (lsp-ui-sideline-enable nil)
+    (lsp-ui-imenu-enable nil)
+    (lsp-ui-peek-enable)
+    ;; (lsp-ui-sideline-delay 0)
+    ;; (lsp-ui-peek-fontify 'always)
+    :bind
+    (:map lsp-mode-map (("M-." . lsp-ui-peek-find-definitions))))
+  )
 
 (use-package lsp-mode
   :init

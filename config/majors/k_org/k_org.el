@@ -72,7 +72,10 @@
 (use-package org-plus-contrib)
 
 (use-package org-bullets)
-
+
+(use-package org-kanban
+  :config
+  (add-hook 'before-save-hook 'org-update-all-dblocks))
 
 ;; import-export
 

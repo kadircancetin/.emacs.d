@@ -25,6 +25,7 @@
     ("ç"                 . (lambda() (interactive) (eval-buffer) (message "eval") (save-buffer)))
     ("j"                 . dumb-jump-go)
 
+    ("n"                . flyspell-goto-next-error)
     ;; D
     ("dm"                 . (lambda() (interactive)
                               (let ((helm-rg-default-glob-string "models.py"))

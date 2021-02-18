@@ -12,12 +12,12 @@
   (setq-default cursor-type 'bar)
   (god-mode-all)
 
-  ;; enableing god mode
+  ;; enabling god mode
   (global-set-key (kbd "ş") #'god-local-mode)
   (define-key isearch-mode-map (kbd "ş") #'god-local-mode)
 
   ;; styling
-  ;; TODO: cursort type for terminal mode will could be good
+  ;; TODD: cursor type for terminal mode will could be good
   (defun my-god-mode-update-cursor ()
     (interactive)
     (setq cursor-type (if (or god-local-mode buffer-read-only)
@@ -27,7 +27,7 @@
   (add-hook 'god-mode-enabled-hook #'my-god-mode-update-cursor)
   (add-hook 'god-mode-disabled-hook #'my-god-mode-update-cursor)
 
-  ;; some editingtings
+  ;; some editing
   (global-set-key (kbd "C-x C-1") #'delete-other-windows)
   (global-set-key (kbd "C-x C-2") #'kadir/split-and-follow-horizontally)
   (global-set-key (kbd "C-x C-3") #'kadir/split-and-follow-vertically)
@@ -83,6 +83,7 @@
   (revert-buffer)
   (k-colors-mode 0)
   (flycheck-mode 0)
+  (wucuo-mode 0)
   (auto-highlight-symbol-mode 1)
   (highlight-symbol-nav-mode 1)
   (setq font-lock-maximum-decoration t))
@@ -92,6 +93,7 @@
   (setq font-lock-maximum-decoration t)
   (revert-buffer)
   (k-colors-mode 1)
+  (wucuo-mode 1)
   (flycheck-mode 1))
 
 (global-set-key (kbd "M-:") 'xref-find-definitions-other-window)
@@ -127,13 +129,38 @@
 (use-package gitignore-mode
   :mode "/\\.gitignore\\'")
 
-(use-package explain-pause-mode
-  :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
-  :init
-  (setq explain-pause-slow-too-long-ms 40
-        explain-pause-top-auto-refresh-interval 1
-        explain-pause-profile-slow-threshold 1
-        explain-pause-profile-saved-profiles 10))
+(global-auto-revert-mode 1)
+
+(use-package posframe)
+(use-package screenshot.el
+  :straight (screenshot.el :type git :host github :repo "tecosaur/screenshot")
+  :commands (screenshot))
 
 
-(global-auto-revert-mode 1)
+(use-package wucuo
+  :init
+  (setq ispell-program-name "aspell")
+  (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together" "--run-together-limit=16" "--camel-case"))
+
+  (setq wucuo-flyspell-start-mode "normal")
+  (add-hook 'prog-mode-hook #'wucuo-start)
+  (add-hook 'text-mode-hook #'wucuo-start)
+  (setq wucuo-personal-font-faces-to-check '(font-lock-type-face))
+  )
+
+
+(use-package winum
+  :bind*
+  ("s-1" . winum-select-window-1)
+  ("s-2" . winum-select-window-2)
+  ("s-3" . winum-select-window-3)
+  ("s-4" . winum-select-window-4)
+  ("s-5" . winum-select-window-5)
+  ("s-6" . winum-select-window-6)
+  ("s-7" . winum-select-window-7)
+  ("s-8" . winum-select-window-8)
+  ("s-9" . winum-select-window-9)
+  :config
+  (winum-mode))
+
+
