@@ -81,17 +81,24 @@
       (global-hl-line-mode 1)        ; highlight your cusor line. don't lost.
 
       (straight-use-package 'spacemacs-theme)
-      (use-package spacemacs-theme
-        :init
-        (setq-default spacemacs-theme-comment-italic t
-                      spacemacs-theme-org-height nil)
-        (load-theme 'spacemacs-dark t)
-        (kadir/fix-some-colors 'spacemacs-dark)
-        )
+      ;; (use-package spacemacs-theme
+      ;;   :init
+      ;;   (setq-default spacemacs-theme-comment-italic t
+      ;;                 spacemacs-theme-org-height nil)
+      ;;   (load-theme 'spacemacs-dark t)
+      ;;   (kadir/fix-some-colors 'spacemacs-dark)
+      ;;   )
 
       (use-package doom-themes
         :init
-        (doom-themes-visual-bell-config))
+        (doom-themes-visual-bell-config)
+        ;; (load-theme 'doom-peacock t)
+        ;; (kadir/fix-some-colors 'doom-peacock)
+
+        (load-theme 'doom-laserwave t)
+        (kadir/fix-some-colors 'doom-laserwave)
+
+        )
       ;; (use-package doom-themes
       ;;   :custom-face
       ;;   (cursor ((t (:background "blanchedalmond"))))

@@ -4,8 +4,8 @@
 (defvar kadir/emacs-open-with-doom (member "-doom" command-line-args))
 (setq command-line-args (delete "-doom" command-line-args))
 
-(defvar kadir/default-font-size 100)
-(when kadir/emacs-fast-open (setq kadir/default-font-size 100))
+(defvar kadir/default-font-size 72)
+(when kadir/emacs-fast-open (setq kadir/default-font-size 72))
 
 
 (defun k/set-garbage-collection()
@@ -66,8 +66,17 @@
     (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
   (set-face-attribute 'window-divider nil :foreground "#4C4262")
-  (set-face-attribute 'default nil :family "Source Code Pro" :height kadir/default-font-size :weight 'normal)
+
+  ;; (prin1 (font-family-list)) ;; see all font available on system
+  ;; (set-face-attribute 'default nil :family "Ubuntu Mono" :height 95 :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "Source Code Pro" :height 77 :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "Inconsolata" :height 90 :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "Hack" :height 80 :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "Meslo LG M" :height 72 :weight 'normal)
+  (set-face-attribute 'default nil :family "Fira Code" :height kadir/default-font-size :weight 'normal)
+
   (set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro" :italic t :weight 'bold))
+
 
 
 (when (not kadir/emacs-open-with-doom)

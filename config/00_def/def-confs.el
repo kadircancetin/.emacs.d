@@ -286,14 +286,14 @@
 (defun kadir/font-size-smaller()
   (interactive)
   (defvar kadir/default-font-size)
-  (setq kadir/default-font-size (- kadir/default-font-size 10))
+  (setq kadir/default-font-size (- kadir/default-font-size 3))
   (kadir/adjust-font-size kadir/default-font-size)
   )
 
 (defun kadir/font-size-bigger()
   (interactive)
   (defvar kadir/default-font-size)
-  (setq kadir/default-font-size (+ kadir/default-font-size 10))
+  (setq kadir/default-font-size (+ kadir/default-font-size 5))
   (kadir/adjust-font-size kadir/default-font-size))
 
 
