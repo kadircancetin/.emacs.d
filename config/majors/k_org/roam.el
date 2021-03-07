@@ -37,7 +37,6 @@
 
   (defun org-roam-protocol-open-file (info)
     (when-let ((file (plist-get info :file)))
-      (message "other xD")
       (raise-frame)
       (other-window 2)
       (org-roam--find-file file))

@@ -164,3 +164,32 @@
   (winum-mode))
 
 
+(use-package groovy-mode)
+(use-package jenkinsfile-mode)
+
+
+
+(load-file (expand-file-name "side-window.el" user-emacs-directory))
+(global-set-key (kbd "M-ü") 'kadir/smart-push-pop)
+
+(use-package imenu-list
+  :init
+  (setq imenu-list-position 'left)
+  (setq imenu-list-auto-resize nil)
+  (setq imenu-list-focus-after-activation t)
+
+  (defun kadir/imenu-change-function(arg)
+    (run-with-idle-timer
+     0.5 nil
+     (lambda ()
+       (imenu-list-update-safe))))
+
+  (defun kadir/imenu-list()
+    (interactive)
+    (add-to-list 'window-selection-change-functions 'kadir/imenu-change-function)
+    (imenu-list)
+    (kadir/buffer-to-side-left)
+    (when (derived-mode-p 'imenu-list-major-mode)
+      (delete-window))))
+
+

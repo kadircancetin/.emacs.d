@@ -28,7 +28,8 @@
                 org-ellipsis                "  ..."         ;;"  ↴"
                 org-src-fontify-natively    t
                 org-startup-indented        t
-                org-hide-emphasis-markers   t
+                org-hide-emphasis-markers   t  ;; hide _xx_ or *xx*
+                org-pretty-entities         t
                 org-default-notes-file      "~/org/inbox.org"
                 org-startup-folded          'content
                 org-default-priority        ?C
@@ -73,6 +74,17 @@
 (use-package org-plus-contrib)
 
 (use-package org-bullets)
+
+(use-package org-appear
+  :straight (org-appear :type git :host github :repo "awth13/org-appear")
+  :init
+  (add-hook 'org-mode-hook 'org-appear-mode)
+  (setq org-appear-autosubmarkers t
+        org-appear-autolinks      t
+        org-link-descriptive      t
+        )
+  )
+
 
 (use-package org-kanban
   :init
