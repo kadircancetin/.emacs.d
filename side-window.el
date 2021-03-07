@@ -4,11 +4,12 @@
 
   (let ((width-height-param nil)
         (lock-param nil)
-        (window-params nil))
+        (window-params nil)
+        (created-window nil))
 
     (if (or (eq side 'left) (eq side 'right))
         (progn
-          (setq widh-height-param '(window-width . 0.2))
+          (setq widh-height-param '(window-width . 0.17))
           (setq lock-param '(preserve-size . (t . nil))))
       (setq widh-height-param '(window-height . 0.2))
       (setq lock-param '(preserve-size . (nil . t))))
@@ -17,19 +18,42 @@
                                                (no-delete-other-windows . t))))
 
 
-    (display-buffer-in-side-window
-     (get-buffer (current-buffer))
-     `((side . ,side)
-       (slot . ,(+ 1 (or (kadir/side-window-get-max-slot side) 0)))
-       ,widh-height-param
-       ,lock-param
-       ,window-params
-       ))
-    )
-  (delete-window)
-  ;; TODO: jump to created buffer
-  (kadir/side-window-lock)
-  )
+    (setq created-window (display-buffer-in-side-window
+                          (get-buffer (current-buffer))
+                          `((side . ,side)
+                            (slot . ,(+ 1 (or (kadir/side-window-get-max-slot side) 0)))
+                            ,widh-height-param
+                            ,lock-param
+                            ,window-params
+                            )))
+    (delete-window)
+    (balance-windows)
+    (select-window created-window)
+    (toggle-truncate-lines 1))
+
+  (kadir/side-window-lock))
+
+
+(defun kadir/pop-side-window()
+  (interactive)
+  (let ((buf-name (window-buffer (selected-window))))
+    (message (buffer-name buf-name))
+    (delete-window)
+    (other-window -1)
+    (split-window)
+    (other-window 1)
+    (switch-to-buffer buf-name)))
+
+(defun kadir/is-side-window(window)
+  (let* ((window-state (window-state-get window))
+         (window-side (cdr (assoc 'window-side (assoc 'parameters window-state)))))
+    (not (eq window-side nil))))
+
+(defun kadir/smart-push-pop()
+  (interactive)
+  (if (kadir/is-side-window (selected-window))
+      (kadir/pop-side-window)
+    (kadir/push-side-window-stack)))
 
 (defun kadir/side-window--count(side)
   (interactive)
