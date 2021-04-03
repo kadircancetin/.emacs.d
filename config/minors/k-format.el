@@ -33,7 +33,8 @@
         (progn
           (python-black-region (region-beginning) (region-end)))
       (python-black)
-      (py-isort-buffer)))
+      ;; (py-isort-buffer)
+      ))
    ((eq major-mode 'go-mode) (gofmt))
    ((eq major-mode 'sass-mode) (css-mode) (format-all-buffer)(sass-mode))
 

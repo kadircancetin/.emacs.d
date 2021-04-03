@@ -169,5 +169,38 @@
   (let ((helm-rg-default-glob-string "settings.py"))
     (helm-rg "")))
 
+
+
+
+(defun fk/django-get-module ()
+  ;; origin: https://github.com/KaratasFurkan/.emacs.d/
+  "pony-get-module originally."
+  (let* ((root (projectile-project-root))
+         (path (file-name-sans-extension (or buffer-file-name (expand-file-name default-directory)))))
+    (when (string-match (projectile-project-root) path)
+      (let ((path-to-class (substring path (match-end 0))))
+        (mapconcat 'identity (split-string path-to-class "/") ".")))))
+
+(defun kadir/python-copy-import()
+  (interactive)
+
+  (require 'which-func)
+  (require 's)
+
+  (let* ((which-result (which-function))
+         (dot-count (s-count-matches "\\." which-result))
+         (class-or-function nil))
+
+    (if (> dot-count 0)
+        (setq class-or-function (car (seq-subseq (split-string which-result "\\.") 0 2)))
+      (setq class-or-function which-result))
+
+    (kill-new (concat "from " (fk/django-get-module) " import " class-or-function))))
+
+
+
+
+
+
 
 (provide 'k_python)

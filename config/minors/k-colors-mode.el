@@ -89,7 +89,8 @@
         (rainbow-delimiters-mode 1)
         (color-identifiers-mode 1)
         (auto-highlight-symbol-mode 1)
-        (highlight-symbol-nav-mode 1))
+        (highlight-symbol-nav-mode 1)  ;; https://github.com/mickeynp/smart-scan is may alternative
+        )
 
     (highlight-numbers-mode 0)
     (rainbow-delimiters-mode 0)
