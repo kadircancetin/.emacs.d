@@ -171,7 +171,6 @@
 
 
 
-
 (defun fk/django-get-module ()
   ;; origin: https://github.com/KaratasFurkan/.emacs.d/
   "pony-get-module originally."
@@ -196,6 +195,12 @@
       (setq class-or-function which-result))
 
     (kill-new (concat "from " (fk/django-get-module) " import " class-or-function))))
+
+
+
+(defun kadir/python-class-search ()
+  (interactive)
+  (kadir/helm-rg-dwim-with-glob "*.py" "^class "))
 
 
 

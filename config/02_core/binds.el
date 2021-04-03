@@ -133,7 +133,7 @@
    ("C-x f"           . helm-projectile)
 
    ;; helm-rg
-   ("<C-tab>"         . helm-rg)
+   ("<C-tab>"         . kadir/helm-rg-dwim)
    ("<C-iso-lefttab>" . deadgrep)
 
    ;; undo-tree

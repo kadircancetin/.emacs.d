@@ -64,12 +64,57 @@
 (use-package helm-ag
   :config (setq
            helm-ag-base-command
-           "rg -S --no-heading --color=never --line-number --max-columns 200"))
+           "rg -S --no-heading --color=never --line-number --max-columns 400"))
+
 (use-package helm-rg
+  :defer 0.5
   :init
   (setq helm-rg-default-directory 'git-root
-        helm-rg--extra-args '("--max-columns" "200")
-        helm-rg-input-min-search-chars 1))
+        helm-rg--extra-args '("--max-columns" "300")
+        helm-rg-input-min-search-chars 1)
+  :config
+
+  (setq fk/rg-special-characters '("(" ")" "[" "{" "*"))
+
+  (defun fk/convert-string-to-rg-compatible (str)
+    "Escape special characters defined in `fk/rg-special-characters' of STR."
+    (seq-reduce (lambda (str char) (s-replace char (concat "\\" char) str))
+                fk/rg-special-characters
+                str))
+
+  (defun kadir/helm-rg-dwim (&optional query)
+    (interactive)
+    (let ((helm-rg-default-directory (or (projectile-project-root) default-directory)))
+
+      (cl-letf (((symbol-function 'helm-rg--get-thing-at-pt) (lambda () query)))
+        (call-interactively 'helm-rg))))
+
+  (fset 'helm-rg--header-name
+        (lambda (src-name)
+          (format "%s @ %s"
+                  (helm-rg--make-face
+                   'helm-rg-directory-header-face
+                   (s-replace
+                    "argv: /usr/bin/rg --smart-case --color=ansi --colors=match:fg:red --colors=match:style:bold --max-columns 300"
+                    ""
+                    src-name) )
+
+                  (helm-rg--make-face 'helm-rg-directory-header-face helm-rg--current-dir)
+                  )
+          ))
+
+  (defun kadir/helm-rg-normalize-x(func &rest args)
+    (let ((search (car args)))
+      (setf (elt args 0) (fk/convert-string-to-rg-compatible search))
+      (apply func args)))
+  (advice-add #'helm-rg--helm-pattern-to-ripgrep-regexp :around #'kadir/helm-rg-normalize-x)
+
+
+  (defun kadir/helm-rg-dwim-with-glob (glob &optional query)
+    (interactive)
+    (let ((helm-rg-default-glob-string glob))
+      (kadir/helm-rg-dwim query))))
+
 
 
 (use-package helm-swoop
