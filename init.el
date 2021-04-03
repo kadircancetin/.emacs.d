@@ -59,19 +59,19 @@
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    (when (file-exists-p "~/dev-org-docs/dev-org-docs.el")
-      (add-to-list 'load-path "~/dev-org-docs/")
-      (require 'dev-org-docs)
-      (require 'dev-org-docs-available-docs)
+    ;; (when (file-exists-p "~/dev-org-docs/dev-org-docs.el")
+    ;;   (add-to-list 'load-path "~/dev-org-docs/")
+    ;;   (require 'dev-org-docs)
+    ;;   (require 'dev-org-docs-available-docs)
 
-      (global-set-key (kbd "C-c DEL") (lambda()(interactive) (dev-org-docs-search-at-point)))
+    ;;   (global-set-key (kbd "C-c DEL") (lambda()(interactive) (dev-org-docs-search-at-point)))
 
-      (setq dev-org-docs-major-mode-doc-alist
-            '((python-mode . ("django~3.0" "django_rest_framework" "python~3.8"))
-              (html-mode . ("html"))
-              (web-mode . ("html" "css"))
-              (css-mode . ("css"))
-              (org-mode . ("django~3.0" "django_rest_framework" "python~3.8")))))
+    ;;   (setq dev-org-docs-major-mode-doc-alist
+    ;;         '((python-mode . ("django~3.0" "django_rest_framework" "python~3.8"))
+    ;;           (html-mode . ("html"))
+    ;;           (web-mode . ("html" "css"))
+    ;;           (css-mode . ("css"))
+    ;;           (org-mode . ("django~3.0" "django_rest_framework" "python~3.8")))))
 
     (when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
       (load-file (expand-file-name "experimental.el" user-emacs-directory))
