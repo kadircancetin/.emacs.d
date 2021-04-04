@@ -79,8 +79,7 @@
 (defun kadir/python-lsp-start()
   (interactive)
   (require 'lsp-pyright)
-  (lsp)
-  (setq-default company-backends '(company-capf)))
+  (lsp))
 
 
 (defun kadir/activate-venv ()

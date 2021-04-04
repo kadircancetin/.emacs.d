@@ -99,9 +99,11 @@
                     ""
                     src-name) )
 
-                  (helm-rg--make-face 'helm-rg-directory-header-face helm-rg--current-dir)
-                  )
-          ))
+                  (helm-rg--make-face 'helm-rg-directory-header-face helm-rg--current-dir))))
+
+  (defun kadir/helm-rg()
+    (interactive)
+    (kadir/helm-rg-dwim (helm-rg--get-thing-at-pt)))
 
   (defun kadir/helm-rg-normalize-x(func &rest args)
     (let ((search (car args)))
