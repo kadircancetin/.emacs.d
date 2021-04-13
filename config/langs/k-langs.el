@@ -50,11 +50,14 @@
     (interactive)
     (let ((lsp-response-timeout 20))
       (lsp-ui-peek-find-definitions)))
+  :bind (:map lsp-mode-map
+              ("C-c C-d" . lsp-describe-thing-at-point))
   :config
   ;; lsp-eldoc-render-all nil                                                      ???????
   (setq
    ;; lsp-log-io t
    ;; lsp-print-performance t
+   lsp-headerline-breadcrumb-enable nil
    lsp-enable-snippet nil
 
    lsp-enable-folding nil ;; hiç kullanmadığım için
