@@ -172,24 +172,63 @@
 (load-file (expand-file-name "side-window.el" user-emacs-directory))
 (global-set-key (kbd "M-ü") 'kadir/smart-push-pop)
 
-(use-package imenu-list
-  :init
-  (setq imenu-list-position 'left)
-  (setq imenu-list-auto-resize nil)
-  (setq imenu-list-focus-after-activation t)
+;; (use-package imenu-list
+;;   :init
+;;   (setq imenu-list-position 'left)
+;;   (setq imenu-list-auto-resize nil)
+;;   (setq imenu-list-focus-after-activation t)
 
-  (defun kadir/imenu-change-function(arg)
-    (run-with-idle-timer
-     0.5 nil
-     (lambda ()
-       (imenu-list-update-safe))))
+;;   (defun kadir/imenu-change-function(arg)
+;;     (run-with-idle-timer
+;;      0.5 nil
+;;      (lambda ()
+;;        (imenu-list-update-safe))))
 
-  (defun kadir/imenu-list()
-    (interactive)
-    (add-to-list 'window-selection-change-functions 'kadir/imenu-change-function)
-    (imenu-list)
-    (kadir/buffer-to-side-left)
-    (when (derived-mode-p 'imenu-list-major-mode)
-      (delete-window))))
+;;   (defun kadir/imenu-list()
+;;     (interactive)
+;;     (add-to-list 'window-selection-change-functions 'kadir/imenu-change-function)
+;;     (imenu-list)
+;;     (kadir/buffer-to-side-left)
+;;     (when (derived-mode-p 'imenu-list-major-mode)
+;;       (delete-window))))
 
 
+
+;; (use-package flycheck-grammarly
+;;   :init
+;;   (require 'flycheck-grammarly)
+;;   )
+
+
+
+
+
+(use-package string-inflection)
+
+
+(use-package git-link)
+
+
+
+;; (use-package protobuf-mode
+;;   :defer 10
+;;   )
+
+
+(use-package elixir-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\.elixir2\\'" . elixir-mode))
+
+  ;; for lsp installation and add exec-path
+  ;; git clone https://github.com/elixir-lsp/elixir-ls.git
+  ;; cd elixir-ls (that you just cloned)
+  ;; mix deps.get
+  ;; mix elixir_ls.release
+  (add-to-list 'exec-path "/home/kadir/elixir-ls/release/")
+
+  :hook
+  (elixir-mode . lsp-deferred))
+
+
+
+;; TODO: https://getpocket.com/read/3087997252
