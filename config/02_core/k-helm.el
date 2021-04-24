@@ -18,10 +18,9 @@
                      `(:background ,bg-color :foreground ,bg-color)))
       (setq-local cursor-type nil))))
 
-(use-package helm-mode-manager :defer nil)
+(use-package helm-mode-manager)
 
 (use-package helm
-  :defer 0.15
   :init
   ;; (use-package helm-describe-modes)
   (setq-default helm-boring-buffer-regexp-list (list
@@ -67,12 +66,11 @@
            "rg -S --no-heading --color=never --line-number --max-columns 400"))
 
 (use-package helm-rg
-  :defer 0.5
+  :commands (helm-rg--get-thing-at-pt)
   :init
   (setq helm-rg-default-directory 'git-root
         helm-rg--extra-args '("--max-columns" "300")
         helm-rg-input-min-search-chars 1)
-  :config
 
   (setq fk/rg-special-characters '("(" ")" "[" "{" "*"))
 

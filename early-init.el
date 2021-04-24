@@ -6,7 +6,12 @@
 
 (defvar kadir/default-font-size 115)
 (when kadir/emacs-fast-open (setq kadir/default-font-size 115))
-
+
+(toggle-debug-on-error)
+(add-to-list 'load-path "/Users/kadir/.emacs.d/straight/repos/benchmark-init-el/")
+(require 'benchmark-init)
+(require 'benchmark-init-modes)
+(benchmark-init/activate)
 
 (defun k/set-garbage-collection()
   "source: https://emacs.stackexchange.com/questions/34342/"
@@ -80,6 +85,7 @@
 
 
 
+
 (when (not kadir/emacs-open-with-doom)
   (k/set-garbage-collection)
   (k/set-init-package-disabling)

@@ -116,7 +116,7 @@
 
 
 (use-package doom-modeline
-  :defer 0.1
+  :defer nil
   :config
   (setq doom-modeline-bar-width         1
         doom-modeline-height            1

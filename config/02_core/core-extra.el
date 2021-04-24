@@ -11,7 +11,7 @@
 (use-package ivy)
 
 (use-package undo-tree
-  :defer 0.2
+  :defer nil
   :config
   (global-undo-tree-mode))
 
@@ -21,7 +21,7 @@
   (expand-region-subword-enabled     t))
 
 (use-package shackle
-  :defer 0.1
+  :defer nil
   :config
   (shackle-mode 1)
   (setq shackle-rules
@@ -30,17 +30,16 @@
           (help-mode :align t :size 0.4 :select t))))
 
 (use-package wrap-region
-  :defer 1
+  :defer nil
+  :commands (wrap-region-add-wrapper)
   :config
   (wrap-region-add-wrapper "<>" "</>" "#" 'rjsx-mode)
   (wrap-region-add-wrapper "#+begin_src emacs-lisp\n  " "\n#+end_src" "*" 'org-mode)
   (wrap-region-add-wrapper "{% trans \"" "\"  %}" "*" 'web-mode)
   (wrap-region-add-wrapper "<p>" "</p>" "!" 'web-mode)
-  (wrap-region-add-wrapper "=" "=" "=" 'org-mode)
-  (wrap-region-global-mode t))
+  (wrap-region-add-wrapper "=" "=" "=" 'org-mode))
 
 (use-package yasnippet
-  :defer 2
   :custom
   (yas-indent-line nil)
   (yas-inhibit-overlay-modification-protection t)
@@ -69,7 +68,6 @@
 
 
 (use-package magit
-  :defer t
   :config
   (use-package magit-todos :hook (magit-mode . magit-todos-mode))
   (add-to-list 'git-commit-setup-hook 'git-commit-turn-on-flyspell)

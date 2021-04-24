@@ -1,6 +1,7 @@
 (require 'use-package)
 
 (use-package company
+  :defer nil
   :init
   (setq-default company-idle-delay 0
                 company-minimum-prefix-length 1
@@ -20,7 +21,6 @@
                 company-require-match 'never
 
                 company-auto-complete-chars nil)
-  :defer 0.1
   :bind ((:map company-active-map
                ([return] . nil)
                ("RET" . nil)

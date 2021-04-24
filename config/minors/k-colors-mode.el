@@ -9,7 +9,6 @@
 (use-package highlight-symbol)
 
 (use-package auto-highlight-symbol
-  :defer t
   :config
   (setq-default ahs-case-fold-search nil
                 ahs-default-range 'ahs-range-display

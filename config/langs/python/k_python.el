@@ -77,7 +77,7 @@
 (defun kadir/python-lsp-start()
   (interactive)
   (require 'lsp-pyright)
-  (lsp))
+  (lsp-deferred))
 
 
 (defun kadir/activate-venv ()
