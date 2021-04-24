@@ -23,7 +23,7 @@
          (global-auto-composition-mode 1))))
 
 (run-with-idle-timer
- 1 nil
+ 1 nil ;; defer
  (lambda () (progn
          (require 'hideshow)
          (add-hook 'prog-mode-hook 'hs-minor-mode))))

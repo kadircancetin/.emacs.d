@@ -21,6 +21,7 @@
 (use-package helm-mode-manager)
 
 (use-package helm
+  :defer 5
   :init
   ;; (use-package helm-describe-modes)
   (setq-default helm-boring-buffer-regexp-list (list

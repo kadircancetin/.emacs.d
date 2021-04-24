@@ -1,7 +1,7 @@
 (require 'use-package)
 
 (use-package company
-  :defer nil
+  :defer 0.7
   :init
   (setq-default company-idle-delay 0
                 company-minimum-prefix-length 1
@@ -36,9 +36,10 @@
   ;; make company work on char deleteion
   (add-to-list 'company-begin-commands 'backward-delete-char-untabify)
 
-  (progn
-    ;; https://emacs.stackexchange.com/questions/17537/best-company-backends-lists
-    (load-file (expand-file-name "company-try-hard.el" user-emacs-directory))))
+  ;; (progn
+  ;;   ;; https://emacs.stackexchange.com/questions/17537/best-company-backends-lists
+  ;;   (load-file (expand-file-name "company-try-hard.el" user-emacs-directory)))
+  )
 
 
 (use-package helm-company)

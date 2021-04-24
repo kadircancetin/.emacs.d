@@ -72,7 +72,7 @@
 
     ;; r
     ("rl"                 . org-roam)
-    ("rf"                 . org-roam-find-file)
+    ("rf"                 . (lambda() (interactive)(require 'helm)(org-roam-find-file)))
     ("rt"                 . org-roam-dailies-today)
     ("ri"                 . org-roam-insert)
     ("rg"                 . org-roam-show-graph)))

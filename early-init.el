@@ -42,7 +42,8 @@
      (setq file-name-handler-alist file-name-handler-alist-original)
      (makunbound 'gc-cons-threshold-original)
      (makunbound 'file-name-handler-alist-original)
-     (message "gc-cons-threshold and file-name-handler-alist restored")))
+     ;; (message "gc-cons-threshold and file-name-handler-alist restored")
+     ))
 
   (add-hook 'after-focus-out-hook (lambda() (garbage-collect)))
   (run-with-timer nil (* 10 60) (lambda () (run-with-idle-timer 1 nil 'garbage-collect))))
@@ -73,7 +74,9 @@
   (k/set-init--window-devider)
 
   (when (not kadir/emacs-fast-open)
-    (add-to-list 'default-frame-alist '(fullscreen . maximized)))
+    ;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
+    (add-to-list 'default-frame-alist '(height . 54))
+    (add-to-list 'default-frame-alist '(width . 120)))
 
   (set-face-attribute 'window-divider nil :foreground "#4C4262")
 

@@ -11,7 +11,7 @@
 (use-package ivy)
 
 (use-package undo-tree
-  :defer nil
+  :defer 0.5
   :config
   (global-undo-tree-mode))
 
@@ -21,7 +21,7 @@
   (expand-region-subword-enabled     t))
 
 (use-package shackle
-  :defer nil
+  :defer 0.5
   :config
   (shackle-mode 1)
   (setq shackle-rules
@@ -30,7 +30,7 @@
           (help-mode :align t :size 0.4 :select t))))
 
 (use-package wrap-region
-  :defer nil
+  :defer 0.5
   :commands (wrap-region-add-wrapper)
   :config
   (wrap-region-add-wrapper "<>" "</>" "#" 'rjsx-mode)
@@ -152,10 +152,10 @@
 
 
 
-;; (use-package typo-suggest
-;;   :defer 4
-;;   :init
-;;   (setq typo-suggest-timeout 10))
+(use-package typo-suggest
+  :commands (typo-suggest-helm typo-suggest-ivy)
+  :init
+  (setq typo-suggest-timeout 10))
 
 
 
