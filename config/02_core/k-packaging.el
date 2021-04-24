@@ -1,4 +1,7 @@
 (defvar bootstrap-version)
+
+(setq-default straight-check-for-modifications '(check-on-save find-when-checking))
+
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
       (bootstrap-version 5))
@@ -11,7 +14,7 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(setq-default straight-check-for-modifications nil)
+
 
 (straight-use-package 'use-package)
 (setq-default straight-use-package-by-default t)

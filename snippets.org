@@ -230,6 +230,43 @@
 
 #+END_SRC
 
+* wucuo
+
+
+#+begin_src emacs-lisp
+  (use-package wucuo
+  :init
+  (setq ispell-program-name "aspell")
+  (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together" "--run-together-limit=16" "--camel-case"))
+
+  (setq wucuo-flyspell-start-mode "normal")
+  (add-hook 'prog-mode-hook #'wucuo-start)
+  (add-hook 'text-mode-hook #'wucuo-start)
+  (setq wucuo-personal-font-faces-to-check '(font-lock-type-face)))
+#+end_src
+* imenu
+
+#+begin_src emacs-lisp
+  (use-package imenu-list
+  :init
+  (setq imenu-list-position 'left)
+  (setq imenu-list-auto-resize nil)
+  (setq imenu-list-focus-after-activation t)
+
+  (defun kadir/imenu-change-function(arg)
+    (run-with-idle-timer
+     0.5 nil
+     (lambda ()
+       (imenu-list-update-safe))))
+
+  (defun kadir/imenu-list()
+    (interactive)
+    (add-to-list 'window-selection-change-functions 'kadir/imenu-change-function)
+    (imenu-list)
+    (kadir/buffer-to-side-left)
+    (when (derived-mode-p 'imenu-list-major-mode)
+      (delete-window))))
+#+end_src
 * Dap mode
 #+BEGIN_SRC emacs-lisp
 (use-package dap-mode

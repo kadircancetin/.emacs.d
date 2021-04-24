@@ -3,7 +3,7 @@
 (use-package format-all)
 
 (use-package python-black
-  :defer 0.5
+  :commands (python-black python-black-region)
   :custom (blacken-line-length 119))
 
 (use-package py-isort)

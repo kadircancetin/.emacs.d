@@ -18,7 +18,7 @@
          (global-subword-mode 1)          ; make camel-case usable with word shorcuts
          (save-place-mode 1)              ; save cursor position for next file opening, and restore it
          ;; (global-prettify-symbols-mode 1) ; lambda to cool lambda character
-         ;; (global-auto-revert-mode nil)      ; auto revert
+         (global-auto-revert-mode 1)
          (column-number-mode 1)
          (global-auto-composition-mode 1))))
 

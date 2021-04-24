@@ -39,11 +39,14 @@
     (when (require 'k-minors)
       (require 'k-colors-mode)
       (require 'k-format)
-      (require 'k_theme))
+      (require 'k_theme)
+      (k-colors-global-mode 1))
 
     ;; languages
     (when (require 'k-langs)
       (require 'k-dotfiles)
+      (require 'k-plantuml)
+      (require 'k-elixir)
       (require 'k-restclient)
       (require 'k-clojure)
       (require 'k-go)
@@ -114,4 +117,3 @@
 
 
 (global-so-long-mode 1)
-(k-colors-global-mode 1)

@@ -54,17 +54,15 @@
   :straight (:host github :repo "emacs-lsp/lsp-pyright"))
 
 
-(use-package importmagic
-  :ensure t
-  :defer 4.5
-  :init
-  (defun kadir/import-magic-ac-kapat ()
-    (interactive)
-    (importmagic-mode 0)
-    (importmagic-mode 1)
-    (sleep-for 3)
-    (importmagic-fix-symbol-at-point)
-    (importmagic-mode 0)))
+;; (use-package importmagic
+;;   :init
+;;   (defun kadir/import-magic-ac-kapat ()
+;;     (interactive)
+;;     (importmagic-mode 0)
+;;     (importmagic-mode 1)
+;;     (sleep-for 3)
+;;     (importmagic-fix-symbol-at-point)
+;;     (importmagic-mode 0)))
 
 
 
@@ -204,7 +202,27 @@
 
 
 
+(defun kadir/fast-python()
+  (interactive)
 
+  (setq font-lock-maximum-decoration 2)
+  (revert-buffer)
+  (k-colors-mode 0)
+  (flycheck-mode 0)
+  (wucuo-mode 0)
+  (auto-highlight-symbol-mode 1)
+  (highlight-symbol-nav-mode 1)
+  (setq font-lock-maximum-decoration t))
+
+(defun kadir/normal-python()
+  (interactive)
+  (setq font-lock-maximum-decoration t)
+  (revert-buffer)
+  (k-colors-mode 1)
+  (wucuo-mode 1)
+  (flycheck-mode 1))
+
+
 
 
 (provide 'k_python)

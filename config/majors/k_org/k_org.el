@@ -3,7 +3,7 @@
 
 
 (use-package org
-  ;; :straight (:type built-in)
+  :straight (:type built-in)
   :init
   (kadir/beatiful-org-todo)
   (add-hook 'org-mode-hook 'kadir/org-mode-hooks)
@@ -71,9 +71,12 @@
   :hook
   (org-mode . org-fancy-priorities-mode))
 
-(use-package org-plus-contrib)
+;; (use-package org-plus-contrib)
+
 
+
 (use-package org-bullets)
+
 
 (use-package org-appear
   :straight (org-appear :type git :host github :repo "awth13/org-appear")
@@ -115,7 +118,9 @@
 ;; (require 'ox-reveal)
 
 
+
 (load-file (expand-file-name "config/majors/k_org/roam.el" user-emacs-directory))
 (use-package org-web-tools)
+
 
 (provide 'k_org)

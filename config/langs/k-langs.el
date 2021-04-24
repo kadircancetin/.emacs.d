@@ -91,7 +91,9 @@
    lsp-prefer-capf t))
 
 (use-package helm-xref
-  :defer 1)
+  :hook
+  (helm-mode . (lambda() (require 'helm-xref)) )
+  )
 
 (use-package eglot
   ;; (add-to-list 'eglot-server-programs '((js-mode) "typescript-language-server" "--stdio"))
