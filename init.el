@@ -98,9 +98,10 @@
   "switch meta between Option and Command"
   (interactive)
 
-  (use-package exec-path-from-shell)
-  (require 'exec-path-from-shell)
-  (exec-path-from-shell-initialize)
+  (if (not kadir/emacs-fast-open)
+      (use-package exec-path-from-shell :init (exec-path-from-shell-initialize))
+    (load-file (expand-file-name "straight/repos/exec-path-from-shell/exec-path-from-shell.el" user-emacs-directory))
+    (exec-path-from-shell-initialize))
 
   (setq mac-option-modifier nil)
   (setq mac-command-modifier 'super)

@@ -3,12 +3,12 @@
 
 ;; some no-litterings (for -fo mode)
 ;; TODO: make them more robust paths
-(setq-default save-place-file       "/home/kadir/.emacs.d/var/fo-save-place.el")
-(setq-default savehist-file         "/home/kadir/.emacs.d/var/fo-savehist.el")
+(setq-default save-place-file       "~/.emacs.d/var/fo-save-place.el")
+(setq-default savehist-file         "~/.emacs.d/var/fo-savehist.el")
 
-(let ((backup-dir "/home/kadir/.emacs.d/var/backup/fo/")
+(let ((backup-dir "~/.emacs.d/var/backup/fo/")
       ;; source: https://emacs.stackexchange.com/questions/33/put-all-backups-into-one-backup-folder
-      (auto-saves-dir "/home/kadir/.emacs.d/var/auto-save/fo/"))
+      (auto-saves-dir "~/.emacs.d/var/auto-save/fo/"))
   (dolist (dir (list backup-dir auto-saves-dir))
     (when (not (file-directory-p dir))
       (make-directory dir t)))
