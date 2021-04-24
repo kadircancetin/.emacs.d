@@ -37,7 +37,8 @@
   (wrap-region-add-wrapper "#+begin_src emacs-lisp\n  " "\n#+end_src" "*" 'org-mode)
   (wrap-region-add-wrapper "{% trans \"" "\"  %}" "*" 'web-mode)
   (wrap-region-add-wrapper "<p>" "</p>" "!" 'web-mode)
-  (wrap-region-add-wrapper "=" "=" "=" 'org-mode))
+  (wrap-region-add-wrapper "=" "=" "=" 'org-mode)
+  (wrap-region-global-mode t))
 
 (use-package yasnippet
   :custom

@@ -31,14 +31,11 @@
 
 
 
-
-(run-with-idle-timer
- 1 nil
- (lambda ()
-   (benchmark-init/deactivate)
-   (benchmark-init/show-durations-tabulated)
-   (benchmark-init/show-durations-tree)
-
-   )
-
- )
+;; (run-with-idle-timer
+;;  1 nil
+;;  (lambda ()
+;;    (benchmark-init/deactivate)
+;;    (benchmark-init/show-durations-tabulated)
+;;    (benchmark-init/show-durations-tree)
+;;    )
+;;  )
