@@ -91,5 +91,27 @@
       (k/init-emacs-full))))
 (put 'downcase-region 'disabled nil)
 
+
+(defun kadir/mac-conf()
+  "switch meta between Option and Command"
+  (interactive)
+
+  (use-package exec-path-from-shell)
+  (require 'exec-path-from-shell)
+  (exec-path-from-shell-initialize)
+
+  (setq mac-option-modifier nil)
+  (setq mac-command-modifier 'super)
+  (setq ns-option-modifier 'meta
+        ns-right-alternate-modifier 'super
+        ns-right-option-modifier 'none)
+  (setq ns-auto-hide-menu-bar t))
+
+
+(if (eq system-type 'darwin)
+    (kadir/mac-conf))
+
+
+
 (global-so-long-mode 1)
 (k-colors-global-mode 1)
