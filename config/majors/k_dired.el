@@ -1,6 +1,8 @@
 ;; Default dired settings
 ;; make dired human readble
-(setq-default dired-listing-switches "-lha --group-directories-first")
+
+;; (setq-default dired-listing-switches "-lha --group-directories-first")
+
 
 ;; FUNCTIONS
 
@@ -9,7 +11,7 @@
    The size is converted to float for consistency.
    This doesn't recurse directories."
   (float (file-attribute-size			; might be int or float
-	      (file-attributes filename))))
+          (file-attributes filename))))
 
 (defun kadir/dired-smart-open ()
   "If file size bigger then 100 mb, open directly whith system, if
@@ -66,7 +68,7 @@
         ("<tab>" . dired-subtree-toggle)
         ("TAB" . dired-subtree-toggle)
         ("<C-iso-lefttab>" . dired-subtree-remove))
-  :config  
+  :config
   (defadvice dired-subtree-toggle (after add-dired-icons activate)
     (dired-revert))
 

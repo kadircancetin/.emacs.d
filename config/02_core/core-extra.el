@@ -85,7 +85,9 @@
     (forge-pull)))
 
 
-(use-package git-link)
+(use-package git-link
+  :commands (git-link))
+
 (use-package vc-msg)
 
 
