@@ -70,13 +70,13 @@
 (defun kadir/push-side-window-stack()
   (interactive)
   (let ((left-count (kadir/side-window--count 'left))
-        (bot-count (kadir/side-window--count 'bottom)))
+        (right-count (kadir/side-window--count 'right)))
 
-    (if (not (and (> left-count 1) (< bot-count 4)))
-        (if (> left-count bot-count)
-            (kadir/buffer-to-side-bottom)
+    (if (not (and (> left-count 1) (< right-count 4)))
+        (if (> left-count right-count)
+            (kadir/buffer-to-side-right)
           (kadir/buffer-to-side-left))
-      (kadir/buffer-to-side-bottom))))
+      (kadir/buffer-to-side-right))))
 
 
 (defun kadir/buffer-to-side-right()
