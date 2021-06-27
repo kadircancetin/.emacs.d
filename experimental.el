@@ -66,3 +66,12 @@
   )
 
 
+(use-package which-key
+  :defer 3
+  :config
+  (which-key-mode)
+  (which-key-setup-side-window-bottom)
+  (setq which-key-idle-delay 0.4))
+
+
+
