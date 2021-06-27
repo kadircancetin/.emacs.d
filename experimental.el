@@ -16,7 +16,6 @@
 
 
 (defun eldoc-mode(&rest args)
-  ;; TODO: find who opens the eldoc on python and fix it. Not like that.
   (message "no eldoc"))
 
 (defun tooltip-mode(&rest args)
@@ -31,14 +30,6 @@
 
 
 
-;; (run-with-idle-timer
-;;  1 nil
-;;  (lambda ()
-;;    (benchmark-init/deactivate)
-;;    (benchmark-init/show-durations-tabulated)
-;;    (benchmark-init/show-durations-tree)
-;;    )
-;;  )
 (use-package tree-sitter
   :defer t
   :straight
@@ -55,6 +46,8 @@
 
 (add-hook 'python-mode-hook  (lambda () (require 'tree-sitter-langs) (tree-sitter-hl-mode)))
 (add-hook 'python-mode-hook  (lambda () (rainbow-delimiters-mode-disable)))
+
+
 
 (use-package gcmh
   :init
