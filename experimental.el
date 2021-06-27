@@ -39,3 +39,20 @@
 ;;    (benchmark-init/show-durations-tree)
 ;;    )
 ;;  )
+(use-package tree-sitter
+  :defer t
+  :straight
+  (tree-sitter :host github
+               :repo "ubolonton/emacs-tree-sitter"
+               :files ("lisp/*.el")))
+
+(use-package tree-sitter-langs
+  :defer t
+  :straight
+  (tree-sitter-langs :host github
+                     :repo "ubolonton/emacs-tree-sitter"
+                     :files ("langs/*.el" "langs/queries")))
+
+(add-hook 'python-mode-hook  (lambda () (require 'tree-sitter-langs) (tree-sitter-hl-mode)))
+(add-hook 'python-mode-hook  (lambda () (rainbow-delimiters-mode-disable)))
+
