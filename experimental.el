@@ -56,3 +56,13 @@
 (add-hook 'python-mode-hook  (lambda () (require 'tree-sitter-langs) (tree-sitter-hl-mode)))
 (add-hook 'python-mode-hook  (lambda () (rainbow-delimiters-mode-disable)))
 
+(use-package gcmh
+  :init
+  (gcmh-mode)
+  (setq garbage-collection-messages t)
+  (setq gcmh-verbose t)
+  (setq gcmh-idle-delay 2)
+  ;; (add-hook  'post-gc-hook (lambda() (message "garbage collected")))
+  )
+
+

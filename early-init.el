@@ -19,7 +19,7 @@
 
 (defun k/set-garbage-collection()
   "source: https://emacs.stackexchange.com/questions/34342/"
-  (defconst k-gc (* 1024 1024 100))
+  (defconst k-gc most-positive-fixnum)
 
   (defun fk/defer-garbage-collection ()
     (setq gc-cons-threshold most-positive-fixnum))
@@ -45,11 +45,13 @@
      ;; (message "gc-cons-threshold and file-name-handler-alist restored")
      ))
 
-  (add-hook 'after-focus-out-hook (lambda() (garbage-collect)))
-  (run-with-timer nil (* 10 60) (lambda () (run-with-idle-timer 1 nil 'garbage-collect))))
+  ;; (add-hook 'after-focus-out-hook (lambda() (garbage-collect)))
+  ;; (run-with-timer nil (* 10) (lambda () (run-with-idle-timer 120 nil 'garbage-collect)))
+  (run-with-idle-timer 300 nil 'garbage-collect)
+  )
 
 (defun k/set-init-package-disabling ()
-  (setq-default comp-deferred-compilation t)
+  ;;(setq-default comp-deferred-compilation t)
   (setq package-enable-at-startup nil)
   ;; (setq load-prefer-newer t)
   (setq load-prefer-newer noninteractive))
@@ -94,6 +96,6 @@
 
 
 (when (not kadir/emacs-open-with-doom)
-  (k/set-garbage-collection)
+  ;; (k/set-garbage-collection)
   (k/set-init-package-disabling)
   (k/set-init-ui))
