@@ -7,11 +7,12 @@
         (rjsx-mode))))
 
 (use-package js
-  ;; :bind (:map js-mode-map
-  ;;             ("M-." . lsp-ui-peek-find-definitions))
+  :bind (:map js-mode-map
+              ("M-." . lsp-ui-peek-find-definitions))
   :config
   (add-hook 'js-mode-hook #'lsp)
   (add-hook 'js-mode-hook #'kadir/if_react_rjsx_mode)
+  (add-hook 'js-mode-hook #'kadir/lsp-ui-activate)
   )
 
 
@@ -21,7 +22,23 @@
         js-indent-level 2))
 
 (use-package typescript-mode
-  :bind (:map typescript-mode-map ("M-." . lsp-ui-peek-find-definitions)))
+  :init
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+
+  (load-file (expand-file-name "config/langs/js/typescript_rjsx.el" user-emacs-directory))
+
+  (add-hook 'typescript-mode-hook #'lsp-deferred)
+  ;; (kadir/lsp-ui-activate)
+  ;; (lsp-ui-mode)
+
+  :bind (:map typescript-mode-map
+              ("M-." . lsp-ui-peek-find-definitions)
+              ("M-ı" . lsp-format-buffer)
+              ))
+
+(use-package flow-js2-mode
+  :straight (flow-js2-mode :type git :host github :repo "Fuco1/flow-js2-mode"))
 
 (use-package rjsx-mode
   :bind (:map rjsx-mode-map
@@ -38,16 +55,20 @@
 (use-package prettier-js
   ;; npm install -g prettier
   :init
-  (setq prettier-js-args '("--trailing-comma" "none"
+  (setq prettier-js-args '("--trailing-comma" "es5"
                            "--bracket-spacing" "true"
                            "--single-quote" "true"
                            ;; "--no-semi" "true"
-                           "--jsx-single-quote" "true"
+                           "--jsx-single-quote" "false"
                            "--jsx-bracket-same-line" "true"
                            "--print-width" "90"))
+
   (add-hook 'js2-mode-hook 'prettier-js-mode)
   ;; (add-hook 'web-mode-hook 'prettier-js-mode)
-  (add-hook 'rjsx-mode 'prettier-js-mode))
+  (add-hook 'rjsx-mode 'prettier-js-mode)
+  (add-hook 'js2-mode-hook 'prettier-js-mode)
+  (add-hook 'web-mode-hook 'prettier-js-mode)
+  )
 
 
 (use-package json-mode)
@@ -64,11 +85,6 @@
   )
 
 
-(use-package prettier-js
-  :config
-  (add-hook 'js2-mode-hook 'prettier-js-mode)
-  (add-hook 'web-mode-hook 'prettier-js-mode)
-  )
 
 
 ;; (use-package company-tabnine
