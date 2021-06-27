@@ -168,18 +168,16 @@
 
 
 
-(defun fk/django-get-module ()
+(defun fk/django-get-module (devider)
   ;; origin: https://github.com/KaratasFurkan/.emacs.d/
   "pony-get-module originally."
   (let* ((root (projectile-project-root))
          (path (file-name-sans-extension (or buffer-file-name (expand-file-name default-directory)))))
     (when (string-match (projectile-project-root) path)
       (let ((path-to-class (substring path (match-end 0))))
-        (mapconcat 'identity (split-string path-to-class "/") ".")))))
+        (mapconcat 'identity (split-string path-to-class "/") devider)))))
 
-(defun kadir/python-copy-import()
-  (interactive)
-
+(defun kadir/class-or-function()
   (require 'which-func)
   (require 's)
 
@@ -191,7 +189,22 @@
         (setq class-or-function (car (seq-subseq (split-string which-result "\\.") 0 2)))
       (setq class-or-function which-result))
 
-    (kill-new (concat "from " (fk/django-get-module) " import " class-or-function))))
+    class-or-function))
+
+(defun kadir/python-copy-import()
+  (interactive)
+  (require 'which-func)
+  (kill-new (concat "from " (fk/django-get-module ".") " import " (kadir/class-or-function))))
+
+(defun kadir/python-copy-pytest()
+  (interactive)
+  (require 'which-func)
+  (kill-new (concat "pytest " (fk/django-get-module "/") ".py::" (s-replace "." "::" (which-function)) " -s")))
+
+(defun kadir/python-copy-mock()
+  (interactive)
+  (require 'which-func)
+  (kill-new (concat (fk/django-get-module ".") "." (which-function))))
 
 
 

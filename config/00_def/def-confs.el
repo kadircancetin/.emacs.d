@@ -148,6 +148,16 @@
   (interactive) (switch-to-buffer "*dashboard*"))
 
 
+(defun kadir/move-to-top ()
+  (interactive)
+  (save-excursion
+    (mwim-beginning-of-code)(kill-line)
+
+    (goto-char (point-min))
+    (yank)(insert "\n"))
+  (mwim-beginning-of-line)
+  (kill-line))
+
 (defun kadir/delete-file-and-buffer ()
   ;; based on https://gist.github.com/hyOzd/23b87e96d43bca0f0b52 which is based on
   ;; http://emacsredux.com/blog/2013/04/03/delete-file-and-buffer/
@@ -315,7 +325,7 @@
    ("M-o"             . other-window)
    ("M-u"             . winner-undo)
    ("C-x k"           . kadir/kill-buffer)
-   ("M-ı"             . (lambda() (interactive) (indent-region (point-min) (point-max))))
+   ;; ("M-ı"             . (lambda() (interactive) (indent-region (point-min) (point-max))))
    ("C-x 2"           . kadir/split-and-follow-horizontally)
    ("C-x 3"           . kadir/split-and-follow-vertically)
    ("C-x 0"           . kadir/delete-window)
