@@ -46,7 +46,10 @@
   (defadvice ace-select-window (after blink activate)
     (beacon-blink))
   (defadvice ace-swap-window (after blink activate)
-    (beacon-blink)))
+    (beacon-blink))
+  (defadvice avy-jump (after blink activate)
+    (beacon-blink))
+  )
 
 (use-package volatile-highlights
   :config

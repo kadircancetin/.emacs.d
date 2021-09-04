@@ -194,16 +194,19 @@
 (defun kadir/python-copy-import()
   (interactive)
   (require 'which-func)
+  (mwim-beginning-of-code)
   (kill-new (concat "from " (fk/django-get-module ".") " import " (kadir/class-or-function))))
 
 (defun kadir/python-copy-pytest()
   (interactive)
   (require 'which-func)
+  (mwim-beginning-of-code)
   (kill-new (concat "pytest " (fk/django-get-module "/") ".py::" (s-replace "." "::" (which-function)) " -s")))
 
 (defun kadir/python-copy-mock()
   (interactive)
   (require 'which-func)
+  (mwim-beginning-of-code)
   (kill-new (concat (fk/django-get-module ".") "." (which-function))))
 
 

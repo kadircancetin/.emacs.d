@@ -134,18 +134,21 @@
 
 (defun kadir/find-experimental-config ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
-  "Open config file. (probably this file)"
   (interactive) (find-file "~/.emacs.d/experimental.el"))
 
 (defun kadir/find-inbox ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
-  "Open config file. (probably this file)"
   (interactive) (find-file "~/Dropbox/org-roam/20200503174932-inbox.org"))
 
 (defun kadir/find-dashboard ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
-  "Open config file. (probably this file)"
   (interactive) (switch-to-buffer "*dashboard*"))
+
+(defun kadir/find-messages ()
+  ;; source: https://github.com/KaratasFurkan/.emacs.d
+  "Open Message buffer"
+  (interactive) (switch-to-buffer "*Messages*"))
+
 
 
 (defun kadir/move-to-top ()

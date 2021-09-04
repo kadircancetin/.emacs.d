@@ -62,10 +62,3 @@
                            (error nil)))
                    "LEVEL=3")
   (org-set-startup-visibility))
-
-(defun kadir/org-mode-hooks()
-  ;; TODO: when change the kadir global think
-  (global-hl-todo-mode 0)
-  (global-diff-hl-mode 0)
-  (diff-hl-flydiff-mode 0)
-  (flycheck-mode 0))

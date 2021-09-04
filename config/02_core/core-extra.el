@@ -86,7 +86,9 @@
 
 
 (use-package git-link
-  :commands (git-link))
+  :commands (git-link)
+  :init
+  (setq git-link-default-branch "develop"))
 
 (use-package vc-msg)
 
@@ -100,10 +102,10 @@
 
 
 (use-package wakatime-mode
-  :if (executable-find "wakatime")
-  :defer 5
+  :defer 2
   :config
-  (message "waka activated"))
+  (global-wakatime-mode t)
+  (message "waka loaded"))
 
 (use-package google-translate
   :init

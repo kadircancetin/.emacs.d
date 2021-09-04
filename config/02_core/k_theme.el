@@ -137,4 +137,19 @@
   :hook ((org-mode . turn-on-stripe-table-mode)))
 
 
+(defun kadir/light-theme()
+  (interactive)
+  (load-theme 'doom-one-light t)
+  (kadir/fix-some-colors 'doom-one-light))
+
+(defun kadir/doom-theme()
+  (interactive)
+  (load-theme 'doom-one t)
+  (kadir/fix-some-colors 'doom-one))
+
+(defun kadir/spacemacs-theme()
+  (interactive)
+  (load-theme 'spacemacs-dark t)
+  (kadir/fix-some-colors 'spacemacs-dark))
+
 (provide 'k_theme)

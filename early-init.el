@@ -4,7 +4,7 @@
 (defvar kadir/emacs-open-with-doom (member "-doom" command-line-args))
 (setq command-line-args (delete "-doom" command-line-args))
 
-(defvar kadir/default-font-size 115)
+(defvar kadir/default-font-size 110)
 (when kadir/emacs-fast-open (setq kadir/default-font-size 115))
 
 

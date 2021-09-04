@@ -28,6 +28,7 @@
   (interactive)
   (cond
    ((eq major-mode 'web-mode) (indent-region (point-min) (point-max)))
+   ((eq major-mode 'emacs-lisp-mode) (indent-region (point-min) (point-max)))
    ((eq major-mode 'python-mode)
     (if (region-active-p)
         (progn
@@ -36,8 +37,9 @@
       ;; (py-isort-buffer)
       ))
    ((eq major-mode 'go-mode) (gofmt))
+   ((eq major-mode 'js2-mode) (lsp-format-buffer))
    ((eq major-mode 'sass-mode) (css-mode) (format-all-buffer)(sass-mode))
-
+   ((eq (bound-and-true-p lsp-mode) t) (lsp-format-buffer))
    (t (format-all-buffer))))
 
 

@@ -64,7 +64,8 @@
   :config
   (which-key-mode)
   (which-key-setup-side-window-bottom)
-  (setq which-key-idle-delay 0.4))
+  (setq which-key-idle-delay 2.0)
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 
 
 
@@ -84,7 +85,7 @@
                                   (name . "*RTags Peek*")
                                   (width . 89)
                                   (visibility . nil)
-                                  (height . 15))))
+                                  (height . 25))))
 
     (when (> y 550) (setq y (- y 330)))
     (when (< y 0 ) (setq y 0))

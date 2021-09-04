@@ -11,6 +11,7 @@
               ("M-." . lsp-ui-peek-find-definitions))
   :config
   (add-hook 'js-mode-hook #'lsp)
+  (add-hook 'js-mode-hook #'kadir/company-tabnine-enable)
   (add-hook 'js-mode-hook #'kadir/if_react_rjsx_mode)
   (add-hook 'js-mode-hook #'kadir/lsp-ui-activate)
   )
@@ -19,7 +20,8 @@
 (use-package js2-mode
   :init
   (setq js2-basic-offset 2
-        js-indent-level 2))
+        js-indent-level 2
+        js2-strict-missing-semi-warning nil))
 
 (use-package typescript-mode
   :init

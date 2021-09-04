@@ -21,7 +21,6 @@
     ("t"                 . hs-toggle-hiding)
     ("y"                 . yas-insert-snippet)
     ;; ("d"                 . deadgrep)
-    ("c"                 . (lambda()(interactive)(org-capture nil "t")))
     ("ç"                 . (lambda() (interactive) (eval-buffer) (message "eval") (save-buffer)))
     ("j"                 . dumb-jump-go)
 
@@ -43,6 +42,7 @@
 
     ;; o
     ("oi"                 . kadir/find-inbox)
+    ("om"                 . kadir/find-messages)
     ("oc"                 . kadir/find-config)
     ("oe"                 . kadir/find-experimental-config)
     ("os"                 . kadir/find-scratch-buffer)
@@ -72,10 +72,16 @@
 
     ;; r
     ("rl"                 . org-roam)
-    ("rf"                 . (lambda() (interactive)(require 'helm)(org-roam-find-file)))
-    ("rt"                 . org-roam-dailies-today)
-    ("ri"                 . org-roam-insert)
-    ("rg"                 . org-roam-show-graph)))
+    ("rf"                 . (lambda() (interactive)(require 'helm)(org-roam-node-find)))
+
+    ;; c
+    ("ci"                 . kadir/python-copy-import)
+    ("cm"                 . kadir/python-copy-mock)
+    ("cp"                 . kadir/python-copy-pytest)
+
+    ;; m
+    ("mt"                 . kadir/move-to-top)
+    ))
 
 
 

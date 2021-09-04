@@ -6,10 +6,9 @@
   :straight (:type built-in)
   :init
   (kadir/beatiful-org-todo)
-  (add-hook 'org-mode-hook 'kadir/org-mode-hooks)
   ;; Other package hooks
   (add-hook 'org-mode-hook #'visual-line-mode)
-  (add-hook 'org-mode-hook (lambda() (toggle-truncate-lines 1)))
+  ;; (add-hook 'org-mode-hook (lambda() (toggle-truncate-lines 1)))
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
   :bind (:map org-mode-map
@@ -17,7 +16,7 @@
               ("M-," . org-mark-ring-goto)
               ("C-a" . mwim-beginning-of-code-or-line)
               ("C-c ," . org-priority-up)
-              ("C-c s" . kadir/org-sort-by-priority)
+              ;; ("C-c s" . kadir/org-sort-by-priority)
               ;; ("ö p d" . org-priority-down)
               )
 
@@ -45,22 +44,18 @@
 
   (setq org-bullets-bullet-list '("✿" "⁖" "⁖" "." "." "."))
 
-  ;; (setq org-agenda-files '("~/Dropbox/org-roam/20200503174932-inbox.org"))
-  ;; org-agenda-start-day         "-0d"
-  ;; org-agenda-span              20
-  ;; org-agenda-start-on-weekday  nil
-
-  (setq org-capture-templates
-        '(("t" "Todo" entry (file "~/Dropbox/org-roam/20200503174932-inbox.org" )
-           "* %?\nAdded: \%u\n\%a")
-          ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
-           "* %?\n  Entered on %U\n  %i\n  %a")
-          ("p" "Protocol"
-           entry (file+headline "inbox.org" "Inbox")
-           "* %:description :RESEARCH:\n  #+BEGIN_QUOTE\n    %i\n\n     -- %:link %u\n  #+END_QUOTE\n\n%?")
-          ("L" "Protocol Link"
-           entry (file+headline "inbox.org" "Inbox")
-           "* %? [[%:link][%:description]] \n  Captured On: %u"))))
+  ;; (setq org-capture-templates
+  ;;       '(("t" "Todo" entry (file "~/Dropbox/org-roam/20200503174932-inbox.org" )
+  ;;          "* %?\nAdded: \%u\n\%a")
+  ;;         ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
+  ;;          "* %?\n  Entered on %U\n  %i\n  %a")
+  ;;         ("p" "Protocol"
+  ;;          entry (file+headline "inbox.org" "Inbox")
+  ;;          "* %:description :RESEARCH:\n  #+BEGIN_QUOTE\n    %i\n\n     -- %:link %u\n  #+END_QUOTE\n\n%?")
+  ;;         ("L" "Protocol Link"
+  ;;          entry (file+headline "inbox.org" "Inbox")
+  ;;          "* %? [[%:link][%:description]] \n  Captured On: %u")))
+  )
 
 (use-package org-fancy-priorities
   :custom
@@ -89,38 +84,37 @@
   )
 
 
-(use-package org-kanban
-  :init
-  ;; (add-hook 'before-save-hook 'org-update-all-dblocks)
-  (defun kadir/start-org-kanban-auto-refresh()
-    (interactive)
-    ;; adding to before save hook
-    (add-hook 'before-save-hook (lambda()
-                                  (when (derived-mode-p 'org-mode)
-                                    (org-update-all-dblocks))))
+;; (use-package org-kanban
+;;   :init
+;;   ;; (add-hook 'before-save-hook 'org-update-all-dblocks)
+;;   (defun kadir/start-org-kanban-auto-refresh()
+;;     (interactive)
+;;     ;; adding to before save hook
+;;     (add-hook 'before-save-hook (lambda()
+;;                                   (when (derived-mode-p 'org-mode)
+;;                                     (org-update-all-dblocks))))
 
-    ;; and auto refresh when it is not saved
-    (run-with-idle-timer
-     2.5 t
-     (lambda ()
-       (when (buffer-modified-p)
-         (org-update-all-dblocks)))))
+;;     ;; and auto refresh when it is not saved
+;;     (run-with-idle-timer
+;;      2.5 t
+;;      (lambda ()
+;;        (when (buffer-modified-p)
+;;          (org-update-all-dblocks)))))
 
-  (add-hook 'org-mode-hook 'kadir/start-org-kanban-auto-refresh))
+;;   (add-hook 'org-mode-hook 'kadir/start-org-kanban-auto-refresh))
 
 
 
 ;; import-export
 
-(use-package htmlize)
-(use-package org-web-tools)
+;; (use-package org-web-tools)
+;; (use-package htmlize)
 ;; (use-package ox-reveal)
 ;; (require 'ox-reveal)
 
 
 
 (load-file (expand-file-name "config/majors/k_org/roam.el" user-emacs-directory))
-(use-package org-web-tools)
 
 
 (provide 'k_org)
