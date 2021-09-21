@@ -107,3 +107,116 @@
 (global-set-key (kbd "s-,") '(lambda()(interactive)
                                (xref-pop-marker-stack)
                                (delete-frame)))
+
+
+(use-package zoom
+  :init
+  (zoom-mode)
+  (setq zoom-size '(85 . 22)))
+
+
+(setq kadir/last-next-line-count 0)
+(setq kadir/jit-lock-defer-time 0.1)
+
+(defun kadir/post-command(command N)
+  (lexical-let ((command command)
+                (kadir/last-next-line-count kadir/last-next-line-count)
+                (N N))
+
+
+    (run-with-idle-timer 0.1 t (lambda () (setq kadir/last-next-line-count 0)))
+
+    (lambda()
+      (if (eq last-command command)
+          (progn
+            (setq kadir/last-next-line-count (+ kadir/last-next-line-count 1))
+
+            (when (> kadir/last-next-line-count N)
+              (setq jit-lock-defer-time 0)
+              (condition-case nil
+
+                  (dotimes (i (min (/ kadir/last-next-line-count N) 10))
+                    (funcall (symbol-function command)))
+
+                (error nil))))
+
+        (setq jit-lock-defer-time kadir/jit-lock-defer-time)
+        (setq kadir/last-next-line-count 0)))))
+
+
+(add-hook 'post-command-hook (kadir/post-command 'next-line 45))
+(add-hook 'post-command-hook (kadir/post-command 'forward-char 45))
+(add-hook 'post-command-hook (kadir/post-command 'backward-char 45))
+(add-hook 'post-command-hook (kadir/post-command 'previous-line 45))
+(add-hook 'post-command-hook (kadir/post-command 'scroll-up-command 4))
+(add-hook 'post-command-hook (kadir/post-command 'scroll-down-command 4))
+;; (remove-hook 'post-command-hook 'kadir/post-command)
+
+(defun kadir/buffer-local-disable-jit-defering()
+  (make-variable-buffer-local 'kadir/jit-lock-defer-time)
+  (setq kadir/jit-lock-defer-time 0))
+
+(use-package svelte-mode
+  :config
+  (add-hook 'svelte-mode-hook  'kadir/buffer-local-disable-jit-defering)
+  (add-hook 'svelte-mode-hook  'lsp-deferred)
+  )
+
+
+
+(use-package magit-delta
+  :init
+  (add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1))))
+
+
+
+;; (electric-pair-mode)
+;; (setq electric-pair-preserve-balance nil)
+
+(use-package explain-pause-mode
+  :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
+  :init
+  (explain-pause-mode)
+  )
+;; (defun lsp--create-filter-function (workspace)(prin1 workspace))
+
+(use-package company-tabnine
+  :defer 20
+  :init
+  (defun kadir/company-tabnine-disable()
+    (interactive)
+    (setq company-backends (remove 'company-tabnine company-backends)))
+
+  (defun kadir/company-tabnine-enable()
+    (interactive)
+    (set (make-local-variable 'company-idle-delay) .15)
+    (set (make-local-variable 'company-tooltip-idle-delay) .15)
+    (set (make-local-variable 'company-echo-delay) .15)
+    (set (make-local-variable 'company-backends ) '(company-tabnine))
+    (set (make-local-variable 'lsp-completion-provider ) :none)
+    )
+
+  (setq company-tabnine--disable-next-transform nil)
+  (defun my-company--transform-candidates (func &rest args)
+    (if (not company-tabnine--disable-next-transform)
+        (apply func args)
+      (setq company-tabnine--disable-next-transform nil)
+      (car args)))
+
+  (defun my-company-tabnine (func &rest args)
+    (when (eq (car args) 'candidates)
+      (setq company-tabnine--disable-next-transform t))
+    (apply func args))
+
+  (advice-add #'company--transform-candidates :around #'my-company--transform-candidates)
+  (advice-add #'company-tabnine :around #'my-company-tabnine))
+
+;; (defun kadir/format-haha()
+;;   (interactive)
+;;   (kadir/dired-smart-open)
+;;   (lsp-format-buffer)
+;;   (save-buffer)
+;;   (kadir/last-buffer)
+;;   (next-line)
+;;   )
+;; (global-set-key (kbd "C-ü") 'kadir/format-haha)

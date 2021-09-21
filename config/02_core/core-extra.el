@@ -110,7 +110,14 @@
 (use-package google-translate
   :init
   (setq google-translate-default-source-language "auto"
-        google-translate-default-target-language "tr"))
+        google-translate-default-target-language "tr")
+
+  (with-eval-after-load 'google-translate
+    ;; fix from https://github.com/atykhonov/google-translate/issues/52#issuecomment-850813058
+    (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130))
+    (setq google-translate-backend-method 'curl))
+
+  )
 
 
 

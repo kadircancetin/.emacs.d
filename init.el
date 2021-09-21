@@ -117,3 +117,8 @@
 
 
 (global-so-long-mode 1)
+
+
+(use-package org
+  :straight (:type built-in))
+(load-file (expand-file-name "language-learn.el" user-emacs-directory))

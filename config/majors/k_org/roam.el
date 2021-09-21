@@ -4,12 +4,15 @@
   (interactive)
 
   ;; open backlink buffer automaticly, set dark background
-  (unless (get-buffer-window org-roam-buffer)
-    (org-roam-buffer-toggle)
-    ;; set dark background
-    (with-selected-window (get-buffer-window org-roam-buffer)
-      (kadir/darken-background))
-    ))
+
+  (require 'org-roam-mode)
+
+  (when (and (buffer-file-name) (f-parent-of? org-roam-directory (buffer-file-name)) )
+    (unless (get-buffer-window org-roam-buffer)
+      (org-roam-buffer-toggle)
+      (with-selected-window (get-buffer-window org-roam-buffer)
+        (kadir/darken-background))
+      )))
 
 
 (use-package org-roam
@@ -18,16 +21,16 @@
   (setq org-roam-v2-ack t)
   (setq org-roam-directory "~/Dropbox/org-roam")
 
-
+  (setq org-roam-list-files-commands '(rg))
   ;; org roam buffer displaying
   (add-to-list 'display-buffer-alist
                '("\\*org-roam\\*"
                  (display-buffer-in-side-window)
-                 (side . right)
+                 (side . left)
                  (slot . 0)
-                 (window-width . 0.25)
+                 (window-width . 0.33)
                  (preserve-size . (t nil))
-                 (window-parameters . (;; (no-other-window . t)
+                 (window-parameters . ((no-other-window . t)
                                        (no-delete-other-windows . t)))))
 
 
@@ -43,8 +46,74 @@
   (define-key org-roam-mode-map [mouse-1] #'org-roam-visit-thing) ;; mouse support for backlink buffer
 
 
+  ;; helm thing https://github.com/org-roam/org-roam/wiki/Hitchhiker's-Rough-Guide-to-Org-roam-V2
+  (cl-defmethod org-roam-node-directories ((node org-roam-node))
+    (if-let ((dirs (file-name-directory (file-relative-name (org-roam-node-file node) org-roam-directory))))
+        (format "(%s)" (car (f-split dirs)))
+      ""))
+
+  (cl-defmethod org-roam-node-backlinkscount ((node org-roam-node))
+    (let* ((count (caar (org-roam-db-query
+                         [:select (funcall count source)
+                                  :from links
+                                  :where (= dest $s1)
+                                  :and (= type "id")]
+                         (org-roam-node-id node)))))
+      (format "[%d]" count)))
+
+  (setq org-roam-node-display-template "${title:100} ${tags:10} ${backlinkscount:6}")
   )
 
+
+
+;; https://github.com/org-roam/org-roam/issues/1853
+(with-eval-after-load 'org-roam-mode
+  (setq kadir/calculation-done nil)
+
+  (defun org-roam-buffer-persistent-redisplay ()
+    (when-let ((node (org-roam-node-at-point)))
+      (when (or (not (equal node org-roam-buffer-current-node))
+                (not (eq kadir/calculation-done :DONE)))
+        (setq org-roam-buffer-current-node node
+              org-roam-buffer-current-directory org-roam-directory)
+        (with-current-buffer (get-buffer-create org-roam-buffer)
+          (org-roam-buffer-render-contents)
+          (add-hook 'kill-buffer-hook #'org-roam-buffer--persistent-cleanup-h nil t)))))
+
+  (defun kadir/org-roam--idle-timer-function()
+    (when (not (eq major-mode 'org-roam-mode))
+      (setq kadir/calculation-done
+            (while-no-input
+              (get-buffer-window org-roam-buffer)
+              (org-roam-buffer--redisplay-h)
+              :DONE))
+
+      (unless (eq kadir/calculation-done :DONE)
+        (with-current-buffer (get-buffer-create org-roam-buffer)
+          (let ((inhibit-read-only t))
+            (erase-buffer)
+            (insert "please don't press key for calculating..."))))))
+
+
+  (setq kadir/idle-timer-setted nil)
+
+  (defun org-roam-buffer--setup-redisplay-h ()
+    (unless kadir/idle-timer-setted
+      (run-with-idle-timer 0.2 t 'kadir/org-roam--idle-timer-function)
+      (setq kadir/idle-timer-setted t))))
+
+(with-eval-after-load 'org-roam-mode
+  (setq org-roam-fontify-buffer (get-buffer-create "*org-roam-fontify-buffer*"))
+  (with-current-buffer org-roam-fontify-buffer
+    (org-mode))
+
+  (defun org-roam-fontify-like-in-org-mode (s)
+    (with-current-buffer org-roam-fontify-buffer
+      (erase-buffer)
+      (insert s)
+      (let ((org-ref-buffer-hacked t))
+        (org-font-lock-ensure)
+        (buffer-string)))))
 
 (use-package org-roam-ui
   :straight

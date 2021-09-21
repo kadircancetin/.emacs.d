@@ -73,6 +73,7 @@
     ;; r
     ("rl"                 . org-roam)
     ("rf"                 . (lambda() (interactive)(require 'helm)(org-roam-node-find)))
+    ("ri"                 . (lambda() (interactive)(org-roam-node-insert)))
 
     ;; c
     ("ci"                 . kadir/python-copy-import)

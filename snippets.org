@@ -267,6 +267,62 @@
     (when (derived-mode-p 'imenu-list-major-mode)
       (delete-window))))
 #+end_src
+* avy
+#+begin_src emacs-lisp
+(use-package avy
+  :bind (;; ("C-q" . avy-goto-char)
+         ("C-q" . avy-goto-line)
+         ;; ("M-g f" . avy-goto-line)
+         ;; ("M-g w" . avy-goto-word-1)
+         ;; ("M-g e" . avy-goto-word-0)
+         )
+  :hook (after-init . avy-setup-default)
+  :config
+  (setq avy-all-windows t
+        avy-background t
+        avy-style 'pre
+        avy-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?q ?ı ?w ?e ;;?u ?n ?m ?v ?ı ?o ?x ?ü ?i)))
+
+(defun avy-goto-word-2 (char1 char2 &optional arg beg end symbol)
+    ;; inpired: https://github.com/abo-abo/avy/issues/198
+    (interactive (list (read-char "char 1: " t)
+                       (read-char "char 2: " t)
+                       current-prefix-arg))
+    (avy-with avy-goto-word-2
+      (let* ((str1 (string char1))
+             (str2 (string char2))
+             (regex1 (cond ((string= str1 ".")
+                            "\\.")
+                           ((and avy-word-punc-regexp
+                                 (string-match avy-word-punc-regexp str1))
+                            (regexp-quote str1))
+                           ((<= char1 26)
+                            str1)
+                           (t
+                            (concat
+                             (if symbol "\\_<" "\\b")
+                             str1))))
+             (regex2 (cond ((string= str2 ".")
+                            "\\.")
+                           ((and avy-word-punc-regexp
+                                 (string-match avy-word-punc-regexp str2))
+                            (regexp-quote str2))
+                           ((<= char2 26)
+                            str2)
+                           (t
+                            str2)))
+             (regex (concat regex1 regex2)))
+
+        (avy-jump regex
+                  :window-flip arg
+                  :beg beg
+                  :end end)
+
+        )))
+
+#+end_src
+
+
 * Dap mode
 #+BEGIN_SRC emacs-lisp
 (use-package dap-mode
