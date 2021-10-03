@@ -70,9 +70,10 @@
 
 (use-package magit
   :config
-  (use-package magit-todos :hook (magit-mode . magit-todos-mode))
+  ;; (use-package magit-todos :hook (magit-mode . magit-todos-mode))
   (add-to-list 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
-  (add-hook 'magit-diff-mode-hook (lambda () (flyspell-mode 1)) 100))
+  (add-hook 'magit-diff-mode-hook (lambda () (flyspell-mode 1)) 100)
+  (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1))
 
 (use-package forge
   :after magit
