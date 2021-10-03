@@ -8,7 +8,9 @@
   :init
   (setq org-drill-save-buffers-after-drill-sessions-p nil)
   (setq org-drill-hide-item-headings-p t)
-  (setq org-drill-add-random-noise-to-intervals-p t))
+  (setq org-drill-add-random-noise-to-intervals-p t)
+  (setq org-drill-spaced-repetition-algorithm 'simple8)
+  (setq org-drill-adjust-intervals-for-early-and-late-repetitions-p t))
 
 
 
@@ -157,7 +159,5 @@
 
 
 (global-set-key (kbd "C-ç") 'kadir/dilogretio)
-(global-set-key (kbd "C-ü") 'kadir/gramarly)
-
-
+;; (global-set-key (kbd "C-g") 'kadir/gramarly)
 ;; Why are you talking like that to me? Kasf. asdf asf.
