@@ -164,10 +164,9 @@
 
 
 
-(use-package magit-delta
-  :init
-  (add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1))))
-
+;; (use-package magit-delta
+;;   :init
+;;   (add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1))))
 
 
 ;; (electric-pair-mode)
