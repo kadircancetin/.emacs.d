@@ -257,9 +257,11 @@
                   (setq last-tree (ht-get last-tree node))))
 
             ;; if not folder, then add-or-create to 'files list
-            (if (ht-get last-tree 'files)
-                (push node (ht-get last-tree 'files))
-              (ht-set! last-tree 'files (list node))))
+            (let ((file-node (ht ('name node)
+                                 ('file-path (concat (projectile-project-root) file)))))
+              (if (ht-get last-tree 'files)
+                  (push file-node (ht-get last-tree 'files))
+                (ht-set! last-tree 'files (list file-node)))))
 
           (setq file-parsed (cdr file-parsed))))
 
@@ -277,19 +279,23 @@
     ;;     }
     ;; }
 
-    (defun recursive-write (tree depth path)
+    (defun recursive-write (tree depth)
 
-
-      (let ((files (sort (ht-get tree 'files) 'string<)))
+      (let ((files (sort (ht-get tree 'files)
+                         (lambda (a b) (string< (ht-get a 'name) (ht-get b 'name))))))
         (dolist (file files)
           (dotimes (i depth) (insert "|  "))
           (when (eq depth 0) (insert "- "))
           (insert-text-button
-           file
+           (ht-get file 'name)
            'face 'link
            'action `(lambda (_button)
-                      (find-file ,(concat path file)))
+                      (find-file ,(ht-get file 'file-path)))
            'follow-link t)
+
+          (when (s-equals? current-buffer-name (ht-get file 'file-path))  ;; TODO: local is bind bad
+            (insert " <<--"))
+
           (insert "\n")))
 
       (when (eq depth 0) (insert "\n"))
@@ -302,14 +308,15 @@
             (dotimes (i depth) (insert "|  "))
             (insert key)
             (insert "\n")
-            (recursive-write (ht-get tree key) (+ 1 depth) (concat path key "/"))))))
+            (recursive-write (ht-get tree key) (+ 1 depth))))))
 
 
-    (let ((root (projectile-project-root)))
+    (let ((root (projectile-project-root))
+          (current-buffer-name (buffer-file-name (current-buffer))))
       (with-current-buffer (get-buffer-create "*kadir-buffers*")
         (erase-buffer)
         (insert root)
         (insert "\n\n")
-        (recursive-write files-trees 0 root)))))
+        (recursive-write files-trees 0)))))
 
 (add-hook 'buffer-list-update-hook 'refresh-kadir-opened-buffers)
