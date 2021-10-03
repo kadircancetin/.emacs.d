@@ -220,3 +220,97 @@
 ;;   (next-line)
 ;;   )
 ;; (global-set-key (kbd "C-ü") 'kadir/format-haha)
+
+
+(require 'projectile)
+(require 'ht)
+
+(setq refresh-buff "*kadir-buffers*")
+(defun refresh-kadir-opened-buffers()
+  (interactive)
+  (unless (eq (current-buffer) (get-buffer-create refresh-buff))
+    (setq all-files
+          (-non-nil (--map
+                     (s-chop-prefix (projectile-project-root) (buffer-file-name it))
+                     (projectile-project-buffers))))
+
+
+    (setq files-trees (ht-create))
+    ;;LOOP
+    (dolist (file all-files)
+
+      (setq file-parsed  (s-split "/" file))
+
+      (setq last-tree files-trees)
+      (while (> (length file-parsed) 0)
+        (let ((node (car file-parsed)))
+          (if (> (length file-parsed) 1)
+              (progn
+                ;; if folder
+                (if (not (ht-get last-tree node))
+                    ;; if folder but not setted on hashtable
+                    (progn
+                      (setq inner-tree (ht-create))
+                      (ht-set! last-tree node inner-tree)
+                      (setq last-tree inner-tree))
+
+                  ;; if folder and setted on hashtable
+                  (setq last-tree (ht-get last-tree node))))
+
+            ;; if not folder, then add-or-create to 'files list
+            (if (ht-get last-tree 'files)
+                (push node (ht-get last-tree 'files))
+              (ht-set! last-tree 'files (list node))))
+
+          (setq file-parsed (cdr file-parsed))))
+
+      )
+    ;; files-trees =
+    ;; {
+    ;;     "folder": {
+    ;;         files:["a.py", "b.py"],
+    ;;         "inner": {
+    ;;             files: ["a.py"]
+    ;;         }
+    ;;     },
+    ;;     "folder2": {
+    ;;         files: ["x.py"]
+    ;;     }
+    ;; }
+
+    (defun recursive-write (tree depth path)
+
+
+      (let ((files (sort (ht-get tree 'files) 'string<)))
+        (dolist (file files)
+          (dotimes (i depth) (insert "|  "))
+          (when (eq depth 0) (insert "- "))
+          (insert-text-button
+           file
+           'face 'link
+           'action `(lambda (_button)
+                      (find-file ,(concat path file)))
+           'follow-link t)
+          (insert "\n")))
+
+      (when (eq depth 0) (insert "\n"))
+
+      (let ((folders (sort (ht-keys tree) 'string<)))
+
+        (dolist (key folders)
+          (unless (eq key 'files)
+
+            (dotimes (i depth) (insert "|  "))
+            (insert key)
+            (insert "\n")
+            (recursive-write (ht-get tree key) (+ 1 depth) (concat path key "/"))))))
+
+
+    (let ((root (projectile-project-root)))
+      (with-current-buffer (get-buffer-create "*kadir-buffers*")
+        (erase-buffer)
+        (insert root)
+        (insert "\n\n")
+        (recursive-write files-trees 0 root)))))
+
+(add-hook 'buffer-list-update-hook 'refresh-kadir-opened-buffers)
