@@ -220,19 +220,44 @@
 ;;   )
 ;; (global-set-key (kbd "C-ü") 'kadir/format-haha)
 
+
 
 (require 'projectile)
 (require 'ht)
 
 (setq refresh-buff "*kadir-buffers*")
+;; TODO: kill buffer shortcut
+;; TODO: make buffer name for buffer name confict
+
+(setq git-files '())
+(defun update-git-changes()
+  (condition-case nil
+      (make-process
+       :command `("bash" "-c" ,(format "cd %s; git status -s | cut -c4-" (projectile-project-root)))
+       :name "async-process"
+       :filter (lambda (process output)
+                 (setq git-files
+                       (--filter (and
+                                  (not (s-ends-with? "/" it))
+                                  (not (s-contains? ".#" it))
+                                  (not (s-equals? "" it)))
+                                 (s-split "\n" output)))
+                 ;; TODO: sure process is ended
+                 (run-with-idle-timer 0.05 nil 'refresh-kadir-opened-buffers)))
+    (error nil)))
+
+
 (defun refresh-kadir-opened-buffers()
   (interactive)
-  (unless (eq (current-buffer) (get-buffer-create refresh-buff))
-    (setq all-files
+  (unless (or (eq (current-buffer) (get-buffer-create refresh-buff))
+              (not (projectile-project-root)))
+
+    (setq buffer-files
           (-non-nil (--map
                      (s-chop-prefix (projectile-project-root) (buffer-file-name it))
                      (projectile-project-buffers))))
 
+    (setq all-files  (-distinct (append git-files buffer-files)))
 
     (setq files-trees (ht-create))
     ;;LOOP
@@ -258,6 +283,7 @@
 
             ;; if not folder, then add-or-create to 'files list
             (let ((file-node (ht ('name node)
+                                 ('relative-path file)
                                  ('file-path (concat (projectile-project-root) file)))))
               (if (ht-get last-tree 'files)
                   (push file-node (ht-get last-tree 'files))
@@ -279,23 +305,42 @@
     ;;     }
     ;; }
 
+    (setq windows-buffers (-distinct (-non-nil (--map (buffer-file-name (window-buffer it))
+                                                      (window-list)))))
+
+    (defface link-bold2
+      '((t :inherit link :weight bold))
+      "kad"
+      :version "26.1"
+      :group 'basic-faces
+      :group 'display-line-numbers)
+
     (defun recursive-write (tree depth)
 
       (let ((files (sort (ht-get tree 'files)
-                         (lambda (a b) (string< (ht-get a 'name) (ht-get b 'name))))))
+                         (lambda (a b) (string< (ht-get a 'name) (ht-get b 'name)))))
+            (button-face nil))
+
         (dolist (file files)
           (dotimes (i depth) (insert "|  "))
           (when (eq depth 0) (insert "- "))
+
+          (when (-contains? git-files (ht-get file 'relative-path))  ;; TODO: should more fast
+            (setq button-face 'link-visited))
+          (when (-contains? buffer-files (ht-get file 'relative-path)) ;; TODO: should more fast
+            (setq button-face 'link))
+          (when (-contains? windows-buffers (ht-get file 'file-path)) ;; TODO: should more fast
+            (setq button-face 'link-bold2))
+
           (insert-text-button
            (ht-get file 'name)
-           'face 'link
+           'face button-face
            'action `(lambda (_button)
                       (find-file ,(ht-get file 'file-path)))
            'follow-link t)
 
           (when (s-equals? current-buffer-name (ht-get file 'file-path))  ;; TODO: local is bind bad
-            (insert " <<--"))
-
+            (insert " <<----- "))
           (insert "\n")))
 
       (when (eq depth 0) (insert "\n"))
@@ -319,4 +364,14 @@
         (insert "\n\n")
         (recursive-write files-trees 0)))))
 
-(add-hook 'buffer-list-update-hook 'refresh-kadir-opened-buffers)
+(defun kadir/updater-activate()
+  (interactive)
+  (add-hook 'buffer-list-update-hook 'update-git-changes))
+
+(defun kadir/updater-deactivate()
+  (interactive)
+  (remove-hook 'buffer-list-update-hook 'update-git-changes))
+
+;; (kadir/updater-activate)
+;; (kadir/updater-deactivate)
+;; (update-git-changes)
