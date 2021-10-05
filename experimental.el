@@ -231,20 +231,23 @@
 
 (setq git-files '())
 (defun update-git-changes()
-  (condition-case nil
-      (make-process
-       :command `("bash" "-c" ,(format "cd %s; git status -s | cut -c4-" (projectile-project-root)))
-       :name "async-process"
-       :filter (lambda (process output)
-                 (setq git-files
-                       (--filter (and
-                                  (not (s-ends-with? "/" it))
-                                  (not (s-contains? ".#" it))
-                                  (not (s-equals? "" it)))
-                                 (s-split "\n" output)))
-                 ;; TODO: sure process is ended
-                 (run-with-idle-timer 0.05 nil 'refresh-kadir-opened-buffers)))
-    (error nil)))
+  (setq git-files '())
+  (when (projectile-project-root)
+    (condition-case nil
+        (make-process
+         :command `("bash" "-c" ,(format "cd %s; git status -s | cut -c4-" (projectile-project-root)))
+         :name "async-process"
+         :sentinel (lambda (process event)
+                     (when (s-equals? event "finished\n")
+                       (refresh-kadir-opened-buffers)))
+         :filter (lambda (process output)
+                   (setq git-files
+                         (--filter (and
+                                    (not (s-ends-with? "/" it))
+                                    (not (s-contains? ".#" it))
+                                    (not (s-equals? "" it)))
+                                   (s-split "\n" output)))))
+      (error (message "err")))))
 
 
 (defun refresh-kadir-opened-buffers()
