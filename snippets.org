@@ -322,7 +322,6 @@
 
 #+end_src
 
-
 * Dap mode
 #+BEGIN_SRC emacs-lisp
 (use-package dap-mode
@@ -374,3 +373,11 @@
             (lambda (arg) (call-interactively #'dap-hydra))))
 
 #+END_SRC
+
+* zoom
+#+begin_src emacs-lisp
+  (use-package zoom
+    :init
+    (zoom-mode)
+    (setq zoom-size '(85 . 22)))
+#+end_src

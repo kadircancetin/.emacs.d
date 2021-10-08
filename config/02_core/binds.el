@@ -41,7 +41,6 @@
     ("it"                 . typo-suggest-ivy)
 
     ;; o
-    ("oi"                 . kadir/find-inbox)
     ("om"                 . kadir/find-messages)
     ("oc"                 . kadir/find-config)
     ("oe"                 . kadir/find-experimental-config)

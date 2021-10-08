@@ -13,7 +13,11 @@
 (use-package undo-tree
   :defer 0.5
   :config
-  (global-undo-tree-mode))
+  (global-undo-tree-mode)
+  ;; (setq undo-limit 1600)
+  ;; (setq undo-tree-strong-limit 1600)
+  ;; (setq undo-tree-outer-limit 160000)
+  )
 
 (use-package expand-region
   :custom
@@ -54,18 +58,7 @@
    ("<tab>" . (lambda () (interactive) (company-abort) (yas-next-field))))
   :config
   (yas-global-mode 1)
-  (use-package yasnippet-snippets)
-  ;; (require 'helm)
-  ;; (use-package yasnippet-snippets)
-  ;; (setq yas-keymap nil
-  ;;       yas-minor-mode-map nil)
-  ;; (defadvice yas-insert-snippet (before yas-activate activate)
-  ;;   (yas-minor-mode 1))
-  ;; (add-to-list 'helm-quit-hook
-  ;;              (lambda()
-  ;;                (remove-hook 'post-command-hook #'yas--post-command-handler t)
-  ;;                (remove-hook 'auto-fill-mode-hook #'yas--auto-fill-wrapper)))
-  )
+  (use-package yasnippet-snippets))
 
 
 (use-package magit
@@ -75,15 +68,15 @@
   (add-hook 'magit-diff-mode-hook (lambda () (flyspell-mode 1)) 100)
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1))
 
-(use-package forge
-  :after magit
-  :custom
-  (forge-create-pullreq-prefix "STAGING -")
-  :config
-  (defadvice magit-pull-from-upstream (after forge-pull activate)
-    (forge-pull))
-  (defadvice magit-fetch-all (after forge-pull activate)
-    (forge-pull)))
+;; (use-package forge
+;;   :after magit
+;;   :custom
+;;   (forge-create-pullreq-prefix "STAGING -")
+;;   :config
+;;   (defadvice magit-pull-from-upstream (after forge-pull activate)
+;;     (forge-pull))
+;;   (defadvice magit-fetch-all (after forge-pull activate)
+;;     (forge-pull)))
 
 
 (use-package git-link

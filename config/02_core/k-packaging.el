@@ -25,8 +25,8 @@
 
 (straight-use-package 'no-littering)
 (require 'no-littering)
-(setq auto-save-file-name-transforms
-      `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+;; (setq auto-save-file-name-transforms
+;;       `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
 (if (file-exists-p custom-file)
     (load-file custom-file))

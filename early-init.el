@@ -1,61 +1,27 @@
 (defvar kadir/emacs-fast-open (member "-fo" command-line-args))
 (setq command-line-args (delete "-fo" command-line-args))
 
-(defvar kadir/emacs-open-with-doom (member "-doom" command-line-args))
-(setq command-line-args (delete "-doom" command-line-args))
-
 (defvar kadir/default-font-size 110)
 (when kadir/emacs-fast-open (setq kadir/default-font-size 115))
 
 
 
-;; (toggle-debug-on-error)
-;; (add-to-list 'load-path "/Users/kadir/.emacs.d/straight/repos/benchmark-init-el/")
-;; (require 'benchmark-init)
-;; (require 'benchmark-init-modes)
-;; (benchmark-init/activate)
+(setq gc-cons-threshold most-positive-fixnum)
+(defvar file-name-handler-alist-original file-name-handler-alist)
+(setq file-name-handler-alist nil)
+(setq gc-cons-percentage 0.1)
+(run-with-idle-timer 3 nil (lambda () (setq file-name-handler-alist file-name-handler-alist-original)))
 
 
-
-(defun k/set-garbage-collection()
-  "source: https://emacs.stackexchange.com/questions/34342/"
-  (defconst k-gc most-positive-fixnum)
-
-  (defun fk/defer-garbage-collection ()
-    (setq gc-cons-threshold most-positive-fixnum))
-
-  (defun fk/restore-garbage-collction ()
-    (run-at-time 1 nil (lambda () (setq gc-cons-threshold k-gc))))
-
-  (add-hook 'minibuffer-setup-hook 'fk/defer-garbage-collection)
-  (add-hook 'minibuffer-exit-hook 'fk/restore-garbage-collction)
-
-  (defvar file-name-handler-alist-original file-name-handler-alist)
-
-  (setq gc-cons-percentage 0.8)
-  (fk/defer-garbage-collection)
-  (setq file-name-handler-alist nil)
-  (run-with-idle-timer
-   3 nil
-   (lambda ()
-     (fk/restore-garbage-collction)
-     (setq file-name-handler-alist file-name-handler-alist-original)
-     (makunbound 'gc-cons-threshold-original)
-     (makunbound 'file-name-handler-alist-original)
-     ;; (message "gc-cons-threshold and file-name-handler-alist restored")
-     ))
-
-  ;; (add-hook 'after-focus-out-hook (lambda() (garbage-collect)))
-  ;; (run-with-timer nil (* 10) (lambda () (run-with-idle-timer 120 nil 'garbage-collect)))
-  (run-with-idle-timer 300 nil 'garbage-collect)
-  )
-
 (defun k/set-init-package-disabling ()
   ;;(setq-default comp-deferred-compilation t)
   (setq package-enable-at-startup nil)
   ;; (setq load-prefer-newer t)
   (setq load-prefer-newer noninteractive))
 
+(k/set-init-package-disabling)
+
+
 (defun k/set-init--window-devider ()
   (setq window-divider-default-places t
         window-divider-default-bottom-width 1
@@ -75,10 +41,9 @@
 
   (k/set-init--window-devider)
 
-  (when (not kadir/emacs-fast-open)
-    ;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
-    (add-to-list 'default-frame-alist '(height . 54))
-    (add-to-list 'default-frame-alist '(width . 120)))
+  ;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (add-to-list 'default-frame-alist '(height . 54))
+  (add-to-list 'default-frame-alist '(width . 120))
 
   (set-face-attribute 'window-divider nil :foreground "#4C4262")
 
@@ -93,9 +58,5 @@
   (set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro" :italic t :weight 'bold))
 
 
+(k/set-init-ui)
 
-
-(when (not kadir/emacs-open-with-doom)
-  ;; (k/set-garbage-collection)
-  (k/set-init-package-disabling)
-  (k/set-init-ui))
