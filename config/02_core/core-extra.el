@@ -9,10 +9,8 @@
 (use-package ace-window)
 (use-package su :init (su-mode 1))
 (use-package ivy)
-
-
-(use-package all-the-icons
-  :defer 0.5)
+(use-package string-inflection)
+(use-package all-the-icons :defer 0.5)
 
 (use-package undo-tree
   :defer 0.5
@@ -49,6 +47,7 @@
   (wrap-region-global-mode t))
 
 (use-package yasnippet
+  :defer 3
   :custom
   (yas-indent-line nil)
   (yas-inhibit-overlay-modification-protection t)
@@ -67,20 +66,22 @@
 
 (use-package magit
   :config
+  (defun kadir/cool-spell()
+    (spell-fu-mode 1)
+
+    (setq-local
+     face-remapping-alist
+     '((spell-fu-incorrect-face (:box
+                                 (:line-width (2 . 2) :color "grey75" :style
+                                              released-button)))))
+    (setq-local spell-fu-idle-delay -1))
+
   ;; (use-package magit-todos :hook (magit-mode . magit-todos-mode))
   (add-to-list 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
-  (add-hook 'magit-diff-mode-hook (lambda () (flyspell-mode 1)) 100)
+  (add-hook 'magit-diff-mode-hook 'kadir/cool-spell 100)
+  (add-hook 'magit-mode-hook 'kadir/cool-spell 100)
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1))
 
-;; (use-package forge
-;;   :after magit
-;;   :custom
-;;   (forge-create-pullreq-prefix "STAGING -")
-;;   :config
-;;   (defadvice magit-pull-from-upstream (after forge-pull activate)
-;;     (forge-pull))
-;;   (defadvice magit-fetch-all (after forge-pull activate)
-;;     (forge-pull)))
 
 
 (use-package git-link
@@ -102,8 +103,7 @@
 (use-package wakatime-mode
   :defer 2
   :config
-  (global-wakatime-mode t)
-  (message "waka loaded"))
+  (global-wakatime-mode t))
 
 (use-package google-translate
   :init
@@ -113,9 +113,7 @@
   (with-eval-after-load 'google-translate
     ;; fix from https://github.com/atykhonov/google-translate/issues/52#issuecomment-850813058
     (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130))
-    (setq google-translate-backend-method 'curl))
-
-  )
+    (setq google-translate-backend-method 'curl)))
 
 
 
@@ -184,8 +182,12 @@
   (winum-mode))
 
 
-
-(use-package string-inflection)
+(use-package gcmh
+  :init
+  (gcmh-mode)
+  (setq garbage-collection-messages t)
+  (setq gcmh-verbose t)
+  (setq gcmh-idle-delay 2))
 
 
 

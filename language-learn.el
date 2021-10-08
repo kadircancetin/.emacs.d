@@ -75,13 +75,6 @@
   (insert (kadir/dilogretio-org-capture-insert-text text)))
 
 
-(use-package grammarly)
-(require 'grammarly)
-(require 'json)
-(use-package org-web-tools)
-(require 'org-web-tools)
-
-
 (setq posframe-buf-name "*scratch*")
 (setq ex-json-data nil)
 
@@ -131,8 +124,6 @@
         (goto-char (point-max))
         (insert text)))))
 
-(add-to-list 'grammarly-on-message-function-list 'test-on-message)
-
 (defun kadir/gramarly-result-to-buffer(text)
   (interactive)
   (setq kadir/before-gramarly-selected-frame (selected-frame))
@@ -150,6 +141,13 @@
     (kadir/dilogretio-org-capture text)))
 
 (defun kadir/gramarly()
+  (use-package grammarly)
+  (require 'grammarly)
+  (require 'json)
+  (use-package org-web-tools)
+  (require 'org-web-tools)
+  (add-to-list 'grammarly-on-message-function-list 'test-on-message)
+
   (interactive)
   (let ((text (if (region-active-p)
                   (buffer-substring-no-properties (region-beginning) (region-end))
@@ -157,7 +155,3 @@
     (kadir/gramarly-result-to-buffer text)))
 
 
-
-(global-set-key (kbd "C-ç") 'kadir/dilogretio)
-;; (global-set-key (kbd "C-g") 'kadir/gramarly)
-;; Why are you talking like that to me? Kasf. asdf asf.

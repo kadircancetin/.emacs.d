@@ -15,13 +15,6 @@
 
   (require 'def-confs)
   (require 'k-packaging)
-  (use-package gcmh
-    :init
-    (gcmh-mode)
-    (setq garbage-collection-messages t)
-    (setq gcmh-verbose t)
-    (setq gcmh-idle-delay 2))
-
   (require 'k-helm)
   (require 'core-extra)
   (require 'k_company)

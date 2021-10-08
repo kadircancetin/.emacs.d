@@ -1,6 +1,3 @@
-(require 'use-package)
-
-
 ;; (use-package syntactic-close)
 ;; (global-set-key (kbd "M-m") 'syntactic-close)
 
@@ -8,7 +5,7 @@
 
 (global-set-key (kbd "M-:") 'xref-find-definitions-other-window)
 
-(setq jit-lock-defer-time 0.1
+(setq jit-lock-defer-time 0.25
       jit-lock-context-time 0.3
       jit-lock-chunk-size 1000
       jit-lock-stealth-time 2)
@@ -27,44 +24,7 @@
 (load-file (expand-file-name "side-window.el" user-emacs-directory))
 (global-set-key (kbd "M-ü") 'kadir/smart-push-pop)
 
-
 
-
-(use-package tree-sitter
-  :straight
-  (tree-sitter :host github
-               :repo "ubolonton/emacs-tree-sitter"
-               :files ("lisp/*.el")))
-
-(use-package tree-sitter-langs
-  :straight
-  (tree-sitter-langs :host github
-                     :repo "ubolonton/emacs-tree-sitter"
-                     :files ("langs/*.el" "langs/queries")))
-
-(add-hook 'python-mode-hook  (lambda () (require 'tree-sitter-langs) (tree-sitter-hl-mode)))
-(add-hook 'python-mode-hook  (lambda () (rainbow-delimiters-mode-disable)))
-
-
-
-(use-package gcmh
-  :init
-  (gcmh-mode)
-  (setq garbage-collection-messages t)
-  (setq gcmh-verbose t)
-  (setq gcmh-idle-delay 2))
-
-
-;; (use-package which-key
-;;   :defer 3
-;;   :config
-;;   (which-key-mode)
-;;   (which-key-setup-side-window-bottom)
-;;   (setq which-key-idle-delay 2.0)
-;;   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
-
-
-
 
 (defun make-peek-frame (find-definition-function &rest args)
   ;; main source: https://tuhdo.github.io/emacs-frame-peek.html
@@ -155,15 +115,11 @@
 
 
 
-;; (use-package magit-delta
-;;   :init
-;;   (add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1))))
-
-
 ;; (electric-pair-mode)
 ;; (setq electric-pair-preserve-balance nil)
 
 (use-package explain-pause-mode
+  :defer 1
   :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
   :init
   (explain-pause-mode)
@@ -214,6 +170,7 @@
 
 
 (load-file (expand-file-name "language-learn.el" user-emacs-directory))
+(global-set-key (kbd "C-ç") 'kadir/dilogretio)
 
 
 
@@ -224,56 +181,67 @@
 
 
 
-(use-package mood-line
+(use-package spell-fu
+  :defer nil
   :init
-  (mood-line-mode)
-  (remove-hook 'flycheck-status-changed-functions #'mood-line--update-flycheck-segment)
-  (remove-hook 'flycheck-mode-hook #'mood-line--update-flycheck-segment)
+
+  (setq-default spell-fu-faces-include
+                '(tree-sitter-hl-face:comment
+                  tree-sitter-hl-face:doc
+                  tree-sitter-hl-face:string
+                  tree-sitter-hl-face:function
+                  tree-sitter-hl-face:variable
+                  tree-sitter-hl-face:constructor
+                  tree-sitter-hl-face:constant
+                  default
+                  font-lock-type-face
+                  font-lock-variable-name-face
+                  font-lock-comment-face
+                  font-lock-doc-face
+                  font-lock-string-face
+
+                  magit-diff-added-highlight
+                  ))
 
   :config
-  (defun mood-line-segment-buffer-name()
-    (require 's)
 
-    (let ((is-file (buffer-file-name (current-buffer))))
+  ;; for styling
+  (custom-set-faces
+   '(spell-fu-incorrect-face ((t (:underline (:color "Olivedrab4" :style wave))))))
 
-      (if (not is-file)
-          (propertize (format-mode-line "%b") 'face 'mood-line-buffer-name)
-
-        (progn
-          (let* ((full-path (buffer-file-name (current-buffer)))
-                 (relative-path (s-chop-prefix (projectile-project-root)  full-path))
-                 (file-splitted (s-split "/" relative-path))
-                 (file-name (concat (nth (- (length file-splitted) 1) file-splitted)))
-                 (folder-name (s-chop-suffix file-name relative-path)))
-
-            (concat
-             (propertize folder-name 'face 'mood-line-status-neutral)
-             (propertize file-name 'face 'mood-line-major-mode)
-             " "))))))
-
-  (defun mood-line-segment-modified ()
-    "Displays a color-coded buffer modification/read-only indicator in the mode-line."
-    (if (not (string-match-p "\\*.*\\*" (buffer-name)))
-        (if (buffer-modified-p)
-            (propertize " ** " 'face '((t (:background "red" :foreground "black"))))
-          (if (and buffer-read-only (buffer-file-name))
-              (propertize "■ " 'face 'mood-line-unimportant)
-            "  "))
-      "  "))
+  ;; (custom-set-faces
+  ;;  '(spell-fu-incorrect-face
+  ;;    ((t (:box
+  ;;         (:line-width (1 . 1) :color "grey75" :style released-button))))))
 
 
-  (setq-default mode-line-format
-                '((:eval
-                   (mood-line--format
-                    ;; Left
-                    (format-mode-line
-                     '(" "
-                       (:eval (mood-line-segment-modified))
-                       (:eval (mood-line-segment-buffer-name))
-                       (:eval (mood-line-segment-multiple-cursors))))
+  ;; for make sure aspell settings are correct (sometimes "en" not true)
+  (setq ispell-program-name "aspell")
+  (setq ispell-dictionary "en")
 
-                    ;; Right
-                    (format-mode-line
-                     '((:eval (mood-line-segment-vc))
-                       (:eval (mood-line-segment-major-mode))
-                       " ")))))))
+  ;; for camel case support
+  (setq-default case-fold-search nil)
+  (setq-default spell-fu-word-regexp (rx (maximal-match
+                                          (or
+                                           (one-or-more lower)
+                                           (and upper
+                                                (zero-or-more lower))))))
+
+  ;; for save dictionaries forever
+  (setq spell-fu-directory "~/Dropbox/spell-fu-tmp/")
+  (setq ispell-personal-dictionary "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")
+
+
+  ;; for if I want to check personal dict file
+  (defun kadir/open-fly-a-spell-fu-file()
+    (interactive)
+    (find-file (file-truename "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")))
+
+  ;; start spell-fu
+  (global-spell-fu-mode)
+
+  ;; for all kind of face check
+  ;; (defun spell-fu--check-range-with-faces (point-start point-end)
+  ;;   (spell-fu--check-range-without-faces point-start point-end))
+
+  )

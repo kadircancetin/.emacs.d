@@ -24,7 +24,6 @@
     ("ç"                 . (lambda() (interactive) (eval-buffer) (message "eval") (save-buffer)))
     ("j"                 . dumb-jump-go)
 
-    ("n"                . flyspell-goto-next-error)
     ;; D
     ("dm"                 . (lambda() (interactive)
                               (let ((helm-rg-default-glob-string "models.py"))
@@ -151,9 +150,9 @@
    ("C-x g"           . magit-status)
 
    ;; fonts
-   ("C-+"                . kadir/font-size-bigger)
-   ("C--"                . kadir/font-size-smaller)
-   ("C-c c"                 . (lambda()(interactive)(org-capture nil "t")))
+   ("C-+"             . kadir/font-size-bigger)
+   ("C--"             . kadir/font-size-smaller)
+   ("C-c c"           . (lambda()(interactive)(org-capture nil "t")))
    )
  )
 

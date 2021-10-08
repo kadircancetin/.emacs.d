@@ -235,14 +235,38 @@
 
 #+begin_src emacs-lisp
   (use-package wucuo
-  :init
-  (setq ispell-program-name "aspell")
-  (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together" "--run-together-limit=16" "--camel-case"))
+    :init
+    (setq ispell-program-name "aspell")
+    (setq ispell-extra-args '("--sug-mode=ultra" "--Lang=en_US" "--run-together" "--run-together-limit=16" "--camel-case"))
 
-  (setq wucuo-flyspell-start-mode "normal")
-  (add-hook 'prog-mode-hook #'wucuo-start)
-  (add-hook 'text-mode-hook #'wucuo-start)
-  (setq wucuo-personal-font-faces-to-check '(font-lock-type-face)))
+    (setq wucuo-debug t)
+    (setq wucuo-flyspell-start-mode "fast")
+    (add-hook 'prog-mode-hook #'wucuo-start)
+    (add-hook 'text-mode-hook #'wucuo-start)
+    (setq wucuo-personal-font-faces-to-check '(font-lock-type-face))
+
+    (setq kadir/wucuo-safe-words
+          '("kadir"
+            "alist"
+            "serializer"
+            ))
+
+    (defun kadir/wucuo-not-check-function (word)
+      (if (-contains? kadir/wucuo-safe-words word)
+          (progn
+            (message "in: %s" word)
+            nil)
+        t)
+      )
+
+    (setq wucuo-extra-predicate #'kadir/wucuo-not-check-function)
+
+    (defun kadir/open-fly-a-wucuo-spell-file()
+      (interactive)
+      ;; (wucuo-create-aspell-personal-dictionary)
+      (find-file (file-truename (format "~/.aspell.%s.pws" wucuo-aspell-language-to-use))))
+
+    (setq wucuo-update-interval 0.5))
 #+end_src
 * imenu
 
@@ -442,5 +466,23 @@
   (setq doom-modeline-buffer-encoding nil)
   (setq doom-modeline-env-version nil)
   (doom-modeline-mode 1))
+
+#+end_src
+* which key
+#+begin_src emacs-lisp
+  (use-package which-key
+  :defer 3
+  :config
+  (which-key-mode)
+  (which-key-setup-side-window-bottom)
+  (setq which-key-idle-delay 2.0)
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+
+#+end_src
+* magit delta
+#+begin_src emacs-lisp
+  (use-package magit-delta
+    :init
+    (add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1))))
 
 #+end_src

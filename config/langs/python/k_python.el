@@ -3,6 +3,12 @@
 
 
 
+(add-hook 'python-mode-hook  (lambda () (require 'tree-sitter-langs) (tree-sitter-hl-mode)))
+(add-hook 'python-mode-hook  (lambda () (rainbow-delimiters-mode-disable)))
+
+
+
+
 (setq-default python-indent-guess-indent-offset-verbose nil)
 (setq-default python-shell-interpreter "ipython"
               python-shell-interpreter-args "-i")

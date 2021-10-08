@@ -87,14 +87,65 @@
                       spacemacs-theme-org-height nil)
         (load-theme 'spacemacs-dark t)
         (kadir/fix-some-colors 'spacemacs-dark)
-        )
-
-      ;; (use-package doom-themes
-      ;;   :init
-      ;;   (doom-themes-visual-bell-config))
-      )
+        ))
   (progn
     (global-hl-line-mode -1)))
+
+
+
+(use-package mood-line
+  :init
+  (mood-line-mode)
+  (remove-hook 'flycheck-status-changed-functions #'mood-line--update-flycheck-segment)
+  (remove-hook 'flycheck-mode-hook #'mood-line--update-flycheck-segment)
+
+  :config
+  (defun mood-line-segment-buffer-name()
+    (require 's)
+
+    (let ((is-file (buffer-file-name (current-buffer))))
+
+      (if (not is-file)
+          (propertize (format-mode-line "%b") 'face 'mood-line-buffer-name)
+
+        (progn
+          (let* ((full-path (buffer-file-name (current-buffer)))
+                 (relative-path (s-chop-prefix (projectile-project-root)  full-path))
+                 (file-splitted (s-split "/" relative-path))
+                 (file-name (concat (nth (- (length file-splitted) 1) file-splitted)))
+                 (folder-name (s-chop-suffix file-name relative-path)))
+
+            (concat
+             (propertize folder-name 'face 'mood-line-status-neutral)
+             (propertize file-name 'face 'mood-line-major-mode)
+             " "))))))
+
+  (defun mood-line-segment-modified ()
+    "Displays a color-coded buffer modification/read-only indicator in the mode-line."
+    (if (not (string-match-p "\\*.*\\*" (buffer-name)))
+        (if (buffer-modified-p)
+            (propertize " ** " 'face '((t (:background "red" :foreground "black"))))
+          (if (and buffer-read-only (buffer-file-name))
+              (propertize "■ " 'face 'mood-line-unimportant)
+            "  "))
+      "  "))
+
+
+  (setq-default mode-line-format
+                '((:eval
+                   (mood-line--format
+                    ;; Left
+                    (format-mode-line
+                     '(" "
+                       (:eval (mood-line-segment-modified))
+                       (:eval (mood-line-segment-buffer-name))
+                       (:eval (mood-line-segment-multiple-cursors))))
+
+                    ;; Right
+                    (format-mode-line
+                     '((:eval (mood-line-segment-vc))
+                       (:eval (mood-line-segment-major-mode))
+                       " ")))))))
 
 
 (use-package stripe-buffer
