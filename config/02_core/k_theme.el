@@ -89,47 +89,12 @@
         (kadir/fix-some-colors 'spacemacs-dark)
         )
 
-      (use-package doom-themes
-        :init
-        (doom-themes-visual-bell-config)
-        ;; (load-theme 'doom-peacock t)
-        ;; (kadir/fix-some-colors 'doom-peacock)
-
-        ;; (load-theme 'doom-laserwave t)
-        ;; (kadir/fix-some-colors 'doom-laserwave)
-
-        )
       ;; (use-package doom-themes
-      ;;   :custom-face
-      ;;   (cursor ((t (:background "blanchedalmond"))))
       ;;   :init
-      ;;   ;; flashing mode-line on errors
-      ;;   (doom-themes-visual-bell-config)
-      ;;   ;; corrects (and improves) org-mode's native fontification.
-      ;;   (doom-themes-org-config)
-      ;;   (load-theme 'doom-one t)
-
-      ;;   (kadir/fix-some-colors 'doom-one))
+      ;;   (doom-themes-visual-bell-config))
       )
   (progn
     (global-hl-line-mode -1)))
-
-
-(use-package doom-modeline
-  :defer nil
-  :config
-  (setq doom-modeline-bar-width         1
-        doom-modeline-height            1
-        doom-modeline-buffer-encoding   nil
-        ;; doom-modeline-buffer-modification-icon t
-        doom-modeline-vcs-max-length    20
-        doom-modeline-icon              t
-        ;; relative-to-project
-        doom-modeline-buffer-file-name-style 'relative-from-project)
-
-  (set-face-attribute 'mode-line nil :height kadir/default-font-size)
-  (set-face-attribute 'mode-line-inactive nil :height kadir/default-font-size)
-  (doom-modeline-mode 1))
 
 
 (use-package stripe-buffer

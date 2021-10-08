@@ -381,3 +381,66 @@
     (zoom-mode)
     (setq zoom-size '(85 . 22)))
 #+end_src
+
+* nano modeline
+#+begin_src emacs-lisp
+  (use-package nano-modeline
+  :straight (nano-modeline :type git :host github :repo "rougier/nano-modeline")
+  (require 'kadir-modeline)
+
+  (setq nano-modeline-position 'bottom)
+  (nano-modeline-mode 1)
+  (set-face-attribute 'nano-modeline-active-status-** nil :background "red")
+  (set-face-attribute 'nano-modeline-inactive-status-** nil :background "red")
+
+  (defun nano-modeline-default-mode ()
+
+    (when (buffer-file-name (current-buffer)))
+
+    (let* ((is-file (buffer-file-name (current-buffer)))
+           (relative-path (when is-file (s-chop-prefix (projectile-project-root) (buffer-file-name (current-buffer)) )))
+           (file-splitted (when is-file (s-split "/" relative-path)))
+           (file-name (if is-file
+                          (concat (nth (- (length file-splitted) 1) file-splitted))
+                        (format-mode-line "%b")))
+           (folder-name (when is-file (s-chop-suffix file-name relative-path)))
+           (mode-name   (nano-modeline-mode-name))
+           (branch      (nano-modeline-vc-branch))
+           (position    (format-mode-line "%l:%c")))
+
+
+      (nano-modeline-compose (nano-modeline-status)
+
+                             file-name
+
+                             (concat (when (and (not (s-equals? folder-name "")) folder-name)
+                                       (concat " (" folder-name ")  "))
+                                     "(" mode-name ")"
+                                     )
+                             (concat branch "  -  " position)))))
+#+end_src
+* doom mode line
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+  :defer nil
+  :config
+  (setq doom-modeline-bar-width         1
+        doom-modeline-height            1
+        doom-modeline-buffer-encoding   nil
+        ;; doom-modeline-buffer-modification-icon t
+        doom-modeline-vcs-max-length    20
+        doom-modeline-icon              t
+        ;; relative-to-project
+        doom-modeline-buffer-file-name-style 'relative-from-project)
+
+  (set-face-attribute 'mode-line nil :height kadir/default-font-size)
+  (set-face-attribute 'mode-line-inactive nil :height kadir/default-font-size)
+  (setq doom-modeline-lsp nil)
+  (setq doom-modeline-icon t)
+  (setq doom-modeline-minor-modes t)
+  (setq doom-modeline-major-mode-icon nil)
+  (setq doom-modeline-buffer-encoding nil)
+  (setq doom-modeline-env-version nil)
+  (doom-modeline-mode 1))
+
+#+end_src

@@ -26,7 +26,7 @@
          (save-place-mode 1)              ; save cursor position for next file opening, and restore it
          ;; (global-prettify-symbols-mode 1) ; lambda to cool lambda character
          (global-auto-revert-mode 1)
-         (column-number-mode 1)
+         ;; (column-number-mode 0)
          (global-auto-composition-mode 1))))
 
 (run-with-idle-timer

@@ -10,6 +10,10 @@
 (use-package su :init (su-mode 1))
 (use-package ivy)
 
+
+(use-package all-the-icons
+  :defer 0.5)
+
 (use-package undo-tree
   :defer 0.5
   :config
