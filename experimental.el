@@ -182,26 +182,27 @@
 
 
 (use-package spell-fu
-  :defer nil
+  ;; TODO: URLconf -> Lconf?
+  ;; AMKSENIN_akd_ASFN_asf_UR
+  ;;
+  :defer 1.11
   :init
 
-  (setq-default spell-fu-faces-include
-                '(tree-sitter-hl-face:comment
-                  tree-sitter-hl-face:doc
-                  tree-sitter-hl-face:string
-                  tree-sitter-hl-face:function
-                  tree-sitter-hl-face:variable
-                  tree-sitter-hl-face:constructor
-                  tree-sitter-hl-face:constant
-                  default
-                  font-lock-type-face
-                  font-lock-variable-name-face
-                  font-lock-comment-face
-                  font-lock-doc-face
-                  font-lock-string-face
-
-                  magit-diff-added-highlight
-                  ))
+  ;; (setq-default spell-fu-faces-include
+  ;;               '(tree-sitter-hl-face:comment
+  ;;                 tree-sitter-hl-face:doc
+  ;;                 tree-sitter-hl-face:string
+  ;;                 tree-sitter-hl-face:function
+  ;;                 tree-sitter-hl-face:variable
+  ;;                 tree-sitter-hl-face:constructor
+  ;;                 tree-sitter-hl-face:constant
+  ;;                 default
+  ;;                 font-lock-type-face
+  ;;                 font-lock-variable-name-face
+  ;;                 font-lock-comment-face
+  ;;                 font-lock-doc-face
+  ;;                 font-lock-string-face
+  ;;                 magit-diff-added-highlight))
 
   :config
 
@@ -209,18 +210,12 @@
   (custom-set-faces
    '(spell-fu-incorrect-face ((t (:underline (:color "Olivedrab4" :style wave))))))
 
-  ;; (custom-set-faces
-  ;;  '(spell-fu-incorrect-face
-  ;;    ((t (:box
-  ;;         (:line-width (1 . 1) :color "grey75" :style released-button))))))
-
-
   ;; for make sure aspell settings are correct (sometimes "en" not true)
   (setq ispell-program-name "aspell")
   (setq ispell-dictionary "en")
 
   ;; for camel case support
-  (setq-default case-fold-search nil)
+  (setq-default case-fold-search nil) ;; TODO: this breaks isearch
   (setq-default spell-fu-word-regexp (rx (maximal-match
                                           (or
                                            (one-or-more lower)
@@ -237,11 +232,16 @@
     (interactive)
     (find-file (file-truename "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")))
 
+  ;; for all kind of face check
+  (defun spell-fu--check-range-with-faces (point-start point-end)
+    (spell-fu--check-range-without-faces point-start point-end))
+
   ;; start spell-fu
   (global-spell-fu-mode)
 
-  ;; for all kind of face check
-  ;; (defun spell-fu--check-range-with-faces (point-start point-end)
-  ;;   (spell-fu--check-range-without-faces point-start point-end))
-
+  ;; (add-hook 'after-save-hook
+  ;;           (lambda()
+  ;;             (interactive)
+  ;;             (when spell-fu-mode
+  ;;               (spell-fu--check-range-without-faces (point-min) (point-max)))))
   )

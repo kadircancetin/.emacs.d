@@ -5,5 +5,6 @@
 (use-package gitignore-mode :mode "/\\.gitignore\\'")
 (use-package groovy-mode)
 (use-package jenkinsfile-mode)
+(use-package ansible)
 
 (provide 'k-dotfiles)

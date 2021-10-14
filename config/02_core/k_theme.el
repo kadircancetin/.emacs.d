@@ -94,6 +94,9 @@
 
 
 (use-package mood-line
+  ;; TODO: s-1 s-2
+  ;; TODO: new created file
+  ;; TODO: is line number mode activated?
   :init
   (mood-line-mode)
   (remove-hook 'flycheck-status-changed-functions #'mood-line--update-flycheck-segment)
@@ -155,11 +158,13 @@
 
 (defun kadir/light-theme()
   (interactive)
+  (use-package doom-themes)
   (load-theme 'doom-one-light t)
   (kadir/fix-some-colors 'doom-one-light))
 
 (defun kadir/doom-theme()
   (interactive)
+  (use-package doom-themes)
   (load-theme 'doom-one t)
   (kadir/fix-some-colors 'doom-one))
 
