@@ -183,8 +183,6 @@
 
 (use-package spell-fu
   ;; TODO: URLconf -> Lconf?
-  ;; AMKSENIN_akd_ASFN_asf_UR
-  ;;
   :defer 1.11
   :init
 
@@ -204,6 +202,11 @@
   ;;                 font-lock-string-face
   ;;                 magit-diff-added-highlight))
 
+  ;; for if I want to check personal dict file
+  (defun kadir/open-fly-a-spell-fu-file()
+    (interactive)
+    (find-file (file-truename "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")))
+
   :config
 
   ;; for styling
@@ -214,34 +217,43 @@
   (setq ispell-program-name "aspell")
   (setq ispell-dictionary "en")
 
-  ;; for camel case support
-  (setq-default case-fold-search nil) ;; TODO: this breaks isearch
+  ;; regex function
   (setq-default spell-fu-word-regexp (rx (maximal-match
                                           (or
-                                           (one-or-more lower)
+                                           (>= 2 upper)
                                            (and upper
-                                                (zero-or-more lower))))))
+                                                (zero-or-more lower))
+                                           (one-or-more lower)))))
 
   ;; for save dictionaries forever
   (setq spell-fu-directory "~/Dropbox/spell-fu-tmp/")
   (setq ispell-personal-dictionary "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")
 
 
-  ;; for if I want to check personal dict file
-  (defun kadir/open-fly-a-spell-fu-file()
-    (interactive)
-    (find-file (file-truename "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")))
-
-  ;; for all kind of face check
-  (defun spell-fu--check-range-with-faces (point-start point-end)
-    (spell-fu--check-range-without-faces point-start point-end))
+  ;; ;; for all kind of face check
+  (setq-default spell-fu-check-range 'spell-fu--check-range-without-faces)
 
   ;; start spell-fu
   (global-spell-fu-mode)
 
-  ;; (add-hook 'after-save-hook
-  ;;           (lambda()
-  ;;             (interactive)
-  ;;             (when spell-fu-mode
-  ;;               (spell-fu--check-range-without-faces (point-min) (point-max)))))
+  ;; Fixed case-fold-search for spell-fu--check-range-without-faces
+  (defun kadir/with-case-fold-search-nil (func &rest args)
+    (let ((case-fold-search nil))
+      (apply func args)))
+
+
+
+  (advice-add #'spell-fu--check-range-without-faces :around #'kadir/with-case-fold-search-nil)
+  (advice-add #'spell-fu--word-add-or-remove :around #'kadir/with-case-fold-search-nil) ;; TODO:
+  ;; word add point wrong at AlexaDoc
+
+  ;; Fixed upper cased search with delete (unless (equal word (upcase word))
+  (defun spell-fu-check-word (point-start point-end word)
+    (unless (gethash (encode-coding-string (downcase word) 'utf-8) spell-fu--cache-table nil)
+      (spell-fu-mark-incorrect point-start point-end)))
+
+  ;; Wrong examples::
+  ;;     wrng Wrng WrngButJustWrngPart WRNG wrng-wrng wrongnot
+  ;; Not wrong examples:
+  ;;     NOTwrong not_wrong NotWrongAtAll wrong_not
   )

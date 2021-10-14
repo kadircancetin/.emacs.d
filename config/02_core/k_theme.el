@@ -142,6 +142,7 @@
                      '(" "
                        (:eval (mood-line-segment-modified))
                        (:eval (mood-line-segment-buffer-name))
+                       ;; (:eval (mood-line-segment-position))
                        (:eval (mood-line-segment-multiple-cursors))))
 
                     ;; Right
