@@ -182,7 +182,6 @@
 
 
 (use-package spell-fu
-  ;; TODO: URLconf -> Lconf?
   :defer 1.11
   :init
 
@@ -230,7 +229,7 @@
   (setq ispell-personal-dictionary "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")
 
 
-  ;; ;; for all kind of face check
+  ;; for all kind of face check
   (setq-default spell-fu-check-range 'spell-fu--check-range-without-faces)
 
   ;; start spell-fu
@@ -244,8 +243,8 @@
 
 
   (advice-add #'spell-fu--check-range-without-faces :around #'kadir/with-case-fold-search-nil)
-  (advice-add #'spell-fu--word-add-or-remove :around #'kadir/with-case-fold-search-nil) ;; TODO:
-  ;; word add point wrong at AlexaDoc
+  (advice-add #'spell-fu--word-add-or-remove :around #'kadir/with-case-fold-search-nil)
+  ;; TODO: word add point wrong at AlexaDoc
 
   ;; Fixed upper cased search with delete (unless (equal word (upcase word))
   (defun spell-fu-check-word (point-start point-end word)

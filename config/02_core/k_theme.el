@@ -60,7 +60,7 @@
 
 
      ;; ahs
-     '(ahs-plugin-defalt-face       ((t (:underline t :weight bold :background nil :foreground nil))))
+     '(ahs-plugin-default-face       ((t (:underline t :weight bold :background nil :foreground nil))))
      '(ahs-definition-face          ((t (:underline t :weight bold :background nil :foreground nil))))
      '(ahs-face                     ((t (:underline t :weight bold :background nil :foreground nil))))
      '(ahs-plugin-whole-buffer-face ((t (:underline t :weight bold :background nil
