@@ -112,8 +112,10 @@
           (propertize (format-mode-line "%b") 'face 'mood-line-buffer-name)
 
         (progn
-          (let* ((full-path (buffer-file-name (current-buffer)))
-                 (relative-path (s-chop-prefix (projectile-project-root)  full-path))
+          (let* ((p-root (projectile-project-root))
+                 (full-path (buffer-file-name (current-buffer)))
+                 (project-name (car (last (s-split "/" p-root 'omit-nulls))))
+                 (relative-path (s-chop-prefix p-root  full-path))
                  (file-splitted (s-split "/" relative-path))
                  (file-name (concat (nth (- (length file-splitted) 1) file-splitted)))
                  (folder-name (s-chop-suffix file-name relative-path)))
@@ -121,7 +123,11 @@
             (concat
              (propertize folder-name 'face 'mood-line-status-neutral)
              (propertize file-name 'face 'mood-line-major-mode)
-             " "))))))
+             " - "
+             (propertize project-name 'face 'mood-line-status-info)
+             " ")
+            ))
+        )))
 
   (defun mood-line-segment-modified ()
     "Displays a color-coded buffer modification/read-only indicator in the mode-line."
@@ -147,7 +153,7 @@
 
                     ;; Right
                     (format-mode-line
-                     '((:eval (mood-line-segment-vc))
+                     '(;; (:eval (mood-line-segment-vc))
                        (:eval (mood-line-segment-major-mode))
                        " ")))))))
 
@@ -157,11 +163,24 @@
   :hook ((org-mode . turn-on-stripe-table-mode)))
 
 
-(defun kadir/light-theme()
+(defun kadir/doom-light-theme()
   (interactive)
   (use-package doom-themes)
   (load-theme 'doom-one-light t)
   (kadir/fix-some-colors 'doom-one-light))
+
+(defun kadir/spacemacs-light-theme()
+  (interactive)
+  (use-package doom-themes)
+  (load-theme 'spacemacs-light t)
+  (kadir/fix-some-colors 'spacemacs-light))
+
+(defun kadir/solarized-light-theme()
+  (interactive)
+  (use-package doom-themes)
+  (load-theme 'doom-solarized-light t)
+  (kadir/fix-some-colors 'doom-solarized-light))
+
 
 (defun kadir/doom-theme()
   (interactive)
@@ -173,5 +192,7 @@
   (interactive)
   (load-theme 'spacemacs-dark t)
   (kadir/fix-some-colors 'spacemacs-dark))
+
+
 
 (provide 'k_theme)

@@ -71,9 +71,8 @@
 
     (setq-local
      face-remapping-alist
-     '((spell-fu-incorrect-face (:box
-                                 (:line-width (2 . 2) :color "grey75" :style
-                                              released-button)))))
+     '((spell-fu-incorrect-face (:underline
+                                 (:color "yellow" :style wave)))))
     (setq-local spell-fu-idle-delay -1))
 
   ;; (use-package magit-todos :hook (magit-mode . magit-todos-mode))

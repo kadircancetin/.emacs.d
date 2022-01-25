@@ -98,7 +98,7 @@
 
   (defun org-roam-buffer--setup-redisplay-h ()
     (unless kadir/idle-timer-setted
-      (run-with-idle-timer 0.2 t 'kadir/org-roam--idle-timer-function)
+      (run-with-idle-timer 0.1 t 'kadir/org-roam--idle-timer-function)
       (setq kadir/idle-timer-setted t))))
 
 (with-eval-after-load 'org-roam-mode

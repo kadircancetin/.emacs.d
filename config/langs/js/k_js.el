@@ -63,7 +63,7 @@
                            ;; "--no-semi" "true"
                            "--jsx-single-quote" "false"
                            "--jsx-bracket-same-line" "true"
-                           "--print-width" "90"))
+                           "--print-width" "120"))
 
   (add-hook 'js2-mode-hook 'prettier-js-mode)
   ;; (add-hook 'web-mode-hook 'prettier-js-mode)

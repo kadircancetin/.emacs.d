@@ -161,5 +161,11 @@
 ;; (kadir/updater-deactivate)
 ;; (update-git-changes)
 
+(defun kadir/open-updater()
+  (interactive)
+  (kadir/updater-activate)
+  (update-git-changes)
+  (display-buffer refresh-buff '((display-buffer-same-window))))
+
 
 (provide 'git-file-tree)

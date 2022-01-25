@@ -256,3 +256,42 @@
   ;; Not wrong examples:
   ;;     NOTwrong not_wrong NotWrongAtAll wrong_not
   )
+
+
+(use-package too-long-lines-mode
+  :straight (too-long-lines-mode :type git :host github :repo "rakete/too-long-lines-mode")
+
+  :init
+  (load-file (expand-file-name "straight/repos/too-long-lines-mode/too-long-lines-mode.el" user-emacs-directory))
+
+  (setq too-long-lines-threshold 220)
+  (setq too-long-lines-show-number-of-characters 50)
+  (setq too-long-lines-special-buffer-modes '(json-mode eshell-mode))
+  (setq too-long-lines-idle-seconds 10)
+
+  (defun kadir/activate-too-long-lines()
+    (interactive)
+    (too-long-lines-mode t)
+    (toggle-truncate-lines 1)
+    (set (make-variable-buffer-local 'column-number-mode) nil)
+    (set (make-variable-buffer-local 'global-hl-line-mode) nil)
+    (set (make-variable-buffer-local 'line-number-mode) nil)
+    (setq-local bidi-inhibit-bpa t)
+    )
+
+  (defun kadir/dactivate-too-long-lines()
+    (interactive)
+    (too-long-lines-mode 0)
+    (toggle-truncate-lines -1)
+    (set (make-variable-buffer-local 'column-number-mode) 1)
+    (set (make-variable-buffer-local 'global-hl-line-mode) 1)
+    (set (make-variable-buffer-local 'line-number-mode) 1)
+    (setq-local bidi-inhibit-bpa nil)
+    )
+
+  (kadir/activate-too-long-lines)
+  )
+
+
+(column-number-mode 0)
+
