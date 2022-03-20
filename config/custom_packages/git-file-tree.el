@@ -18,7 +18,7 @@
          :name "async-process"
          :sentinel (lambda (process event)
                      (when (s-equals? event "finished\n")
-                       (refresh-kadir-opened-buffers)))
+                       (kadir-tree/refresh-kadir-tree-buffer)))
          :filter (lambda (process output)
                    (setq kadir-tree/git-files
                          (--filter (and
@@ -109,7 +109,7 @@
     f-tree))
 
 
-(defun refresh-kadir-opened-buffers()
+(defun kadir-tree/refresh-kadir-tree-buffer()
   (interactive)
   (unless (or (eq (current-buffer) (get-buffer-create refresh-buff))
               (not (projectile-project-root)))
@@ -124,13 +124,13 @@
 
 
     (let ((root (projectile-project-root))
-          (current-buffer-name (buffer-file-name (current-buffer))))
+          (curr-buffer (buffer-file-name (current-buffer))))
       (with-current-buffer (get-buffer-create refresh-buff)
         (let ((inhibit-read-only t))
           (erase-buffer)
           (insert root)
           (insert "\n\n")
-          (recursive-write files-trees 0))))))
+          (recursive-write files-trees 0 curr-buffer))))))
 
 
 (defun kadir-tree/kill-from-button()
@@ -141,7 +141,7 @@
 
     (when buf- (kill-buffer buf-))
     (kadir-tree/next-line)
-    (refresh-kadir-opened-buffers)))
+    (kadir-tree/refresh-kadir-tree-buffer)))
 
 (defun kadir-tree/open-from-button()
   (interactive)
@@ -152,7 +152,7 @@
     (kadir-tree/next-line)))
 
 
-(defun recursive-write (tree depth)
+(defun recursive-write (tree depth curr-buffer)
   (setq windows-buffers (-distinct (-non-nil (--map (buffer-file-name (window-buffer it))
                                                     (window-list)))))
 
@@ -186,8 +186,7 @@
                  map)
        'follow-link t)
 
-
-      (if (s-equals? current-buffer-name (ht-get file 'file-path))  ;; TODO: local is bind bad
+      (if (s-equals? curr-buffer (ht-get file 'file-path))  ;; TODO: local is bind bad
           (insert " <<-----")
         ;; (when (-contains? windows-buffers (ht-get file 'file-path)) ;; TODO: should more fast
         ;;   (insert " <-"))
@@ -205,7 +204,7 @@
         (dotimes (i depth) (insert "|  "))
         (insert key)
         (insert "\n")
-        (recursive-write (ht-get tree key) (+ 1 depth))))))
+        (recursive-write (ht-get tree key) (+ 1 depth) curr-buffer)))))
 
 
 (defun kadir/updater-activate()
