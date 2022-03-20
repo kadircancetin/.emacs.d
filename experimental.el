@@ -357,3 +357,11 @@
 (defun buffer-shown-in-a-window?(buf)
   "Return t if buffer shown in any window"
   (if (member buf (mapcar (lambda (wind) (window-buffer wind)) (window-list))) t nil))
+
+
+(global-set-key (kbd "C-ü")
+                (lambda ()
+                  (interactive)
+                  (kadir/open-updater)
+                  (select-window (get-buffer-window refresh-buff))
+                  (kadir-tree-mode)))

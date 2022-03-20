@@ -5,10 +5,11 @@
 ;; TODO: make buffer name for buffer name confict
 ;; TODO: hide deleted ones
 
-(setq git-files '())
+(setq kadir-tree/git-files '())
+(setq kadir-tree/opened-buffers '())
 
 (defun update-git-changes()
-  (setq git-files '())
+  (setq kadir-tree/git-files '())
 
   (when (projectile-project-root)
     (condition-case nil
@@ -19,7 +20,7 @@
                      (when (s-equals? event "finished\n")
                        (refresh-kadir-opened-buffers)))
          :filter (lambda (process output)
-                   (setq git-files
+                   (setq kadir-tree/git-files
                          (--filter (and
                                     (not (s-ends-with? "/" it))
                                     (not (s-contains? ".#" it))
@@ -28,63 +29,98 @@
       (error (message "err")))))
 
 
+(defun kadir-tree/get-internal-data-type(relative-files)
+  "
+  input:
+  '('f1/inner_f/a.py'  'f1/a.py'  'f1/b.py' 'f2/a.py')
+
+  returns
+  {
+      'f1': {
+          'inner_f': {
+              'files': [
+                  {
+                      'name': 'a.py',
+                      'relative_path': 'f1/inner/a.py',
+                      'file_path': '/usr/f1/inner/a.py',
+                  }
+              ]
+          },
+          'files':[
+              {
+                  'name': 'a.py',
+                  'relative_path': 'f1/a.py',
+                  'file_path': '/usr/f1/a.py',
+              },
+              {
+                  'name': 'b.py',
+                  'relative_path': 'f1/b.py',
+                  'file_path': '/usr/f1/b.py',
+               }
+          ],
+      },
+      'f2': {
+          'files': [
+              {
+                  'name': 'a.py',
+                  'relative_path': 'f2/a.py',
+                  'file_path': '/usr/f2/a.py',
+              }
+          ]
+      }
+  }
+  "
+  (let ((relative-files (-distinct relative-files))
+        (f-tree (ht-create)))
+
+    ;;LOOP
+    (dolist (file relative-files)
+
+      (let ((file-parsed  (s-split "/" file))
+            (last-tree f-tree)
+            (inner-tree nil))
+
+        (while (> (length file-parsed) 0)
+          (let ((node (car file-parsed)))
+            (if (> (length file-parsed) 1)
+                (progn
+                  ;; if folder
+                  (if (not (ht-get last-tree node))
+                      ;; if folder but not setted on hashtable
+                      (progn
+                        (setq inner-tree (ht-create))
+                        (ht-set! last-tree node inner-tree)
+                        (setq last-tree inner-tree))
+
+                    ;; if folder and setted on hashtable
+                    (setq last-tree (ht-get last-tree node))))
+
+              ;; if not folder, then add-or-create to 'files list
+              (let ((file-node (ht ('name node)
+                                   ('relative-path file)
+                                   ('file-path (concat (projectile-project-root) file)))))
+
+                (if (ht-get last-tree 'files)
+                    (push file-node (ht-get last-tree 'files))
+                  (ht-set! last-tree 'files (list file-node)))))
+
+            (setq file-parsed (cdr file-parsed))))))
+
+    f-tree))
+
+
 (defun refresh-kadir-opened-buffers()
   (interactive)
   (unless (or (eq (current-buffer) (get-buffer-create refresh-buff))
               (not (projectile-project-root)))
 
-    (setq buffer-files
+
+    (setq kadir-tree/opened-buffers
           (-non-nil (--map
                      (s-chop-prefix (projectile-project-root) (buffer-file-name it))
                      (projectile-project-buffers))))
 
-    ;; start
-    (setq all-files  (-distinct (append git-files buffer-files)))
-
-    (setq files-trees (ht-create))
-    ;;LOOP
-    (dolist (file all-files)
-
-      (setq file-parsed  (s-split "/" file))
-
-      (setq last-tree files-trees)
-      (while (> (length file-parsed) 0)
-        (let ((node (car file-parsed)))
-          (if (> (length file-parsed) 1)
-              (progn
-                ;; if folder
-                (if (not (ht-get last-tree node))
-                    ;; if folder but not setted on hashtable
-                    (progn
-                      (setq inner-tree (ht-create))
-                      (ht-set! last-tree node inner-tree)
-                      (setq last-tree inner-tree))
-
-                  ;; if folder and setted on hashtable
-                  (setq last-tree (ht-get last-tree node))))
-
-            ;; if not folder, then add-or-create to 'files list
-            (let ((file-node (ht ('name node)
-                                 ('relative-path file)
-                                 ('file-path (concat (projectile-project-root) file)))))
-              (if (ht-get last-tree 'files)
-                  (push file-node (ht-get last-tree 'files))
-                (ht-set! last-tree 'files (list file-node)))))
-
-          (setq file-parsed (cdr file-parsed)))))
-
-    ;; files-trees =
-    ;; {
-    ;;     "folder_name_1": {
-    ;;         files:["a.py", "b.py"],
-    ;;         "inner": {
-    ;;             files: ["a.py"]
-    ;;         }
-    ;;     },
-    ;;     "folder_name_2": {
-    ;;         files: ["x.py"]
-    ;;     }
-    ;; }
+    (setq files-trees (kadir-tree/get-internal-data-type  (append kadir-tree/git-files kadir-tree/opened-buffers)))
 
 
     (let ((root (projectile-project-root))
@@ -129,9 +165,9 @@
       (dotimes (i depth) (insert "|  "))
       (when (eq depth 0) (insert "- "))
 
-      (when (-contains? git-files (ht-get file 'relative-path))  ;; TODO: should more fast
+      (when (-contains? kadir-tree/git-files (ht-get file 'relative-path))  ;; TODO: should more fast
         (setq button-face 'link-visited))
-      (when (-contains? buffer-files (ht-get file 'relative-path)) ;; TODO: should more fast
+      (when (-contains? kadir-tree/opened-buffers (ht-get file 'relative-path)) ;; TODO: should more fast
         (setq button-face 'link))
       (when (-contains? windows-buffers (ht-get file 'file-path)) ;; TODO: should more fast
         (setq button-face 'link)) ;; -bold
@@ -222,14 +258,6 @@
   (god-local-mode-pause)
   (toggle-truncate-lines -1)
   (toggle-read-only 1))
-
-
-(global-set-key (kbd "C-ü")
-                (lambda ()
-                  (interactive)
-                  (kadir/open-updater)
-                  (select-window (get-buffer-window refresh-buff))
-                  (kadir-tree-mode)))
 
 
 (provide 'git-file-tree)
