@@ -486,3 +486,33 @@
     (add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1))))
 
 #+end_src
+
+* centaur tabs
+#+begin_src emacs-lisp
+  (use-package centaur-tabs
+    :defer 10
+    :bind
+    ("C-x n" . centaur-tabs-backward)
+    ("C-x C-n" . centaur-tabs-backward)
+    :config
+    (centaur-tabs-mode -1) ;; disabled (yes)
+    (setq centaur-tabs-set-modified-marker t
+          centaur-tabs-plain-icons t
+          centaur-tabs-style "bar"
+          centaur-tabs-set-close-button nil
+          centaur-tabs-height 20
+          centaur-tabs-label-fixed-length 15
+          centaur-tabs-cycle-scope 'tabs)
+
+    (centaur-tabs-group-by-projectile-project)
+
+    ;; (setq centaur-tabs-buffer-groups-function)
+    (progn
+      (defun kadir/centuar-group-last-five-buffer()
+        (list (projectile-project-name)))
+      (setq centaur-tabs-buffer-groups-function 'kadir/centuar-group-last-five-buffer)
+
+      (defun kadir/centaur-tabs-hide-tab (x)
+        (not (buffer-file-name x)))
+      (setq centaur-tabs-hide-tab-function 'kadir/centaur-tabs-hide-tab)))
+#+end_src

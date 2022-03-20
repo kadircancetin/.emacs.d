@@ -64,6 +64,9 @@
              "** turkish\n"
              (kadir/parse-and-get-direct-translation full-response) "\n"
              "** solution\n"
+             "[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/"
+             text
+             "][on cambridge link]]\n\n"
              "#+begin_src emacs-lisp\n\n")
      full-response
      "\n" "#+end_src" "\n")))

@@ -2,13 +2,14 @@
 (require 'ht)
 
 (setq refresh-buff "*kadir-buffers*")
-;; TODO: kill buffer shortcut
 ;; TODO: make buffer name for buffer name confict
 ;; TODO: hide deleted ones
 
 (setq git-files '())
+
 (defun update-git-changes()
   (setq git-files '())
+
   (when (projectile-project-root)
     (condition-case nil
         (make-process
@@ -37,6 +38,7 @@
                      (s-chop-prefix (projectile-project-root) (buffer-file-name it))
                      (projectile-project-buffers))))
 
+    ;; start
     (setq all-files  (-distinct (append git-files buffer-files)))
 
     (setq files-trees (ht-create))
@@ -69,85 +71,106 @@
                   (push file-node (ht-get last-tree 'files))
                 (ht-set! last-tree 'files (list file-node)))))
 
-          (setq file-parsed (cdr file-parsed))))
+          (setq file-parsed (cdr file-parsed)))))
 
-      )
     ;; files-trees =
     ;; {
-    ;;     "folder": {
+    ;;     "folder_name_1": {
     ;;         files:["a.py", "b.py"],
     ;;         "inner": {
     ;;             files: ["a.py"]
     ;;         }
     ;;     },
-    ;;     "folder2": {
+    ;;     "folder_name_2": {
     ;;         files: ["x.py"]
     ;;     }
     ;; }
 
-    (setq windows-buffers (-distinct (-non-nil (--map (buffer-file-name (window-buffer it))
-                                                      (window-list)))))
-
-    (defface link-bold2
-      '((t :inherit link :weight bold))
-      "kad"
-      :version "26.1"
-      :group 'basic-faces
-      :group 'display-line-numbers)
-
-    (defun recursive-write (tree depth)
-
-      (let ((files (sort (ht-get tree 'files)
-                         (lambda (a b) (string< (ht-get a 'name) (ht-get b 'name)))))
-            (button-face nil))
-
-        (dolist (file files)
-          (dotimes (i depth) (insert "|  "))
-          (when (eq depth 0) (insert "- "))
-
-          (when (-contains? git-files (ht-get file 'relative-path))  ;; TODO: should more fast
-            (setq button-face 'link-visited))
-          (when (-contains? buffer-files (ht-get file 'relative-path)) ;; TODO: should more fast
-            (setq button-face 'link))
-          (when (-contains? windows-buffers (ht-get file 'file-path)) ;; TODO: should more fast
-            (setq button-face 'link)) ;; -bold
-
-          (insert-text-button
-           (ht-get file 'name)
-           'face button-face
-           'action `(lambda (_button)
-                      (find-file ,(ht-get file 'file-path)))
-           'follow-link t)
-
-
-          (if (s-equals? current-buffer-name (ht-get file 'file-path))  ;; TODO: local is bind bad
-              (insert " <<----- ")
-            ;; (when (-contains? windows-buffers (ht-get file 'file-path)) ;; TODO: should more fast
-            ;;   (insert " <-"))
-            )
-
-          (insert "\n")))
-
-      (when (eq depth 0) (insert "\n"))
-
-      (let ((folders (sort (ht-keys tree) 'string<)))
-
-        (dolist (key folders)
-          (unless (eq key 'files)
-
-            (dotimes (i depth) (insert "|  "))
-            (insert key)
-            (insert "\n")
-            (recursive-write (ht-get tree key) (+ 1 depth))))))
-
 
     (let ((root (projectile-project-root))
           (current-buffer-name (buffer-file-name (current-buffer))))
-      (with-current-buffer (get-buffer-create "*kadir-buffers*")
-        (erase-buffer)
-        (insert root)
-        (insert "\n\n")
-        (recursive-write files-trees 0)))))
+      (with-current-buffer (get-buffer-create refresh-buff)
+        (let ((inhibit-read-only t))
+          (erase-buffer)
+          (insert root)
+          (insert "\n\n")
+          (recursive-write files-trees 0))))))
+
+
+(defun kadir-tree/kill-from-button()
+  (interactive)
+  (let* ((butn (button-at (point)) )
+         (file-path (button-get butn 'file-path))
+         (buf- (get-file-buffer file-path)))
+
+    (when buf- (kill-buffer buf-))
+    (kadir-tree/next-line)
+    (refresh-kadir-opened-buffers)))
+
+(defun kadir-tree/open-from-button()
+  (interactive)
+  (let* ((butn (button-at (point)) )
+         (file-path (button-get butn 'file-path)))
+
+    (find-file file-path)
+    (kadir-tree/next-line)))
+
+
+(defun recursive-write (tree depth)
+  (setq windows-buffers (-distinct (-non-nil (--map (buffer-file-name (window-buffer it))
+                                                    (window-list)))))
+
+  (let ((files (sort (ht-get tree 'files)
+                     (lambda (a b) (string< (ht-get a 'name) (ht-get b 'name)))))
+        (button-face nil))
+
+    (dolist (file files)
+
+      (dotimes (i depth) (insert "|  "))
+      (when (eq depth 0) (insert "- "))
+
+      (when (-contains? git-files (ht-get file 'relative-path))  ;; TODO: should more fast
+        (setq button-face 'link-visited))
+      (when (-contains? buffer-files (ht-get file 'relative-path)) ;; TODO: should more fast
+        (setq button-face 'link))
+      (when (-contains? windows-buffers (ht-get file 'file-path)) ;; TODO: should more fast
+        (setq button-face 'link)) ;; -bold
+
+
+      ;; (insert (ht-get file 'name))
+
+      (insert-text-button
+       (ht-get file 'name)
+       'face button-face
+       'file-path (ht-get file 'file-path)
+       'keymap (let ((map (make-sparse-keymap)))
+                 (define-key map "k" #'kadir-tree/kill-from-button)
+                 (define-key map "o" #'kadir-tree/open-from-button)
+                 (define-key map (kbd "C-m") #'kadir-tree/open-from-button)
+                 map)
+       'follow-link t)
+
+
+      (if (s-equals? current-buffer-name (ht-get file 'file-path))  ;; TODO: local is bind bad
+          (insert " <<-----")
+        ;; (when (-contains? windows-buffers (ht-get file 'file-path)) ;; TODO: should more fast
+        ;;   (insert " <-"))
+        )
+
+      (insert "\n")))
+
+  (when (eq depth 0) (insert "\n"))
+
+  (let ((folders (sort (ht-keys tree) 'string<)))
+
+    (dolist (key folders)
+      (unless (eq key 'files)
+
+        (dotimes (i depth) (insert "|  "))
+        (insert key)
+        (insert "\n")
+        (recursive-write (ht-get tree key) (+ 1 depth))))))
+
 
 (defun kadir/updater-activate()
   (interactive)
@@ -157,15 +180,56 @@
   (interactive)
   (remove-hook 'buffer-list-update-hook 'update-git-changes))
 
-;; (kadir/updater-activate)
-;; (kadir/updater-deactivate)
-;; (update-git-changes)
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 (defun kadir/open-updater()
   (interactive)
   (kadir/updater-activate)
-  (update-git-changes)
-  (display-buffer refresh-buff '((display-buffer-same-window))))
+  (kadir/split-and-follow-horizontally)
+  (other-window 1)
+  (other-window -1)
+  (display-buffer (get-buffer-create refresh-buff) '(display-buffer-same-window))
+  (select-window (get-buffer-window refresh-buff))
+  (kadir/smart-push-pop))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defun kadir-tree/next-line()
+  (interactive)
+  (forward-button 1))
+
+(defun kadir-tree/prev-line()
+  (interactive)
+  (backward-button 1))
+
+(defvar kadir-tree-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map "C-n" #'kadir-tree/next-line)
+    (define-key map "n" #'kadir-tree/next-line)
+    (define-key map "p" #'kadir-tree/prev-line)
+    (define-key map "C-p" #'kadir-tree/prev-line)
+    (define-key map "g" #'update-git-changes)
+    map))
+
+
+
+(define-derived-mode kadir-tree-mode nil "Kadir Tree"
+  (god-local-mode -1)
+  (god-local-mode-pause)
+  (toggle-truncate-lines -1)
+  (toggle-read-only 1))
+
+
+(global-set-key (kbd "C-ü")
+                (lambda ()
+                  (interactive)
+                  (kadir/open-updater)
+                  (select-window (get-buffer-window refresh-buff))
+                  (kadir-tree-mode)))
 
 
 (provide 'git-file-tree)

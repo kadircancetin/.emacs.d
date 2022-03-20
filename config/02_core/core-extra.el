@@ -184,8 +184,8 @@
 (use-package gcmh
   :init
   (gcmh-mode)
-  (setq garbage-collection-messages t)
-  (setq gcmh-verbose t)
+  ;; (setq garbage-collection-messages nil)
+  (setq gcmh-verbose nil)
   (setq gcmh-idle-delay 2))
 
 

@@ -294,4 +294,66 @@
 
 
 (column-number-mode 0)
+
 
+
+(setenv "JAVA_HOME"
+        "/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/")
+
+;; (animate-birthday-present)
+(defun lsp-metals--server-command ()
+  "Generate the Scala language server startup command."
+  `("/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/bin/java"
+    "-Xss4m"
+    "-Xms100m"
+    "-Dmetals.client=vscode"
+    "-Xmx1G"
+    ,@lsp-metals-server-args
+    "scala.meta.metals.Main"))
+
+
+
+(use-package perspective
+  :defer 0.1
+  :custom
+  (persp-mode-prefix-key (kbd "M-m p"))
+  (persp-state-default-file (no-littering-expand-var-file-name "perspective.el"))
+  :bind*
+  ( :map persp-mode-map
+    ("C-x p" . persp-switch)
+    ("C-x C-p" . persp-switch-quick)
+    ("C-M-SPC" . persp-switch-last)
+    :map perspective-map
+    ("p" . persp-switch)
+    ("k" . persp-kill)
+    ("q" . persp-switch-quick)
+    ("n" . (lambda () (interactive) (persp-switch (make-temp-name "p-")))))
+  :hook
+  (kill-emacs . persp-state-save)
+
+  :config
+  (persp-mode)
+  ;; (persp-state-load (no-littering-expand-var-file-name "perspective.el"))
+  )
+
+
+
+(use-package which-key
+  :defer 3
+  :config
+  (which-key-mode)
+  (which-key-setup-side-window-bottom)
+  (setq which-key-idle-delay 1))
+
+
+
+(use-package eros
+  :defer 2
+  :config
+  (eros-mode 1))
+
+
+
+(defun buffer-shown-in-a-window?(buf)
+  "Return t if buffer shown in any window"
+  (if (member buf (mapcar (lambda (wind) (window-buffer wind)) (window-list))) t nil))

@@ -1,8 +1,8 @@
 (defvar kadir/emacs-fast-open (member "-fo" command-line-args))
 (setq command-line-args (delete "-fo" command-line-args))
 
-(defvar kadir/default-font-size 99)
-(when kadir/emacs-fast-open (setq ekadir/default-font-size 99))
+(defvar kadir/default-font-size 104)
+(when kadir/emacs-fast-open (setq kadir/default-font-size 106))
 
 
 
@@ -47,13 +47,34 @@
 
   (set-face-attribute 'window-divider nil :foreground "#4C4262")
 
-  ;; (prin1 (font-family-list)) ;; see all font available on system
-  ;; (set-face-attribute 'default nil :family "Ubuntu Mono" :height 95 :weight 'normal)
-  ;; (set-face-attribute 'default nil :family "Source Code Pro" :height 77 :weight 'normal)
-  ;; (set-face-attribute 'default nil :family "Inconsolata" :height 90 :weight 'normal)
-  ;; (set-face-attribute 'default nil :family "Hack" :height 80 :weight 'normal)
-  ;; (set-face-attribute 'default nil :family "Meslo LG M" :height 72 :weight 'normal)
-  (set-face-attribute 'default nil :family "Fira Code" :height kadir/default-font-size :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "Fira Code" :height 80 :weight 'normal)
+
+
+  ;; (prin1 (font-family-list))
+  ;; see all font available on system
+  ;; (font-family-list)
+  ;; (seq-filter (lambda (font)
+  ;;             (when-let ((info (font-info font)))
+  ;;               (string-match-p "spacing=100" (aref info 1))))
+  ;;           (font-family-list))
+
+  ;; (set-face-attribute 'default nil :family "Latin Modern Mono" :height kadir/default-font-size :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "M+ 1m" :height kadir/default-font-size :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "Fira Code" :height kadir/default-font-size :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "Monoid Tight" :height kadir/default-font-size :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "Monoid HalfTight" :height kadir/default-font-size :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "Monoid" :height kadir/default-font-size :weight 'normal)
+
+  ;; (set-face-attribute 'default nil :family "Pragmata" :height kadir/default-font-size :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "Source Code Pro" :height kadir/default-font-size :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "Inconsolata" :height kadir/default-font-size :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "Hack" :height kadir/default-font-size :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "Meslo LG M" :height kadir/default-font-size :weight 'normal)
+  (set-face-attribute 'default nil :family "Fira Code" :height kadir/default-font-size :weight
+                      'normal)
+
+  ;; (set-face-attribute 'default nil :family "Iosevka" :height 90 :weight 'normal)
+  ;; (set-face-attribute 'default nil :family "M+ 1m" :height kadir/default-font-size :weight 'normal)
 
   (set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro" :italic t :weight 'bold))
 

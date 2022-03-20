@@ -208,20 +208,23 @@
   (interactive)
   (split-window-below)
   (other-window 1)
-  (balance-windows))
+  ;; (balance-windows)
+  )
 
 (defun kadir/split-and-follow-vertically ()
   "Split window below and follow."
   (interactive)
   (split-window-right)
   (other-window 1)
-  (balance-windows))
+  ;; (balance-windows)
+  )
 
 (defun kadir/delete-window ()
   "Split window below and follow."
   (interactive)
   (delete-window)
-  (balance-windows))
+  ;; (balance-windows)
+  )
 
 (defun spacemacs/backward-kill-word-or-region (&optional arg)
   "Calls `kill-region' when a region is active and
@@ -276,7 +279,7 @@
 (defun kadir/font-size-smaller()
   (interactive)
   (defvar kadir/default-font-size)
-  (setq kadir/default-font-size (- kadir/default-font-size 3))
+  (setq kadir/default-font-size (- kadir/default-font-size 1))
   (kadir/adjust-font-size kadir/default-font-size))
 
 (defun kadir/font-size-bigger()

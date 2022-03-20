@@ -34,10 +34,12 @@
     (require 'k_python)
     (require 'k_js)
     (require 'k_elisp)
+    (require 'k-scala)
+    ;; (kadir-scala)
     ;; (require 'k_clang)
     ;; (require 'k-elixir)
     ;; (require 'k-plantuml)
-    ;; (require 'k-clojure)
+    (require 'k-clojure)
     ;; (require 'k-go)
     )
 

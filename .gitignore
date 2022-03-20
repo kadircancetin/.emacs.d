@@ -8,3 +8,7 @@ history
 auto-save-list/
 eln-cache/
 elpa/
+/.cask/
+/.local/
+/.log/
+/places

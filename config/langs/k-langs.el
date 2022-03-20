@@ -29,7 +29,7 @@
     ;; :after lsp-mode
     :custom
     ;; DOC
-    (lsp-ui-doc-delay 10)
+    (lsp-ui-doc-delay 3)
     (lsp-ui-doc-position 'top)
 
     ;; Others
