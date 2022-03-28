@@ -73,13 +73,13 @@
      face-remapping-alist
      '((spell-fu-incorrect-face (:underline
                                  (:color "yellow" :style wave)))))
-    (setq-local spell-fu-idle-delay -1))
+    (setq-local spell-fu-idle-delay 0.0))
 
   ;; (use-package magit-todos :hook (magit-mode . magit-todos-mode))
   (add-to-list 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
   (add-hook 'magit-diff-mode-hook 'kadir/cool-spell 100)
   (add-hook 'magit-mode-hook 'kadir/cool-spell 100)
-  (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1))
+  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1))
 
 
 

@@ -141,10 +141,6 @@
   ;; source: https://github.com/KaratasFurkan/.emacs.d
   (interactive) (find-file "~/.emacs.d/experimental.el"))
 
-(defun kadir/find-dashboard ()
-  ;; source: https://github.com/KaratasFurkan/.emacs.d
-  (interactive) (switch-to-buffer "*dashboard*"))
-
 (defun kadir/find-messages ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
   "Open Message buffer"

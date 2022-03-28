@@ -1,0 +1,4344 @@
+# -*- org-drill-learn-fraction: 0.3 -*-
+#+STARTUP: overview
+
+
+* malleability                                                        :drill:
+SCHEDULED: <2021-11-10 Wed>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       6433345A-BFAC-48C8-BB2F-91A3975C6264
+:DRILL_LAST_INTERVAL: 14.8816
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 7
+:DRILL_FAILURE_COUNT: 3
+:DRILL_AVERAGE_QUALITY: 3.286
+:DRILL_EASE: 2.6
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:10]
+:END:
+
+** english
+malleability
+** turkish
+dövülebilirlik
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  malleability
+
+  dövülebilirlik
+
+  noun
+  1. yumuşaklık (softness, smoothness, gentleness, ductility, suppleness, malleability)
+  2. dövülebilirlik (malleability)
+
+
+  "The malleability of Emacs allowed the creation of Org-mode"
+
+#+end_src
+
+* vast                               :drill:
+SCHEDULED: <2021-11-03 Wed>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       6FBAF869-272B-4208-B238-91DAE6471D1F
+:DRILL_LAST_INTERVAL: 7.7986
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 6
+:DRILL_FAILURE_COUNT: 2
+:DRILL_AVERAGE_QUALITY: 3.267
+:DRILL_EASE: 2.589
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:07]
+:END:
+
+** english
+vast
+** turkish
+Muazzam
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  vast
+
+  Muazzam
+
+  adjective
+  1. geniş (wide, broad, spacious, large, extensive, vast)
+  2. çok (very, much, many, numerous, plenty, vast)
+  3. çok büyük (very big, tremendous, vast, thumping, extra large, giant)
+  4. uçsuz bucaksız (immense, vast, endless, limitless, no end in sight, shoreless)
+  5. dünya kadar (vast)
+
+  noun
+  1. büyük boşluk (vast)
+
+  DEFINITION
+
+  adjective
+  1. of very great extent or quantity; immense.
+  "a vast plain of buffalo grass"
+
+  noun
+  1. an immense space.
+  "nil"
+
+#+end_src
+* lisp                               :drill:
+SCHEDULED: <2021-11-14 Sun>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       FFA1D761-70A6-4C9D-8CD7-8C9F3D4E5B72
+:DRILL_LAST_INTERVAL: 18.6009
+:DRILL_REPEATS_SINCE_FAIL: 5
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 4.25
+:DRILL_EASE: 3.589
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:05]
+:END:
+
+** english
+lisp
+** turkish
+peltek
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  lisp
+
+  peltek
+
+  noun
+  1. yanlış telaffuz (mispronunciation, lisp)
+  2. peltek konuşma (lisp)
+
+  verb
+  1. peltek konuşmak (lisp)
+  2. telaffuz edememek (lisp)
+
+  DEFINITION
+
+  noun
+  1. a speech defect in which s is pronounced like th in thick and z is pronounced like th in this.
+  "he spoke with a slight lisp"
+  2. a high-level computer programming language devised for list processing.
+
+  verb
+  1. speak with a lisp.
+  "she spoke softly, lisping slightly"
+
+#+end_src
+* introductory                               :drill:
+SCHEDULED: <2021-11-06 Sat>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       FE5F2670-1DCF-47B4-B6CB-EA24861A7A87
+:DRILL_LAST_INTERVAL: 19.5433
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 5
+:DRILL_FAILURE_COUNT: 1
+:DRILL_AVERAGE_QUALITY: 3.5
+:DRILL_EASE: 2.73
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-17 Sun 15:17]
+:END:
+
+** english
+introductory
+** turkish
+giriş
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  introductory
+
+  giriş
+
+  adjective
+  1. tanıtıcı (introductory)
+  2. giriş niteliğinde olan (introductory)
+
+  DEFINITION
+
+  adjective
+  1. serving as an introduction to a subject or topic; basic or preliminary.
+  "an introductory course in Russian"
+
+#+end_src
+* intimidates                               :drill:
+SCHEDULED: <2021-11-03 Wed>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       23B55F7B-3D5F-4826-B126-FEE0EFBF3E13
+:DRILL_LAST_INTERVAL: 7.7315
+:DRILL_REPEATS_SINCE_FAIL: 6
+:DRILL_TOTAL_REPEATS: 10
+:DRILL_FAILURE_COUNT: 6
+:DRILL_AVERAGE_QUALITY: 2.706
+:DRILL_EASE: 2.317
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:12]
+:END:
+
+** english
+intimidates
+** turkish
+korkutur
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  intimidates
+
+  korkutur
+
+  verb
+  1. korkutmak (scare, frighten, intimidate, daunt, threaten, horrify)
+  2. gözünü korkutmak (threaten, hector, browbeat, daunt, intimidate)
+
+  DEFINITION
+
+  verb
+  1. frighten or overawe (someone), especially in order to make them do what one wants.
+  "he tries to intimidate his rivals"
+
+#+end_src
+* intimidate                               :drill:
+SCHEDULED: <2021-11-07 Sun>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       26103B41-F6A5-4F84-B334-A88059CC1F30
+:DRILL_LAST_INTERVAL: 11.9523
+:DRILL_REPEATS_SINCE_FAIL: 5
+:DRILL_TOTAL_REPEATS: 8
+:DRILL_FAILURE_COUNT: 3
+:DRILL_AVERAGE_QUALITY: 2.969
+:DRILL_EASE: 2.441
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:09]
+:END:
+
+** english
+intimidate
+** turkish
+gözdağı vermek
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  intimidate
+
+  gözdağı vermek
+
+  verb
+  1. korkutmak (scare, frighten, intimidate, daunt, threaten, horrify)
+  2. gözünü korkutmak (threaten, hector, browbeat, daunt, intimidate)
+
+  DEFINITION
+
+  verb
+  1. frighten or overawe (someone), especially in order to make them do what one wants.
+  "he tries to intimidate his rivals"
+
+#+end_src
+
+* Decomposition                               :drill:
+SCHEDULED: <2021-11-06 Sat>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       5EE29929-3A9B-4A02-A932-4411891662F8
+:DRILL_LAST_INTERVAL: 11.4383
+:DRILL_REPEATS_SINCE_FAIL: 5
+:DRILL_TOTAL_REPEATS: 8
+:DRILL_FAILURE_COUNT: 3
+:DRILL_AVERAGE_QUALITY: 2.906
+:DRILL_EASE: 2.412
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:12]
+:END:
+
+** english
+Decomposition
+** turkish
+Ayrışma
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  Decomposition
+
+  Ayrışma
+
+  noun
+  1. ayrışma (decomposition, separation, dissociation, resolution, decay)
+  2. ayrıştırma (decomposition, extrication)
+  3. bozulma (corruption, deterioration, breakdown, degradation, impairment, disruption)
+  4. çürüme (decay, rot, decomposition, corruption, putrefaction, rottenness)
+  5. analiz (analysis, breakdown, decomposition, anatomy, post-mortem)
+  6. çürüklük (unsoundness, rottenness, deterioration, putrescence, decomposition, flimsiness)
+  7. bozukluk (disturbance, defect, failure, distortion, deformity, coin)
+
+  DEFINITION
+
+  noun
+  1. the state or process of rotting; decay.
+  "the decomposition of organic waste"
+
+#+end_src
+
+* exhibiting                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       BE769456-07EC-4980-A053-23082A03FA10
+:DRILL_LAST_INTERVAL: 0.0
+:DRILL_REPEATS_SINCE_FAIL: 0
+:DRILL_TOTAL_REPEATS: 10
+:DRILL_FAILURE_COUNT: 7
+:DRILL_AVERAGE_QUALITY: 2.329
+:DRILL_EASE: 2.124
+:DRILL_LAST_QUALITY: 1
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:12]
+:END:
+
+** english
+exhibiting
+** turkish
+sergilemek
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  exhibiting
+
+  sergilemek
+
+  verb
+  1. sergilemek (display, exhibit, expose, show, display of, emcee)
+  2. göstermek (show, indicate, demonstrate, display, represent, show off)
+  3. sunmak (offer, present, submit, put forward, hold forth, serve up)
+  4. ortaya koymak (put forth, produce, set forth, present, prove, execute)
+  5. teşhir etmek (expose, exhibit, display, trot out, display of)
+
+  DEFINITION
+
+  verb
+  1. publicly display (a work of art or item of interest) in an art gallery or museum or at a trade fair.
+  "only one sculpture was exhibited in the artist's lifetime"
+  2. manifest or deliberately display (a quality or a type of behavior).
+  "he could exhibit a saintlike submissiveness"
+
+#+end_src
+
+* exhaustion                               :drill:
+SCHEDULED: <2021-11-15 Mon>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       D40B5E07-7BB1-4AC8-BC8D-96564A4E16A7
+:DRILL_LAST_INTERVAL: 19.5681
+:DRILL_REPEATS_SINCE_FAIL: 5
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 3.25
+:DRILL_EASE: 2.58
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:12]
+:END:
+
+** english
+exhaustion
+** turkish
+yorgunluk
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  exhaustion
+
+  yorgunluk
+
+  noun
+  1. tükenme (exhaustion, failure, being exhausted, petering)
+  2. yorgunluk (fatigue, tiredness, exhaustion, weariness, staleness, lassitude)
+  3. bitkinlik (fatigue, exhaustion, weariness, prostration, lassitude, languor)
+  4. boşaltma (unloading, discharge, emptying, pouring, tipping, exhaustion)
+  5. dermansızlık (decrepitude, exhaustion, atony, debility, senility, sinking)
+  6. takâtsizlik (exhaustion)
+
+  DEFINITION
+
+  noun
+  1. a state of extreme physical or mental fatigue.
+  "he was pale with exhaustion"
+  2. the action or state of using something up or of being used up completely.
+  "the rapid exhaustion of fossil fuel reserves"
+  3. the process of establishing a conclusion by eliminating all the alternatives.
+  "nil"
+
+#+end_src
+
+* failures crosses a threshold                               :drill:
+SCHEDULED: <2021-11-08 Mon>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       5081B188-AC5D-45EB-B574-5D8210B73DB2
+:DRILL_LAST_INTERVAL: 12.7528
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 7
+:DRILL_FAILURE_COUNT: 2
+:DRILL_AVERAGE_QUALITY: 3.257
+:DRILL_EASE: 2.584
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:12]
+:END:
+
+** english
+failures crosses a threshold
+** turkish
+başarısızlıklar bir eşiği aşıyor
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  failures crosses a threshold
+
+  başarısızlıklar bir eşiği aşıyor
+
+#+end_src
+
+* granularity                               :drill:
+SCHEDULED: <2021-11-23 Tue>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       678A1F20-DD97-4482-8631-E1259DCDE7A8
+:DRILL_LAST_INTERVAL: 27.8077
+:DRILL_REPEATS_SINCE_FAIL: 5
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 4.25
+:DRILL_EASE: 3.589
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:05]
+:END:
+
+** english
+granularity
+** turkish
+taneciklilik
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  granularity
+
+  taneciklilik
+
+  DEFINITION
+
+  noun
+  1. the quality or condition of being granular.
+  2. the scale or level of detail present in a set of data or other phenomenon.
+  "the bill data doesn't provide sufficient granularity to answer the questions"
+
+#+end_src
+
+* elaborate                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       A9AAB553-B1D7-40A6-994F-07B9B1035F64
+:DRILL_LAST_INTERVAL: 0.0
+:DRILL_REPEATS_SINCE_FAIL: 0
+:DRILL_TOTAL_REPEATS: 7
+:DRILL_FAILURE_COUNT: 8
+:DRILL_AVERAGE_QUALITY: 2.389
+:DRILL_EASE: 2.157
+:DRILL_LAST_QUALITY: 2
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:11]
+:END:
+
+** english
+elaborate
+** turkish
+açmak, detaylandırmak (v) ,
+ayrıntılı, özenli (adj)
+
+- They wore [elaborate] costumes.
+- Will you [elaborate] on that?
+
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  elaborate
+
+  detaylandırmak
+
+  adjective
+  1. ayrıntılı (detailed, elaborate, exhaustive, itemized, particular, circumstantial)
+  2. özenli (attentive, careful, elaborate, thoughtful, painstaking, scrupulous)
+  3. dikkatle hazırlanmış (elaborate)
+
+  verb
+  1. açmak (open, turn on, turn on, open up, unlock, elaborate)
+  2. özen göstermek (care, take pains, take care, take care of, elaborate, fuss)
+  3. üzerinde durmak (accent, accentuate, discourse, dwell on, elaborate, emphasize)
+  4. ayrıntılara inmek (elaborate)
+
+  DEFINITION
+
+  adjective
+  1. involving many carefully arranged parts or details; detailed and complicated in design and planning.
+  "elaborate security precautions"
+
+  verb
+  1. develop or present (a theory, policy, or system) in detail.
+  "the key idea of the book is expressed in the title and elaborated in the text"
+  2. (of a natural agency) produce (a substance) from its elements or simpler constituents.
+  "many amino acid and peptide hormones are elaborated by neural tissue"
+
+#+end_src
+
+* It handles other requests by fanning out to multiple services.                               :drill:
+SCHEDULED: <2021-10-30 Sat>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       D0E4C4ED-F89A-40AE-A34D-3B1614DA2327
+:DRILL_LAST_INTERVAL: 13.3031
+:DRILL_REPEATS_SINCE_FAIL: 5
+:DRILL_TOTAL_REPEATS: 6
+:DRILL_FAILURE_COUNT: 2
+:DRILL_AVERAGE_QUALITY: 3.0
+:DRILL_EASE: 2.456
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2021-10-17 Sun 15:16]
+:END:
+
+** english
+It handles other requests by fanning out to multiple services.
+** turkish
+Birden çok hizmete yayılarak diğer istekleri yerine getirir.
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  It handles other requests by fanning out to multiple services.
+
+  Birden çok hizmete yayılarak diğer istekleri yerine getirir.
+
+#+end_src
+
+* fanning out                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       DD8405F3-728D-49ED-97D2-B383E87AAB79
+:DRILL_LAST_INTERVAL: 0.0
+:DRILL_REPEATS_SINCE_FAIL: 0
+:DRILL_TOTAL_REPEATS: 5
+:DRILL_FAILURE_COUNT: 2
+:DRILL_AVERAGE_QUALITY: 2.889
+:DRILL_EASE: 2.404
+:DRILL_LAST_QUALITY: 2
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:13]
+:END:
+
+** english
+fanning out
+** turkish
+havalanmak, yayılmak
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  fanning out
+
+  havalanmak
+
+  verb
+  1. yelpaze şeklinde açılmak (fan, fan out)
+  2. yayılmak (spread, sprawl, branch, circulate, diffuse, disperse)
+  3. esmek (blow, fan, fan out, breathe, set, whiffle)
+
+#+end_src
+
+* substantial                               :drill:
+SCHEDULED: <2021-10-31 Sun>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       5112CF01-96A6-4E1F-AF82-5A8A722373E3
+:DRILL_LAST_INTERVAL: 4.9203
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 11
+:DRILL_FAILURE_COUNT: 8
+:DRILL_AVERAGE_QUALITY: 2.723
+:DRILL_EASE: 2.325
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:08]
+:END:
+
+** english
+substantial
+** Mean
+of considerable importance, size, or worth.
+
+(important, significant, major, substantial, considerable, prominent)
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  substantial
+
+  varlıklı
+
+  adjective
+  1. önemli (important, significant, major, substantial, considerable, prominent)
+  2. sağlam (sturdy, solid, sound, strong, firm, substantial)
+  3. dayanıklı (resistant, durable, tough, proof, resistant to, substantial)
+  4. gerçek (real, true, actual, genuine, authentic, substantial)
+  5. özlü (concise, succinct, substantial, pithy, compact, brief)
+  6. mevcut (available, present, existing, actual, existent, substantial)
+  7. besleyici (nutritive, nutritious, nourishing, nutrient, alimentary, substantial)
+  8. var olan (existing, existent, in being, substantial)
+  9. hemen hemen tam (substantial)
+
+  DEFINITION
+
+  adjective
+  1. of considerable importance, size, or worth.
+  "a substantial amount of cash"
+  2. concerning the essentials of something.
+  "there was substantial agreement on changing policies"
+  3. real and tangible rather than imaginary.
+  "spirits are shadowy, human beings substantial"
+
+#+end_src
+
+* myriad                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       FAF297F9-DFCD-4FE8-A7A0-17498AB068FA
+:DRILL_LAST_INTERVAL: 0.0
+:DRILL_REPEATS_SINCE_FAIL: 0
+:DRILL_TOTAL_REPEATS: 7
+:DRILL_FAILURE_COUNT: 6
+:DRILL_AVERAGE_QUALITY: 2.532
+:DRILL_EASE: 2.232
+:DRILL_LAST_QUALITY: 2
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:11]
+:END:
+
+** english
+myriad
+** turkish
+sayısız
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  myriad
+
+  sayısız
+
+  adjective
+  1. sayısız (numerous, countless, innumerable, myriad, numberless, infinite)
+  2. çok büyük sayıda (myriad)
+
+  noun
+  1. çok büyük sayı (myriad, number of many figures)
+
+  DEFINITION
+
+  noun
+  1. a countless or extremely great number.
+  "networks connecting a myriad of computers"
+  2. (chiefly in classical history) a unit of ten thousand.
+  "the army was organized on a decimal system, up to divisions of 10,000 or myriads"
+
+  adjective
+  1. countless or extremely great in number.
+  "the myriad lights of the city"
+
+#+end_src
+
+* Embrace                               :drill:
+SCHEDULED: <2021-11-01 Mon>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       C9CB56E1-3AB2-4851-8835-245416773E4E
+:DRILL_LAST_INTERVAL: 6.0753
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 10
+:DRILL_FAILURE_COUNT: 7
+:DRILL_AVERAGE_QUALITY: 2.621
+:DRILL_EASE: 2.276
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:09]
+:END:
+
+** english
+Embrace
+** turkish
+Kucaklamak
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  Embrace
+
+  Kucaklamak
+
+  noun
+  1. kucaklama (embrace, hug, embracing, squeeze, hugging, cuddle)
+  2. kucaklaşma (embrace)
+  3. sarılma (hug, hugging, cuddling, embrace, cuddle, convolution)
+
+  verb
+  1. kucaklamak (embrace, hug, cuddle, caress, clasp, give a hug)
+  2. benimsemek (take up seriously, assimilate, adopt, commandeer, embrace, espouse)
+  3. kapsamak (include, cover, comprise, contain, blanket, compass)
+  4. kucaklaşmak (embrace, hug, cuddle up, embrace one another)
+  5. sarmak (wrap, twine, wind, wrap up, envelop, surround)
+  6. bağrına basmak (cherish, embrace, nestle, canoodle)
+  7. yakalamak (catch, clutch, snatch, bag, catch hold of, catch up on)
+  8. ele geçirmek (capture, conquer, seize, get hold of, take possession of, possess oneself of)
+  9. beslemek (feed, nourish, raise, breed, bring up, cherish)
+  10. sarmaş dolaş olmak (embrace, neck)
+
+  DEFINITION
+
+  verb
+  1. hold (someone) closely in one's arms, especially as a sign of affection.
+  "Aunt Sophie embraced her warmly"
+  2. accept or support (a belief, theory, or change) willingly and enthusiastically.
+  "besides traditional methods, artists are embracing new technology"
+  3. include or contain (something) as a constituent part.
+  "his career embraces a number of activities—composing, playing, and acting"
+
+  noun
+  1. an act of holding someone closely in one's arms.
+  "they were locked in an embrace"
+  2. an act of accepting or supporting something willingly or enthusiastically.
+  "their eager embrace of foreign influences"
+
+#+end_src
+
+* emphasis                               :drill:
+SCHEDULED: <2021-10-29 Fri>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       B5528F87-143C-4A7E-B5AD-3AE660904004
+:DRILL_LAST_INTERVAL: 11.5083
+:DRILL_REPEATS_SINCE_FAIL: 5
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 3.5
+:DRILL_EASE: 2.73
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-17 Sun 15:17]
+:END:
+
+** english
+emphasis
+** turkish
+vurgu
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  emphasis
+
+  vurgu
+
+  noun
+  1. vurgu (emphasis, accent, stress, decompression sickness, point, ictus)
+  2. önem (importance, stature, significance, matter, emphasis, value)
+  3. üzerinde durulan nokta (emphasis)
+
+  DEFINITION
+
+  noun
+  1. special importance, value, or prominence given to something.
+  "they placed great emphasis on the individual's freedom"
+
+#+end_src
+
+* real estate                                :drill:
+SCHEDULED: <2021-11-05 Fri>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       D9F95167-B4A4-40D1-ACAC-4519913A38C7
+:DRILL_LAST_INTERVAL: 10.4476
+:DRILL_REPEATS_SINCE_FAIL: 6
+:DRILL_TOTAL_REPEATS: 6
+:DRILL_FAILURE_COUNT: 1
+:DRILL_AVERAGE_QUALITY: 3.167
+:DRILL_EASE: 2.537
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:05]
+:END:
+
+** english
+real estate
+** turkish
+Emlak
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  real estate
+
+  Emlak
+
+  noun
+  1. gayrimenkul (real estate, immovables, realty, real estate property, landed estate, landed property)
+  2. taşınmaz mal (real estate, immovables, real estate property, realty)
+  3. emlâk (estate, real estate, property, real estate property, realty, demesne)
+
+#+end_src
+
+* ultimately                               :drill:
+SCHEDULED: <2021-10-31 Sun>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       40EC043C-69B2-48BB-88AC-1474EB0CC0F2
+:DRILL_LAST_INTERVAL: 20.3453
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 1
+:DRILL_AVERAGE_QUALITY: 4.0
+:DRILL_EASE: 3.204
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2021-10-11 Mon 09:27]
+:END:
+
+** english
+ultimately
+** turkish
+sonuçta
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  ultimately
+
+  sonuçta
+
+  adverb
+  1. en sonunda (finally, ultimately, at last, at length, after all)
+  2. eninde sonunda (ultimately)
+
+  DEFINITION
+
+  adverb
+  1. finally; in the end.
+  "the largest firms may ultimately become unstoppable"
+
+#+end_src
+
+* compromising                               :drill:
+SCHEDULED: <2021-10-30 Sat>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       C227E4F5-C255-40C2-AFF2-1C9FC8272B9E
+:DRILL_LAST_INTERVAL: 3.5629
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 13
+:DRILL_FAILURE_COUNT: 14
+:DRILL_AVERAGE_QUALITY: 2.355
+:DRILL_EASE: 2.138
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:05]
+:END:
+
+** english
+compromising
+** turkish
+
+- yanlış anlamaya neden olan/ değişik yorumlanan
+
+** solution
+#+begin_src emacs-lisp
+  1. A compromising situation, photograph, etc makes people think you have done something wrong.
+  2. yanlış anlamaya neden olan/ değişik yorumlanan
+  "The press printed compromising photographs of the princess and her bodyguard."
+#+end_src
+
+* compromise :drill:
+:PROPERTIES:
+:ID:       FE634826-BAFF-4B9D-9E62-0713B9456D0C
+:END:
+
+** english
+compromise
+** turkish
+- an agreement to accept something which is not exactly what you want
+** solution
+*ex:*
+- The drawback of this system was that precision was compromised (sırırlı).
+
+* reside                               :drill:
+SCHEDULED: <2021-11-06 Sat>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       740761E3-010A-4F8F-98D0-C6C2F5F0B78D
+:DRILL_LAST_INTERVAL: 11.1145
+:DRILL_REPEATS_SINCE_FAIL: 5
+:DRILL_TOTAL_REPEATS: 9
+:DRILL_FAILURE_COUNT: 5
+:DRILL_AVERAGE_QUALITY: 3.071
+:DRILL_EASE: 2.49
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:09]
+:END:
+
+** english
+reside
+** turkish
+ikamet
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  reside
+
+  ikamet
+
+  verb
+  1. oturmak (sit, fit, sit down, be seated, take a seat, reside)
+  2. ikamet etmek (reside, dwell in, stay, indwell, inhabit, hang out)
+  3. bulunmak (have, exist, present, be, be present, reside)
+  4. ait olmak (belong to, relate, concern, appertain, pertain, reside)
+
+  DEFINITION
+
+  verb
+  1. have one's permanent home in a particular place.
+  "people who work in the city actually reside in neighboring towns"
+
+#+end_src
+
+* First, it allows for more efficient interactions between the device and the server since most calls that otherwise would be going across the network can be handled on the server.                               :drill:
+SCHEDULED: <2021-11-07 Sun>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       17767A34-7803-4EAD-A7E2-C04E7173CCEE
+:DRILL_LAST_INTERVAL: 12.4759
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 7
+:DRILL_FAILURE_COUNT: 3
+:DRILL_AVERAGE_QUALITY: 2.914
+:DRILL_EASE: 2.415
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:08]
+:END:
+
+** english
+First, it allows for more efficient interactions between the device and the server since most calls that otherwise would be going across the network can be handled on the server.
+** turkish
+Birincisi, aksi takdirde ağ üzerinden yapılacak olan çağrıların çoğu sunucuda yönetilebildiğinden, cihaz ve sunucu arasında daha verimli etkileşimlere izin verir.
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  First, it allows for more efficient interactions between the device and the server since most calls
+  that otherwise would be going across the network can be handled on the server.
+
+  Birincisi, aksi takdirde ağ üzerinden yapılacak olan çağrıların çoğu sunucuda yönetilebildiğinden,
+  cihaz ve sunucu arasında daha verimli etkileşimlere izin verir.
+
+#+end_src
+
+* nimble                                :drill:
+SCHEDULED: <2021-11-11 Thu>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       5C68A4EF-65CA-481D-BA2A-C217C39848ED
+:DRILL_LAST_INTERVAL: 15.6291
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 7
+:DRILL_FAILURE_COUNT: 3
+:DRILL_AVERAGE_QUALITY: 3.179
+:DRILL_EASE: 2.543
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:05]
+:END:
+
+** english
+nimble
+** turkish
+çevik
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  nimble
+
+  çevik
+
+  adjective
+  1. çevik (agile, nimble, swift, nippy, spry, dapper)
+  2. çabuk (quick, fast, rapid, snappy, swift, nimble)
+  3. uyanık (awake, vigilant, waking, alert, aware, nimble)
+  4. atik (agile, quick, alert, nimble, snappy, lissom)
+  5. tez (quick, prompt, nimble, hasty, expeditious)
+  6. tetik (alert, awake, nimble)
+  7. açıkgöz (canny, heady, shrewd, smart, knowing, nimble)
+
+  DEFINITION
+
+  adjective
+  1. quick and light in movement or action; agile.
+  "with a deft motion of her nimble fingers"
+
+#+end_src
+
+* diminishes                               :drill:
+SCHEDULED: <2021-10-30 Sat>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       463F3598-7F39-4D3A-B9B6-043B73C53361
+:DRILL_LAST_INTERVAL: 3.7766
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 7
+:DRILL_FAILURE_COUNT: 5
+:DRILL_AVERAGE_QUALITY: 3.071
+:DRILL_EASE: 2.49
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:07]
+:END:
+
+** english
+diminishes
+** turkish
+azalır
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  diminishes
+
+  azalır
+
+  verb
+  1. azaltmak (reduce, decrease, ax, diminish, abate, cut back)
+  2. azalmak (decrease, decline, wane, diminish, lessen, be reduced)
+  3. eksiltmek (decrease, reduce, diminish, derogate, detract, underbid)
+  4. küçültmek (miniaturize, make smaller, diminish, reduce, minimize, belittle)
+  5. kısmak (throttle, choke, ax, pinch, tighten, cut down on)
+  6. inceltmek (thin, refine, thin of, sharpen, slenderize, attenuate)
+  7. sivriltmek (point, sharpen, taper, diminish, distinguish, fine away)
+
+  DEFINITION
+
+  verb
+  1. make or become less.
+  "a tax whose purpose is to diminish spending"
+
+#+end_src
+
+* pursue                               :drill:
+SCHEDULED: <2021-11-02 Tue>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       97830145-F96A-43AA-831F-A0F7C0FE6709
+:DRILL_LAST_INTERVAL: 16.1751
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 5
+:DRILL_FAILURE_COUNT: 2
+:DRILL_AVERAGE_QUALITY: 3.65
+:DRILL_EASE: 2.841
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2021-10-17 Sun 15:18]
+:END:
+
+** english
+pursue
+** turkish
+#+begin_src emacs-lisp
+  verb
+  1. follow (someone or something) in order to catch or attack them.
+  2. (of a person or way) continue or proceed along (a path or route).
+#+end_src
+
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  pursue
+
+  izlemek
+
+  verb
+  1. sürdürmek (maintain, continue, sustain, keep, pursue, remain)
+  2. izlemek (follow, follow up, trace, track, pursue, chase)
+  3. kovalamak (chase, pursue, run after, give chase, drive, follow up)
+  4. takip etmek (follow up, chase, follow, track, come after, pursue)
+  5. yürütmek (walk, pursue, wage, filch, push, prosecute)
+  6. devam etmek (continue, proceed, keep going, go on, go ahead, pursue)
+  7. peşine düşmek (chase, pursue, go in search of)
+  8. peşinde koşmak (pursue, fish for, seek, search after, ghost)
+  9. peşinde olmak (pursue, chase, go after, seek for, seek after, aspire)
+
+  DEFINITION
+
+  verb
+  1. follow (someone or something) in order to catch or attack them.
+  "the officer pursued the van"
+  2. (of a person or way) continue or proceed along (a path or route).
+  "the road pursued a straight course over the scrubland"
+
+#+end_src
+
+* adjective                               :drill:
+SCHEDULED: <2021-11-10 Wed>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       6436F9B6-BD88-4A61-B275-D03AD80FC8BD
+:DRILL_LAST_INTERVAL: 14.6964
+:DRILL_REPEATS_SINCE_FAIL: 5
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 4.25
+:DRILL_EASE: 3.589
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:09]
+:END:
+
+** english
+adjective
+** turkish
+sıfat
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  adjective
+
+  sıfat
+
+  adjective
+  1. sıfat (adjective, adjectival)
+  2. biçimsel (formal, stylistic, logistic, pro forma, adjective)
+  3. sıfat gibi kullanılan (adjectival, adjective)
+  4. bağlı (connected, bonded, dependent, attached, related, adjective)
+  5. tabi (subject, subject to, dependent, subordinate, linked, adjective)
+  6. sabitleştiricili (adjective)
+
+  noun
+  1. sıfat (adjective, title, capacity, attribute, epithet, attribution)
+  2. önad (adjective)
+
+  DEFINITION
+
+  noun
+  1. a word or phrase naming an attribute, added to or grammatically related to a noun to modify or describe it.
+  "nil"
+
+#+end_src
+
+* pile                               :drill:
+SCHEDULED: <2021-10-29 Fri>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       CD2FB099-30AA-4A9A-AD98-D54956C91310
+:DRILL_LAST_INTERVAL: 16.3533
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 1
+:DRILL_AVERAGE_QUALITY: 4.0
+:DRILL_EASE: 3.204
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2021-10-13 Wed 08:58]
+:END:
+
+** english
+pile
+** turkish
+istif
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  pile
+
+  istif
+
+  noun
+  1. kazık (pile, stake, picket, peg, post, pale)
+  2. yığın (stack, heap, mass, pile, bulk, batch)
+  3. hav (pile, fuzz, nap, floss, down)
+  4. servet (fortune, wealth, assets, property, riches, pile)
+  5. küme (cluster, pile, group, stack, aggregate, mass)
+  6. tüy (hair, feather, down, pile, fluff, plume)
+  7. kat (floor, fold, coat, layer, ply, pile)
+  8. pil (battery, cell, pile)
+  9. yük (load, burden, cargo, charge, freight, pile)
+  10. büyük ve muhteşem yapı (pile)
+  11. hidroelektrik pil (pile)
+  12. kırık dökük şey (pile, rattletrap)
+  13. temel kazığı (pile)
+  14. ince tüy (fuzz, pile, flue, pappus)
+  15. kuştüyü (down, feather, plume, fuzz, pile)
+  16. atom reaktörü (nuclear reactor, chain reactor, atomic pile, pile)
+  17. basur memesi (pile)
+
+  verb
+  1. yığmak (stack, pile, agglomerate, accumulate, amass, bank up)
+  2. istif etmek (stack, stow, pile, hoard, put up)
+  3. stok yapmak (stock, stock up, pile, stockpile, buy forward)
+  4. tepeleme doldurmak (heap, pile)
+  5. stoklamak (stock up, stock, stockpile, pile, buy up, forestall)
+  6. kazık çakmak (drive in a stake, pile, pale)
+  7. kazık döşemek (pile)
+
+  adjective
+  1. katlı (storied, storeyed, multiple, pile, creased)
+
+  DEFINITION
+
+  noun
+  1. a heap of things laid or lying one on top of another.
+  "he placed the books in a neat pile"
+  2. a large imposing building or group of buildings.
+  "a Victorian Gothic pile"
+  3. a series of plates of dissimilar metals laid one on another alternately to produce an electric current.
+  4. a nuclear reactor.
+  "nil"
+  5. a heavy beam or post driven vertically into the bed of a river, soft ground, etc., to support the foundations of a structure.
+  6. a triangular charge or ordinary formed by two lines meeting at an acute angle, usually pointing down from the top of the shield.
+  "nil"
+  7. the soft projecting surface of a carpet or a fabric such as velvet or flannel, consisting of many small threads.
+  "the thick pile of the new rugs"
+
+  verb
+  1. place (things) one on top of another.
+  "she piled all the groceries on the counter"
+  2. (of a group of people) get into or out of a vehicle or space in a disorganized manner.
+  "ten of us piled into the minibus"
+  3. strengthen or support (a structure) with piles.
+  "an earlier bridge may have been piled"
+  4. furnish with a pile.
+  "a thick-piled carpet"
+
+#+end_src
+
+* screwdriver                               :drill:
+SCHEDULED: <2021-11-06 Sat>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       1C7BD40A-3C15-4A75-A6DF-48D20BB2E167
+:DRILL_LAST_INTERVAL: 20.1573
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 3.5
+:DRILL_EASE: 2.73
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-17 Sun 15:16]
+:END:
+
+** english
+screwdriver
+** turkish
+Tornavida
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  screwdriver
+
+  Tornavida
+
+  noun
+  1. tornavida (screwdriver, turnscrew)
+
+  DEFINITION
+
+  noun
+  1. a tool with a flattened, cross-shaped, or star-shaped tip that fits into the head of a screw to turn it.
+  2. a cocktail made from vodka and orange juice.
+
+#+end_src
+
+* ack                               :drill:
+SCHEDULED: <2021-11-18 Thu>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       526E9147-A1B0-4FAB-8390-4666B4652519
+:DRILL_LAST_INTERVAL: 22.5517
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 5
+:DRILL_FAILURE_COUNT: 1
+:DRILL_AVERAGE_QUALITY: 3.7
+:DRILL_EASE: 2.884
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:12]
+:END:
+
+** english
+ack
+** turkish
+kabul etmek
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  ack
+
+  kabul etmek
+
+#+end_src
+
+* acknowledge                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       2608B1EF-37DA-49F1-8464-6A7B2BB698B0
+:DRILL_LAST_INTERVAL: 0.0
+:DRILL_REPEATS_SINCE_FAIL: 0
+:DRILL_TOTAL_REPEATS: 5
+:DRILL_FAILURE_COUNT: 6
+:DRILL_AVERAGE_QUALITY: 2.375
+:DRILL_EASE: 2.149
+:DRILL_LAST_QUALITY: 2
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:11]
+:END:
+
+** english
+acknowledge
+** turkish
+kabullenmek
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  acknowledge
+
+  kabullenmek
+
+  verb
+  1. onaylamak (confirm, approve, ratify, endorse, affirm, acknowledge)
+  2. kabul etmek (accept, admit, adopt, approve, acknowledge, receive)
+  3. tanımak (recognize, know, get to know, identify, acknowledge, be acquainted with)
+  4. itiraf etmek (confess, admit, avouch, acknowledge, allow, avow)
+  5. alındığını bildirmek (acknowledge)
+  6. teşekkür etmek (thank, acknowledge, return thanks)
+
+  DEFINITION
+
+  verb
+  1. accept or admit the existence or truth of.
+  "the plight of the refugees was acknowledged by the authorities"
+  2. (of a body of opinion) recognize the fact or importance or quality of.
+  "the art world has begun to acknowledge his genius"
+  3. show that one has noticed or recognized (someone) by making a gesture or greeting.
+  "she refused to acknowledge my presence"
+
+#+end_src
+
+* Chattiness                               :drill:
+SCHEDULED: <2021-11-27 Sat>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       277010FC-E84D-4DD2-B61C-E9974D23F4A9
+:DRILL_LAST_INTERVAL: 31.8684
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 1
+:DRILL_AVERAGE_QUALITY: 4.25
+:DRILL_EASE: 3.589
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:08]
+:END:
+
+** english
+Chattiness
+** turkish
+konuşkanlık
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  Chattiness
+
+  konuşkanlık
+
+#+end_src
+
+* pursuing                               :drill:
+SCHEDULED: <2021-11-17 Wed>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       933F21F0-DAD8-4B45-8E2A-E9C3895A231E
+:DRILL_LAST_INTERVAL: 22.3681
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 4.25
+:DRILL_EASE: 3.589
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:06]
+:END:
+
+** english
+pursuing
+** turkish
+peşinde
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  pursuing
+
+  peşinde
+
+#+end_src
+
+* pursue                               :drill:
+SCHEDULED: <2021-11-12 Fri>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       AA9AB71E-6B1F-417F-9EBB-E64F20DB9062
+:DRILL_LAST_INTERVAL: 16.9111
+:DRILL_REPEATS_SINCE_FAIL: 5
+:DRILL_TOTAL_REPEATS: 6
+:DRILL_FAILURE_COUNT: 3
+:DRILL_AVERAGE_QUALITY: 3.417
+:DRILL_EASE: 2.676
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:13]
+:END:
+
+** english
+pursue
+** turkish
+izlemek, takip etmek
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  pursue
+
+  izlemek
+
+  verb
+  1. sürdürmek (maintain, continue, sustain, keep, pursue, remain)
+  2. izlemek (follow, follow up, trace, track, pursue, chase)
+  3. kovalamak (chase, pursue, run after, give chase, drive, follow up)
+  4. takip etmek (follow up, chase, follow, track, come after, pursue)
+  5. yürütmek (walk, pursue, wage, filch, push, prosecute)
+  6. devam etmek (continue, proceed, keep going, go on, go ahead, pursue)
+  7. peşine düşmek (chase, pursue, go in search of)
+  8. peşinde koşmak (pursue, fish for, seek, search after, ghost)
+  9. peşinde olmak (pursue, chase, go after, seek for, seek after, aspire)
+
+  DEFINITION
+
+  verb
+  1. follow (someone or something) in order to catch or attack them.
+  "the officer pursued the van"
+  2. (of a person or way) continue or proceed along (a path or route).
+  "the road pursued a straight course over the scrubland"
+
+#+end_src
+
+* hinder                               :drill:
+SCHEDULED: <2021-11-08 Mon>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       1BDCFBAC-78EE-42F7-BC79-3D237EFD18F3
+:DRILL_LAST_INTERVAL: 12.7747
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 6
+:DRILL_FAILURE_COUNT: 3
+:DRILL_AVERAGE_QUALITY: 3.021
+:DRILL_EASE: 2.465
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:08]
+:END:
+
+** english
+hinder
+** turkish
+- engellemek (v)
+- arkadaki daha arkadaki
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  hinder
+
+  engellemek
+
+  verb
+  1. engellemek (embarrass, fetter, hinder, inhibit, obstruct, keep from)
+  2. engel olmak (encumber, hinder, obstruct, handicap, put back, put off)
+  3. alıkoymak (retain, detain, stay, keep from, keep, hinder)
+  4. aksatmak (hinder, limp, make limp, disturb, paralyse, hamper)
+  5. aksamak (hitch, hobble, limp, have a hitch, halt, hinder)
+  6. sonraya kalmak (stand over, hinder)
+
+  adjective
+  1. arkadaki (rear, back, rearward, hind, hinder, posterior)
+  2. daha arkadaki (hinder)
+
+  DEFINITION
+
+  verb
+  1. create difficulties for (someone or something), resulting in delay or obstruction.
+  "various family stalemates were hindering communication"
+
+  adjective
+  1. (especially of a bodily part) rear; hind.
+  "the hinder end of its body"
+
+#+end_src
+
+* Mitigate                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       320E5C32-E88B-454A-83E7-BC31CE00636B
+:DRILL_LAST_INTERVAL: 0.0
+:DRILL_REPEATS_SINCE_FAIL: 0
+:DRILL_TOTAL_REPEATS: 8
+:DRILL_FAILURE_COUNT: 12
+:DRILL_AVERAGE_QUALITY: 2.242
+:DRILL_EASE: 2.074
+:DRILL_LAST_QUALITY: 2
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:11]
+:END:
+
+** english
+Mitigate
+** turkish
+hafifletmek
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  Mitigate
+
+  hafifletmek
+
+  verb
+  1. azaltmak (reduce, decrease, ax, diminish, abate, mitigate)
+  2. hafifletmek (lighten, alleviate, relieve, ease, extenuate, mitigate)
+  3. yatıştırmak (soothe, appease, calm, allay, placate, mitigate)
+
+  DEFINITION
+
+  verb
+  1. make less severe, serious, or painful.
+  "he wanted to mitigate misery in the world"
+
+#+end_src
+
+* cohesive                               :drill:
+SCHEDULED: <2021-11-08 Mon>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       D33E32BC-442C-4081-8050-3A6B9B11444A
+:DRILL_LAST_INTERVAL: 12.7555
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 5
+:DRILL_FAILURE_COUNT: 2
+:DRILL_AVERAGE_QUALITY: 3.7
+:DRILL_EASE: 2.884
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:09]
+:END:
+
+** english
+cohesive
+** turkish
+bağlı, yapışkan
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  cohesive
+
+  bağlı
+
+  adjective
+  1. yapışkan (adhesive, sticky, viscous, cohesive, adherent, glutinous)
+  2. bağlı (connected, bonded, dependent, attached, related, cohesive)
+  3. yapışık (adherent, attached, coherent, cohesive, conjoint)
+  4. yapışan (cohesive, agglutinate, clingy)
+
+  DEFINITION
+
+  adjective
+  1. characterized by or causing cohesion.
+  "each parish was formerly a cohesive unit"
+
+#+end_src
+
+* provable                               :drill:
+SCHEDULED: <2021-11-25 Thu>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       C4E46F9D-9A5C-4E8A-A05C-4E96D1ADF750
+:DRILL_LAST_INTERVAL: 29.8064
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 4.25
+:DRILL_EASE: 3.589
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:06]
+:END:
+
+** english
+provable
+** turkish
+kanıtlanabilir
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  provable
+
+  kanıtlanabilir
+
+  adjective
+  1. kanıtlanabilir (provable, demonstrable, verifiable, supportable)
+  2. ispatlanabilir (provable)
+  3. ispatı mümkün (provable)
+
+#+end_src
+
+* immersive                               :drill:
+SCHEDULED: <2021-11-18 Thu>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       C3CAF02E-2200-4CE8-83CB-7163F428FBDF
+:DRILL_LAST_INTERVAL: 23.373
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 5
+:DRILL_FAILURE_COUNT: 1
+:DRILL_AVERAGE_QUALITY: 4.1
+:DRILL_EASE: 3.343
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:13]
+:END:
+
+** english
+immersive
+** turkish
+(of a computer display or system) generating a three-dimensional image which appears to surround the user.
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  immersive
+
+  sürükleyici
+
+  DEFINITION
+
+  adjective
+  1. (of a computer display or system) generating a three-dimensional image which appears to surround the user.
+
+#+end_src
+* intricacy                               :drill:
+SCHEDULED: <2021-10-27 Wed>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       B00A5285-BF37-430D-9DE0-4015BECF5E43
+:DRILL_LAST_INTERVAL: 1.4507
+:DRILL_REPEATS_SINCE_FAIL: 1
+:DRILL_TOTAL_REPEATS: 8
+:DRILL_FAILURE_COUNT: 8
+:DRILL_AVERAGE_QUALITY: 2.605
+:DRILL_EASE: 2.269
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:11]
+:END:
+
+** english
+intricacy
+** turkish
+karmaşıklık
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  intricacy
+
+  karmaşıklık
+
+  noun
+  1. karışıklık (confusion, mess, fuss, complexity, disturbance, intricacy)
+  2. karmakarışıklık (mishmash, mess, mixed bag, ballup, confusion worse confounded, intricacy)
+  3. anlaşılmazlık (obscurity, incomprehensibility, intricacy, opacity, subtlety, unintelligiblity)
+
+  DEFINITION
+
+  noun
+  1. the quality of being intricate.
+  "the exquisite intricacy of Indian silverwork"
+
+#+end_src
+* a tax whose purpose is to diminish spending                               :drill:
+SCHEDULED: <2021-11-06 Sat>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       C5C528F1-3F6D-45AB-AE77-92F4F2376EE7
+:DRILL_LAST_INTERVAL: 10.688
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 3.0
+:DRILL_EASE: 2.456
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:05]
+:END:
+
+** english
+a tax whose purpose is to diminish spending
+** turkish
+amacı harcamaları azaltmak olan bir vergi
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  a tax whose purpose is to diminish spending
+
+  amacı harcamaları azaltmak olan bir vergi
+
+#+end_src
+*
+* rival                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       6AF30276-B20C-42E6-93FE-9317E52DAB4A
+:DRILL_LAST_INTERVAL: 0.0
+:DRILL_REPEATS_SINCE_FAIL: 0
+:DRILL_TOTAL_REPEATS: 3
+:DRILL_FAILURE_COUNT: 1
+:DRILL_AVERAGE_QUALITY: 3.25
+:DRILL_EASE: 2.58
+:DRILL_LAST_QUALITY: 1
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:13]
+:END:
+
+** english
+rival
+** turkish
+rakip
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  rival
+
+  rakip
+
+  adjective
+  1. rakip (rival)
+
+  noun
+  1. rakip (opponent, rival, competitor, contender, adversary, match)
+  2. hasım (hostile, adversary, enemy, rival, antagonist, foe)
+
+  verb
+  1. rekabet etmek (compete, rival, enter into rivalry with, vie, contend, contest)
+  2. çekişmek (quarrel, bicker, contend, chaffer, compete, rival)
+  3. aşık atmak (compete with, keep up with, rival, play knuclebones)
+
+  DEFINITION
+
+  noun
+  1. a person or thing competing with another for the same objective or for superiority in the same field of activity.
+  "he has no serious rival for the job"
+
+  verb
+  1. be or seem to be equal or comparable to.
+  "he was a photographer whose fame rivaled that of his subjects"
+
+#+end_src
+* accommodation                               :drill:
+SCHEDULED: <2021-11-08 Mon>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       07D08F23-DEA7-4928-99D6-0E503202C05F
+:DRILL_LAST_INTERVAL: 21.7845
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 3
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 4.667
+:DRILL_EASE: 4.583
+:DRILL_LAST_QUALITY: 5
+:DRILL_LAST_REVIEWED: [2021-10-17 Sun 15:20]
+:END:
+
+** english
+accommodation
+** turkish
+Konaklama
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  accommodation
+
+  Konaklama
+
+  noun
+  1. kalacak yer (accommodation, accommodations, quarters, sleeping accommodation, lodging, rooms)
+  2. uyum (harmony, conformity, accordance, consistency, coherence, accommodation)
+  3. yatacak yer (accommodation, accommodations, bed, quarters, lair, lying)
+  4. uzlaşma (compromise, reconciliation, agreement, settlement, rapprochement, accommodation)
+  5. uyma (fit, compliance, respect, adherence, conformity, accommodation)
+  6. uyuşma (numbness, agreement, compromise, concurrence, anesthesia, accommodation)
+  7. bulma (find, finding, detection, invention, procurement, accommodation)
+  8. uzlaştırma (conciliation, reconciliation, pacification, accommodation)
+  9. sağlama (providing, supply, provision, procuring, proof, accommodation)
+  10. borç (debt, liability, loan, debit, arrears, accommodation)
+
+  DEFINITION
+
+  noun
+  1. a convenient arrangement; a settlement or compromise.
+  "management was seeking an accommodation with labor"
+  2. the process of adapting or adjusting to someone or something.
+  "accommodation to a separate political entity was not possible"
+
+#+end_src
+* Conversely                               :drill:
+SCHEDULED: <2021-11-03 Wed>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       57B38A30-2676-4258-9187-04C3F6CAABF8
+:DRILL_LAST_INTERVAL: 8.1207
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 5
+:DRILL_FAILURE_COUNT: 1
+:DRILL_AVERAGE_QUALITY: 3.0
+:DRILL_EASE: 2.456
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:11]
+:END:
+
+** english
+Conversely
+** turkish
+tersine
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  Conversely
+
+  tersine
+
+  adverb
+  1. tersine (backwards, conversely, inversely, backward, contrarily, contrariwise)
+  2. aksine (rather, on the contrary, conversely, contrarily, contra, by contrast with)
+  3. diğer taraftan (on the other hand, conversely, moreover, otherwise)
+
+  DEFINITION
+
+  adverb
+  1. introducing a statement or idea which reverses one that has just been made or referred to.
+  "we're not going to have enough onions to last the year, while courgettes, conversely, are in a major surplus"
+
+#+end_src
+* persist                               :drill:
+SCHEDULED: <2021-11-08 Mon>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       8FA866E0-E3AB-444F-A732-477C37D047B7
+:DRILL_LAST_INTERVAL: 13.2368
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 5
+:DRILL_FAILURE_COUNT: 1
+:DRILL_AVERAGE_QUALITY: 2.9
+:DRILL_EASE: 2.409
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:12]
+:END:
+
+** english
+persist
+** turkish
+ısrar etmek
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  persist
+
+  ısrar etmek
+
+  verb
+  1. sürdürmek (maintain, continue, sustain, keep, pursue, persist)
+  2. inat etmek (be obstinate, persist, balk, balk at, baulk, recalcitrate)
+  3. sürmek (drive, drive out, last, continue, hang over, persist)
+  4. devam etmek (continue, proceed, keep going, go on, go ahead, persist)
+  5. ısrar etmek (insist, persist, stick to it, hang on, stand on, claim)
+  6. sebat etmek (be constant, persist, persevere)
+
+  DEFINITION
+
+  verb
+  1. continue firmly or obstinately in an opinion or a course of action in spite of difficulty, opposition, or failure.
+  "the minority of drivers who persist in drinking"
+
+#+end_src
+* audit                               :drill:
+SCHEDULED: <2021-11-08 Mon>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       A259596D-67A7-47D5-ACC1-683A238F6786
+:DRILL_LAST_INTERVAL: 12.728
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 5
+:DRILL_FAILURE_COUNT: 3
+:DRILL_AVERAGE_QUALITY: 3.6
+:DRILL_EASE: 2.802
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:08]
+:END:
+
+** english
+audit
+** turkish
+denetim
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  audit
+
+  denetim
+
+  noun
+  1. denetim (control, audit, check, test, governance, discipline)
+  2. hesap denetimi (audit)
+  3. hesapların kontrolü (audit)
+  4. sistemli inceleme (audit)
+
+  verb
+  1. denetlemek (check, control, audit, inspect, examine, supervise)
+  2. kontrol etmek (control, check up, check up on, check, inspect, audit)
+  3. incelemek (examine, investigate, study, analyze, view, audit)
+
+  DEFINITION
+
+  noun
+  1. an official inspection of an individual's or organization's accounts, typically by an independent body.
+  "audits can't be expected to detect every fraud"
+
+  verb
+  1. conduct an official financial examination of (an individual's or organization's accounts).
+  "companies must have their accounts audited"
+
+#+end_src
+* sentiment                               :drill:
+SCHEDULED: <2021-11-01 Mon>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       12E487D8-0121-416E-A34B-8748E716A1C7
+:DRILL_LAST_INTERVAL: 5.7059
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 6
+:DRILL_FAILURE_COUNT: 4
+:DRILL_AVERAGE_QUALITY: 2.955
+:DRILL_EASE: 2.434
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:06]
+:END:
+
+** english
+sentiment
+** turkish
+duygusallık
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  sentiment
+
+  duygusallık
+
+  noun
+  1. duygusallık (sensuality, sentiment, emotionality, sensibility, romanticism, sensuousness)
+  2. duygu (feeling, sense, emotion, feel, sentiment, sensation)
+  3. duyarlılık (sensitivity, susceptibility, sensibility, sentiment, sensitiveness, delicacy)
+  4. his (feeling, feel, sense, sensation, emotion, sentiment)
+  5. hassaslık (sensitivity, tenderness, susceptibility, sensitiveness, sensibility, sentiment)
+
+  DEFINITION
+
+  noun
+  1. a view of or attitude toward a situation or event; an opinion.
+  "I agree with your sentiments regarding the road bridge"
+  2. exaggerated and self-indulgent feelings of tenderness, sadness, or nostalgia.
+  "many of the appeals rely on treacly sentiment"
+
+#+end_src
+* hesitate                               :drill:
+SCHEDULED: <2021-11-03 Wed>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       39E1F063-A416-43F2-A3AE-F76E8DE289DC
+:DRILL_LAST_INTERVAL: 8.0762
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 7
+:DRILL_FAILURE_COUNT: 11
+:DRILL_AVERAGE_QUALITY: 2.613
+:DRILL_EASE: 2.273
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:12]
+:END:
+
+** english
+hesitate
+** turkish
+tereddüt etmek
+** solution
+
+#+begin_src emacs-lisp
+  "Richard hesitated before answering."
+#+end_src
+
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  hesitate
+
+  tereddüt etmek
+
+  verb
+  1. duraksamak (pause, hesitate, halt, hobble, baulk, come to a stop)
+  2. tereddüd etmek (hesitate, falter, waver, pause, balk at, dither)
+  3. çekinmek (hesitate, fear, hold back, beware, shy, boggle)
+  4. teklemek (misfire, stutter, knock, act up, hesitate, kick)
+
+  DEFINITION
+
+  verb
+  1. pause before saying or doing something, especially through uncertainty.
+  "she hesitated, unsure of what to say"
+
+#+end_src
+* obligation                               :drill:
+SCHEDULED: <2021-11-07 Sun>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       01920C67-B9C3-472F-936A-5DF18FBC5CAF
+:DRILL_LAST_INTERVAL: 12.1761
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 6
+:DRILL_FAILURE_COUNT: 5
+:DRILL_AVERAGE_QUALITY: 3.111
+:DRILL_EASE: 2.509
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:12]
+:END:
+
+** english
+obligation
+** turkish
+yükümlülük
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  obligation
+
+  yükümlülük
+
+  noun
+  1. yükümlülük (obligation, liability, responsibility, duty, engagement, charge)
+  2. zorunluluk (obligation, necessity, imperative, urgency, burden, ought)
+  3. borç (debt, liability, loan, debit, arrears, obligation)
+  4. mecburiyet (obligation, compulsion, exigence, exigency, indispensability)
+  5. ödev (homework, assignment, task, duty, obligation, schoolwork)
+  6. minnet (gratefulness, thankfulness, obligation)
+  7. senet (bill, bond, note, voucher, instrument, obligation)
+  8. minnet borcu (debt of gratitude, gratefulness, obligation)
+
+  DEFINITION
+
+  noun
+  1. an act or course of action to which a person is morally or legally bound; a duty or commitment.
+  "I have an obligation to look after her"
+
+#+end_src
+* stove                               :drill:
+SCHEDULED: <2021-11-09 Tue>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       18FC3B29-B988-45F5-ABD8-DFE3FD5FFB83
+:DRILL_LAST_INTERVAL: 23.347
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 3
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 4.0
+:DRILL_EASE: 3.204
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-17 Sun 15:20]
+:END:
+
+** english
+stove (v.)
+** turkish
+soba
+** solution
+#+begin_src emacs-lisp
+
+  Translate from English (detected) to Turkish:
+
+  stove
+
+  soba
+
+  noun
+  1. soba (stove)
+  2. ocak (stove, cooker, furnace, hearth, oven, fireplace)
+  3. fırın (oven, furnace, kiln, bakery, stove, cooker)
+  4. sera (greenhouse, glasshouse, conservatory, hothouse, orangery, stove)
+  5. limonluk (conservatory, greenhouse, orangery, hothouse, cold frame, stove)
+
+  verb
+  1. sobada kurutmak (stove)
+  2. sobada ısıtmak (stove)
+  3. tütsülemek (fumigate, smoke, fume, cense, incense, stove)
+  4. dezenfekte etmek (disinfect, stove)
+
+  DEFINITION
+
+  noun
+  1. an apparatus for cooking or heating that operates by burning fuel or using electricity.
+
+  verb
+  1. treat (an object) by heating it in a stove in order to apply a desired surface coating.
+  2. past and past participle of stave.
+
+#+end_src
+* exquisite                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       C8A0EFD3-023A-48F2-813F-50BC15075214
+:DRILL_LAST_INTERVAL: 0.0
+:DRILL_REPEATS_SINCE_FAIL: 0
+:DRILL_TOTAL_REPEATS: 7
+:DRILL_FAILURE_COUNT: 9
+:DRILL_AVERAGE_QUALITY: 2.739
+:DRILL_EASE: 2.333
+:DRILL_LAST_QUALITY: 2
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:12]
+:END:
+
+** english
+exquisite
+** turkish
+enfes
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+exquisite
+
+enfes
+
+adjective
+ 1. nefis (yummy, exquisite, delicious, delectable, beautiful, fine)
+ 2. hassas (sensitive, precision, delicate, fine, susceptible, exquisite)
+ 3. nazik (kind, courteous, gentle, polite, delicate, exquisite)
+ 4. keskin (sharp, keen, pungent, acute, strong, exquisite)
+ 5. kibar (polite, courteous, nice, gentle, urbane, exquisite)
+ 6. aşırı (extreme, excessive, ultra, high, heavy, exquisite)
+ 7. şiddetli (severe, vigorous, violent, intense, heavy, exquisite)
+
+DEFINITION
+
+adjective
+ 1. extremely beautiful and, typically, delicate.
+    "exquisite, jewellike portraits"
+
+noun
+ 1. a man who is affectedly concerned with his clothes and appearance; a dandy.
+    "nil"
+
+#+end_src
+* the exquisite intricacy of Indian silverwork                               :drill:
+SCHEDULED: <2021-11-14 Sun>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       D8883A3E-A1A0-4C06-B444-4B147FE300D3
+:DRILL_LAST_INTERVAL: 18.9947
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 3.0
+:DRILL_EASE: 2.456
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:13]
+:END:
+
+** english
+the exquisite intricacy of Indian silverwork
+** turkish
+Hint gümüş işçiliğinin enfes karmaşıklığı
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+the exquisite intricacy of Indian silverwork
+
+Hint gümüş işçiliğinin enfes karmaşıklığı
+
+#+end_src
+* Adequate                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       329E16C2-B8E9-49C5-8516-2E8218FD9CBB
+:DRILL_LAST_INTERVAL: 0.0
+:DRILL_REPEATS_SINCE_FAIL: 0
+:DRILL_TOTAL_REPEATS: 5
+:DRILL_FAILURE_COUNT: 8
+:DRILL_AVERAGE_QUALITY: 2.198
+:DRILL_EASE: 2.049
+:DRILL_LAST_QUALITY: 1
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:11]
+:END:
+
+** english
+Adequate
+** turkish
+Yeterli
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+Adequate
+
+Yeterli
+
+adjective
+ 1. yeterli (enough, sufficient, adequate, ample, satisfactory, competent)
+ 2. uygun (appropriate, suitable, convenient, proper, fit, adequate)
+ 3. elverişli (convenient, suitable, adequate, susceptible, opportune, practical)
+
+DEFINITION
+
+adjective
+ 1. satisfactory or acceptable in quality or quantity.
+    "this office is perfectly adequate for my needs"
+
+#+end_src
+
+* peculiar fact                               :drill:
+SCHEDULED: <2021-11-02 Tue>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       47C7C87C-6636-4105-ACDF-6DE18CFE9A85
+:DRILL_LAST_INTERVAL: 6.723
+:DRILL_REPEATS_SINCE_FAIL: 4
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 3.0
+:DRILL_EASE: 2.456
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:10]
+:END:
+
+** english
+peculiar fact
+** turkish
+tuhaf gerçek
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+peculiar fact
+
+tuhaf gerçek
+
+#+end_src
+* peculiar                                :drill:
+SCHEDULED: <2021-11-02 Tue>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       EE0AD091-6965-43FE-9000-1F35D2EED8FF
+:DRILL_LAST_INTERVAL: 6.8359
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 5
+:DRILL_FAILURE_COUNT: 5
+:DRILL_AVERAGE_QUALITY: 2.733
+:DRILL_EASE: 2.33
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:10]
+:END:
+
+** english
+peculiar
+** turkish
+acayip, tuhaf, garip, özel eşya
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+peculiar
+
+özel eşya
+
+adjective
+ 1. tuhaf (strange, weird, bizarre, odd, peculiar, funny)
+ 2. özel (special, private, specific, exclusive, particular, peculiar)
+ 3. has (special, peculiar, private, appropriate)
+ 4. özgün (original, unique, peculiar, genuine, distinctive, individual)
+ 5. acayip (strange, weird, odd, bizarre, peculiar, outlandish)
+
+noun
+ 1. ayrıcalık (privilege, prerogative, concession, benefit, favor, peculiar)
+ 2. özel mülk (peculiar)
+ 3. özel eşya (belongings, personalty, peculiar)
+ 4. ayrıcalıklı kilise (peculiar)
+
+DEFINITION
+
+adjective
+ 1. strange or odd; unusual.
+    "his accent was a peculiar mixture of Cockney and Irish"
+ 2. particular; special.
+    "any attempt to explicate the theme is bound to run into peculiar difficulties"
+
+#+end_src
+* glum                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       2EACA022-A66A-4A3F-A15A-10DA1F0E9972
+:DRILL_LAST_INTERVAL: 0.0
+:DRILL_REPEATS_SINCE_FAIL: 0
+:DRILL_TOTAL_REPEATS: 3
+:DRILL_FAILURE_COUNT: 4
+:DRILL_AVERAGE_QUALITY: 2.188
+:DRILL_EASE: 2.042
+:DRILL_LAST_QUALITY: 2
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:11]
+:END:
+
+** english
+glum
+** turkish
+somurtkan
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+glum
+
+somurtkan
+
+adjective
+ 1. asık suratlı (dour, glum, morose, saturnine, sulky, surly)
+ 2. hüzünlü (sad, sorrowful, melancholic, gloomy, blue, glum)
+ 3. somurtkan (surly, sullen, sulky, grumpy, glum, sour)
+ 4. üzgün (sorry, sad, upset, unhappy, worried, glum)
+
+DEFINITION
+
+adjective
+ 1. looking or feeling dejected; morose.
+    "they looked glum but later cheered up"
+
+#+end_src
+* misery                                                              :drill:
+SCHEDULED: <2021-10-31 Sun>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       DECF8002-CCF0-4DF2-8EFB-34597792F6B0
+:DRILL_LAST_INTERVAL: 13.6702
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 3
+:DRILL_FAILURE_COUNT: 1
+:DRILL_AVERAGE_QUALITY: 4.0
+:DRILL_EASE: 3.204
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2021-10-17 Sun 15:16]
+:END:
+
+** english
+misery
+** turkish
+sefalet
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+misery
+
+sefalet
+
+noun
+ 1. sefalet (misery, poverty, squalor, wretchedness, beggary, calamity)
+ 2. acı (pain, suffering, hurt, grief, sorrow, misery)
+ 3. ızdırap (suffering, agony, anguish, misery, affliction, pain)
+ 4. yoksulluk (poverty, destitution, misery, penury, need, hardship)
+ 5. hınzır (misery)
+
+DEFINITION
+
+noun
+ 1. a state or feeling of great distress or discomfort of mind or body.
+    "she went upstairs and cried in misery"
+
+#+end_src
+* outage                               :drill:
+SCHEDULED: <2021-11-11 Thu>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       59530C46-0830-4E52-96E1-6C0659B4ECC4
+:DRILL_LAST_INTERVAL: 15.9709
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 3
+:DRILL_FAILURE_COUNT: 2
+:DRILL_AVERAGE_QUALITY: 4.0
+:DRILL_EASE: 3.204
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:11]
+:END:
+
+** english
+outage
+** turkish
+Kesinti (su, elecktrik)
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+outage
+
+Kesinti
+
+noun
+ 1. fire (wastage, shrinkage, outage, ullage, leakage, turnover)
+ 2. zayiat (casualties, outage, decrement)
+
+DEFINITION
+
+noun
+ 1. a period when a power supply or other service is not available or when equipment is closed down.
+    "frequent power outages"
+
+#+end_src
+* errant                               :drill:
+SCHEDULED: <2021-11-04 Thu>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       3B57A140-BA67-416A-9336-E380BCC43047
+:DRILL_LAST_INTERVAL: 9.2859
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 4
+:DRILL_FAILURE_COUNT: 3
+:DRILL_AVERAGE_QUALITY: 3.0
+:DRILL_EASE: 2.456
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:10]
+:END:
+
+** english
+errant
+** turkish
+gezgin
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+errant
+
+gezgin
+
+adjective
+ 1. hatalı (incorrect, erroneous, wrong, faulty, false, errant)
+ 2. serseri (vagrant, outcast, stray, errant, vagabond, wandering)
+ 3. yanlış (wrong, false, incorrect, improper, inaccurate, errant)
+ 4. maceracı (errant)
+ 5. vefasız (unfaithful, disloyal, erring, untrue, perfidious, errant)
+
+DEFINITION
+
+adjective
+ 1. erring or straying from the proper course or standards.
+    "he could never forgive his daughter's errant ways"
+ 2. traveling in search of adventure.
+    "that same lady errant"
+
+#+end_src
+* affiliated                               :drill:
+SCHEDULED: <2021-11-01 Mon>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       A9E0373E-5609-43E1-8393-785F58732154
+:DRILL_LAST_INTERVAL: 5.8073
+:DRILL_REPEATS_SINCE_FAIL: 3
+:DRILL_TOTAL_REPEATS: 5
+:DRILL_FAILURE_COUNT: 5
+:DRILL_AVERAGE_QUALITY: 2.867
+:DRILL_EASE: 2.393
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:11]
+:END:
+
+** english
+affiliated
+** turkish
+bağlı
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+affiliated
+
+bağlı
+
+adjective
+ 1. bağlı (connected, bonded, dependent, attached, related, affiliated)
+
+DEFINITION
+
+adjective
+ 1. (of a subsidiary group or a person) officially attached or connected to an organization.
+    "affiliated union members"
+
+#+end_src
+* terrific                               :drill:
+SCHEDULED: <2021-10-30 Sat>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       D36F5465-CB34-44A0-A1C0-6BE9EFC31EBF
+:DRILL_LAST_INTERVAL: 4.3719
+:DRILL_REPEATS_SINCE_FAIL: 2
+:DRILL_TOTAL_REPEATS: 2
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 3.5
+:DRILL_EASE: 2.73
+:DRILL_LAST_QUALITY: 4
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:07]
+:END:
+
+** english
+terrific
+** turkish
+müthiş
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+terrific
+
+müthiş
+
+adjective
+ 1. müthiş (terrific, stunning, fabulous, formidable, awful, ripping)
+ 2. çok güzel (very good, adorable, terrific, slashing, divine, inspired)
+ 3. korkunç (terrible, horrible, awful, scary, terrifying, terrific)
+ 4. olağanüstü (exceptional, extraordinary, remarkable, phenomenal, fantastic, terrific)
+
+DEFINITION
+
+adjective
+ 1. of great size, amount, or intensity.
+    "there was a terrific bang"
+ 2. causing terror.
+    "his body presented a terrific emblem of death"
+
+#+end_src
+* retain                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       B0D5A4FD-C9A7-4C7A-A5ED-3F32B1BBB6D4
+:DRILL_LAST_INTERVAL: 0.0
+:DRILL_REPEATS_SINCE_FAIL: 0
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 2
+:DRILL_AVERAGE_QUALITY: 1.75
+:DRILL_EASE: 1.759
+:DRILL_LAST_QUALITY: 2
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:11]
+:END:
+
+** english
+retain
+** turkish
+sürdürmek
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+retain
+
+sürdürmek
+
+verb
+ 1. tutmak (keep, hold, grip, retain, keep in, take)
+ 2. kaybetmemek (retain)
+ 3. alıkoymak (retain, detain, stay, keep from, keep, hold up)
+ 4. elinden kaçırmamak (retain)
+ 5. unutmamak (keep in mind, not to forget, make sure, retain)
+ 6. parayla tutmak (retain)
+
+DEFINITION
+
+verb
+ 1. continue to have (something); keep possession of.
+    "built in 1830, the house retains many of its original features"
+ 2. absorb and continue to hold (a substance).
+    "limestone is known to retain water"
+ 3. keep (something) in place; hold fixed.
+    "the successful design of a cartridge belt requires that the cartridges in it be properly located and retained in that position"
+ 4. keep (someone) engaged in one's service.
+    "he has been retained as a freelance"
+
+#+end_src
+* comparisons                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       1F5E35C7-700E-4716-B692-88B45522EE80
+:DRILL_LAST_INTERVAL: 0.0
+:DRILL_REPEATS_SINCE_FAIL: 0
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 2
+:DRILL_AVERAGE_QUALITY: 2.25
+:DRILL_EASE: 2.079
+:DRILL_LAST_QUALITY: 2
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:11]
+:END:
+
+** english
+comparisons
+** turkish
+karşılaştırmalar
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+comparisons
+
+karşılaştırmalar
+
+noun
+ 1. karşılaştırma (comparison, collation, analogy, crosscheck, check)
+ 2. kıyaslama (comparison)
+ 3. mukayese (comparison)
+ 4. kıyas (comparison, analogy, syllogism, comparing)
+ 5. benzerlik (similarity, similar, resemblance, analogy, likeness, identity)
+ 6. benzetme (comparison, simile, image, mimesis, similitude)
+ 7. üstünlük derecesini gösterme (comparison)
+
+DEFINITION
+
+noun
+ 1. a consideration or estimate of the similarities or dissimilarities between two things or people.
+    "they drew a comparison between Gandhi's teaching and that of other teachers"
+ 2. the formation of the comparative and superlative forms of adjectives and adverbs.
+    "nil"
+
+#+end_src
+* peek                               :drill:
+SCHEDULED: <2021-10-29 Fri>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       C164ABF9-CD93-4B5A-98D2-5B3947134C19
+:DRILL_LAST_INTERVAL: 2.6444
+:DRILL_REPEATS_SINCE_FAIL: 1
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 3.0
+:DRILL_EASE: 2.456
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:13]
+:END:
+
+** english
+peek
+** turkish
+dikizlemek
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+peek
+
+dikizlemek
+
+noun
+ 1. gözetleme (surveillance, observation, peek, lookout, peeping, watching)
+ 2. cıvıldama (peek)
+
+verb
+ 1. gözetlemek (watch, spy on, spy on, peep, peek, pry)
+ 2. dikizlemek (have a peep, take a peep, peep, peek, case, case the joint)
+ 3. göz atıvermek (peek)
+
+DEFINITION
+
+verb
+ 1. look quickly, typically in a furtive manner.
+    "faces peeked from behind the curtains"
+
+noun
+ 1. a quick or furtive look.
+    "she sneaked a peek at the map"
+
+#+end_src
+* peak                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       09A0E022-768B-42C7-882C-39FDDEB4A641
+:DRILL_LAST_INTERVAL: 0.0
+:DRILL_REPEATS_SINCE_FAIL: 0
+:DRILL_TOTAL_REPEATS: 0
+:DRILL_FAILURE_COUNT: 1
+:DRILL_AVERAGE_QUALITY: 2.0
+:DRILL_EASE: 1.926
+:DRILL_LAST_QUALITY: 2
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:13]
+:END:
+
+** english
+peak
+** turkish
+doruğa ulaşmak
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+peak
+
+doruğa ulaşmak
+
+adjective
+ 1. zirve (peak)
+ 2. tepe (top, peak, apical)
+ 3. uç (terminal, peak)
+ 4. en yoğun olan (peak)
+
+noun
+ 1. zirve (summit, peak, top, pinnacle, height, climax)
+ 2. tepe (hill, top, peak, crown, apex, crest)
+ 3. doruk (peak, climax, pinnacle, summit, height, cusp)
+ 4. tepe noktası (peak)
+ 5. en yoğun olduğu durum (peak)
+ 6. şapka siperi (brim, visor, vizor, shade, peak)
+
+verb
+ 1. zayıflamak (weaken, decline, decay, fade, loose flesh, peak)
+ 2. doruğa ulaşmak (come to a head, culminate, peak)
+
+DEFINITION
+
+noun
+ 1. the pointed top of a mountain.
+    "the snowy peaks rose against the blue of a cloudless sky"
+
+verb
+ 1. reach a highest point, either of a specified value or at a specified time.
+    "its popularity peaked in the 1940s"
+ 2. decline in health and spirits; waste away.
+    "she sat all day, peaking and pining, at the fire-side"
+
+adjective
+ 1. greatest; maximum.
+    "he did not expect to be anywhere near peak fitness until Christmas"
+
+#+end_src
+* impedance                               :drill:
+SCHEDULED: <2021-10-28 Thu>
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:ID:       6A639FE0-D495-427A-92B2-EB2D1CAC8009
+:DRILL_LAST_INTERVAL: 2.4245
+:DRILL_REPEATS_SINCE_FAIL: 1
+:DRILL_TOTAL_REPEATS: 1
+:DRILL_FAILURE_COUNT: 0
+:DRILL_AVERAGE_QUALITY: 3.0
+:DRILL_EASE: 2.456
+:DRILL_LAST_QUALITY: 3
+:DRILL_LAST_REVIEWED: [2021-10-26 Tue 21:13]
+:END:
+
+** english
+impedance
+** turkish
+iç direnç
+** solution
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+impedance
+
+iç direnç
+
+noun
+ 1. empedans (impedance)
+ 2. iç direnç (impedance)
+ 3. alternatif akım direnci (impedance)
+
+DEFINITION
+
+noun
+ 1. the effective resistance of an electric circuit or component to alternating current, arising from the combined effects of ohmic resistance and reactance.
+
+#+end_src
+324866
+* reckoning                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+reckoning
+** turkish
+hesaplaşma
+
+- the action or process of calculating or estimating something.
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/reckoning][on cambridge link]]
+
+*reckon* --> to think that something is probably true
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+reckoning
+
+hesaplaşma
+
+noun
+ 1. hesaplaşma (reckoning, settling, settlement, revenge, payoff, liquidation)
+ 2. hesaplama (calculation, computation, reckoning, sums)
+ 3. hesap (account, calculus, calculation, computation, count, reckoning)
+ 4. sayma (counting, count, reckoning)
+ 5. hesap pusulası (reckoning)
+ 6. konum hesabı (reckoning)
+ 7. yer belirleme (location, reckoning)
+
+DEFINITION
+
+noun
+ 1. the action or process of calculating or estimating something.
+    "last year was not, by any reckoning, a particularly good one"
+
+#+end_src
+* worsen                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+worsen
+** turkish
+kötüleştirmek
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/worsen][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+worsen
+
+kötüleştirmek
+
+verb
+ 1. kötüleşmek (get worse, worsen, deteriorate, go down, retrograde, retrogress)
+ 2. kötüleştirmek (aggravate, worsen, make worse, exacerbate)
+ 3. beter etmek (worsen)
+ 4. gerilemek (regress, recede, degrade, drop back, stand back, worsen)
+ 5. daha da kötü olmak (worsen)
+
+DEFINITION
+
+verb
+ 1. make or become worse.
+    "her condition worsened on the flight"
+
+#+end_src
+* hound                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+hound
+** turkish
+tazı
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/hound][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+hound
+
+tazı
+
+noun
+ 1. tazı (greyhound, hound, beagle, whippet, bloodhound, harrier)
+ 2. av köpeği (beagle, pointer, hound, bird dog, setter, gun dog)
+ 3. it herif (tyke, hound, rotter, scab, yellow-dog)
+ 4. aşağılık adam (hound)
+ 5. meraklı (aficionado, lover, amateur, buff, fancier, hound)
+ 6. hastası (hound)
+ 7. gemi yan germesi (hound)
+
+verb
+ 1. kışkırtmak (provoke, incite, tempt, prod, instigate, hound)
+ 2. tahrik etmek (turn on, seduce, excite, provoke, incite, hound)
+ 3. iz sürmek (scent out, scent, hound, sleuth, spoor)
+ 4. izlemek (follow, follow up, trace, track, pursue, hound)
+ 5. takip etmek (follow up, chase, follow, track, come after, hound)
+
+DEFINITION
+
+noun
+ 1. a dog of a breed used for hunting, especially one able to track by scent.
+
+verb
+ 1. harass, persecute, or pursue relentlessly.
+    "his opponents used the allegations to hound him out of office"
+
+#+end_src
+* vibrant                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+vibrant
+** turkish
+canlı
+
+- full of excitement and energy
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/vibrant][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+vibrant
+
+canlı
+
+adjective
+ 1. canlı (live, alive, living, lively, vibrant, vivid)
+ 2. enerjik (energetic, vibrant, vigorous, dynamic, active, brisk)
+ 3. titreşimli (vibratory, pulsating, vibrant, wiry)
+ 4. titreşen (vibrating, flickering, oscillating, pulsating, vibrant, vibratory)
+ 5. heyecanlı (excited, exciting, thrilling, hectic, agitated, vibrant)
+ 6. yankılanan (resonant, vibrant, sounding)
+ 7. çınlayan (ringing, resonant, tinkling, sonorous, sounding, vibrant)
+
+DEFINITION
+
+adjective
+ 1. full of energy and enthusiasm.
+    "a vibrant cosmopolitan city"
+
+#+end_src
+* prodded                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+prodded
+** turkish
+dürtülmüş
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/prodded][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+prodded
+
+dürtülmüş
+
+verb
+ 1. dürtmek (prod, goad, incite, dig, edge on, ginger)
+ 2. kışkırtmak (provoke, incite, tempt, prod, instigate, set on)
+ 3. özendirmek (encourage, support, accelerate, prod, tempt, abet)
+ 4. teşvik etmek (encourage, stimulate, incite, urge, set on, ginger up)
+
+DEFINITION
+
+verb
+ 1. poke (someone) with a finger, foot, or pointed object.
+    "he prodded her in the ribs to stop her snoring"
+
+#+end_src
+* betrayal                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+betrayal
+** turkish
+ihanet
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/betrayal][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+betrayal
+
+ihanet
+
+noun
+ 1. ihanet (betrayal, treachery, infidelity, defection, sellout, Judas kiss)
+ 2. hıyanet (treachery, infidelity, betrayal)
+ 3. hainlik (treason, treachery, betrayal, villainy, perfidy, disloyalty)
+ 4. ele verme (betrayal, sellout, giving away, delation, denunciation)
+
+DEFINITION
+
+noun
+ 1. the action of betraying one's country, a group, or a person; treachery.
+    "the betrayal by the king by his daughter"
+
+#+end_src
+* mourning                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+mourning
+** turkish
+yas
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/mourning][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+mourning
+
+yas
+
+noun
+ 1. yas (mourning, lament)
+ 2. matem (mourning, lament, sorrow)
+ 3. karalar (mourning, sables)
+ 4. ağıt (lament, elegy, lamentation, dirge, mourning, wailing)
+ 5. matem elbisesi (mourning dress, mourning, widow's weeds, weeds)
+
+adjective
+ 1. acılı (spicy, hot, bitter, sorrowful, sad, mourning)
+
+DEFINITION
+
+noun
+ 1. the expression of deep sorrow for someone who has died, typically involving following certain conventions such as wearing black clothes.
+    "she's still in mourning after the death of her husband"
+
+#+end_src
+* shattered                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+shattered
+** turkish
+parçalanmış
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/shattered][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+  very upset
+  yıkılmış, sarsılmış, perişan olmuş, param parça olmuş
+
+very tired
+yorgun, bitkin, bitmiş, tükenmiş
+
+#+end_src
+* shatter                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+shatter
+** turkish
+kırmak
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/shatter][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+shatter
+
+kırmak
+
+verb
+ 1. bozmak (disrupt, break, disturb, distort, exchange, shatter)
+ 2. kırmak (break, fracture, split, crack, hurt, shatter)
+ 3. yıkmak (destroy, overthrow, demolish, ruin, break down, shatter)
+ 4. parçalamak (shred, break into pieces, tear to pieces, take to pieces, split, shatter)
+ 5. harap etmek (devastate, ruin, destroy, dilapidate, make havoc of, shatter)
+ 6. yok etmek (exterminate, make away with, charm away, clear off, cut off, shatter)
+ 7. zarar vermek (damage, do a disservice, do harm, encroach, flaw, shatter)
+ 8. parçalanmak (break, split, smash, crash, break up, shatter)
+ 9. kırılmak (break, fracture, be broken, go to pieces, offend, shatter)
+
+DEFINITION
+
+verb
+ 1. break or cause to break suddenly and violently into pieces.
+    "bullets riddled the bar top, glasses shattered, bottles exploded"
+ 2. upset (someone) greatly.
+    "everyone was shattered by the news"
+
+#+end_src
+* trek                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+trek
+** turkish
+yürüyüş
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/trek][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+trek
+
+yürüyüş
+
+noun
+ 1. kağnı ile gitme (trek)
+ 2. göç (migration, immigration, emigration, exodus, transmigration, trek)
+
+verb
+ 1. kağnı ile gitmek (trek)
+ 2. göçmek (migrate, emigrate, immigrate, trek, fall in, die)
+ 3. öküz arabası ile göç etmek (trek)
+
+DEFINITION
+
+noun
+ 1. a long arduous journey, especially one made on foot.
+    "a trek to the South Pole"
+
+verb
+ 1. go on a long arduous journey, typically on foot.
+    "we trekked through the jungle"
+
+#+end_src
+* perception                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+perception
+** turkish
+algı
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/perception][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+perception
+
+algı
+
+noun
+ 1. algı (perception, sense, sensation, feeling, apprehension)
+ 2. algılama (perception, sensation)
+ 3. idrak (perception, grasp, realization, comprehension, discernment, cognizance)
+ 4. sezgi (intuition, perception, instinct, feeling, flair, sentience)
+ 5. kavrama (clutch, grip, understanding, grasp, comprehension, perception)
+ 6. basiret (clairvoyance, foresight, perception, discreetness)
+ 7. idrak yeteneği (cognation, perception)
+ 8. seziş (perception, discernment, scent)
+ 9. sezme (sense, anticipation, flair, insight, inkling, perception)
+10. tahsil (study, perception)
+
+DEFINITION
+
+noun
+ 1. the ability to see, hear, or become aware of something through the senses.
+    "the normal limits to human perception"
+
+#+end_src
+* expedition                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+expedition
+** turkish
+sefer
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/expedition][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+expedition
+
+sefer
+
+noun
+ 1. sefer (expedition, voyage, campaign, run, journey, navigation)
+ 2. sevk (dispatch, driving, consignment, sending, expedition, conn)
+ 3. çabukluk (promptness, quickness, speed, swiftness, fastness, expedition)
+ 4. acele (rush, hurry, haste, urgency, precipitate, expedition)
+ 5. hız (speed, velocity, pace, impetus, rapidity, expedition)
+
+DEFINITION
+
+noun
+ 1. a journey or voyage undertaken by a group of people with a particular purpose, especially that of exploration, scientific research, or war.
+    "an expedition to the jungles of the Orinoco"
+ 2. promptness or speed in doing something.
+    "the landlord shall remedy the defects with all possible expedition"
+
+#+end_src
+* jogging                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+jogging
+** turkish
+hafif koşu
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/jogging][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+jogging
+
+hafif koşu
+
+noun
+ 1. jogging (jogging)
+ 2. tempolu ve yavaş koşma (jogging)
+
+#+end_src
+* inhibition                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+inhibition
+** turkish
+inhibisyon
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/inhibition][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+inhibition
+
+inhibisyon
+
+noun
+ 1. engelleme (prevention, inhibition, obstruction, interference, hindrance, stranglehold)
+ 2. kısıtlama (restriction, limitation, restraint, qualification, inhibition, constriction)
+ 3. tutma (hold, holding, retention, take, catch, inhibition)
+ 4. çekingenlik (shyness, timidity, inhibition, diffidence, bashfulness, coyness)
+ 5. menetme (inhibition, preclusion)
+ 6. tutukluluk (custody, imprisonment, inhibition)
+
+DEFINITION
+
+noun
+ 1. a feeling that makes one self-conscious and unable to act in a relaxed and natural way.
+    "the children, at first shy, soon lost their inhibitions"
+
+#+end_src
+* brink                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+brink
+** turkish
+eşik
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/brink][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+brink
+
+eşik
+
+noun
+ 1. kenar (edge, side, brink, rim, margin, border)
+ 2. ağız (mouth, opening, lip, orifice, dialect, brink)
+ 3. kıyı (coast, shore, bank, edge, side, brink)
+ 4. eşik (threshold, sill, brink, verge, doorstep, door)
+
+DEFINITION
+
+noun
+ 1. an extreme edge of land before a steep or vertical slope.
+    "the brink of the cliffs"
+
+#+end_src
+* emerge                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+emerge
+** turkish
+ortaya çıkmak
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/emerge][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+emerge
+
+ortaya çıkmak
+
+verb
+ 1. çıkmak (exit, quit, go out, rise, walk out, emerge)
+ 2. ortaya çıkmak (emerge, appear, arise, show up, come in view, come into the open)
+ 3. su yüzüne çıkmak (emerge)
+ 4. doğmak (be born, arise, rise, rise, come about, emerge)
+ 5. gün ışığına çıkmak (emerge, surface)
+ 6. yücelmek (emerge, sublime)
+
+DEFINITION
+
+verb
+ 1. move out of or away from something and come into view.
+    "black ravens emerged from the fog"
+
+#+end_src
+* awry                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+awry
+** turkish
+ters
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/awry][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+awry
+
+ters
+
+adjective
+ 1. ters (reverse, opposite, inverse, adverse, contrary, awry)
+ 2. çarpık (crooked, warped, skew, irregular, wry, awry)
+ 3. eğri (crooked, skewed, bent, oblique, skew, awry)
+ 4. yan (side, lateral, ancillary, flanking, subordinate, awry)
+
+adverb
+ 1. ters (wrong, inversely, upside down, counter, backwards, awry)
+ 2. eğri (awry)
+ 3. yan (sidelong, awry)
+
+DEFINITION
+
+adjective
+ 1. away from the appropriate, planned, or expected course; amiss.
+    "I got the impression that something was awry"
+
+#+end_src
+* pastor                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+pastor
+** turkish
+papaz
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/pastor][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+pastor
+
+papaz
+
+noun
+ 1. papaz (priest, pastor, chaplain, king, minister, clergyman)
+
+DEFINITION
+
+noun
+ 1. a minister in charge of a Christian church or congregation.
+
+verb
+ 1. be pastor of (a church or congregation).
+    "he pastored Peninsula Bible Church in Palo Alto"
+
+#+end_src
+* that's                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+that's
+** turkish
+that is or that has
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/that's][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+that's
+
+bu
+
+#+end_src
+* draws on behaviors                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+draws on behaviors
+** turkish
+davranışlardan yararlanır
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/draws on behaviors][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+draws on behaviors
+
+davranışlardan yararlanır
+
+#+end_src
+* draws                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+draws
+** turkish
+1) çizmek vs
+
+2) to make someone notice someone or something
+*birinin dikkatini bir şeye çekmek*
+I don't want to draw too much attention to myself.
+
+3) to attract someone to a place or person
+*bir şeye/birine çekmek, cezbetmek*
+Thousands of tourists are drawn to the city every year.
+
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/draws][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+draws
+
+çizer
+
+#+end_src
+* draws on                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+draws on
+** turkish
+to use information or your knowledge or experience of something to help you do something
+
+ilgili olmak, içermek, dayanmak, anlatmak, kapsamak
+
+His novels draw heavily on his childhood
+
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/draws on][on cambridge link]]
+* On the battlefield, every command that's that issued draws on behaviors practiced to the point of automation.                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+On the battlefield, every command that's that issued draws on behaviors practiced to the point of automation.
+** turkish
+Savaş alanında, verilen her komut, otomasyon noktasına kadar uygulanan davranışlardan yararlanır.
+** solution
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+On the battlefield, every command that's that issued draws on behaviors practiced to the point of
+automation.
+
+Savaş alanında, verilen her komut, otomasyon noktasına kadar uygulanan davranışlardan yararlanır.
+
+#+end_src
+* command                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+command
+** turkish
+emretmek
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/command][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+command
+
+emretmek
+
+noun
+ 1. komuta (command)
+ 2. kumanda (command, remote control, conn, direction, attendance)
+ 3. emir (order, decree, command, emir, commandment, imperative)
+ 4. buyruk (command, commandment, order, behest, ipse dixit, rescript)
+ 5. hakimiyet (dominance, domination, sovereignty, control, dominion, command)
+ 6. kuvvet (force, strength, power, potency, vigor, command)
+ 7. yetki (authority, authorization, power, competence, competency, command)
+ 8. güç (power, strength, force, capacity, ability, command)
+ 9. genel kurmay (general staff, command)
+
+verb
+ 1. buyurmak (prescribe, order, command, come, decree, help oneself to)
+ 2. hakim olmak (dominate, master, predominate, command, rule over, control)
+ 3. emretmek (bade, command, decree, order, dictate, direct)
+ 4. komuta etmek (be in command, command, direct, officer)
+ 5. yönetmek (administer, direct, govern, rule, run, command)
+ 6. emir vermek (give order, command, order, instruct)
+ 7. hükmetmek (dominate, domineer, rule, rule over, command, overrule)
+ 8. tepeden görmek (command)
+ 9. telkin etmek (suggest, inspire, command, imbue, inculcate, indoctrinate)
+10. kontrol etmek (control, check up, check up on, check, inspect, command)
+11. hüküm sürmek (reign, prevail, sway, govern, command, king it)
+
+DEFINITION
+
+verb
+ 1. give an authoritative order.
+    "a gruff voice commanded us to enter"
+ 2. dominate (a strategic position) from a superior height.
+    "the two castles commanded the harbor"
+ 3. be in a strong enough position to have or secure (something).
+    "no party commanded a majority"
+
+noun
+ 1. an authoritative order.
+    "it's unlikely they'll obey your commands"
+
+#+end_src
+* food vendor                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+food vendor
+** turkish
+gıda satıcısı
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/food vendor][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+food vendor
+
+gıda satıcısı
+
+#+end_src
+* riot                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+riot
+** turkish
+isyan
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/riot][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+riot
+
+isyan
+
+noun
+ 1. isyan (rebellion, revolt, riot, uprising, insurgency, insurrection)
+ 2. kargaşa (chaos, confusion, disorder, commotion, disarray, riot)
+ 3. ayaklanma (riot, revolt, uprising, insurrection, rebellion, insurgency)
+ 4. karışıklık (confusion, mess, fuss, complexity, disturbance, riot)
+ 5. alem (realm, world, booze, kingdom, universe, riot)
+ 6. cümbüş (revel, riot, spree, carousal, binge, jollification)
+ 7. şamata (hubbub, uproar, racket, whoopee, riot, rag)
+ 8. patırtı (clatter, noise, row, ado, rumpus, riot)
+ 9. velvele (hullabaloo, hubbub, ballyhoo, fuss, kerfuffle, riot)
+
+verb
+ 1. kargaşaya yol açmak (riot)
+ 2. azıtmak (go astray, overflow, riot, lose)
+ 3. ayaklanmak (riot, revolt, mutiny, rebel, rise in rebellion, revolt against)
+ 4. başkaldırmak (revolt, rebel, revolt against, riot, rise against, oppose)
+ 5. mest olmak (be enchanted, be ecstased, go into raptures, regale, revel, riot)
+
+DEFINITION
+
+noun
+ 1. a violent disturbance of the peace by a crowd.
+    "riots broke out in the capital"
+ 2. an impressively large or varied display of something.
+    "the garden was a riot of color"
+ 3. a highly amusing or entertaining person or thing.
+    "everyone thought she was a riot"
+
+verb
+ 1. take part in a violent public disturbance.
+    "students rioted in Paris"
+
+#+end_src
+* upend                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+upend
+** turkish
+tepetaklak
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/upend][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+upend
+
+tepetaklak
+
+verb
+ 1. boca etmek (turn over, tilt, upend, wear)
+ 2. dikmek (sew, sew up, stitch up, needle, tailor, upend)
+ 3. dikine oturtmak (upend)
+ 4. başaşağı etmek (upend)
+ 5. altüst etmek (run upside down, turn under, upturn, overturn, screw up, upend)
+ 6. tersini yapmak (upend)
+
+DEFINITION
+
+verb
+ 1. set or turn (something) on its end or upside down.
+    "Kitty upended her purse, dumping out all her money"
+
+#+end_src
+* swallowing                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+swallowing
+** turkish
+yutma
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/swallowing][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+swallowing
+
+yutma
+
+noun
+ 1. yutma (swallowing, swallow, gulp)
+ 2. kanma (gullibility, believing, deception, swallowing)
+
+#+end_src
+* seizures                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+seizures
+** turkish
+nöbetler
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/seizures][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+seizures
+
+nöbetler
+
+#+end_src
+* whereas                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+whereas
+** turkish
+buna karşılık
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/whereas][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+whereas
+
+buna karşılık
+
+conjunction
+ 1. oysa (whereas, but, while, however, yet, whilst)
+ 2. halbuki (whereas, while, but, however)
+ 3. mademki (whereby, since, as, seeing that, seeing, whereas)
+
+DEFINITION
+
+conjunction
+ 1. in contrast or comparison with the fact that.
+    "you treat the matter lightly, whereas I myself was never more serious"
+
+#+end_src
+* tendency                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+tendency
+** turkish
+eğilim
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/tendency][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+tendency
+
+eğilim
+
+noun
+ 1. eğilim (tendency, trend, propensity, inclination, disposition, bias)
+ 2. meyil (gradient, slope, inclination, tendency, bias, slant)
+ 3. eğilin (tendency)
+ 4. yüz tutma (tendency)
+ 5. çalma (stealing, playing, theft, knock, blow, tendency)
+
+DEFINITION
+
+noun
+ 1. an inclination toward a particular characteristic or type of behavior.
+    "for students, there is a tendency to socialize in the evenings"
+
+#+end_src
+* fiddling                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+fiddling
+** turkish
+işe yaramaz
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/fiddling][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+fiddling
+
+işe yaramaz
+
+adjective
+ 1. işe yaramaz (useless, fiddling, dud, out, unfit, of no use)
+ 2. önemsiz (insignificant, trivial, unimportant, negligible, immaterial, fiddling)
+ 3. küçük (small, little, minor, young, younger, fiddling)
+
+DEFINITION
+
+adjective
+ 1. annoyingly trivial or petty.
+    "fiddling little details"
+
+#+end_src
+* compelling                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+compelling
+** turkish
+zorlayıcı
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/compelling][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+compelling
+
+zorlayıcı
+
+adjective
+ 1. zorlayıcı (compelling, compulsory, coercive, compulsive, stringent, drastic)
+ 2. zorlayan (compelling, impellent)
+ 3. ilgi uyandıran (compelling)
+ 4. saygı uyandıran (compelling)
+
+DEFINITION
+
+adjective
+ 1. evoking interest, attention, or admiration in a powerfully irresistible way.
+    "his eyes were strangely compelling"
+
+#+end_src
+* empowering                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+empowering
+** turkish
+güçlendirici
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/empowering][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+empowering
+
+güçlendirici
+
+#+end_src
+* devised                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+devised
+** turkish
+tasarlanmış
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/devised][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+devised
+
+tasarlanmış
+
+verb
+ 1. tasarlamak (design, plan, project, contrive, propose, purpose)
+ 2. bulmak (find, discover, devise, meet, ascertain, strike)
+ 3. planlamak (plan, design, program, programme, work up, architect)
+ 4. icat etmek (invent, contrive, devise, cogitate, dream up, father)
+ 5. vasiyetle bırakmak (bequeath, devise, legate)
+
+DEFINITION
+
+verb
+ 1. plan or invent (a complex procedure, system, or mechanism) by careful thought.
+    "a training program should be devised"
+ 2. leave (real estate) to someone by the terms of a will.
+    "nil"
+
+#+end_src
+* unfold                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+unfold
+** turkish
+açılmak
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/unfold][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+unfold
+
+açılmak
+
+verb
+ 1. açılmak (open, be opened, thaw, come open, open out, unfold)
+ 2. açmak (open, turn on, turn on, open up, unlock, unfold)
+ 3. sermek (spread out, spread, lay, lay out, unfold, stretch)
+ 4. açıklamak (explain, clarify, account, express, elucidate, unfold)
+ 5. yayılmak (spread, sprawl, branch, circulate, diffuse, unfold)
+ 6. gelişmek (thrive, develop, improve, evolve, grow, unfold)
+ 7. gözler önüne serilmek (unfold)
+
+DEFINITION
+
+verb
+ 1. open or spread out from a folded position.
+    "he unfolded the map and laid it out on the table"
+
+#+end_src
+* diverts                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+diverts
+** turkish
+yön değiştirir
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/diverts][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+diverts
+
+yön değiştirir
+
+verb
+ 1. yönlendirmek (canalize, conduct, direct, divert, guide, head)
+ 2. dağıtmak (distribute, deploy, deal, deal out, hand out, deliver)
+ 3. çevirmek (turn, spin, upturn, exchange, roll, twirl)
+ 4. başka yöne çekmek (divert)
+ 5. ayırmak (separate, allocate, partition, sunder, set apart, keep apart)
+ 6. oyalamak (stall, put off, divert, string along, waste time, delay)
+ 7. bir köşeye koymak (divert)
+ 8. eğlendirmek (amuse, beguile, break up, divert, entertain, feast)
+
+DEFINITION
+
+verb
+ 1. cause (someone or something) to change course or turn from one direction to another.
+    "a scheme to divert water from the river to irrigate agricultural land"
+ 2. draw (the attention) of someone from something.
+    "public relations policies are sometimes intended to divert attention away from criticism"
+
+#+end_src
+* extinguish                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+extinguish
+** turkish
+söndürmek
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/extinguish][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+extinguish
+
+söndürmek
+
+verb
+ 1. söndürmek (extinguish, snuff out, put out, douse, quench, deflate)
+ 2. ortadan kaldırmak (remove, take away, do away with, make away with, clear away, extinguish)
+ 3. yıkmak (destroy, overthrow, demolish, ruin, break down, extinguish)
+ 4. tüketmek (exhaust, consume, use up, finish, eat, extinguish)
+ 5. baskın çıkmak (euchre, trump, surpass, extinguish, preponderate, preponderate over)
+ 6. yok etmek (exterminate, make away with, charm away, clear off, cut off, extinguish)
+ 7. bastırmak (suppress, depress, push down, compress, weigh down, extinguish)
+ 8. ödeyerek bitirmek (extinguish)
+
+DEFINITION
+
+verb
+ 1. cause (a fire or light) to cease to burn or shine.
+    "firemen were soaking everything to extinguish the blaze"
+
+#+end_src
+* devised                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+devised
+** turkish
+tasarlanmış
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/devised][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+devised
+
+tasarlanmış
+
+verb
+ 1. tasarlamak (design, plan, project, contrive, propose, purpose)
+ 2. bulmak (find, discover, devise, meet, ascertain, strike)
+ 3. planlamak (plan, design, program, programme, work up, architect)
+ 4. icat etmek (invent, contrive, devise, cogitate, dream up, father)
+ 5. vasiyetle bırakmak (bequeath, devise, legate)
+
+DEFINITION
+
+verb
+ 1. plan or invent (a complex procedure, system, or mechanism) by careful thought.
+    "a training program should be devised"
+ 2. leave (real estate) to someone by the terms of a will.
+    "nil"
+
+#+end_src
+* delicate                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+delicate
+** turkish
+Narin
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/delicate][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+delicate
+
+Narin
+
+adjective
+ 1. hassas (sensitive, precision, delicate, fine, susceptible, tender)
+ 2. narin (delicate, slim, fragile, slender, fine, frail)
+ 3. ince (thin, fine, slim, subtle, slender, delicate)
+ 4. nazik (kind, courteous, gentle, polite, delicate, affable)
+ 5. lezzetli (delicious, tasty, yummy, savory, palatable, delicate)
+ 6. duyarlı (sensitive, responsive, susceptible, sensible, tender, delicate)
+ 7. nazlı (coy, wayward, delicate, rose-water, spoilt)
+ 8. güvenli (safe, secure, reliable, confident, trustworthy, delicate)
+ 9. düşünceli (considerate, thoughtful, pensive, pensive, reflective, delicate)
+
+DEFINITION
+
+adjective
+ 1. very fine in texture or structure; of intricate workmanship or quality.
+    "a spider's web, strong yet delicate"
+ 2. easily broken or damaged; fragile.
+    "delicate china"
+ 3. requiring sensitive or careful handling.
+    "delicate negotiations"
+
+noun
+ 1. a delicate fabric or garment made of such fabric.
+    "the delicates cycle of a washing machine"
+
+#+end_src
+* cling                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+cling
+** turkish
+sarılmak
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/cling][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+cling
+
+sarılmak
+
+verb
+ 1. sarılmak (hug, cuddle, clasp, twine, give a hug, cling)
+ 2. yapışmak (stick, adhere, clinch, cleave, clench, cling)
+ 3. tutunmak (cling, hold on to, get a grip, hang on, catch, fasten on)
+ 4. bağlanmak (connect, be tied, be attached to, engage, attach, cling)
+ 5. sadık kalmak (stick, be faithful, stick by, hold, stand by, cling)
+ 6. tırmanmak (climb, cling, ascend, clamber, entwine, scale)
+
+DEFINITION
+
+verb
+ 1. hold on tightly to.
+    "she clung to Joe's arm"
+
+noun
+ 1. a clingstone peach.
+
+#+end_src
+* Maybe it can hurt you.                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+Maybe it can hurt you.
+** turkish
+Maybe it can hurt you.
+** solution
+Belki sana zarar verebilir.
+* substituting                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+substituting
+** turkish
+ikame
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/substituting][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+substituting
+
+ikame
+
+verb
+ 1. yerini almak (cut in, relay, replace, sit in for, subrogate, substitute)
+ 2. yerine geçmek (displace, take place, take the place of, replace, stand for, sub)
+ 3. yerine geçirmek (subrogate, substitute)
+ 4. yerine kullanmak (substitute)
+
+DEFINITION
+
+verb
+ 1. use or add in place of.
+    "dried rosemary can be substituted for the fresh herb"
+
+#+end_src
+* equilibrium                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+equilibrium
+** turkish
+denge
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/equilibrium][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+equilibrium
+
+denge
+
+noun
+ 1. denge (balance, equilibrium, stability, equilibration, equation, poise)
+ 2. denklik (equivalence, balance, equality, equilibrium)
+ 3. karalılık (equilibrium)
+ 4. tarafsızlık (impartiality, neutrality, objectivity, equity, fairness, equilibrium)
+
+DEFINITION
+
+noun
+ 1. a state in which opposing forces or influences are balanced.
+    "the maintenance of social equilibrium"
+
+#+end_src
+* craving                               :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** english
+craving
+** turkish
+özlem
+** solution
+[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/craving][on cambridge link]]
+
+#+begin_src emacs-lisp
+
+Translate from English (detected) to Turkish:
+
+craving
+
+özlem
+
+noun
+ 1. özlem (longing, craving, yearning, aspiration, nostalgia, missing)
+ 2. arzu (desire, wish, want, will, request, craving)
+ 3. hasret (longing, yearning, hankering, nostalgia, craving)
+
+DEFINITION
+
+noun
+ 1. a powerful desire for something.
+    "a craving for chocolate"
+
+#+end_src

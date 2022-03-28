@@ -9,8 +9,6 @@
 
   (let ((key (car key-map)))
     (setq key (concat "C-" (mapconcat #'char-to-string (mapcar 'identity key) " C-")))
-    (message key)
-
     (define-key k-binds-map (kbd (concat "C-ö " key)) (cdr key-map))))
 
 
@@ -87,9 +85,7 @@
 (define-minor-mode k-binds-mode
   "t"
   "t" "m" k-binds-map
-  (--map (k-bind-both-god-and-normal it) tuslar)
-  (if k-binds-mode
-      (message "Binds")))
+  (--map (k-bind-both-god-and-normal it) tuslar))
 
 (k-binds-mode 1)
 

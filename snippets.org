@@ -516,3 +516,13 @@
         (not (buffer-file-name x)))
       (setq centaur-tabs-hide-tab-function 'kadir/centaur-tabs-hide-tab)))
 #+end_src
+
+* explain pause mode
+#+begin_src emacs-lisp
+  (use-package explain-pause-mode
+    :defer 1
+    :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
+    :init
+    (explain-pause-mode)
+    )
+#+end_src

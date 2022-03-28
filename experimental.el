@@ -114,16 +114,10 @@
 ;;   )
 
 
-
 ;; (electric-pair-mode)
 ;; (setq electric-pair-preserve-balance nil)
 
-(use-package explain-pause-mode
-  :defer 1
-  :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
-  :init
-  (explain-pause-mode)
-  )
+
 ;; (defun lsp--create-filter-function (workspace)(prin1 workspace))
 
 (use-package company-tabnine
@@ -276,8 +270,7 @@
     (set (make-variable-buffer-local 'column-number-mode) nil)
     (set (make-variable-buffer-local 'global-hl-line-mode) nil)
     (set (make-variable-buffer-local 'line-number-mode) nil)
-    (setq-local bidi-inhibit-bpa t)
-    )
+    (setq-local bidi-inhibit-bpa t))
 
   (defun kadir/dactivate-too-long-lines()
     (interactive)
@@ -286,11 +279,9 @@
     (set (make-variable-buffer-local 'column-number-mode) 1)
     (set (make-variable-buffer-local 'global-hl-line-mode) 1)
     (set (make-variable-buffer-local 'line-number-mode) 1)
-    (setq-local bidi-inhibit-bpa nil)
-    )
+    (setq-local bidi-inhibit-bpa nil))
 
-  (kadir/activate-too-long-lines)
-  )
+  (kadir/activate-too-long-lines))
 
 
 (column-number-mode 0)
@@ -365,3 +356,13 @@
                   (kadir/open-updater)
                   (select-window (get-buffer-window refresh-buff))
                   (kadir-tree-mode)))
+
+(global-set-key (kbd "C-ç")
+                (lambda ()
+                  (interactive)
+                  (beacon-blink)))
+
+
+
+(use-package font-lock-studio)
+
