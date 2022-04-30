@@ -8,7 +8,9 @@
   :init
   (setq org-drill-save-buffers-after-drill-sessions-p nil)
   (setq org-drill-hide-item-headings-p t)
-  (setq org-drill-add-random-noise-to-intervals-p t))
+  (setq org-drill-add-random-noise-to-intervals-p t)
+  (setq org-drill-spaced-repetition-algorithm 'simple8)
+  (setq org-drill-adjust-intervals-for-early-and-late-repetitions-p t))
 
 
 
@@ -62,6 +64,9 @@
              "** turkish\n"
              (kadir/parse-and-get-direct-translation full-response) "\n"
              "** solution\n"
+             "[[https://dictionary.cambridge.org/tr/s%C3%B6zl%C3%BCk/ingilizce-t%C3%BCrk%C3%A7e/"
+             text
+             "][on cambridge link]]\n\n"
              "#+begin_src emacs-lisp\n\n")
      full-response
      "\n" "#+end_src" "\n")))
@@ -73,13 +78,6 @@
   (insert (kadir/dilogretio-org-capture-insert-text text)))
 
 
-(use-package grammarly)
-(require 'grammarly)
-(require 'json)
-(use-package org-web-tools)
-(require 'org-web-tools)
-
-
 (setq posframe-buf-name "*scratch*")
 (setq ex-json-data nil)
 
@@ -129,8 +127,6 @@
         (goto-char (point-max))
         (insert text)))))
 
-(add-to-list 'grammarly-on-message-function-list 'test-on-message)
-
 (defun kadir/gramarly-result-to-buffer(text)
   (interactive)
   (setq kadir/before-gramarly-selected-frame (selected-frame))
@@ -148,6 +144,13 @@
     (kadir/dilogretio-org-capture text)))
 
 (defun kadir/gramarly()
+  (use-package grammarly)
+  (require 'grammarly)
+  (require 'json)
+  (use-package org-web-tools)
+  (require 'org-web-tools)
+  (add-to-list 'grammarly-on-message-function-list 'test-on-message)
+
   (interactive)
   (let ((text (if (region-active-p)
                   (buffer-substring-no-properties (region-beginning) (region-end))
@@ -155,9 +158,3 @@
     (kadir/gramarly-result-to-buffer text)))
 
 
-
-(global-set-key (kbd "C-ç") 'kadir/dilogretio)
-(global-set-key (kbd "C-ü") 'kadir/gramarly)
-
-
-;; Why are you talking like that to me? Kasf. asdf asf.

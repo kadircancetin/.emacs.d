@@ -9,7 +9,7 @@
 
     (if (or (eq side 'left) (eq side 'right))
         (progn
-          (setq widh-height-param '(window-width . 0.22))
+          (setq widh-height-param '(window-width . 0.14))
           (setq lock-param '(preserve-size . (t . nil))))
       (setq widh-height-param '(window-height . 0.2))
       (setq lock-param '(preserve-size . (nil . t))))

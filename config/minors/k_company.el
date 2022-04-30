@@ -42,9 +42,9 @@
   )
 
 
-(use-package helm-company)
+;; (use-package helm-company)
 
-(use-package company-statistics
-  :hook (global-company-mode . company-statistics-mode))
+;; (use-package company-statistics
+;;   :hook (global-company-mode . company-statistics-mode))
 
 (provide 'k_company)

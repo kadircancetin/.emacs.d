@@ -1,3 +1,9 @@
+(defun kadir/format-html()
+  (interactive)
+  (when (derived-mode-p 'web-mode)
+    (kadir/format-buffer)))
+
+
 (use-package web-mode
   :init
   (setq-default css-indent-offset 2
@@ -7,11 +13,28 @@
                 web-mode-attr-indent-offset 2
                 web-mode-engines-alist '(("django"    . "\\.html\\'"))
                 web-mode-enable-current-element-highlight t
+                ;; web-mode-auto-close-style 2
                 web-mode-enable-current-column-highlight t)
   (add-hook 'mhtml-mode 'web-mode)
   (add-hook 'web-mode-hook 'toggle-truncate-lines)
   (add-hook 'web-mode-hook 'kadir/deactivate-flycheck)
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode)))
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+  ;; (defun kadir/web-mode-big()
+  ;;   (interactive)
+  ;;   (insert "<>")
+  ;;   (backward-char)
+
+  ;;   )
+  :bind
+  (:map web-mode-map
+        ("ü" . 'web-mode-element-close)
+        ("C-ü" . 'web-mode-element-close)
+        ;; ("<" . 'kadir/web-mode-big)
+        )
+  :custom
+  (add-hook 'before-save-hook 'kadir/format-html 100)
+  )
+
 
 (use-package emmet-mode
   :init

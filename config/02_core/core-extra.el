@@ -9,11 +9,17 @@
 (use-package ace-window)
 (use-package su :init (su-mode 1))
 (use-package ivy)
-
+(use-package string-inflection)
+(use-package all-the-icons :defer 0.5)
+
 (use-package undo-tree
   :defer 0.5
   :config
-  (global-undo-tree-mode))
+  (global-undo-tree-mode)
+  ;; (setq undo-limit 1600)
+  ;; (setq undo-tree-strong-limit 1600)
+  ;; (setq undo-tree-outer-limit 160000)
+  )
 
 (use-package expand-region
   :custom
@@ -41,6 +47,7 @@
   (wrap-region-global-mode t))
 
 (use-package yasnippet
+  :defer 3
   :custom
   (yas-indent-line nil)
   (yas-inhibit-overlay-modification-protection t)
@@ -54,35 +61,26 @@
    ("<tab>" . (lambda () (interactive) (company-abort) (yas-next-field))))
   :config
   (yas-global-mode 1)
-  (use-package yasnippet-snippets)
-  ;; (require 'helm)
-  ;; (use-package yasnippet-snippets)
-  ;; (setq yas-keymap nil
-  ;;       yas-minor-mode-map nil)
-  ;; (defadvice yas-insert-snippet (before yas-activate activate)
-  ;;   (yas-minor-mode 1))
-  ;; (add-to-list 'helm-quit-hook
-  ;;              (lambda()
-  ;;                (remove-hook 'post-command-hook #'yas--post-command-handler t)
-  ;;                (remove-hook 'auto-fill-mode-hook #'yas--auto-fill-wrapper)))
-  )
+  (use-package yasnippet-snippets))
 
 
 (use-package magit
   :config
-  (use-package magit-todos :hook (magit-mode . magit-todos-mode))
-  (add-to-list 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
-  (add-hook 'magit-diff-mode-hook (lambda () (flyspell-mode 1)) 100))
+  (defun kadir/cool-spell()
+    (spell-fu-mode 1)
 
-(use-package forge
-  :after magit
-  :custom
-  (forge-create-pullreq-prefix "STAGING -")
-  :config
-  (defadvice magit-pull-from-upstream (after forge-pull activate)
-    (forge-pull))
-  (defadvice magit-fetch-all (after forge-pull activate)
-    (forge-pull)))
+    (setq-local
+     face-remapping-alist
+     '((spell-fu-incorrect-face (:underline
+                                 (:color "yellow" :style wave)))))
+    (setq-local spell-fu-idle-delay 0.0))
+
+  ;; (use-package magit-todos :hook (magit-mode . magit-todos-mode))
+  (add-to-list 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
+  (add-hook 'magit-diff-mode-hook 'kadir/cool-spell 100)
+  (add-hook 'magit-mode-hook 'kadir/cool-spell 100)
+  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1))
+
 
 
 (use-package git-link
@@ -104,8 +102,7 @@
 (use-package wakatime-mode
   :defer 2
   :config
-  (global-wakatime-mode t)
-  (message "waka loaded"))
+  (global-wakatime-mode t))
 
 (use-package google-translate
   :init
@@ -115,9 +112,7 @@
   (with-eval-after-load 'google-translate
     ;; fix from https://github.com/atykhonov/google-translate/issues/52#issuecomment-850813058
     (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130))
-    (setq google-translate-backend-method 'curl))
-
-  )
+    (setq google-translate-backend-method 'curl)))
 
 
 
@@ -186,8 +181,12 @@
   (winum-mode))
 
 
-
-(use-package string-inflection)
+(use-package gcmh
+  :init
+  (gcmh-mode)
+  ;; (setq garbage-collection-messages nil)
+  (setq gcmh-verbose nil)
+  (setq gcmh-idle-delay 2))
 
 
 

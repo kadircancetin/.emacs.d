@@ -6,7 +6,15 @@
 
 (use-package highlight-numbers)
 
-(use-package highlight-symbol)
+(use-package highlight-symbol
+  :config
+  (defun kadir/highlight-add()
+    (interactive)
+    (highlight-symbol (read-from-minibuffer "add highlight: " (thing-at-point 'symbol))))
+
+  (defun kadir/highlight-remove()
+    (interactive)
+    (highlight-symbol-remove-symbol (read-from-minibuffer "remove highlight: " (thing-at-point 'symbol)))))
 
 (use-package auto-highlight-symbol
   :config

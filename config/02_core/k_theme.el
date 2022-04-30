@@ -60,7 +60,7 @@
 
 
      ;; ahs
-     '(ahs-plugin-defalt-face       ((t (:underline t :weight bold :background nil :foreground nil))))
+     '(ahs-plugin-default-face       ((t (:underline t :weight bold :background nil :foreground nil))))
      '(ahs-definition-face          ((t (:underline t :weight bold :background nil :foreground nil))))
      '(ahs-face                     ((t (:underline t :weight bold :background nil :foreground nil))))
      '(ahs-plugin-whole-buffer-face ((t (:underline t :weight bold :background nil
@@ -87,49 +87,124 @@
                       spacemacs-theme-org-height nil)
         (load-theme 'spacemacs-dark t)
         (kadir/fix-some-colors 'spacemacs-dark)
-        )
-
-      (use-package doom-themes
-        :init
-        (doom-themes-visual-bell-config)
-        ;; (load-theme 'doom-peacock t)
-        ;; (kadir/fix-some-colors 'doom-peacock)
-
-        ;; (load-theme 'doom-laserwave t)
-        ;; (kadir/fix-some-colors 'doom-laserwave)
-
-        )
-      ;; (use-package doom-themes
-      ;;   :custom-face
-      ;;   (cursor ((t (:background "blanchedalmond"))))
-      ;;   :init
-      ;;   ;; flashing mode-line on errors
-      ;;   (doom-themes-visual-bell-config)
-      ;;   ;; corrects (and improves) org-mode's native fontification.
-      ;;   (doom-themes-org-config)
-      ;;   (load-theme 'doom-one t)
-
-      ;;   (kadir/fix-some-colors 'doom-one))
-      )
+        ))
   (progn
     (global-hl-line-mode -1)))
 
 
-(use-package doom-modeline
-  :defer nil
-  :config
-  (setq doom-modeline-bar-width         1
-        doom-modeline-height            1
-        doom-modeline-buffer-encoding   nil
-        ;; doom-modeline-buffer-modification-icon t
-        doom-modeline-vcs-max-length    20
-        doom-modeline-icon              t
-        ;; relative-to-project
-        doom-modeline-buffer-file-name-style 'relative-from-project)
 
-  (set-face-attribute 'mode-line nil :height kadir/default-font-size)
-  (set-face-attribute 'mode-line-inactive nil :height kadir/default-font-size)
-  (doom-modeline-mode 1))
+(use-package mood-line
+  ;; TODO: s-1 s-2
+  ;; TODO: new created file
+  ;; TODO: is line number mode activated?
+  :init
+  (mood-line-mode)
+  (remove-hook 'flycheck-status-changed-functions #'mood-line--update-flycheck-segment)
+  (remove-hook 'flycheck-mode-hook #'mood-line--update-flycheck-segment)
+
+  :config
+  (defun kadir/mood-line-segment-buffer-name()
+    (require 's)
+
+    (let ((is-file (buffer-file-name (current-buffer))))
+
+      (if (not is-file)
+          (propertize (format-mode-line "%b") 'face 'mood-line-buffer-name)
+
+        (progn
+          (let* ((p-root (projectile-project-root))
+                 (full-path (buffer-file-name (current-buffer)))
+                 (project-name (car (last (s-split "/" p-root 'omit-nulls))))
+                 (relative-path (s-chop-prefix p-root  full-path))
+                 (file-splitted (s-split "/" relative-path))
+                 (file-name (concat (nth (- (length file-splitted) 1) file-splitted)))
+                 (folder-name (s-chop-suffix file-name relative-path)))
+
+            (concat
+             (propertize folder-name 'face 'mood-line-status-neutral)
+             (propertize file-name 'face 'mood-line-major-mode)
+             " - "
+             (propertize project-name 'face 'mood-line-status-info)
+             " "))))))
+
+  (defun kadir/mood-line-segment-modified ()
+    "Displays a color-coded buffer modification/read-only indicator in the mode-line."
+    (if (not (string-match-p "\\*.*\\*" (buffer-name)))
+        (if (buffer-modified-p)
+            (propertize " ** " 'face '(:weight bold :background "red" :foreground "black"))
+          (if (and buffer-read-only (buffer-file-name))
+              (propertize "■ " 'face 'mood-line-unimportant)
+            "  "))
+      "  "))
+
+
+  (defun kadir-performance-mode-line()
+    (interactive)
+
+    (make-variable-buffer-local 'local-kadir-mode-line-calculated)
+    (make-variable-buffer-local 'local-kadir-mode-line-format)
+
+    (setq local-kadir-mode-line-calculated nil)
+    (setq local-kadir-mode-line-format "calculaing...")
+
+    (defun kadir/full-mood-line()
+      (when (not local-kadir-mode-line-calculated)
+        (setq local-kadir-mode-line-calculated t)
+        (setq local-kadir-mode-line-format
+              (mood-line--format
+               ;; Left
+               (format-mode-line
+                '(" "
+                  (:eval (kadir/mood-line-segment-modified))
+                  (:eval (kadir/mood-line-segment-buffer-name))
+                  (:eval (mood-line-segment-position))
+                  (:eval (mood-line-segment-multiple-cursors))))
+
+               ;; Right
+               (format-mode-line
+                '(;; (:eval (mood-line-segment-vc))
+                  (:eval (mood-line-segment-major-mode))
+                  " ")))))
+
+      local-kadir-mode-line-format)
+    (setq-default mode-line-format '((:eval (kadir/full-mood-line))))
+
+    (defun kadir-force-update-mode-line()
+      (setq local-kadir-mode-line-calculated nil)
+      (force-mode-line-update))
+
+    (defun kadir-soft-update-mode-line()
+      (setq local-kadir-mode-line-calculated nil))
+
+
+    (defun kadir-soft-update-mode-line-all-buffers()
+      (dolist (buf (mapcar (lambda (wind) (window-buffer wind)) (window-list)))
+        (with-current-buffer buf
+          (kadir-soft-update-mode-line)))
+      (force-mode-line-update t)  ;; force update all
+      )
+
+
+    ;; (kadir-force-update-mode-line)
+    )
+
+
+  (run-with-idle-timer 0.5 t 'kadir-soft-update-mode-line-all-buffers)
+
+  (defun kadir-soft-update-mode-line-advice (func &rest args)
+    (kadir-soft-update-mode-line)
+    (apply func args))
+
+  ;; TODO: not open on helm
+  (add-hook 'change-major-mode-hook 'kadir-performance-mode-line)
+
+  (add-hook 'after-save-hook 'kadir-force-update-mode-line)
+
+  (advice-add #'undo-tree-undo :around #'kadir-soft-update-mode-line-advice)
+  (advice-add #'backward-delete-char-untabify :around #'kadir-soft-update-mode-line-advice)
+  (advice-add #'delete-char :around #'kadir-soft-update-mode-line-advice)
+  (advice-add #'self-insert-command :around #'kadir-soft-update-mode-line-advice))
+
 
 
 (use-package stripe-buffer
@@ -137,13 +212,28 @@
   :hook ((org-mode . turn-on-stripe-table-mode)))
 
 
-(defun kadir/light-theme()
+(defun kadir/doom-light-theme()
   (interactive)
+  (use-package doom-themes)
   (load-theme 'doom-one-light t)
   (kadir/fix-some-colors 'doom-one-light))
 
+(defun kadir/spacemacs-light-theme()
+  (interactive)
+  (use-package doom-themes)
+  (load-theme 'spacemacs-light t)
+  (kadir/fix-some-colors 'spacemacs-light))
+
+(defun kadir/solarized-light-theme()
+  (interactive)
+  (use-package doom-themes)
+  (load-theme 'doom-solarized-light t)
+  (kadir/fix-some-colors 'doom-solarized-light))
+
+
 (defun kadir/doom-theme()
   (interactive)
+  (use-package doom-themes)
   (load-theme 'doom-one t)
   (kadir/fix-some-colors 'doom-one))
 
@@ -151,5 +241,7 @@
   (interactive)
   (load-theme 'spacemacs-dark t)
   (kadir/fix-some-colors 'spacemacs-dark))
+
+
 
 (provide 'k_theme)

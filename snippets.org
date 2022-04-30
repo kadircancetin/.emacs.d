@@ -235,14 +235,38 @@
 
 #+begin_src emacs-lisp
   (use-package wucuo
-  :init
-  (setq ispell-program-name "aspell")
-  (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together" "--run-together-limit=16" "--camel-case"))
+    :init
+    (setq ispell-program-name "aspell")
+    (setq ispell-extra-args '("--sug-mode=ultra" "--Lang=en_US" "--run-together" "--run-together-limit=16" "--camel-case"))
 
-  (setq wucuo-flyspell-start-mode "normal")
-  (add-hook 'prog-mode-hook #'wucuo-start)
-  (add-hook 'text-mode-hook #'wucuo-start)
-  (setq wucuo-personal-font-faces-to-check '(font-lock-type-face)))
+    (setq wucuo-debug t)
+    (setq wucuo-flyspell-start-mode "fast")
+    (add-hook 'prog-mode-hook #'wucuo-start)
+    (add-hook 'text-mode-hook #'wucuo-start)
+    (setq wucuo-personal-font-faces-to-check '(font-lock-type-face))
+
+    (setq kadir/wucuo-safe-words
+          '("kadir"
+            "alist"
+            "serializer"
+            ))
+
+    (defun kadir/wucuo-not-check-function (word)
+      (if (-contains? kadir/wucuo-safe-words word)
+          (progn
+            (message "in: %s" word)
+            nil)
+        t)
+      )
+
+    (setq wucuo-extra-predicate #'kadir/wucuo-not-check-function)
+
+    (defun kadir/open-fly-a-wucuo-spell-file()
+      (interactive)
+      ;; (wucuo-create-aspell-personal-dictionary)
+      (find-file (file-truename (format "~/.aspell.%s.pws" wucuo-aspell-language-to-use))))
+
+    (setq wucuo-update-interval 0.5))
 #+end_src
 * imenu
 
@@ -322,7 +346,6 @@
 
 #+end_src
 
-
 * Dap mode
 #+BEGIN_SRC emacs-lisp
 (use-package dap-mode
@@ -374,3 +397,132 @@
             (lambda (arg) (call-interactively #'dap-hydra))))
 
 #+END_SRC
+
+* zoom
+#+begin_src emacs-lisp
+  (use-package zoom
+    :init
+    (zoom-mode)
+    (setq zoom-size '(85 . 22)))
+#+end_src
+
+* nano modeline
+#+begin_src emacs-lisp
+  (use-package nano-modeline
+  :straight (nano-modeline :type git :host github :repo "rougier/nano-modeline")
+  (require 'kadir-modeline)
+
+  (setq nano-modeline-position 'bottom)
+  (nano-modeline-mode 1)
+  (set-face-attribute 'nano-modeline-active-status-** nil :background "red")
+  (set-face-attribute 'nano-modeline-inactive-status-** nil :background "red")
+
+  (defun nano-modeline-default-mode ()
+
+    (when (buffer-file-name (current-buffer)))
+
+    (let* ((is-file (buffer-file-name (current-buffer)))
+           (relative-path (when is-file (s-chop-prefix (projectile-project-root) (buffer-file-name (current-buffer)) )))
+           (file-splitted (when is-file (s-split "/" relative-path)))
+           (file-name (if is-file
+                          (concat (nth (- (length file-splitted) 1) file-splitted))
+                        (format-mode-line "%b")))
+           (folder-name (when is-file (s-chop-suffix file-name relative-path)))
+           (mode-name   (nano-modeline-mode-name))
+           (branch      (nano-modeline-vc-branch))
+           (position    (format-mode-line "%l:%c")))
+
+
+      (nano-modeline-compose (nano-modeline-status)
+
+                             file-name
+
+                             (concat (when (and (not (s-equals? folder-name "")) folder-name)
+                                       (concat " (" folder-name ")  "))
+                                     "(" mode-name ")"
+                                     )
+                             (concat branch "  -  " position)))))
+#+end_src
+* doom mode line
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+  :defer nil
+  :config
+  (setq doom-modeline-bar-width         1
+        doom-modeline-height            1
+        doom-modeline-buffer-encoding   nil
+        ;; doom-modeline-buffer-modification-icon t
+        doom-modeline-vcs-max-length    20
+        doom-modeline-icon              t
+        ;; relative-to-project
+        doom-modeline-buffer-file-name-style 'relative-from-project)
+
+  (set-face-attribute 'mode-line nil :height kadir/default-font-size)
+  (set-face-attribute 'mode-line-inactive nil :height kadir/default-font-size)
+  (setq doom-modeline-lsp nil)
+  (setq doom-modeline-icon t)
+  (setq doom-modeline-minor-modes t)
+  (setq doom-modeline-major-mode-icon nil)
+  (setq doom-modeline-buffer-encoding nil)
+  (setq doom-modeline-env-version nil)
+  (doom-modeline-mode 1))
+
+#+end_src
+* which key
+#+begin_src emacs-lisp
+  (use-package which-key
+  :defer 3
+  :config
+  (which-key-mode)
+  (which-key-setup-side-window-bottom)
+  (setq which-key-idle-delay 2.0)
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+
+#+end_src
+* magit delta
+#+begin_src emacs-lisp
+  (use-package magit-delta
+    :init
+    (add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1))))
+
+#+end_src
+
+* centaur tabs
+#+begin_src emacs-lisp
+  (use-package centaur-tabs
+    :defer 10
+    :bind
+    ("C-x n" . centaur-tabs-backward)
+    ("C-x C-n" . centaur-tabs-backward)
+    :config
+    (centaur-tabs-mode -1) ;; disabled (yes)
+    (setq centaur-tabs-set-modified-marker t
+          centaur-tabs-plain-icons t
+          centaur-tabs-style "bar"
+          centaur-tabs-set-close-button nil
+          centaur-tabs-height 20
+          centaur-tabs-label-fixed-length 15
+          centaur-tabs-cycle-scope 'tabs)
+
+    (centaur-tabs-group-by-projectile-project)
+
+    ;; (setq centaur-tabs-buffer-groups-function)
+    (progn
+      (defun kadir/centuar-group-last-five-buffer()
+        (list (projectile-project-name)))
+      (setq centaur-tabs-buffer-groups-function 'kadir/centuar-group-last-five-buffer)
+
+      (defun kadir/centaur-tabs-hide-tab (x)
+        (not (buffer-file-name x)))
+      (setq centaur-tabs-hide-tab-function 'kadir/centaur-tabs-hide-tab)))
+#+end_src
+
+* explain pause mode
+#+begin_src emacs-lisp
+  (use-package explain-pause-mode
+    :defer 1
+    :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
+    :init
+    (explain-pause-mode)
+    )
+#+end_src

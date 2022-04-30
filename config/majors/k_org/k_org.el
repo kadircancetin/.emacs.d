@@ -8,6 +8,12 @@
   (kadir/beatiful-org-todo)
   ;; Other package hooks
   (add-hook 'org-mode-hook #'visual-line-mode)
+  (setq org-todo-keywords
+        '((sequence "TODO(t!)" "NEXT(n)" "SOMD(s)" "|" "DONE(d!)" "CANC(c!)")))
+  ;; I prefer to log TODO creation also
+  (setq org-treat-insert-todo-heading-as-state-change t)
+  ;; log into LOGBOOK drawer
+  (setq org-log-into-drawer t)
   ;; (add-hook 'org-mode-hook (lambda() (toggle-truncate-lines 1)))
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
@@ -21,7 +27,7 @@
               )
 
   :config
-
+  (add-to-list 'org-modules 'org-habit t)
   (setq-default org-src-tab-acts-natively   t               ; intent code blocks with its major modes
                 org-src-window-setup        'current-window ; edit code on same window
                 org-ellipsis                "  ..."         ;;"  ↴"

@@ -9,8 +9,6 @@
 
   (let ((key (car key-map)))
     (setq key (concat "C-" (mapconcat #'char-to-string (mapcar 'identity key) " C-")))
-    (message key)
-
     (define-key k-binds-map (kbd (concat "C-ö " key)) (cdr key-map))))
 
 
@@ -24,7 +22,6 @@
     ("ç"                 . (lambda() (interactive) (eval-buffer) (message "eval") (save-buffer)))
     ("j"                 . dumb-jump-go)
 
-    ("n"                . flyspell-goto-next-error)
     ;; D
     ("dm"                 . (lambda() (interactive)
                               (let ((helm-rg-default-glob-string "models.py"))
@@ -41,7 +38,6 @@
     ("it"                 . typo-suggest-ivy)
 
     ;; o
-    ("oi"                 . kadir/find-inbox)
     ("om"                 . kadir/find-messages)
     ("oc"                 . kadir/find-config)
     ("oe"                 . kadir/find-experimental-config)
@@ -89,9 +85,7 @@
 (define-minor-mode k-binds-mode
   "t"
   "t" "m" k-binds-map
-  (--map (k-bind-both-god-and-normal it) tuslar)
-  (if k-binds-mode
-      (message "Binds")))
+  (--map (k-bind-both-god-and-normal it) tuslar))
 
 (k-binds-mode 1)
 
@@ -152,9 +146,9 @@
    ("C-x g"           . magit-status)
 
    ;; fonts
-   ("C-+"                . kadir/font-size-bigger)
-   ("C--"                . kadir/font-size-smaller)
-   ("C-c c"                 . (lambda()(interactive)(org-capture nil "t")))
+   ("C-+"             . kadir/font-size-bigger)
+   ("C--"             . kadir/font-size-smaller)
+   ("C-c c"           . (lambda()(interactive)(org-capture nil "t")))
    )
  )
 

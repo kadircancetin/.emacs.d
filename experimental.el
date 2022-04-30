@@ -1,14 +1,11 @@
-(require 'use-package)
-
-
-(use-package syntactic-close)
-(global-set-key (kbd "M-m") 'syntactic-close)
+;; (use-package syntactic-close)
+;; (global-set-key (kbd "M-m") 'syntactic-close)
 
 
 
 (global-set-key (kbd "M-:") 'xref-find-definitions-other-window)
 
-(setq jit-lock-defer-time 0.1
+(setq jit-lock-defer-time 0.25
       jit-lock-context-time 0.3
       jit-lock-chunk-size 1000
       jit-lock-stealth-time 2)
@@ -27,48 +24,7 @@
 (load-file (expand-file-name "side-window.el" user-emacs-directory))
 (global-set-key (kbd "M-ü") 'kadir/smart-push-pop)
 
-
 
-
-(use-package tree-sitter
-  :defer t
-  :straight
-  (tree-sitter :host github
-               :repo "ubolonton/emacs-tree-sitter"
-               :files ("lisp/*.el")))
-
-(use-package tree-sitter-langs
-  :defer t
-  :straight
-  (tree-sitter-langs :host github
-                     :repo "ubolonton/emacs-tree-sitter"
-                     :files ("langs/*.el" "langs/queries")))
-
-(add-hook 'python-mode-hook  (lambda () (require 'tree-sitter-langs) (tree-sitter-hl-mode)))
-(add-hook 'python-mode-hook  (lambda () (rainbow-delimiters-mode-disable)))
-
-
-
-(use-package gcmh
-  :init
-  (gcmh-mode)
-  (setq garbage-collection-messages t)
-  (setq gcmh-verbose t)
-  (setq gcmh-idle-delay 2)
-  ;; (add-hook  'post-gc-hook (lambda() (message "garbage collected")))
-  )
-
-
-(use-package which-key
-  :defer 3
-  :config
-  (which-key-mode)
-  (which-key-setup-side-window-bottom)
-  (setq which-key-idle-delay 2.0)
-  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
-
-
-
 
 (defun make-peek-frame (find-definition-function &rest args)
   ;; main source: https://tuhdo.github.io/emacs-frame-peek.html
@@ -109,12 +65,6 @@
                                (delete-frame)))
 
 
-(use-package zoom
-  :init
-  (zoom-mode)
-  (setq zoom-size '(85 . 22)))
-
-
 (setq kadir/last-next-line-count 0)
 (setq kadir/jit-lock-defer-time 0.1)
 
@@ -150,34 +100,24 @@
 (add-hook 'post-command-hook (kadir/post-command 'previous-line 45))
 (add-hook 'post-command-hook (kadir/post-command 'scroll-up-command 4))
 (add-hook 'post-command-hook (kadir/post-command 'scroll-down-command 4))
-;; (remove-hook 'post-command-hook 'kadir/post-command)
-
+(remove-hook 'post-command-hook 'kadir/post-command)
+
 (defun kadir/buffer-local-disable-jit-defering()
   (make-variable-buffer-local 'kadir/jit-lock-defer-time)
   (setq kadir/jit-lock-defer-time 0))
 
-(use-package svelte-mode
-  :config
-  (add-hook 'svelte-mode-hook  'kadir/buffer-local-disable-jit-defering)
-  (add-hook 'svelte-mode-hook  'lsp-deferred)
-  )
+
+;; (use-package svelte-mode
+;;   :config
+;;   (add-hook 'svelte-mode-hook  'kadir/buffer-local-disable-jit-defering)
+;;   (add-hook 'svelte-mode-hook  'lsp-deferred)
+;;   )
 
 
-
-(use-package magit-delta
-  :init
-  (add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1))))
-
-
-
 ;; (electric-pair-mode)
 ;; (setq electric-pair-preserve-balance nil)
 
-(use-package explain-pause-mode
-  :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
-  :init
-  (explain-pause-mode)
-  )
+
 ;; (defun lsp--create-filter-function (workspace)(prin1 workspace))
 
 (use-package company-tabnine
@@ -220,3 +160,209 @@
 ;;   (next-line)
 ;;   )
 ;; (global-set-key (kbd "C-ü") 'kadir/format-haha)
+
+
+
+(load-file (expand-file-name "language-learn.el" user-emacs-directory))
+(global-set-key (kbd "C-ç") 'kadir/dilogretio)
+
+
+
+(require 'git-file-tree)
+;; (memory-report)
+;; company-keywords-alist
+;; thai-word-table
+
+
+
+(use-package spell-fu
+  :defer 1.11
+  :init
+
+  ;; (setq-default spell-fu-faces-include
+  ;;               '(tree-sitter-hl-face:comment
+  ;;                 tree-sitter-hl-face:doc
+  ;;                 tree-sitter-hl-face:string
+  ;;                 tree-sitter-hl-face:function
+  ;;                 tree-sitter-hl-face:variable
+  ;;                 tree-sitter-hl-face:constructor
+  ;;                 tree-sitter-hl-face:constant
+  ;;                 default
+  ;;                 font-lock-type-face
+  ;;                 font-lock-variable-name-face
+  ;;                 font-lock-comment-face
+  ;;                 font-lock-doc-face
+  ;;                 font-lock-string-face
+  ;;                 magit-diff-added-highlight))
+
+  ;; for if I want to check personal dict file
+  (defun kadir/open-fly-a-spell-fu-file()
+    (interactive)
+    (find-file (file-truename "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")))
+
+  :config
+
+  ;; for styling
+  (custom-set-faces
+   '(spell-fu-incorrect-face ((t (:underline (:color "Olivedrab4" :style wave))))))
+
+  ;; for make sure aspell settings are correct (sometimes "en" not true)
+  (setq ispell-program-name "aspell")
+  (setq ispell-dictionary "en")
+
+  ;; regex function
+  (setq-default spell-fu-word-regexp (rx (maximal-match
+                                          (or
+                                           (>= 2 upper)
+                                           (and upper
+                                                (zero-or-more lower))
+                                           (one-or-more lower)))))
+
+  ;; for save dictionaries forever
+  (setq spell-fu-directory "~/Dropbox/spell-fu-tmp/")
+  (setq ispell-personal-dictionary "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")
+
+
+  ;; for all kind of face check
+  (setq-default spell-fu-check-range 'spell-fu--check-range-without-faces)
+
+  ;; start spell-fu
+  (global-spell-fu-mode)
+
+  ;; Fixed case-fold-search for spell-fu--check-range-without-faces
+  (defun kadir/with-case-fold-search-nil (func &rest args)
+    (let ((case-fold-search nil))
+      (apply func args)))
+
+
+
+  (advice-add #'spell-fu--check-range-without-faces :around #'kadir/with-case-fold-search-nil)
+  (advice-add #'spell-fu--word-add-or-remove :around #'kadir/with-case-fold-search-nil)
+  ;; TODO: word add point wrong at AlexaDoc
+
+  ;; Fixed upper cased search with delete (unless (equal word (upcase word))
+  (defun spell-fu-check-word (point-start point-end word)
+    (unless (gethash (encode-coding-string (downcase word) 'utf-8) spell-fu--cache-table nil)
+      (spell-fu-mark-incorrect point-start point-end)))
+
+  ;; Wrong examples::
+  ;;     wrng Wrng WrngButJustWrngPart WRNG wrng-wrng wrongnot
+  ;; Not wrong examples:
+  ;;     NOTwrong not_wrong NotWrongAtAll wrong_not
+  )
+
+
+(use-package too-long-lines-mode
+  :straight (too-long-lines-mode :type git :host github :repo "rakete/too-long-lines-mode")
+
+  :init
+  (load-file (expand-file-name "straight/repos/too-long-lines-mode/too-long-lines-mode.el" user-emacs-directory))
+
+  (setq too-long-lines-threshold 220)
+  (setq too-long-lines-show-number-of-characters 50)
+  (setq too-long-lines-special-buffer-modes '(json-mode eshell-mode))
+  (setq too-long-lines-idle-seconds 10)
+
+  (defun kadir/activate-too-long-lines()
+    (interactive)
+    (too-long-lines-mode t)
+    (toggle-truncate-lines 1)
+    (set (make-variable-buffer-local 'column-number-mode) nil)
+    (set (make-variable-buffer-local 'global-hl-line-mode) nil)
+    (set (make-variable-buffer-local 'line-number-mode) nil)
+    (setq-local bidi-inhibit-bpa t))
+
+  (defun kadir/dactivate-too-long-lines()
+    (interactive)
+    (too-long-lines-mode 0)
+    (toggle-truncate-lines -1)
+    (set (make-variable-buffer-local 'column-number-mode) 1)
+    (set (make-variable-buffer-local 'global-hl-line-mode) 1)
+    (set (make-variable-buffer-local 'line-number-mode) 1)
+    (setq-local bidi-inhibit-bpa nil))
+
+  (kadir/activate-too-long-lines))
+
+
+(column-number-mode 0)
+
+
+
+(setenv "JAVA_HOME"
+        "/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/")
+
+;; (animate-birthday-present)
+(defun lsp-metals--server-command ()
+  "Generate the Scala language server startup command."
+  `("/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/bin/java"
+    "-Xss4m"
+    "-Xms100m"
+    "-Dmetals.client=vscode"
+    "-Xmx1G"
+    ,@lsp-metals-server-args
+    "scala.meta.metals.Main"))
+
+
+
+(use-package perspective
+  :defer 0.1
+  :custom
+  (persp-mode-prefix-key (kbd "M-m p"))
+  (persp-state-default-file (no-littering-expand-var-file-name "perspective.el"))
+  :bind*
+  ( :map persp-mode-map
+    ("C-x p" . persp-switch)
+    ("C-x C-p" . persp-switch-quick)
+    ("C-M-SPC" . persp-switch-last)
+    :map perspective-map
+    ("p" . persp-switch)
+    ("k" . persp-kill)
+    ("q" . persp-switch-quick)
+    ("n" . (lambda () (interactive) (persp-switch (make-temp-name "p-")))))
+  :hook
+  (kill-emacs . persp-state-save)
+
+  :config
+  (persp-mode)
+  ;; (persp-state-load (no-littering-expand-var-file-name "perspective.el"))
+  )
+
+
+
+(use-package which-key
+  :defer 3
+  :config
+  (which-key-mode)
+  (which-key-setup-side-window-bottom)
+  (setq which-key-idle-delay 1))
+
+
+
+(use-package eros
+  :defer 2
+  :config
+  (eros-mode 1))
+
+
+
+(defun buffer-shown-in-a-window?(buf)
+  "Return t if buffer shown in any window"
+  (if (member buf (mapcar (lambda (wind) (window-buffer wind)) (window-list))) t nil))
+
+
+(global-set-key (kbd "C-ü")
+                (lambda ()
+                  (interactive)
+                  (kadir/open-updater)
+                  (select-window (get-buffer-window refresh-buff))
+                  (kadir-tree-mode)))
+
+(global-set-key (kbd "C-ç")
+                (lambda ()
+                  (interactive)
+                  (beacon-blink)))
+
+
+
+(use-package font-lock-studio)
+

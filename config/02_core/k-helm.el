@@ -59,7 +59,8 @@
   (helm-projectile-sources-list '(helm-source-projectile-buffers-list
                                   helm-source-projectile-recentf-list
                                   helm-source-projectile-files-list
-                                  helm-source-projectile-projects)))
+                                  ;; helm-source-projectile-projects
+                                  )))
 
 (use-package helm-ag
   :config (setq

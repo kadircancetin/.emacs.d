@@ -3,6 +3,12 @@
 
 
 
+(add-hook 'python-mode-hook  (lambda () (require 'tree-sitter-langs) (tree-sitter-hl-mode)))
+(add-hook 'python-mode-hook  (lambda () (rainbow-delimiters-mode-disable)))
+
+
+
+
 (setq-default python-indent-guess-indent-offset-verbose nil)
 (setq-default python-shell-interpreter "ipython"
               python-shell-interpreter-args "-i")
@@ -69,10 +75,14 @@
 (defun kadir/enable-flycheck-flake8-python()
   (interactive)
   (require 'flycheck)
-  (setq lsp-diagnostic-package :none)
-  (setq lsp-diagnostics-provider :none)
+  (setq lsp-diagnostic-package :none) ;; lsp kapa
+  (setq lsp-diagnostics-provider :none) ;; lsp kapa
   (setq flycheck-disabled-checkers '(python-mypy python-pylint))
-  (flycheck-select-checker 'python-flake8))
+  (flycheck-select-checker 'python-flake8)
+
+  ;;
+  ;; (flycheck-add-next-checker 'lsp 'python-flake8) ;; lsp ac
+  )
 
 (defun kadir/python-lsp-start()
   (interactive)

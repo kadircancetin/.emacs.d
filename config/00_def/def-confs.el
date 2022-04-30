@@ -1,8 +1,14 @@
 (setq-default user-full-name "Kadir Can Çetin")
 (setq-default user-mail-address "kadircancetin@gmail.com")
-
 
+
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+
+
 (global-eldoc-mode 0)
+
 
 ;; Deffered activation minor modes
 (run-with-idle-timer
@@ -10,6 +16,7 @@
  (lambda () (progn
          ;; (display-battery-mode 1)
          (savehist-mode 1)
+         (global-so-long-mode 1)
          (blink-cursor-mode -1)
          ;; (display-time-mode 1)
          (delete-selection-mode 1)        ; writing when ther is selected, delete the selected part
@@ -19,7 +26,7 @@
          (save-place-mode 1)              ; save cursor position for next file opening, and restore it
          ;; (global-prettify-symbols-mode 1) ; lambda to cool lambda character
          (global-auto-revert-mode 1)
-         (column-number-mode 1)
+         ;; (column-number-mode 0)
          (global-auto-composition-mode 1))))
 
 (run-with-idle-timer
@@ -50,10 +57,10 @@
 (setq-default ring-bell-function      'ignore    ; shutdown rings
               inhibit-startup-message  t         ; disable startup messages
               initial-scratch-message  nil       ; disable startup messages
-              initial-major-mode      'text-mode ; initial buffer
-              mark-ring-max            128       ; increatese mark-ring
+              initial-major-mode      'fundamental-mode ; initial buffer
+              ;; mark-ring-max            128       ; increatese mark-ring
               default-buffer-file-coding-system 'utf-8-unix
-              kill-ring-max            256       ; increatese kill-ring history
+              ;; kill-ring-max            256       ; increatese kill-ring history
               search-whitespace-regexp ".*?"     ; make isearch more fuzzy like
               ;; require-final-newline    t
               vc-follow-symlinks       t)
@@ -79,7 +86,6 @@
 ;; back up
 (setq-default backup-by-copying t    ; Don't delink hardlinks
               delete-old-versions t  ; Clean up the backups
-              version-control t      ; Use version numbers on backups,
               )
 
 ;; Performance improvements
@@ -99,7 +105,6 @@
 ;; ;; SmoothScroll
 (setq-default scroll-conservatively 1000
               fast-but-imprecise-scrolling t
-              jit-lock-defer-time 0
               ;; scroll-step 1
               ;; scroll-margin 0
               ;; scroll-up-aggressively 0.01
@@ -136,19 +141,14 @@
   ;; source: https://github.com/KaratasFurkan/.emacs.d
   (interactive) (find-file "~/.emacs.d/experimental.el"))
 
-(defun kadir/find-inbox ()
-  ;; source: https://github.com/KaratasFurkan/.emacs.d
-  (interactive) (find-file "~/Dropbox/org-roam/20200503174932-inbox.org"))
-
-(defun kadir/find-dashboard ()
-  ;; source: https://github.com/KaratasFurkan/.emacs.d
-  (interactive) (switch-to-buffer "*dashboard*"))
-
 (defun kadir/find-messages ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
   "Open Message buffer"
   (interactive) (switch-to-buffer "*Messages*"))
 
+(defun kadir/find-scratch-buffer ()
+  (interactive)
+  (switch-to-buffer "*scratch*"))
 
 
 (defun kadir/move-to-top ()
@@ -160,6 +160,7 @@
     (yank)(insert "\n"))
   (mwim-beginning-of-line)
   (kill-line))
+
 
 (defun kadir/delete-file-and-buffer ()
   ;; based on https://gist.github.com/hyOzd/23b87e96d43bca0f0b52 which is based on
@@ -173,10 +174,6 @@
           (message "Deleted file %s." filename)
           (kill-buffer))
       (message "Not a file visiting buffer!"))))
-
-(defun kadir/find-scratch-buffer ()
-  (interactive)
-  (switch-to-buffer "*scratch*"))
 
 (defun kadir/comment-or-self-insert (&optional beg end)
   "If region active comment-or-uncomment work,
@@ -207,20 +204,23 @@
   (interactive)
   (split-window-below)
   (other-window 1)
-  (balance-windows))
+  ;; (balance-windows)
+  )
 
 (defun kadir/split-and-follow-vertically ()
   "Split window below and follow."
   (interactive)
   (split-window-right)
   (other-window 1)
-  (balance-windows))
+  ;; (balance-windows)
+  )
 
 (defun kadir/delete-window ()
   "Split window below and follow."
   (interactive)
   (delete-window)
-  (balance-windows))
+  ;; (balance-windows)
+  )
 
 (defun spacemacs/backward-kill-word-or-region (&optional arg)
   "Calls `kill-region' when a region is active and
@@ -233,37 +233,11 @@
       (call-interactively #'kill-region)
     (backward-kill-word arg)))
 
-;; (defun kadir/buffer-dublicate-p ()
-;;   (not (eq (length (cl-delete-duplicates (mapcar #'window-buffer (window-list))))
-;;            (length (window-list)))))
-
-;; (defun kadir/buffer-dublicate-alarm()
-;;   (when (and (kadir/buffer-dublicate-p))
-;;     (message "******************* DUBLICATE BUFFERSSSS ***************")))
-
-;; (add-hook 'buffer-list-update-hook 'kadir/buffer-dublicate-alarm)
-
-
 (defun kadir/last-buffer ()
   "Get last buffer. If it is windowed, jump it"
   (interactive)
 
-  (switch-to-buffer (other-buffer (current-buffer) nil))
-  ;; (let* ((cur-buffer (current-buffer))
-  ;;        (normally-next-buffer (switch-to-buffer (other-buffer (current-buffer) nil)))
-  ;;        ;; then nil->t interestingp
-  ;;        (nexts-visible-buffer (find-buffer-visiting (buffer-file-name normally-next-buffer)))
-  ;;        (nexts-visible-window (when nexts-visible-buffer (get-buffer-window nexts-visible-buffer))))
-  ;;   (switch-to-buffer cur-buffer)
-
-  ;;   (cond
-  ;;    ;; ((eq my-buffer (window-buffer (selected-window)))
-  ;;    ;; (message "Visible and focused"))
-  ;;    ((get-buffer-window normally-next-buffer)
-  ;;     (select-window (get-buffer-window nexts-visible-buffer)))
-  ;;    (t
-  ;;     (switch-to-buffer normally-next-buffer))))
-  )
+  (switch-to-buffer (other-buffer (current-buffer) nil)))
 
 
 (defun resize-window-width (w)
@@ -290,6 +264,8 @@
   (align-regexp beginning end (concat "\\(\\s-*\\)"
                                       (regexp-quote comment-start))))
 
+
+
 (defun kadir/adjust-font-size(x)
   (set-face-attribute 'default nil :height x)
   (set-face-attribute 'mode-line nil :height x)
@@ -299,14 +275,13 @@
 (defun kadir/font-size-smaller()
   (interactive)
   (defvar kadir/default-font-size)
-  (setq kadir/default-font-size (- kadir/default-font-size 3))
-  (kadir/adjust-font-size kadir/default-font-size)
-  )
+  (setq kadir/default-font-size (- kadir/default-font-size 1))
+  (kadir/adjust-font-size kadir/default-font-size))
 
 (defun kadir/font-size-bigger()
   (interactive)
   (defvar kadir/default-font-size)
-  (setq kadir/default-font-size (+ kadir/default-font-size 5))
+  (setq kadir/default-font-size (+ kadir/default-font-size 10))
   (kadir/adjust-font-size kadir/default-font-size))
 
 
@@ -328,7 +303,6 @@
    ("M-o"             . other-window)
    ("M-u"             . winner-undo)
    ("C-x k"           . kadir/kill-buffer)
-   ;; ("M-ı"             . (lambda() (interactive) (indent-region (point-min) (point-max))))
    ("C-x 2"           . kadir/split-and-follow-horizontally)
    ("C-x 3"           . kadir/split-and-follow-vertically)
    ("C-x 0"           . kadir/delete-window)

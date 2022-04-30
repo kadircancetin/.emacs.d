@@ -29,7 +29,7 @@
     ;; :after lsp-mode
     :custom
     ;; DOC
-    (lsp-ui-doc-delay 10)
+    (lsp-ui-doc-delay 3)
     (lsp-ui-doc-position 'top)
 
     ;; Others
@@ -104,5 +104,18 @@
         (("C-c C-n" . flycheck-next-error)
          ("C-c C-p" . flycheck-previous-error))))
 
+
+(use-package tree-sitter
+  :straight
+  (tree-sitter :host github
+               :repo "ubolonton/emacs-tree-sitter"
+               :files ("lisp/*.el")))
+
+(use-package tree-sitter-langs
+  :straight
+  (tree-sitter-langs :host github
+                     :repo "ubolonton/emacs-tree-sitter"
+                     :files ("langs/*.el" "langs/queries")))
+
 
 (provide 'k-langs)
