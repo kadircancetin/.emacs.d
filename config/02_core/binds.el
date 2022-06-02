@@ -60,11 +60,7 @@
     ("hht"                . (lambda () (interactive) (hs-hide-level 2)))
 
     ;; b
-    ("bt"                 . bm-toggle)
-    ("bb"                 . bm-toggle)
-    ("bn"                 . bm-next)
-    ("bp"                 . bm-previous)
-    ("ba"                 . helm-bm)
+    ("b"                 . kadir/blame-line-or-region)
 
     ;; r
     ("rl"                 . org-roam)

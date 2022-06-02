@@ -350,19 +350,48 @@
   (if (member buf (mapcar (lambda (wind) (window-buffer wind)) (window-list))) t nil))
 
 
-(global-set-key (kbd "C-ü")
+(global-set-key (kbd "C-x t g")
                 (lambda ()
                   (interactive)
                   (kadir/open-updater)
                   (select-window (get-buffer-window refresh-buff))
                   (kadir-tree-mode)))
 
-(global-set-key (kbd "C-ç")
-                (lambda ()
-                  (interactive)
-                  (beacon-blink)))
-
 
 
 (use-package font-lock-studio)
 
+
+
+(use-package blamer
+  :ensure t
+  :defer 200
+  :custom
+  (blamer-type 'both)
+  (blamer-min-offset 70)
+  (blamer-datetime-formatter " [%s] ")
+  (blamer-author-formatter "%s")
+  (blamer-commit-formatter "%s")
+  (blamer-max-commit-message-length 35)
+  (blamer-max-lines 500)
+  (blamer-uncommitted-changes-message "-- NO COMMIT --")
+  :custom-face
+  (blamer-face ((t :foreground "#7a88cf"
+                   :background nil
+                   ;; :height 89
+                   :italic t)))
+
+  :init
+  (defun kadir/blame-line-or-region()
+    (interactive)
+    (require 'blamer)
+    (message "blame")
+    (setq blamer-idle-time 0)
+    (blamer--try-render)
+    (add-hook 'pre-command-hook 'kadir/blame-line-or-region--reset-state-hook nil t))
+  :config
+  ;; (global-blamer-mode 0)
+  (defun kadir/blame-line-or-region--reset-state-hook()
+    (message "rest")
+    (blamer--reset-state)
+    (remove-hook 'pre-command-hook 'kadir/blame-line-or-region--reset-state-hook t)))
