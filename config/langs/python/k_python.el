@@ -80,7 +80,8 @@
   (setq flycheck-disabled-checkers '(python-mypy python-pylint))
   (flycheck-select-checker 'python-flake8)
 
-  ;;
+  ;; (setq flycheck-checkers '( python-flake8 python-pycompile))
+
   ;; (flycheck-add-next-checker 'lsp 'python-flake8) ;; lsp ac
   )
 
@@ -93,7 +94,8 @@
 (defun kadir/activate-venv ()
   "source: https://github.com/jorgenschaefer/pyvenv/issues/51"
   (interactive)
-
+  (require 'pyvenv)
+  (require 'lsp)
   (let* ((pdir (projectile-project-root))
          (pfile (concat pdir ".venv"))
          (ploc nil))
@@ -101,8 +103,9 @@
       (setq ploc (with-temp-buffer
                    (insert-file-contents pfile)
                    (nth 0 (split-string (buffer-string)))))
-      (setq lsp-pyright-venv-path ploc)
-      (pyvenv-workon ploc))))
+
+      (pyvenv-workon ploc)
+      (setq lsp-pyright-venv-path (concat (pyvenv-workon-home) "/" ploc "/")))))
 
 
 (setq kadir/python-auto-remove-unused nil)

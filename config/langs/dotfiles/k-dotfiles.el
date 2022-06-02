@@ -5,6 +5,12 @@
 ;; (use-package gitignore-mode :mode "/\\.gitignore\\'")
 (use-package groovy-mode)
 (use-package jenkinsfile-mode)
-(use-package ansible)
+;; (use-package ansible)
+
+;; (use-package po-mode
+;;   :load-path "/usr/local/Cellar/gettext/0.19.5.1/share/emacs/site-lisp/"
+;;   :commands (po-mode)
+;;   )
+
 
 (provide 'k-dotfiles)
