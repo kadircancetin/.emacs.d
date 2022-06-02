@@ -39,7 +39,7 @@
     ;; (require 'k_clang)
     ;; (require 'k-elixir)
     ;; (require 'k-plantuml)
-    (require 'k-clojure)
+    ;; (require 'k-clojure)
     ;; (require 'k-go)
     )
 
