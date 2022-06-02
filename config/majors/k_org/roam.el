@@ -4,7 +4,7 @@
   (interactive)
 
   ;; open backlink buffer automaticly, set dark background
-
+  (require 'f)
   (require 'org-roam-mode)
 
   (when (and (buffer-file-name) (f-parent-of? org-roam-directory (buffer-file-name)) )
@@ -27,7 +27,7 @@
                  (display-buffer-in-side-window)
                  (side . left)
                  (slot . 0)
-                 (window-width . 0.33)
+                 (window-width . 0.28)
                  (preserve-size . (t nil))
                  (window-parameters . ((no-other-window . t)
                                        (no-delete-other-windows . t)))))
