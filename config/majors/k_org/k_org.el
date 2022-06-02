@@ -84,10 +84,8 @@
   :init
   (add-hook 'org-mode-hook 'org-appear-mode)
   (setq org-appear-autosubmarkers t
-        org-appear-autolinks      t
-        org-link-descriptive      t
-        )
-  )
+        org-appear-autolinks      'just-brackets
+        org-link-descriptive      t))
 
 
 ;; (use-package org-kanban
