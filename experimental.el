@@ -217,14 +217,42 @@
   (setq spell-fu-directory "~/Dropbox/spell-fu-tmp/")
   (setq ispell-personal-dictionary "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")
   ;; regex function
-  (setq-default spell-fu-word-regexp (rx (maximal-match
-                                          (or
-                                           (>= 2 upper)
-                                           (and upper
-                                                (zero-or-more lower))
-                                           (one-or-more lower)))))
+  (use-package xr)
+
+  (setq-default spell-fu-word-regexp
+                (rx
+                 (or
+                  (seq word-boundary (one-or-more upper) word-boundary)
+                  (and upper
+                       (zero-or-more lower))
+                  (one-or-more lower))))
+
   ;; for all kind of face check
   (setq-default spell-fu-check-range 'spell-fu--check-range-without-faces)
+
+  (spell-fu-mode-disable)
+  (spell-fu-mode)
+
+  ;; Wrong examples::
+  ;;     wrng
+  ;;     Wrng
+  ;;     WrngButJustWrngPart
+  ;;     WRNG
+  ;;     wrng-wrng
+  ;;     wrongnot
+  ;;     YESWRONG
+  ;;     YES_WRNG
+  ;;     WRNG_YES
+  ;;
+  ;;
+  ;; Not wrong examples:
+  ;;     not_wrong
+  ;;     NotWrongAtAll
+  ;;     wrong_not
+  ;;     NOT_WRONG
+  ;;     URLField
+  ;; Not covered
+  ;;     NOTwrong   (note possible when URLField covered)
 
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -261,12 +289,6 @@
       (spell-fu-mark-incorrect pos-beg pos-end)))
   ;; END: Very bad spell fu hack for running upcase word spell check
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-  ;; Wrong examples::
-  ;;     wrng Wrng WrngButJustWrngPart WRNG wrng-wrng wrongnot
-  ;; Not wrong examples:
-  ;;     NOTwrong not_wrong NotWrongAtAll wrong_not
   )
 
 
