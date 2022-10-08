@@ -205,9 +205,14 @@
   ;;   (find-file (file-truename "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")))
 
   :config
-
-  ;; styling
-  (custom-set-faces '(spell-fu-incorrect-face ((t (:underline (:color "Olivedrab4" :style wave))))))
+  (custom-set-faces '(spell-fu-incorrect-face ((t (
+                                                   :underline (:color "Blue" :style wave)
+                                                   ;; :underline nil
+                                                   ;; :background "#800000"
+                                                   ;; :famliy "DejaVu Sans Mono"
+                                                   ;; :weight ultra-bold
+                                                   ;; :inverse-video t
+                                                   )))))
   ;; start spell-fu
   (global-spell-fu-mode)
   ;; for make sure aspell settings are correct (sometimes "en" not true)
