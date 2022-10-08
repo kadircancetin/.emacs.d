@@ -526,3 +526,23 @@
     (explain-pause-mode)
     )
 #+end_src
+
+* tilde fringe
+#+begin_src emacs-lisp
+
+(use-package vi-tilde-fringe
+  :defer 1.2
+  :config
+  (setq vi-tilde-fringe-bitmap-array
+        [#b00000000
+         #b00000000
+         #b00000000
+         #b00101000
+         #b00010100
+         #b00000000
+         #b00000000
+         #b00000000])
+  (global-vi-tilde-fringe-mode 0)
+  (global-vi-tilde-fringe-mode 1))
+
+#+end_src

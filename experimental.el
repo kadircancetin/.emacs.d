@@ -107,11 +107,13 @@
   (setq kadir/jit-lock-defer-time 0))
 
 
-;; (use-package svelte-mode
-;;   :config
-;;   (add-hook 'svelte-mode-hook  'kadir/buffer-local-disable-jit-defering)
-;;   (add-hook 'svelte-mode-hook  'lsp-deferred)
-;;   )
+(use-package svelte-mode
+  :bind
+  (:map svelte-mode-map
+        ("M-o" . other-window))
+  :config
+  (add-hook 'svelte-mode-hook  'kadir/buffer-local-disable-jit-defering)
+  (add-hook 'svelte-mode-hook  'lsp-deferred))
 
 
 ;; (electric-pair-mode)
@@ -176,8 +178,10 @@
 
 
 (use-package spell-fu
-  :defer 1.11
+  :defer 2.22
+  :if (executable-find "aspell")
   :init
+  ;; yay -S aspell aspell-en
 
   ;; (setq-default spell-fu-faces-include
   ;;               '(tree-sitter-hl-face:comment
@@ -196,20 +200,22 @@
   ;;                 magit-diff-added-highlight))
 
   ;; for if I want to check personal dict file
-  (defun kadir/open-fly-a-spell-fu-file()
-    (interactive)
-    (find-file (file-truename "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")))
+  ;; (defun kadir/open-fly-a-spell-fu-file()
+  ;;   (interactive)
+  ;;   (find-file (file-truename "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")))
 
   :config
 
-  ;; for styling
-  (custom-set-faces
-   '(spell-fu-incorrect-face ((t (:underline (:color "Olivedrab4" :style wave))))))
-
+  ;; styling
+  (custom-set-faces '(spell-fu-incorrect-face ((t (:underline (:color "Olivedrab4" :style wave))))))
+  ;; start spell-fu
+  (global-spell-fu-mode)
   ;; for make sure aspell settings are correct (sometimes "en" not true)
   (setq ispell-program-name "aspell")
   (setq ispell-dictionary "en")
-
+  ;; for save dictionaries forever
+  (setq spell-fu-directory "~/Dropbox/spell-fu-tmp/")
+  (setq ispell-personal-dictionary "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")
   ;; regex function
   (setq-default spell-fu-word-regexp (rx (maximal-match
                                           (or
@@ -217,33 +223,45 @@
                                            (and upper
                                                 (zero-or-more lower))
                                            (one-or-more lower)))))
-
-  ;; for save dictionaries forever
-  (setq spell-fu-directory "~/Dropbox/spell-fu-tmp/")
-  (setq ispell-personal-dictionary "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")
-
-
   ;; for all kind of face check
   (setq-default spell-fu-check-range 'spell-fu--check-range-without-faces)
 
-  ;; start spell-fu
-  (global-spell-fu-mode)
 
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Fixed case-fold-search for spell-fu--check-range-without-faces
   (defun kadir/with-case-fold-search-nil (func &rest args)
     (let ((case-fold-search nil))
       (apply func args)))
-
-
-
   (advice-add #'spell-fu--check-range-without-faces :around #'kadir/with-case-fold-search-nil)
   (advice-add #'spell-fu--word-add-or-remove :around #'kadir/with-case-fold-search-nil)
-  ;; TODO: word add point wrong at AlexaDoc
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;; Fixed upper cased search with delete (unless (equal word (upcase word))
-  (defun spell-fu-check-word (point-start point-end word)
-    (unless (gethash (encode-coding-string (downcase word) 'utf-8) spell-fu--cache-table nil)
-      (spell-fu-mark-incorrect point-start point-end)))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; START: very bad spell-fu word add prompt hack
+  (defun kadir/spell-fu--word-at-point--read-from-minibuffer ()
+    (interactive)
+    (unless cache
+      (setq cache (read-from-minibuffer "input: " (or (word-at-point) ""))))
+    cache)
+
+  (defun kadir/spell-fu-dictionary-add ()
+    (interactive)
+    (flet ((spell-fu--word-at-point () (kadir/spell-fu--word-at-point--read-from-minibuffer)))
+      (let ((cache nil))
+        (call-interactively 'spell-fu-word-add))))
+  ;; END: very bad spell-fu word add prompt hack
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; START: Very bad spell fu hack for running upcase word spell check
+  (defun spell-fu-check-word (pos-beg pos-end word)
+    (unless (spell-fu--check-word-in-dict-list (spell-fu--canonicalize-word word))
+      (spell-fu-mark-incorrect pos-beg pos-end)))
+  ;; END: Very bad spell fu hack for running upcase word spell check
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
   ;; Wrong examples::
   ;;     wrng Wrng WrngButJustWrngPart WRNG wrng-wrng wrongnot
@@ -411,3 +429,7 @@
     (message "rest")
     (blamer--reset-state)
     (remove-hook 'pre-command-hook 'kadir/blame-line-or-region--reset-state-hook t)))
+
+
+
+(setq create-lockfiles nil)

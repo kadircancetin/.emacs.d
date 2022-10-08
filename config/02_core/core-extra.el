@@ -101,6 +101,7 @@
 
 (use-package wakatime-mode
   :defer 2
+  :if (executable-find "wakatime")
   :config
   (global-wakatime-mode t))
 

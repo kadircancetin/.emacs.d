@@ -222,6 +222,16 @@
   (mwim-beginning-of-code)
   (kill-new (concat (fk/django-get-module ".") "." (which-function))))
 
+
+(defun kadir/python-copy-django-test()
+  (interactive)
+  (require 'which-func)
+  (mwim-beginning-of-code)
+  (kill-new (concat
+             "python manage.py test  --settings algorand.settings.testing --parallel=20 "
+             (kadir/python-copy-mock)
+             " --keepdb")))
+
 
 
 (defun kadir/python-class-search ()

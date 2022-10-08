@@ -35,7 +35,7 @@
   ;; (lsp-ui-mode)
 
   :bind (:map typescript-mode-map
-              ("M-." . lsp-ui-peek-find-definitions)
+              ("M-." . xref-find-definitions)
               ("M-ı" . lsp-format-buffer)
               ))
 

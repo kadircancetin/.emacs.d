@@ -39,6 +39,7 @@
                  helm-display-function                 'helm-default-display-buffer
                  )
   :config
+  (require 'all-the-icons)
   (helm-mode 1)
   (add-hook 'helm-minibuffer-set-up-hook 'spacemacs//helm-hide-minibuffer-maybe)
 

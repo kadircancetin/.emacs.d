@@ -71,6 +71,7 @@
     ("ci"                 . kadir/python-copy-import)
     ("cm"                 . kadir/python-copy-mock)
     ("cp"                 . kadir/python-copy-pytest)
+    ("ct"                 . kadir/python-copy-django-test)
 
     ;; m
     ("mt"                 . kadir/move-to-top)
