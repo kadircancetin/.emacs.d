@@ -72,6 +72,8 @@
     ("cm"                 . kadir/python-copy-mock)
     ("cp"                 . kadir/python-copy-pytest)
     ("ct"                 . kadir/python-copy-django-test)
+    ("cgc"                 . kadir/copy-git-commit-url)
+    ("cgl"                 . git-link)
 
     ;; m
     ("mt"                 . kadir/move-to-top)

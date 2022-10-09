@@ -86,7 +86,8 @@
 (use-package git-link
   :commands (git-link)
   :init
-  (setq git-link-default-branch "develop"))
+  ;; (setq git-link-default-branch "develop")
+  (setq git-link-use-commit t))
 
 (use-package vc-msg)
 

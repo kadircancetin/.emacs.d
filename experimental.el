@@ -460,3 +460,28 @@
 
 
 (setq create-lockfiles nil)
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; very bad vc-msg copy paste for directly copy git commit link
+(defun kadir/copy-git-commit-url()
+  (interactive)
+  (require 'vc-msg)
+  (let* ((plugin (vc-msg-find-plugin))
+         (current-file (funcall vc-msg-get-current-file-function))
+         (executer (plist-get plugin :execute))
+         (commit-info (and current-file
+                           (funcall executer
+                                    current-file
+                                    (funcall vc-msg-get-line-num-function)
+                                    (funcall vc-msg-get-version-function)))))
+
+
+    (setq vc-msg-previous-commit-info commit-info)
+
+    (let* ((info vc-msg-previous-commit-info))
+      (with-temp-buffer
+        (insert (plist-get info :id))
+        (call-interactively 'git-link-commit)))))
