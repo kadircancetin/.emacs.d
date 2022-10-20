@@ -67,41 +67,6 @@
 
 ;; https://github.com/org-roam/org-roam/issues/1853
 (with-eval-after-load 'org-roam-mode
-  (setq kadir/calculation-done nil)
-
-  (defun org-roam-buffer-persistent-redisplay ()
-    (when-let ((node (org-roam-node-at-point)))
-      (when (or (not (equal node org-roam-buffer-current-node))
-                (not (eq kadir/calculation-done :DONE)))
-        (setq org-roam-buffer-current-node node
-              org-roam-buffer-current-directory org-roam-directory)
-        (with-current-buffer (get-buffer-create org-roam-buffer)
-          (org-roam-buffer-render-contents)
-          (add-hook 'kill-buffer-hook #'org-roam-buffer--persistent-cleanup-h nil t)))))
-
-  (defun kadir/org-roam--idle-timer-function()
-    (when (not (eq major-mode 'org-roam-mode))
-      (setq kadir/calculation-done
-            (while-no-input
-              (get-buffer-window org-roam-buffer)
-              (org-roam-buffer--redisplay-h)
-              :DONE))
-
-      (unless (eq kadir/calculation-done :DONE)
-        (with-current-buffer (get-buffer-create org-roam-buffer)
-          (let ((inhibit-read-only t))
-            (erase-buffer)
-            (insert "please don't press key for calculating..."))))))
-
-
-  (setq kadir/idle-timer-setted nil)
-
-  (defun org-roam-buffer--setup-redisplay-h ()
-    (unless kadir/idle-timer-setted
-      (run-with-idle-timer 0.1 t 'kadir/org-roam--idle-timer-function)
-      (setq kadir/idle-timer-setted t))))
-
-(with-eval-after-load 'org-roam-mode
   (setq org-roam-fontify-buffer (get-buffer-create "*org-roam-fontify-buffer*"))
   (with-current-buffer org-roam-fontify-buffer
     (org-mode))

@@ -18,7 +18,7 @@
   :straight (:type built-in)
   :bind (:map python-mode-map
               ("C-c C-d" . lsp-describe-thing-at-point)
-              ("C-c C-f" . kadir/import-magic-ac-kapat))
+              )
   :hook
   ((python-mode . kadir/python-hook)))
 
@@ -26,35 +26,32 @@
 
 (defun kadir/python-hook()
   (kadir/activate-venv)
-  ;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (kadir/python-lsp-start)
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;
+  (kadir/enable-flycheck-flake8-python)
 
+  (add-hook 'after-save-hook 'kadir/python-remove-unused-imports)
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; (require 'company-tabnine)
   ;; (setq company-backends '(company-tabnine))
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;
-
   ;; (use-package lsp-jedi)
   ;; (lsp)
   ;; (setq lsp-jedi-python-library-directories nil)
   ;; (require 'lsp-jedi)
   ;; (add-to-list 'lsp-disabled-clients 'pyls)
   ;; (add-to-list 'lsp-enabled-clients 'jedi)
-
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;
-  (kadir/enable-flycheck-flake8-python)
-  (add-hook 'after-save-hook 'kadir/python-remove-unused-imports))
+  )
 
 
 (use-package pyvenv)
 (use-package lsp-pyright
   :init
-  (setq-default lsp-pyright-auto-import-completions nil
-                lsp-pyright-disable-organize-imports t)
+  ;; (setq-default lsp-pyright-auto-import-completions nil
+  ;;               lsp-pyright-disable-organize-imports nil)
 
   (setq lsp-pyright-stub-path "/home/kadir/stubs/typings/")
   :straight (:host github :repo "emacs-lsp/lsp-pyright"))
@@ -108,49 +105,45 @@
       (setq lsp-pyright-venv-path (concat (pyvenv-workon-home) "/" ploc "/")))))
 
 
-(setq kadir/python-auto-remove-unused nil)
+(setq kadir/python-remove-unused-imports--open t)
+
+(defun kadir/python-remove-unused-imports-toggle()
+  (interactive)
+  (setq kadir/python-remove-unused-imports--open (not kadir/python-remove-unused-imports--open)))
+
 (defun kadir/python-remove-unused-imports()
-  "Removes unused imports with autoflake."
   (interactive)
-  (when kadir/python-auto-remove-unused
-    (let ((file (shell-quote-argument (buffer-file-name))))
+  (when kadir/python-remove-unused-imports--open
+    (kadir/python-remove-unused-imports--run)))
 
-      (when (not (and (executable-find "autoflake") (executable-find "flake8")))
-        (when (y-or-n-p
-               (format "Can't find autoflake or flake8. Do you want to install on %s"
-                       (executable-find "python")))
-          (shell-command  "pip install autoflake flake8")))
-
-      (let* ((process (start-process "find unused imports" nil
-                                     "bash" "-c" (format "flake8 --select F401 %s | wc -l" (buffer-file-name))))
-             (filter (lambda (process output)
-                       (unless (string= output "0\n")
-                         (when (y-or-n-p "There are unused imports. Do you want to remove them?")
-                           (shell-command (format "autoflake --remove-all-unused-imports -i %s" (buffer-file-name)))
-                           (revert-buffer t t t))))))
-        (set-process-filter process filter)))))
-
-(defun kadir/directly-python-remove-unused-import()
-  "Removes unused imports with autoflake."
+(defun kadir/python-remove-unused-imports--run()
+  "Removes unused imports with autoflake. Assumes there is flake8"
   (interactive)
-  (let ((file (shell-quote-argument (buffer-file-name))))
+  (let* ((auto-flake-rslt nil)
+         (process
+          (start-process "find unused imports" nil
+                         "bash" "-c" (format "flake8 --select F401 %s | wc -l" (buffer-file-name))))
+         (filter
+          (lambda (process output)
+            (unless (string= output "0\n")
+              (setq auto-flake-rslt (shell-command (format "autoflake --remove-all-unused-imports -i %s" (buffer-file-name))))
 
-    (when (not (and (executable-find "autoflake") (executable-find "flake8")))
-      (when (y-or-n-p
-             (format "Can't find autoflake or flake8. Do you want to install on %s"
-                     (executable-find "python")))
-        (shell-command  "pip install autoflake flake8")))
+              (when (not (eq auto-flake-rslt 0)) ;; install and rerun
+                (kadir/install-autoflake) (kadir/python-remove-unused-imports--run))
 
-    (let* ((process (start-process "find unused imports" nil
-                                   "bash" "-c" (format "flake8 --select F401 %s | wc -l" (buffer-file-name))))
-           (filter (lambda (process output)
-                     (unless (string= output "0\n")
-                       (when (y-or-n-p "There are unused imports. Do you want to remove them?")
-                         (shell-command (format "autoflake --remove-all-unused-imports -i %s" (buffer-file-name)))
-                         (revert-buffer t t t))))))
-      (set-process-filter process filter))))
+              (message "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Unused imports DELETED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111")
+              (revert-buffer t t t)))))
 
+    (set-process-filter process filter)))
 
+(defun kadir/install-autoflake()
+  (when (not (executable-find "autoflake"))
+    (when (y-or-n-p
+           (format "Can't find autoflake or flake8. Do you want to install on %s"
+                   (executable-find "python")))
+      (shell-command  "pip install autoflake flake8"))))
+
+
 (defun kadir/django/find-models()
   (interactive)
   (let ((helm-rg-default-glob-string "models.py"))
@@ -237,7 +230,6 @@
 (defun kadir/python-class-search ()
   (interactive)
   (kadir/helm-rg-dwim-with-glob "*.py" "^class "))
-
 
 
 
