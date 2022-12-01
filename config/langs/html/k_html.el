@@ -4,6 +4,10 @@
     (kadir/format-buffer)))
 
 
+
+
+
+
 (use-package web-mode
   :init
   (setq-default css-indent-offset 2
@@ -64,5 +68,16 @@
   (add-to-list 'auto-mode-alist '("\\.scss\\'" . sass-mode))
   (add-hook 'sass-mode-hook 'kadir/deactivate-flycheck)
   )
+
+
+
+(use-package svelte-mode
+  :bind
+  (:map svelte-mode-map
+        ("M-o" . other-window))
+  :config
+  (add-hook 'svelte-mode-hook  'kadir/buffer-local-disable-jit-defering)
+  (add-hook 'svelte-mode-hook  'lsp-deferred))
+
 
 (provide 'k_html)

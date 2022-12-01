@@ -27,7 +27,7 @@
               )
 
   :config
-
+  (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
   (add-to-list 'org-modules 'org-habit t)
   (setq-default org-src-tab-acts-natively   t               ; intent code blocks with its major modes
                 org-src-window-setup        'current-window ; edit code on same window
@@ -139,6 +139,9 @@
 
 
 
+(use-package verb)
+
+
 (load-file (expand-file-name "config/majors/k_org/roam.el" user-emacs-directory))
 
 

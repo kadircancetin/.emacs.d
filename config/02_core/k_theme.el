@@ -102,6 +102,9 @@
   (remove-hook 'flycheck-status-changed-functions #'mood-line--update-flycheck-segment)
   (remove-hook 'flycheck-mode-hook #'mood-line--update-flycheck-segment)
 
+  (defun kadir-soft-update-mode-line()
+    (setq local-kadir-mode-line-calculated nil))
+
   :config
   (defun kadir/mood-line-segment-buffer-name()
     (require 's)
@@ -172,10 +175,6 @@
     (defun kadir-force-update-mode-line()
       (setq local-kadir-mode-line-calculated nil)
       (force-mode-line-update))
-
-    (defun kadir-soft-update-mode-line()
-      (setq local-kadir-mode-line-calculated nil))
-
 
     (defun kadir-soft-update-mode-line-all-buffers()
       (dolist (buf (mapcar (lambda (wind) (window-buffer wind)) (window-list)))

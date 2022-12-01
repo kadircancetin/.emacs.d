@@ -1,5 +1,4 @@
-(when (version< emacs-version "27")
-  (load-file (expand-file-name "early-init.el" user-emacs-directory)))
+(when (version< emacs-version "27") (load-file (expand-file-name "early-init.el" user-emacs-directory)))
 
 (setq comp-deferred-compilation nil)
 
@@ -24,9 +23,11 @@
     (require 'k-colors-mode)
     (require 'k-format)
     (require 'k_theme)
-    (k-colors-global-mode 1))
+    (require 'k-spell-fu)
+    (k-colors-global-mode 1)
+    )
 
-  ;; languages
+  ;;  ;; languages
   (when (require 'k-langs)
     (require 'k-dotfiles)
     (require 'k-restclient)
@@ -34,7 +35,7 @@
     (require 'k_python)
     (require 'k_js)
     (require 'k_elisp)
-    (require 'k-scala)
+    ;; (require 'k-scala)
     ;; (require 'k_nim)
     ;; (kadir-scala)
     ;; (require 'k_clang)
@@ -56,8 +57,7 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
-    (load-file (expand-file-name "experimental.el" user-emacs-directory)))
-  )
+    (load-file (expand-file-name "experimental.el" user-emacs-directory))))
 
 
 (k/init-emacs-full)
@@ -81,4 +81,4 @@
 
 
 
-(use-package org :straight (:type built-in))
+;; (use-package org :straight (:type built-in))

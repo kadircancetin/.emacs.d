@@ -5,11 +5,6 @@
 
 (global-set-key (kbd "M-:") 'xref-find-definitions-other-window)
 
-(setq jit-lock-defer-time 0.25
-      jit-lock-context-time 0.3
-      jit-lock-chunk-size 1000
-      jit-lock-stealth-time 2)
-
 
 
 (defun eldoc-mode(&rest args)
@@ -107,15 +102,7 @@
   (setq kadir/jit-lock-defer-time 0))
 
 
-(use-package svelte-mode
-  :bind
-  (:map svelte-mode-map
-        ("M-o" . other-window))
-  :config
-  (add-hook 'svelte-mode-hook  'kadir/buffer-local-disable-jit-defering)
-  (add-hook 'svelte-mode-hook  'lsp-deferred))
 
-
 ;; (electric-pair-mode)
 ;; (setq electric-pair-preserve-balance nil)
 
@@ -170,131 +157,11 @@
 
 
 
-(require 'git-file-tree)
-;; (memory-report)
-;; company-keywords-alist
-;; thai-word-table
+;; (require 'git-file-tree)
+;; ;; (memory-report)
+;; ;; company-keywords-alist
+;; ;; thai-word-table
 
-
-
-(use-package spell-fu
-  :defer 2.22
-  :if (executable-find "aspell")
-  :init
-  ;; yay -S aspell aspell-en
-
-  ;; (setq-default spell-fu-faces-include
-  ;;               '(tree-sitter-hl-face:comment
-  ;;                 tree-sitter-hl-face:doc
-  ;;                 tree-sitter-hl-face:string
-  ;;                 tree-sitter-hl-face:function
-  ;;                 tree-sitter-hl-face:variable
-  ;;                 tree-sitter-hl-face:constructor
-  ;;                 tree-sitter-hl-face:constant
-  ;;                 default
-  ;;                 font-lock-type-face
-  ;;                 font-lock-variable-name-face
-  ;;                 font-lock-comment-face
-  ;;                 font-lock-doc-face
-  ;;                 font-lock-string-face
-  ;;                 magit-diff-added-highlight))
-
-  ;; for if I want to check personal dict file
-  ;; (defun kadir/open-fly-a-spell-fu-file()
-  ;;   (interactive)
-  ;;   (find-file (file-truename "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")))
-
-  :config
-  (custom-set-faces '(spell-fu-incorrect-face ((t (
-                                                   :underline (:color "Blue" :style wave)
-                                                   ;; :underline nil
-                                                   ;; :background "#800000"
-                                                   ;; :famliy "DejaVu Sans Mono"
-                                                   ;; :weight ultra-bold
-                                                   ;; :inverse-video t
-                                                   )))))
-  ;; start spell-fu
-  (global-spell-fu-mode)
-  ;; for make sure aspell settings are correct (sometimes "en" not true)
-  (setq ispell-program-name "aspell")
-  (setq ispell-dictionary "en")
-  ;; for save dictionaries forever
-  (setq spell-fu-directory "~/Dropbox/spell-fu-tmp/")
-  (setq ispell-personal-dictionary "~/Dropbox/spell-fu-tmp/kadir_personal.en.pws")
-  ;; regex function
-  (use-package xr)
-
-  (setq-default spell-fu-word-regexp
-                (rx
-                 (or
-                  (seq word-boundary (one-or-more upper) word-boundary)
-                  (and upper
-                       (zero-or-more lower))
-                  (one-or-more lower))))
-
-  ;; for all kind of face check
-  (setq-default spell-fu-check-range 'spell-fu--check-range-without-faces)
-
-  (spell-fu-mode-disable)
-  (spell-fu-mode)
-
-  ;; Wrong examples::
-  ;;     wrng
-  ;;     Wrng
-  ;;     WrngButJustWrngPart
-  ;;     WRNG
-  ;;     wrng-wrng
-  ;;     wrongnot
-  ;;     YESWRONG
-  ;;     YES_WRNG
-  ;;     WRNG_YES
-  ;;
-  ;;
-  ;; Not wrong examples:
-  ;;     not_wrong
-  ;;     NotWrongAtAll
-  ;;     wrong_not
-  ;;     NOT_WRONG
-  ;;     URLField
-  ;; Not covered
-  ;;     NOTwrong   (note possible when URLField covered)
-
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; Fixed case-fold-search for spell-fu--check-range-without-faces
-  (defun kadir/with-case-fold-search-nil (func &rest args)
-    (let ((case-fold-search nil))
-      (apply func args)))
-  (advice-add #'spell-fu--check-range-without-faces :around #'kadir/with-case-fold-search-nil)
-  (advice-add #'spell-fu--word-add-or-remove :around #'kadir/with-case-fold-search-nil)
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; START: very bad spell-fu word add prompt hack
-  (defun kadir/spell-fu--word-at-point--read-from-minibuffer ()
-    (interactive)
-    (unless cache
-      (setq cache (read-from-minibuffer "input: " (or (word-at-point) ""))))
-    cache)
-
-  (defun kadir/spell-fu-dictionary-add ()
-    (interactive)
-    (flet ((spell-fu--word-at-point () (kadir/spell-fu--word-at-point--read-from-minibuffer)))
-      (let ((cache nil))
-        (call-interactively 'spell-fu-word-add))))
-  ;; END: very bad spell-fu word add prompt hack
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; START: Very bad spell fu hack for running upcase word spell check
-  (defun spell-fu-check-word (pos-beg pos-end word)
-    (unless (spell-fu--check-word-in-dict-list (spell-fu--canonicalize-word word))
-      (spell-fu-mark-incorrect pos-beg pos-end)))
-  ;; END: Very bad spell fu hack for running upcase word spell check
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  )
 
 
 (use-package too-long-lines-mode
@@ -395,14 +262,14 @@
   (if (member buf (mapcar (lambda (wind) (window-buffer wind)) (window-list))) t nil))
 
 
-(global-set-key (kbd "C-x t g")
-                (lambda ()
-                  (interactive)
-                  (kadir/open-updater)
-                  (select-window (get-buffer-window refresh-buff))
-                  (kadir-tree-mode)))
+;; (global-set-key (kbd "C-x t g")
+;;                 (lambda ()
+;;                   (interactive)
+;;                   (kadir/open-updater)
+;;                   (select-window (get-buffer-window refresh-buff))
+;;                   (kadir-tree-mode)))
 
-
+;; 
 
 ;; Put backup files neatly away
 (let ((backup-dir "~/tmp/emacs/backups")
@@ -490,51 +357,24 @@
 
 ;; (use-package rainbow-blocks)
 (use-package prism)
-(use-package darkroom)
-;; (use-package w3m)
-
+;; (use-package darkroom)
 
-(use-package verb)
-(use-package org
-  :mode ("\\.org\\'" . org-mode)
-  :config (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
-
-
-
-
-
-;; (use-package anki-editor
-;;   :after org-mode
-;;   :config
-;;   (setq anki-editor-create-decks 't))
-
-
-(use-package org-anki
-  :after org-mode)
 
 
 (defun uuid-kadir ()
   (interactive)
   ;; (insert (format "\"%x\"" (random 100000)))
-  (insert (format "%s" (random 100000)))
-  )
+  (insert (format "%s" (random 100000))))
 
 
-;; Enable vertico
+
 (use-package vertico
+  :defer 0.3
   :init
-  (vertico-mode)
   (setq vertico-count 20)
-  ;; (savehist-mode)
   :config
-  ;; (add-to-list 'load-path (expand-file-name (format "%sstraight/build/vertico/extensions" straight-base-dir)))
-  ;; (use-package vertico-buffer
-  ;;   :ensure nil
-  ;;   :straight nil
-  ;;   :init
-  ;;   (require 'vertico-buffer)
-  ;;   (vertico-buffer-mode 1))
-  )
+  (savehist-mode)
+  (vertico-mode))
 
 (use-package emacs
   :init
@@ -619,3 +459,10 @@
   :init
   (define-key minibuffer-local-map (kbd "M-f") #'marginalia-cycle)
   (marginalia-mode))
+
+
+
+(use-package f
+  :init
+  (load-file (expand-file-name (format "%sstraight/repos/f.el/f-shortdoc.el" user-emacs-directory)))
+  (require 'f-shortdoc))

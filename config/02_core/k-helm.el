@@ -21,7 +21,7 @@
 (use-package helm-mode-manager)
 
 (use-package helm
-  :defer 5
+  :defer 0.1
   :init
   ;; (use-package helm-describe-modes)
   (setq-default helm-boring-buffer-regexp-list (list
@@ -39,8 +39,10 @@
                  helm-display-function                 'helm-default-display-buffer
                  )
   :config
-  (require 'all-the-icons)
-  ;; (helm-mode 1)
+  (use-package all-the-icons
+    :init
+    (require 'all-the-icons))
+  (helm-mode 1)
   (add-hook 'helm-minibuffer-set-up-hook 'spacemacs//helm-hide-minibuffer-maybe)
 
   (defun kadir/helm--collect-matches (orig-fun src-list &rest args)

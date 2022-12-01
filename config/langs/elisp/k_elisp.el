@@ -6,7 +6,7 @@
 (use-package page-break-lines)
 (use-package highlight-quoted)
 (use-package elisp-def)
-(use-package helpful)
+;; (use-package helpful)
 (use-package elisp-slime-nav
   :commands (elisp-slime-nav-find-elisp-thing-at-point))
 

@@ -34,4 +34,14 @@
              (expand-file-name "snippets" user-emacs-directory))
 
 
+
+(setq straight-recipe-repositories
+      '(org-elpa
+        melpa
+        gnu-elpa-mirror
+        ;; nongnu-elpa ;; so big ??
+        el-get
+        emacsmirror-mirror))
+
+
 (provide 'k-packaging)

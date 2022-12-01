@@ -1,3 +1,9 @@
+(use-package flycheck
+  :bind
+  (:map flycheck-mode-map
+        (("C-c C-n" . flycheck-next-error)
+         ("C-c C-p" . flycheck-previous-error))))
+
 (add-hook 'prog-mode-hook #'hs-minor-mode)
 ;; (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 (add-hook 'prog-mode-hook #'k-colors-mode)
@@ -94,15 +100,11 @@
   )
 
 (use-package eglot
+  :straight (:type built-in)
   ;; (add-to-list 'eglot-server-programs '((js-mode) "typescript-language-server" "--stdio"))
   :bind
   (:map eglot-mode-map("C-c C-d" . 'eglot-help-at-point)))
 
-(use-package flycheck
-  :bind
-  (:map flycheck-mode-map
-        (("C-c C-n" . flycheck-next-error)
-         ("C-c C-p" . flycheck-previous-error))))
 
 
 (use-package tree-sitter

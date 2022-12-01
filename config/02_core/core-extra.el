@@ -60,12 +60,13 @@
    ("TAB" . (lambda () (interactive) (company-abort) (yas-next-field)))
    ("<tab>" . (lambda () (interactive) (company-abort) (yas-next-field))))
   :config
-  (yas-global-mode 1)
-  (use-package yasnippet-snippets))
+  (use-package yasnippet-snippets)
+  (yas-global-mode 1))
 
 
 (use-package magit
   :config
+  (require 'k-spell-fu)
   (defun kadir/cool-spell()
     (spell-fu-mode 1)
 
@@ -94,10 +95,6 @@
 
 
 (use-package posframe)
-(use-package screenshot.el
-  :defer 5
-  :straight (screenshot.el :type git :host github :repo "tecosaur/screenshot")
-  :commands (screenshot))
 
 
 
@@ -185,11 +182,14 @@
 
 
 (use-package gcmh
+  :defer 1
   :init
+  (setq gcmh-verbose t)
+  (setq gcmh-idle-delay 2)
+  :config
   (gcmh-mode)
   ;; (setq garbage-collection-messages nil)
-  (setq gcmh-verbose nil)
-  (setq gcmh-idle-delay 2))
+  )
 
 
 

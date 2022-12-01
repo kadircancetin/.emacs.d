@@ -25,6 +25,7 @@
 
 
 (defun kadir/python-hook()
+  (interactive)
   (kadir/activate-venv)
 
   (kadir/python-lsp-start)
@@ -74,7 +75,7 @@
   (require 'flycheck)
   (setq lsp-diagnostic-package :none) ;; lsp kapa
   (setq lsp-diagnostics-provider :none) ;; lsp kapa
-  (setq flycheck-disabled-checkers '(python-mypy python-pylint))
+  (setq flycheck-disabled-checkers '(python-pycompile python-mypy python-pylint))
   (flycheck-select-checker 'python-flake8)
 
   ;; (setq flycheck-checkers '( python-flake8 python-pycompile))

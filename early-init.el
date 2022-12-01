@@ -13,6 +13,11 @@
 (run-with-idle-timer 3 nil (lambda () (setq file-name-handler-alist file-name-handler-alist-original)))
 
 
+(setq jit-lock-defer-time 0.25
+      jit-lock-context-time 0.3
+      jit-lock-chunk-size 1000
+      jit-lock-stealth-time 2)
+
 (defun k/set-init-package-disabling ()
   ;;(setq-default comp-deferred-compilation t)
   (setq package-enable-at-startup nil)
