@@ -35,11 +35,13 @@
     (require 'k_js)
     (require 'k_elisp)
     (require 'k-scala)
+    ;; (require 'k_nim)
     ;; (kadir-scala)
     ;; (require 'k_clang)
     ;; (require 'k-elixir)
     ;; (require 'k-plantuml)
     ;; (require 'k-clojure)
+    ;; (require 'k_rust)
     ;; (require 'k-go)
     )
 

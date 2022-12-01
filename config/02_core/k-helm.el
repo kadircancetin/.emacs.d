@@ -40,7 +40,7 @@
                  )
   :config
   (require 'all-the-icons)
-  (helm-mode 1)
+  ;; (helm-mode 1)
   (add-hook 'helm-minibuffer-set-up-hook 'spacemacs//helm-hide-minibuffer-maybe)
 
   (defun kadir/helm--collect-matches (orig-fun src-list &rest args)
@@ -72,7 +72,7 @@
   :commands (helm-rg--get-thing-at-pt)
   :init
   (setq helm-rg-default-directory 'git-root
-        helm-rg--extra-args '("--max-columns" "300")
+        helm-rg--extra-args '("--max-columns" "300"  "--no-ignore-dot")
         helm-rg-input-min-search-chars 1)
 
   (setq fk/rg-special-characters '("(" ")" "[" "{" "*"))

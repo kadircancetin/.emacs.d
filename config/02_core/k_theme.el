@@ -198,6 +198,9 @@
   ;; TODO: not open on helm
   (add-hook 'change-major-mode-hook 'kadir-performance-mode-line)
 
+  (defun kadir-force-update-mode-line()
+    (setq local-kadir-mode-line-calculated nil)
+    (force-mode-line-update))
   (add-hook 'after-save-hook 'kadir-force-update-mode-line)
 
   (advice-add #'undo-tree-undo :around #'kadir-soft-update-mode-line-advice)

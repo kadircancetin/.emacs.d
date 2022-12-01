@@ -153,13 +153,29 @@
 
 (defun kadir/move-to-top ()
   (interactive)
-  (save-excursion
-    (mwim-beginning-of-code)(kill-line)
+  ;; (save-excursion
+  ;;   (mwim-beginning-of-code)(kill-line)
 
-    (goto-char (point-min))
-    (yank)(insert "\n"))
-  (mwim-beginning-of-line)
-  (kill-line))
+  ;;   (goto-char (point-min))
+  ;;   (yank)(insert "\n"))
+  ;; (mwim-beginning-of-line)
+  ;; (kill-line)
+
+  (let ((var nil))
+    (save-excursion
+      (mwim-beginning-of-code)
+      (kill-line)
+      (save-buffer)
+      (setq var (with-temp-buffer
+                  (yank)
+                  (buffer-substring-no-properties (goto-char (point-min)) (goto-char
+                                                                           (point-max)))))
+      (revert-buffer t t t)
+
+      (if (y-or-n-p (format "  %s  :" var (buffer-file-name)))
+          (shell-command (format "isort -a '%s' '%s'" var (buffer-file-name)))
+        (undo-tree-undo)
+        ))))
 
 
 (defun kadir/delete-file-and-buffer ()

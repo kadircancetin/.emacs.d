@@ -485,3 +485,137 @@
       (with-temp-buffer
         (insert (plist-get info :id))
         (call-interactively 'git-link-commit)))))
+
+
+
+;; (use-package rainbow-blocks)
+(use-package prism)
+(use-package darkroom)
+;; (use-package w3m)
+
+
+(use-package verb)
+(use-package org
+  :mode ("\\.org\\'" . org-mode)
+  :config (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
+
+
+
+
+
+;; (use-package anki-editor
+;;   :after org-mode
+;;   :config
+;;   (setq anki-editor-create-decks 't))
+
+
+(use-package org-anki
+  :after org-mode)
+
+
+(defun uuid-kadir ()
+  (interactive)
+  ;; (insert (format "\"%x\"" (random 100000)))
+  (insert (format "%s" (random 100000)))
+  )
+
+
+;; Enable vertico
+(use-package vertico
+  :init
+  (vertico-mode)
+  (setq vertico-count 20)
+  ;; (savehist-mode)
+  :config
+  ;; (add-to-list 'load-path (expand-file-name (format "%sstraight/build/vertico/extensions" straight-base-dir)))
+  ;; (use-package vertico-buffer
+  ;;   :ensure nil
+  ;;   :straight nil
+  ;;   :init
+  ;;   (require 'vertico-buffer)
+  ;;   (vertico-buffer-mode 1))
+  )
+
+(use-package emacs
+  :init
+  ;; Add prompt indicator to `completing-read-multiple'.
+  ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
+  (defun crm-indicator (args)
+    (cons (format "[CRM%s] %s"
+                  (replace-regexp-in-string
+                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                   crm-separator)
+                  (car args))
+          (cdr args)))
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+  ;; Do not allow the cursor in the minibuffer prompt
+  (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
+  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+  ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
+  ;; Vertico commands are hidden in normal buffers.
+  (setq read-extended-command-predicate #'command-completion-default-include-p)
+  ;; Enable recursive minibuffers
+  (setq enable-recursive-minibuffers t))
+
+
+(use-package consult
+  ;; Replace bindings. Lazily loaded due by `use-package'.
+  :bind (
+         ("C-c m" . consult-mode-command)
+         ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
+         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+         ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+         ("C-x f" . projectile-find-file)
+         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+         ("M-g g" . consult-goto-line)             ;; orig. goto-line
+         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+         ("M-g i" . consult-imenu)
+         ("M-g I" . consult-imenu-multi))
+
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+
+  :init
+
+  (setq register-preview-delay 0.5 register-preview-function #'consult-register-format)
+  (advice-add #'register-preview :override #'consult-register-window)
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+
+  :config
+
+  (consult-customize
+   consult-theme :preview-key '(:debounce 0.2 any)
+   ;; consult-ripgrep consult-git-grep consult-grep
+   consult-bookmark consult-recent-file consult-xref
+   consult--source-bookmark consult--source-file-register
+   consult--source-recent-file consult--source-project-recent-file
+   ;; :preview-key (kbd "M-.")
+   :preview-key '(:debounce 0.2 any))
+
+  (setq consult-narrow-key "<"))
+
+;; Optionally use the `orderless' completion style.
+(use-package orderless
+  :init
+  ;; Configure a custom style dispatcher (see the Consult wiki)
+  ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
+  ;;       orderless-component-separator #'orderless-escapable-split-on-space)
+  (setq
+   ;; completion-styles '(basic partial-completion orderless)
+   completion-styles '(orderless)
+   completion-category-defaults nil
+   ;; orderless-match-faces [
+   ;;                        completions-common-part
+   ;;                        orderless-match-face-1
+   ;;                        orderless-match-face-2
+   ;;                        orderless-match-face-3
+   ;;                        ]
+   completion-category-overrides '((file (styles partial-completion)))))
+
+
+(use-package marginalia
+  :init
+  (define-key minibuffer-local-map (kbd "M-f") #'marginalia-cycle)
+  (marginalia-mode))

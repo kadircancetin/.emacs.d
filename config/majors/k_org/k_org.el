@@ -27,6 +27,7 @@
               )
 
   :config
+
   (add-to-list 'org-modules 'org-habit t)
   (setq-default org-src-tab-acts-natively   t               ; intent code blocks with its major modes
                 org-src-window-setup        'current-window ; edit code on same window
@@ -61,7 +62,27 @@
   ;;         ("L" "Protocol Link"
   ;;          entry (file+headline "inbox.org" "Inbox")
   ;;          "* %? [[%:link][%:description]] \n  Captured On: %u")))
+  (defun kadir/org-confirm-babel-evaluate (lang body)
+    ;; source: https://emacs.stackexchange.com/questions/2945/org-babel-eval-with-no-confirmation-is-explicit-eval-yes
+    (not (or
+          (string= lang "http")
+          (string= lang "restclient")
+          (string= lang "elisp"))))
+
+  (setq org-confirm-babel-evaluate 'kadir/org-confirm-babel-evaluate)
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (python . t)
+     (http . t)
+     (restclient . t)))
+
   )
+
+(use-package ob-http)
+(use-package ob-restclient)
+
 
 (use-package org-fancy-priorities
   :custom
@@ -111,7 +132,7 @@
 
 ;; import-export
 
-;; (use-package org-web-tools)
+(use-package org-web-tools)
 ;; (use-package htmlize)
 ;; (use-package ox-reveal)
 ;; (require 'ox-reveal)
@@ -122,3 +143,28 @@
 
 
 (provide 'k_org)
+
+
+
+;; (defun kadir/orj ()
+;;   (interactive)
+
+;;   (progn
+
+;;     (defun kadir/file-string (html)
+;;       (interactive)
+;;       (with-temp-buffer
+;;         (insert-file-contents html)
+;;         (buffer-string)))
+
+;;     (flet ((org-web-tools--get-url (html) (kadir/file-string html)))
+
+;;       ;; (org-web-tools-read-url-as-org "/home/kadir/tt/concatenated-keys.html")
+
+;;       (org-web-tools--url-as-readable-org "/home/kadir/tt/concatenated-keys.html")
+;;       ))
+;;   )
+
+
+;; (kadir/orj)
+

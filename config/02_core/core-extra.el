@@ -95,6 +95,7 @@
 
 (use-package posframe)
 (use-package screenshot.el
+  :defer 5
   :straight (screenshot.el :type git :host github :repo "tecosaur/screenshot")
   :commands (screenshot))
 

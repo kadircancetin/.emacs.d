@@ -64,7 +64,12 @@
 
     ;; r
     ("rl"                 . org-roam)
-    ("rf"                 . (lambda() (interactive)(require 'helm)(org-roam-node-find)))
+    ("rf"                 . (lambda() (interactive)
+                              (require 'helm)
+                              (org-roam-node-find)
+                              (helm-mode 1) ;; TODO
+                              (vertico-mode 0)
+                              ))
     ("ri"                 . (lambda() (interactive)(org-roam-node-insert)))
 
     ;; c
@@ -124,13 +129,13 @@
    ("C-x -"           . kadir/open-terminator)
 
    ;; helm
-   ("M-x"             . helm-M-x)
-   ("C-x b"           . helm-buffers-list)
+   ;; ("M-x"             . helm-M-x)
+   ;; ("C-x b"           . helm-buffers-list)
    ("C-x C-f"         . helm-find-files)
    ;; ("C-x i"           . helm-imenu-all-buffer)
    ;; ("C-x C-i"         . helm-imenu)
-   ("M-y"             . helm-show-kill-ring)
-   ("C-x f"           . helm-projectile)
+   ;; ("M-y"             . helm-show-kill-ring)
+   ;; ("C-x f"           . helm-projectile)
 
    ;; helm-rg
    ("<C-tab>"         . kadir/helm-rg)
