@@ -1,8 +1,4 @@
-(defvar kadir/emacs-fast-open (member "-fo" command-line-args))
-(setq command-line-args (delete "-fo" command-line-args))
-
 (defvar kadir/default-font-size 93)
-(when kadir/emacs-fast-open (setq kadir/default-font-size 106))
 
 
 
@@ -13,10 +9,12 @@
 (run-with-idle-timer 3 nil (lambda () (setq file-name-handler-alist file-name-handler-alist-original)))
 
 
+
 (setq jit-lock-defer-time 0.25
       jit-lock-context-time 0.3
       jit-lock-chunk-size 1000
       jit-lock-stealth-time 2)
+
 
 (defun k/set-init-package-disabling ()
   ;;(setq-default comp-deferred-compilation t)
@@ -58,32 +56,25 @@
   ;; (mapcar #'prin1 (font-family-list))
   ;; see all font available on system
   ;; (font-family-list)
-
   ;; (set-face-attribute 'default nil :family "Latin Modern Mono" :height kadir/default-font-size :weight 'normal)
   ;; (set-face-attribute 'default nil :family "M+ 1m" :height kadir/default-font-size :weight 'normal)
   ;; (set-face-attribute 'default nil :family "Fira Code" :height kadir/default-font-size :weight 'normal)
   ;; (set-face-attribute 'default nil :family "Monoid Tight" :height kadir/default-font-size :weight 'normal)
   ;; (set-face-attribute 'default nil :family "Monoid HalfTight" :height kadir/default-font-size :weight 'normal)
   ;; (set-face-attribute 'default nil :family "Monoid" :height kadir/default-font-size :weight 'normal)
-
   ;; (set-face-attribute 'default nil :family "Pragmata" :height kadir/default-font-size :weight 'normal)
   ;; (set-face-attribute 'default nil :family "Inconsolata" :height kadir/default-font-size :weight 'normal)
   ;; (set-face-attribute 'default nil :family "Hack" :height kadir/default-font-size :weight 'normal)
   ;; (set-face-attribute 'default nil :family "Meslo LG M" :height kadir/default-font-size :weight 'normal)
-
   ;; standards
   ;; (set-face-attribute 'default nil :family "Source Code Pro" :height kadir/default-font-size :weight 'normal)
   (set-face-attribute 'default nil :family "Fira Code" :height kadir/default-font-size :weight 'normal)
-
   ;; low width mma
   ;; (set-face-attribute 'default nil :family "Sudo" :height (+ kadir/default-font-size 16) :weight 'normal)
   ;; (set-face-attribute 'default nil :family "Iosevka" :height (+ kadir/default-font-size 0) :weight 'normal)
-
   ;; https://aur.archlinux.org/packages/ttf-iosevka
   ;; https://aur.archlinux.org/packages/ttf-sudo
   ;; 1o08OIijlMmw
-
-
   (set-face-attribute 'fixed-pitch-serif nil :family "Source Code Pro" :italic t :weight 'bold))
 
 

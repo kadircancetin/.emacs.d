@@ -1,69 +1,62 @@
 (when (version< emacs-version "27") (load-file (expand-file-name "early-init.el" user-emacs-directory)))
 
-(setq comp-deferred-compilation nil)
+(setq-default user-full-name "Kadir Can Çetin")
+(setq-default user-mail-address "kadircancetin@gmail.com")
 
-(defvar kadir/emacs-fast-open)
-(defvar kadir/emacs-open-with-doom)
+(setq comp-deferred-compilation-black-list nil)
 
 
 
-(defun k/init-emacs-full ()
+(let ((default-directory (expand-file-name "config/" user-emacs-directory)))
+  (normal-top-level-add-subdirs-to-load-path))
 
-  (let ((default-directory "~/.emacs.d/config/"))
-    (normal-top-level-add-subdirs-to-load-path))
+(require 'k-packaging)
+(require 'def-confs)
+(require 'k-helm)
+(require 'core-extra)
+(require 'k_company)
+(require 'k-eshell)
 
-  (require 'def-confs)
-  (require 'k-packaging)
-  (require 'k-helm)
-  (require 'core-extra)
-  (require 'k_company)
-  (require 'k-eshell)
+(when (require 'k-minors)
+  (require 'k-colors-mode)
+  (require 'k-format)
+  (require 'k_theme)
+  (require 'k-spell-fu)
+  (k-colors-global-mode 1))
 
-  (when (require 'k-minors)
-    (require 'k-colors-mode)
-    (require 'k-format)
-    (require 'k_theme)
-    (require 'k-spell-fu)
-    (k-colors-global-mode 1)
-    )
-
-  ;;  ;; languages
-  (when (require 'k-langs)
-    (require 'k-dotfiles)
-    (require 'k-restclient)
-    (require 'k_html)
-    (require 'k_python)
-    (require 'k_js)
-    (require 'k_elisp)
-    ;; (require 'k-scala)
-    ;; (require 'k_nim)
-    ;; (kadir-scala)
-    ;; (require 'k_clang)
-    ;; (require 'k-elixir)
-    ;; (require 'k-plantuml)
-    ;; (require 'k-clojure)
-    ;; (require 'k_rust)
-    ;; (require 'k-go)
-    )
+;;  ;; languages
+(when (require 'k-langs)
+  (require 'k-dotfiles)
+  (require 'k-restclient)
+  (require 'k_html)
+  (require 'k_python)
+  (require 'k_js)
+  (require 'k_elisp)
+  ;; (require 'k-scala)
+  ;; (require 'k_nim)
+  ;; (kadir-scala)
+  ;; (require 'k_clang)
+  ;; (require 'k-elixir)
+  ;; (require 'k-plantuml)
+  ;; (require 'k-clojure)
+  ;; (require 'k_rust)
+  ;; (require 'k-go)
+  )
 
 
-  (require 'k_org)
-  (require 'k_dired)
+(require 'k_org)
+(require 'k_dired)
 
-  ;; majors
+;; majors
 
-  (require 'binds)     ;; all global bindings
+(require 'binds)     ;; all global bindings
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  (when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
-    (load-file (expand-file-name "experimental.el" user-emacs-directory))))
-
-
-(k/init-emacs-full)
+(when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
+  (load-file (expand-file-name "experimental.el" user-emacs-directory)))
 
 
-(setq exec-path (append exec-path '("/home/kadir/go/bin")))
 
 (defun kadir/mac-conf()
   "switch meta between Option and Command"

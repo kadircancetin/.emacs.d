@@ -45,10 +45,11 @@
     ;; (lsp-ui-sideline-delay 0)
     ;; (lsp-ui-peek-fontify 'always)
     :bind
-    (:map lsp-mode-map (("M-." . lsp-ui-peek-find-definitions))))
-  )
+    (:map lsp-mode-map (("M-." . lsp-ui-peek-find-definitions)))))
 
 (use-package lsp-mode
+  :straight (:no-byte-compile t)
+
   :init
   (defun kadir/long-lsp-find ()
     (interactive)
@@ -62,6 +63,8 @@
    ;; lsp-log-io t
    ;; lsp-print-performance t
    lsp-headerline-breadcrumb-enable nil
+   lsp-headerline-breadcrumb-enable-diagnostics nil
+   lsp-headerline-breadcrumb-segments '(project path-up-to-project file symbols)
    lsp-enable-snippet nil
 
    lsp-enable-folding nil ;; hiç kullanmadığım için
@@ -92,18 +95,20 @@
    lsp-enable-indentation nil
    lsp-enable-on-type-formatting nil
    ;; capf is the preferred completion mechanism for lsp-mode now
-   lsp-prefer-capf t))
-
-(use-package helm-xref
-  :hook
-  (helm-mode . (lambda() (require 'helm-xref)) )
+   ;; lsp-prefer-capf t
+   )
   )
 
-(use-package eglot
-  :straight (:type built-in)
-  ;; (add-to-list 'eglot-server-programs '((js-mode) "typescript-language-server" "--stdio"))
-  :bind
-  (:map eglot-mode-map("C-c C-d" . 'eglot-help-at-point)))
+
+;; (use-package helm-xref
+;;   :hook
+;;   (helm-mode . (lambda() (require 'helm-xref)) ))
+
+;; (use-package eglot
+;;   :straight (:type built-in)
+;;   ;; (add-to-list 'eglot-server-programs '((js-mode) "typescript-language-server" "--stdio"))
+;;   :bind
+;;   (:map eglot-mode-map("C-c C-d" . 'eglot-help-at-point)))
 
 
 

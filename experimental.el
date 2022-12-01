@@ -7,8 +7,6 @@
 
 
 
-(defun eldoc-mode(&rest args)
-  (message "no eldoc"))
 
 (defun tooltip-mode(&rest args)
   (message "no tooltip mode"))
@@ -443,8 +441,8 @@
   ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
   ;;       orderless-component-separator #'orderless-escapable-split-on-space)
   (setq
-   ;; completion-styles '(basic partial-completion orderless)
-   completion-styles '(orderless)
+   completion-styles '(basic partial-completion orderless)
+   ;; completion-styles '(orderless)
    completion-category-defaults nil
    ;; orderless-match-faces [
    ;;                        completions-common-part
@@ -466,3 +464,11 @@
   :init
   (load-file (expand-file-name (format "%sstraight/repos/f.el/f-shortdoc.el" user-emacs-directory)))
   (require 'f-shortdoc))
+
+
+;; (use-package explain-pause-mode
+;;   :defer 1
+;;   :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
+;;   :init
+;;   (setq explain-pause-slow-too-long-ms 100)
+;;   (explain-pause-mode))

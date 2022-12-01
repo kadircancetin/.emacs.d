@@ -1,52 +1,53 @@
-(setq-default user-full-name "Kadir Can Çetin")
-(setq-default user-mail-address "kadircancetin@gmail.com")
+(use-package emacs
+  :init
+  (put 'downcase-region 'disabled nil)
+  (put 'upcase-region 'disabled nil)
+  (put 'narrow-to-region 'disabled nil)
 
-
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
+  ;; I hate eldoc
+  (global-eldoc-mode 0)
+  (defun eldoc-mode(&rest args) (message "no eldoc"))
 
-
-(global-eldoc-mode 0)
+  ;; Deffered activation minor modes
+  (run-with-idle-timer
+   0.15 nil  ;; defer
+   (lambda () (progn
+           ;; (display-battery-mode 1)
+           (savehist-mode 1)
+           (global-so-long-mode 1)
+           (blink-cursor-mode -1)
+           ;; (display-time-mode 1)
+           (delete-selection-mode 1)        ; writing when ther is selected, delete the selected part
+           (show-paren-mode 1)              ; shows matching parentheses
+           (winner-mode 1)                  ; provide undo, redo your window layout
+           (global-subword-mode 1)          ; make camel-case usable with word shorcuts
+           (save-place-mode 1)              ; save cursor position for next file opening, and restore it
+           ;; (global-prettify-symbols-mode 1) ; lambda to cool lambda character
+           (global-auto-revert-mode 1)
+           ;; (column-number-mode 0)
+           (global-auto-composition-mode 1))))
 
-
-;; Deffered activation minor modes
-(run-with-idle-timer
- 0.15 nil  ;; defer
- (lambda () (progn
-         ;; (display-battery-mode 1)
-         (savehist-mode 1)
-         (global-so-long-mode 1)
-         (blink-cursor-mode -1)
-         ;; (display-time-mode 1)
-         (delete-selection-mode 1)        ; writing when ther is selected, delete the selected part
-         (show-paren-mode 1)              ; shows matching parentheses
-         (winner-mode 1)                  ; provide undo, redo your window layout
-         (global-subword-mode 1)          ; make camel-case usable with word shorcuts
-         (save-place-mode 1)              ; save cursor position for next file opening, and restore it
-         ;; (global-prettify-symbols-mode 1) ; lambda to cool lambda character
-         (global-auto-revert-mode 1)
-         ;; (column-number-mode 0)
-         (global-auto-composition-mode 1))))
-
-(run-with-idle-timer
- 1 nil ;; defer
- (lambda () (progn
-         (require 'hideshow)
-         (add-hook 'prog-mode-hook 'hs-minor-mode))))
+  (run-with-idle-timer
+   1 nil ;; defer
+   (lambda () (progn
+           (require 'hideshow)
+           (add-hook 'prog-mode-hook 'hs-minor-mode))))
 
 
 
-(run-with-idle-timer 5 nil
-                     (lambda()
-                       (require 'server)
-                       (unless (server-running-p)
-                         (server-start))
-                       (require 'org-protocol)))
+  (run-with-idle-timer 5 nil
+                       (lambda()
+                         (require 'server)
+                         (unless (server-running-p)
+                           (server-start))
+                         (require 'org-protocol)))
 
-
-;; Hooks
-(add-hook 'before-save-hook 'whitespace-cleanup)
+
+  ;; Hooks
+  (add-hook 'before-save-hook 'whitespace-cleanup)
+
+  )
+
 
 
 ;; Setting general default variables
@@ -286,19 +287,18 @@
   (set-face-attribute 'default nil :height x)
   (set-face-attribute 'mode-line nil :height x)
   (set-face-attribute 'mode-line-inactive nil :height x)
-  (message "YENI SIZE: %d" x))
+  (message "New Size: %d" x))
 
 (defun kadir/font-size-smaller()
   (interactive)
-  (defvar kadir/default-font-size)
-  (setq kadir/default-font-size (- kadir/default-font-size 1))
+  (setq kadir/default-font-size (- kadir/default-font-size 3))
   (kadir/adjust-font-size kadir/default-font-size))
 
 (defun kadir/font-size-bigger()
   (interactive)
-  (defvar kadir/default-font-size)
   (setq kadir/default-font-size (+ kadir/default-font-size 10))
   (kadir/adjust-font-size kadir/default-font-size))
+
 
 
 (defun kadir/bind (args)

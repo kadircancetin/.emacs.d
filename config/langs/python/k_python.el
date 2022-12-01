@@ -51,11 +51,17 @@
 (use-package pyvenv)
 (use-package lsp-pyright
   :init
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp)
+                         (if (s-contains? ".virtualen" (buffer-file-name))
+                             (lsp-headerline-breadcrumb-mode 1)
+                           (lsp-headerline-breadcrumb-mode 0))))
   ;; (setq-default lsp-pyright-auto-import-completions nil
   ;;               lsp-pyright-disable-organize-imports nil)
-
-  (setq lsp-pyright-stub-path "/home/kadir/stubs/typings/")
-  :straight (:host github :repo "emacs-lsp/lsp-pyright"))
+  ;; (setq lsp-pyright-stub-path "/home/kadir/stubs/typings/")
+  ;; :straight (:host github :repo "emacs-lsp/lsp-pyright")
+  )
 
 
 ;; (use-package importmagic

@@ -1,6 +1,8 @@
 (require 'use-package)
 
 
+(setq exec-path (append exec-path '("/home/kadir/go/bin")))
+
 (use-package go-mode
   :commands (go-mode)
   :init
