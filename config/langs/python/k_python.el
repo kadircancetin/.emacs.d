@@ -216,11 +216,14 @@
   (mwim-beginning-of-code)
   (kill-new (concat "pytest " (fk/django-get-module "/") ".py::" (s-replace "." "::" (which-function)) " -s")))
 
+
 (defun kadir/python-copy-mock()
   (interactive)
-  (require 'which-func)
+  (require 'mwim)
   (mwim-beginning-of-code)
-  (kill-new (concat (fk/django-get-module ".") "." (which-function))))
+  (kill-new (concat (fk/django-get-module ".") "." (which-function)))
+  (concat (fk/django-get-module ".") "." (which-function))
+  )
 
 
 (defun kadir/python-copy-django-test()

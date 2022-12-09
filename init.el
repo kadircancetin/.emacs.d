@@ -1,21 +1,18 @@
-(when (version< emacs-version "27") (load-file (expand-file-name "early-init.el" user-emacs-directory)))
-
-(setq-default user-full-name "Kadir Can Çetin")
-(setq-default user-mail-address "kadircancetin@gmail.com")
-
-(setq comp-deferred-compilation-black-list nil)
-
-
-
 (let ((default-directory (expand-file-name "config/" user-emacs-directory)))
   (normal-top-level-add-subdirs-to-load-path))
 
-(require 'k-packaging)
-(require 'def-confs)
+;; If in old-emacs runs early init el. It contains speed-up hacks and UI fixes.
+(when (version< emacs-version "27") (load-file (expand-file-name "early-init.el" user-emacs-directory)))
+
+
+(require 'k-packaging)         ; straight - use-package etc
+(require 'k-mini-funcs)        ; raw functions for raw emacs
+(require 'k-defaults)          ; emacs confs for raw emacs ( emacs level vars, global-modes, hooks)
+
 (require 'k-helm)
 (require 'core-extra)
 (require 'k_company)
-(require 'k-eshell)
+
 
 (when (require 'k-minors)
   (require 'k-colors-mode)
@@ -43,35 +40,13 @@
   ;; (require 'k-go)
   )
 
-
+(require 'k-eshell)
 (require 'k_org)
 (require 'k_dired)
+(require 'binds)
 
-;; majors
 
-(require 'binds)     ;; all global bindings
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; And lastly, experimental tryings
 
 (when (file-exists-p (expand-file-name "experimental.el" user-emacs-directory))
   (load-file (expand-file-name "experimental.el" user-emacs-directory)))
-
-
-
-(defun kadir/mac-conf()
-  "switch meta between Option and Command"
-  (interactive)
-  (use-package exec-path-from-shell :init (exec-path-from-shell-initialize))
-  (setq mac-option-modifier nil)
-  (setq mac-command-modifier 'super)
-  (setq ns-option-modifier 'meta
-        ns-right-alternate-modifier 'super
-        ns-right-option-modifier 'none)
-  (setq ns-auto-hide-menu-bar t))
-
-(if (eq system-type 'darwin)
-    (kadir/mac-conf))
-
-
-
-;; (use-package org :straight (:type built-in))

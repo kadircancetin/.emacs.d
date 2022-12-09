@@ -27,9 +27,8 @@
 
 (use-package hl-todo)
 
-(use-package diff-hl
-  :init
-  (setq-default diff-hl-flydiff-delay 2))
+(use-package diff-hl)
+
 
 (use-package color-identifiers-mode)
 
@@ -117,13 +116,13 @@
       (progn (global-hl-todo-mode 1)
              (global-diff-hl-mode 1)
              ;; (beacon-mode 1)  ;; beacon mode activating manually handled
-             (diff-hl-flydiff-mode 1)
+             ;; (diff-hl-flydiff-mode 1)
              (volatile-highlights-mode 1))
 
     (global-hl-todo-mode 0)
     (global-diff-hl-mode 0)
     ;; (beacon-mode 0)  ;; beacon mode activating manually handled
-    (diff-hl-flydiff-mode 0)
+    ;; (diff-hl-flydiff-mode 0)
     (volatile-highlights-mode 0)))
 
 (provide 'k-colors-mode)

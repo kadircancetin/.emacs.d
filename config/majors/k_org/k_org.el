@@ -51,17 +51,6 @@
 
   (setq org-bullets-bullet-list '("✿" "⁖" "⁖" "." "." "."))
 
-  ;; (setq org-capture-templates
-  ;;       '(("t" "Todo" entry (file "~/Dropbox/org-roam/20200503174932-inbox.org" )
-  ;;          "* %?\nAdded: \%u\n\%a")
-  ;;         ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
-  ;;          "* %?\n  Entered on %U\n  %i\n  %a")
-  ;;         ("p" "Protocol"
-  ;;          entry (file+headline "inbox.org" "Inbox")
-  ;;          "* %:description :RESEARCH:\n  #+BEGIN_QUOTE\n    %i\n\n     -- %:link %u\n  #+END_QUOTE\n\n%?")
-  ;;         ("L" "Protocol Link"
-  ;;          entry (file+headline "inbox.org" "Inbox")
-  ;;          "* %? [[%:link][%:description]] \n  Captured On: %u")))
   (defun kadir/org-confirm-babel-evaluate (lang body)
     ;; source: https://emacs.stackexchange.com/questions/2945/org-babel-eval-with-no-confirmation-is-explicit-eval-yes
     (not (or

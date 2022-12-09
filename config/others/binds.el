@@ -67,8 +67,8 @@
     ("rf"                 . (lambda() (interactive)
                               (require 'helm)
                               (org-roam-node-find)
-                              (helm-mode 1) ;; TODO
-                              (vertico-mode 0)
+                              (helm-mode 1)
+                              ;; (vertico-mode 0)
                               ))
     ("ri"                 . (lambda() (interactive)(org-roam-node-insert)))
 

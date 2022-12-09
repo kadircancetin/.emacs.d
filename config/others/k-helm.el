@@ -17,7 +17,9 @@
                    (let ((bg-color (face-background 'default nil)))
                      `(:background ,bg-color :foreground ,bg-color)))
       (setq-local cursor-type nil))))
+
 
+
 (use-package helm-mode-manager)
 
 (use-package helm
@@ -52,7 +54,9 @@
       (unless (eq matches t) matches)))
 
   (advice-add 'helm--collect-matches :around #'kadir/helm--collect-matches))
+
 
+
 (use-package helm-projectile
   :hook
   (projectile-mode . helm-projectile-on)
@@ -64,7 +68,9 @@
                                   helm-source-projectile-files-list
                                   ;; helm-source-projectile-projects
                                   )))
+
 
+
 (use-package helm-ag
   :config (setq
            helm-ag-base-command
@@ -122,6 +128,7 @@
 
 
 
+
 (use-package helm-swoop
   :init
   (setq helm-swoop-speed-or-color t
