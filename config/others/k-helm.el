@@ -80,7 +80,7 @@
   :commands (helm-rg--get-thing-at-pt)
   :init
   (setq helm-rg-default-directory 'git-root
-        helm-rg--extra-args '("--max-columns" "300"  "--no-ignore-dot")
+        helm-rg--extra-args '("--max-columns" "300"  "--hidden")
         helm-rg-input-min-search-chars 1)
 
   (setq fk/rg-special-characters '("(" ")" "[" "{" "*"))
