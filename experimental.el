@@ -466,14 +466,6 @@
   (require 'f-shortdoc))
 
 
-(use-package explain-pause-mode
-  :defer 1
-  :straight (explain-pause-mode :type git :host github :repo "lastquestion/explain-pause-mode")
-  :init
-  (setq explain-pause-slow-too-long-ms 100)
-  (explain-pause-mode))
-
-
 (pixel-scroll-precision-mode 1)
 
 

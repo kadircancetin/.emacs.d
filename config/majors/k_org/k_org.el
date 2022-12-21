@@ -123,8 +123,10 @@
 
 (use-package org-web-tools)
 ;; (use-package htmlize)
-;; (use-package ox-reveal)
-;; (require 'ox-reveal)
+(use-package ox-reveal
+  :after (org-mode)
+  )
+
 
 
 

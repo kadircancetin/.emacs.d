@@ -231,7 +231,7 @@
   (require 'which-func)
   (mwim-beginning-of-code)
   (kill-new (concat
-             "python manage.py test  --settings algorand.settings.testing --parallel=20 "
+             "python manage.py test  --settings algorand.settings.testing --parallel=40 "
              (kadir/python-copy-mock)
              " --keepdb")))
 
