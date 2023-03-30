@@ -16,7 +16,10 @@
 
 
 
-(straight-use-package 'use-package)
+
+(when (version< emacs-version "29") (straight-use-package 'use-package) t)
+
+
 (setq-default straight-use-package-by-default t)
 
 (setq-default use-package-always-defer t

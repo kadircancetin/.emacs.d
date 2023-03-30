@@ -186,7 +186,8 @@
 
     (when buf- (kill-buffer buf-))
     (kadir-tree/next-line)
-    (kadir-tree/refresh-kadir-tree-buffer)))
+    )
+  (kadir-tree/refresh-kadir-tree-buffer))
 
 (defun kadir-tree/open-from-button()
   (interactive)

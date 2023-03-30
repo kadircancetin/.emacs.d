@@ -35,7 +35,7 @@
     ;; :after lsp-mode
     :custom
     ;; DOC
-    (lsp-ui-doc-delay 3)
+    (lsp-ui-doc-delay 0.1)
     (lsp-ui-doc-position 'top)
 
     ;; Others
@@ -45,7 +45,8 @@
     ;; (lsp-ui-sideline-delay 0)
     ;; (lsp-ui-peek-fontify 'always)
     :bind
-    (:map lsp-mode-map (("M-." . lsp-ui-peek-find-definitions)))))
+    ;; (:map lsp-mode-map (("M-." . lsp-ui-peek-find-definitions)))
+    ))
 
 (use-package lsp-mode
   :straight (:no-byte-compile t)
@@ -104,11 +105,13 @@
 ;;   :hook
 ;;   (helm-mode . (lambda() (require 'helm-xref)) ))
 
-;; (use-package eglot
-;;   :straight (:type built-in)
-;;   ;; (add-to-list 'eglot-server-programs '((js-mode) "typescript-language-server" "--stdio"))
-;;   :bind
-;;   (:map eglot-mode-map("C-c C-d" . 'eglot-help-at-point)))
+
+
+(use-package eglot
+  :straight (:type built-in)
+  ;; (add-to-list 'eglot-server-programs '((js-mode) "typescript-language-server" "--stdio"))
+  :bind
+  (:map eglot-mode-map("C-c C-d" . 'eglot-help-at-point)))
 
 
 

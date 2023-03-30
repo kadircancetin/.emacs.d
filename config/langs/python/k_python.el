@@ -229,9 +229,10 @@
 (defun kadir/python-copy-django-test()
   (interactive)
   (require 'which-func)
+  (require 'mwim)
   (mwim-beginning-of-code)
   (kill-new (concat
-             "python manage.py test  --settings algorand.settings.testing --parallel=40 "
+             "SECRET_CREDENTIAL_ENCRYPTION_KEY=5jbekfNF6X2uUaEKXaW19gEqe-zKYT-Xit-zRmWwRPA= python manage.py test  --settings algorand.settings.testing --parallel=35 "
              (kadir/python-copy-mock)
              " --keepdb")))
 

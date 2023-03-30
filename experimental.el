@@ -1,12 +1,6 @@
-;; (use-package syntactic-close)
-;; (global-set-key (kbd "M-m") 'syntactic-close)
-
-
-
 (global-set-key (kbd "M-:") 'xref-find-definitions-other-window)
 
 
-
 
 (defun tooltip-mode(&rest args)
   (message "no tooltip mode"))
@@ -15,7 +9,7 @@
 
 
 (load-file (expand-file-name "side-window.el" user-emacs-directory))
-(global-set-key (kbd "M-ü") 'kadir/smart-push-pop)
+
 
 
 
@@ -416,7 +410,8 @@
 
   :init
 
-  (setq register-preview-delay 0.5 register-preview-function #'consult-register-format)
+  (setq register-preview-delay 0.5
+        register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
@@ -476,3 +471,56 @@
 
 (use-package sql-indent
   :hook (sql-mode . sqlind-minor-mode))
+
+(use-package sqlformat
+  :after sql-mode
+  :init
+  (setq sqlformat-command 'pgformatter)
+  )
+
+
+(use-package devdocs)
+
+
+(global-unset-key (kbd "C-z"))
+
+
+(use-package view-mode
+  :straight (:type built-in)
+  :bind (:map view-mode-map
+              ("n" . next-line)
+              ("p" . previous-line)))
+
+
+(use-package org-rainbow-tags
+  :ensure t
+  :init
+  (add-hook 'org-mode-hook 'org-rainbow-tags-mode)
+  )
+
+
+(use-package copilot
+  :defer 0.1
+  :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("M-e" . copilot-accept-completion)
+              ("C-e" . copilot-accept-completion)
+              )
+  :init
+
+  (setq copilot-max-char 30000000)
+
+
+  (global-set-key (kbd "M-e") 'copilot-complete))
+
+
+
+
+(load-file (expand-file-name "chat.el" user-emacs-directory))
+(load-file (expand-file-name "hidden.el" user-emacs-directory))
+
+
+
+(use-package emojify
+  :hook (after-init . global-emojify-mode))

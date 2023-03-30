@@ -65,27 +65,35 @@
 
 (use-package prism
   :straight (prism :type git :host github :repo "alphapapa/prism.el")
+  :init
+  (add-hook 'verb-response-body-mode-hook 'prism-mode)
   :config
-  (prism-set-colors
-   :num 16
-   :desaturations (cl-loop for i from 0 below 16
-                           collect (* i 1))
-   :lightens (cl-loop for i from 0 below 16
-                      collect (* i 1))
-   :comments-fn
-   (lambda (color)
-     (prism-blend color
-                  "#2d9574" 0.5))
-   :strings-fn
-   (lambda (color)
-     (prism-blend color "#2d9574" 0))
 
-   :colors (list
-            "#bf6bc7"  ;; pembe
-            "#4f97e7"  ;; blue
-            "#c2c2c2"  ;; base
-            ;; yellow
-            "#b1951d")))
+  (prism-set-colors
+    :num 16
+    :desaturations (cl-loop for i from 0 below 16
+                            collect (* i 1))
+    :lightens (cl-loop for i from 0 below 16
+                       collect (* i 1))
+    :comments-fn
+    (lambda (color)
+      (prism-blend color
+                   "#2d9574" 0.5))
+    :strings-fn
+    (lambda (color)
+      (--> color
+           (color-desaturate-name it 20)
+           (color-lighten-name it -20)))
+    ;; (lambda (color)
+    ;;   (prism-blend color "#2d9574" 0))
+
+    :colors (list
+             "Gray"
+             "MediumSpringGreen"
+             "GreenYellow"
+             "LightSalmon"
+             "RoyalBlue"
+             )))
 
 
 (define-minor-mode k-colors-mode

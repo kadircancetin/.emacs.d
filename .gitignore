@@ -13,3 +13,4 @@ elpa/
 /.log/
 /places
 spell-fu/
+/hidden.el

@@ -100,7 +100,7 @@
   :init
   (mood-line-mode)
   (remove-hook 'flycheck-status-changed-functions #'mood-line--update-flycheck-segment)
-  (remove-hook 'flycheck-mode-hook #'mood-line--update-flycheck-segment)
+  ;; (remove-hook 'flycheck-mode-hook #'mood-line--update-flycheck-segment)
 
   (defun kadir-soft-update-mode-line()
     (setq local-kadir-mode-line-calculated nil))
@@ -160,7 +160,7 @@
                 '(" "
                   (:eval (kadir/mood-line-segment-modified))
                   (:eval (kadir/mood-line-segment-buffer-name))
-                  (:eval (mood-line-segment-position))
+                  ;; (:eval (mood-line-segment-position))
                   (:eval (mood-line-segment-multiple-cursors))))
 
                ;; Right

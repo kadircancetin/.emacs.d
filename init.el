@@ -1,3 +1,5 @@
+(defvar native-comp-deferred-compilation-deny-list nil)
+
 (let ((default-directory (expand-file-name "config/" user-emacs-directory)))
   (normal-top-level-add-subdirs-to-load-path))
 
@@ -5,7 +7,7 @@
 (when (version< emacs-version "27") (load-file (expand-file-name "early-init.el" user-emacs-directory)))
 
 
-(require 'k-packaging)         ; straight - use-package etc
+(require 'k-packaging)         ; straight
 (require 'k-mini-funcs)        ; raw functions for raw emacs
 (require 'k-defaults)          ; emacs confs for raw emacs ( emacs level vars, global-modes, hooks)
 
@@ -36,8 +38,8 @@
   ;; (require 'k-elixir)
   ;; (require 'k-plantuml)
   ;; (require 'k-clojure)
-  ;; (require 'k_rust)
-  ;; (require 'k-go)
+  (require 'k_rust)
+  (require 'k-go)
   )
 
 (require 'k-eshell)

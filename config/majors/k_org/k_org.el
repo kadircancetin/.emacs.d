@@ -8,8 +8,8 @@
   (kadir/beatiful-org-todo)
   ;; Other package hooks
   (add-hook 'org-mode-hook #'visual-line-mode)
-  (setq org-todo-keywords
-        '((sequence "TODO(t!)" "NEXT(n)" "SOMD(s)" "|" "DONE(d!)" "CANC(c!)")))
+  ;; (setq org-todo-keywords
+  ;;       '((sequence "TODO" "NEXT" "SOMD" "|" "DONE" "CANC")))
   ;; I prefer to log TODO creation also
   (setq org-treat-insert-todo-heading-as-state-change t)
   ;; log into LOGBOOK drawer
@@ -36,10 +36,19 @@
                 org-startup-indented        t
                 org-hide-emphasis-markers   t  ;; hide _xx_ or *xx*
                 org-pretty-entities         t
-                org-default-notes-file      "~/org/inbox.org"
+                org-default-notes-file      "~/Dropbox/org-roam/20230326233030-gdt.org"
                 org-startup-folded          'content
                 org-default-priority        ?C
                 org-eldoc-breadcrumb-separator " → ")
+
+  (setq org-capture-templates
+        `(("t"
+           "Inbox"
+           entry
+           (file+headline "~/Dropbox/org-roam/20230326233030-gdt.org" "INBOX")
+           "* TODO %?"
+           :kill-buffer t
+           :unnarrowed t)))
 
   (setq-default org-catch-invisible-edits   'show-and-error
                 org-cycle-separator-lines   2

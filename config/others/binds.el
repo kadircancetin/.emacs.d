@@ -129,12 +129,12 @@
    ("C-x -"           . kadir/open-terminator)
 
    ;; helm
-   ;; ("M-x"             . helm-M-x)
-   ;; ("C-x b"           . helm-buffers-list)
+   ("M-x"             . helm-M-x)
+   ("C-x b"           . helm-buffers-list)
    ("C-x C-f"         . helm-find-files)
    ;; ("C-x i"           . helm-imenu-all-buffer)
    ;; ("C-x C-i"         . helm-imenu)
-   ;; ("M-y"             . helm-show-kill-ring)
+   ("M-y"             . helm-show-kill-ring)
    ;; ("C-x f"           . helm-projectile)
 
    ;; helm-rg

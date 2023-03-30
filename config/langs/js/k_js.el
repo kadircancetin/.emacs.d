@@ -7,8 +7,8 @@
         (rjsx-mode))))
 
 (use-package js
-  :bind (:map js-mode-map
-              ("M-." . lsp-ui-peek-find-definitions))
+  ;; :bind (:map js-mode-map
+  ;;             ("M-." . lsp-ui-peek-find-definitions))
   :config
   (add-hook 'js-mode-hook #'lsp)
   (add-hook 'js-mode-hook #'kadir/company-tabnine-enable)
