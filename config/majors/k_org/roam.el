@@ -17,7 +17,7 @@
     ))
 
 (use-package org-roam
-  :straight (:no-native-compile t)
+  :straight (:host github :repo "kadircancetin/org-roam")
   :init
   (setq org-roam-v2-ack t)
   (setq org-roam-directory "~/Dropbox/org-roam")
@@ -40,10 +40,34 @@
 
   :hook
   (org-mode . org-roam-db-autosync-mode)  ;; auto activate with org-mode
-  (org-mode . kadir/roam-auto-open-hook)  ;; some hooks may I want
+  ;; (org-mode . kadir/roam-auto-open-hook)  ;; some hooks may I want
 
   :config
-  (define-key org-roam-mode-map [mouse-1] #'org-roam-visit-thing) ;; mouse support for backlink buffer
+  (define-key org-roam-mode-map [mouse-1] #'org-roam-visit-thing) ;; mouse support for backlink
+  ;; buffer
+
+  (with-eval-after-load 'org-roam-mode
+
+    ;; (setq org-roam-fontify-buffer (get-buffer-create "*org-roam-fontify-buffer*"))
+    ;; (with-current-buffer org-roam-fontify-buffer (org-mode))
+    ;; (defun org-roam-fontify-like-in-org-mode (s)
+    ;;   (with-current-buffer org-roam-fontify-buffer
+    ;;     (erase-buffer)
+    ;;     (insert s)
+    ;;     (let ((org-ref-buffer-hacked t))
+    ;;       (setq-local org-fold-core-style 'overlays)
+    ;;       (font-lock-ensure)
+    ;;       (buffer-string))))
+
+    (defun calculate-runtime (orig-fun &rest args)
+      (let ((start-time (float-time)))
+        (apply orig-fun args)
+        (message "Runtime of `org-roam-backlinks-section` is %.6f seconds."
+                 (- (float-time) start-time))))
+    (advice-add 'org-roam-backlinks-section :around #'calculate-runtime)
+    )
+
+
 
   ;; ;; helm thing https://github.com/org-roam/org-roam/wiki/Hitchhiker's-Rough-Guide-to-Org-roam-V2
   ;; (cl-defmethod org-roam-node-directories ((node org-roam-node))

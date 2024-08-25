@@ -3,6 +3,13 @@
 (use-package dockerfile-mode :mode "Dockerfile[a-zA-Z.-]*\\'")
 (use-package terraform-mode :mode ("\\.tf\\'" . terraform-mode))
 ;; (use-package gitignore-mode :mode "/\\.gitignore\\'")
+(use-package git-modes
+  :init
+
+
+  (add-to-list 'auto-mode-alist
+               (cons "/.dockerignore\\'" 'gitignore-mode))
+  )
 (use-package groovy-mode)
 (use-package jenkinsfile-mode)
 ;; (use-package ansible)

@@ -2,7 +2,7 @@
 
 (setq easy-side-vertical-side-width 0.22)
 (setq easy-side-horizontal-side-width 0.2)
-(setq easy-side-no-other-window t)
+(setq easy-side-no-other-window nil)
 (setq easy-side-no-delete-other-windows t)
 (setq easy-side-side-window-background-color "#212026")
 
@@ -176,6 +176,3 @@ The function returns `nil`."
 
 
 
-
-(use-package emojify
-  :hook (after-init . global-emojify-mode))

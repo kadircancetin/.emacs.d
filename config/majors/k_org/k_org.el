@@ -27,6 +27,13 @@
               )
 
   :config
+  (defun org-toggle-emphasis ()
+    "Toggle hiding/showing of org emphasize markers."
+    (interactive)
+    (if org-hide-emphasis-markers
+        (set-variable 'org-hide-emphasis-markers nil)
+      (set-variable 'org-hide-emphasis-markers t)))
+
   (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
   (add-to-list 'org-modules 'org-habit t)
   (setq-default org-src-tab-acts-natively   t               ; intent code blocks with its major modes

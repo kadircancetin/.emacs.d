@@ -192,22 +192,6 @@
 
 
 
-(setenv "JAVA_HOME"
-        "/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/")
-
-;; (animate-birthday-present)
-(defun lsp-metals--server-command ()
-  "Generate the Scala language server startup command."
-  `("/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/bin/java"
-    "-Xss4m"
-    "-Xms100m"
-    "-Dmetals.client=vscode"
-    "-Xmx1G"
-    ,@lsp-metals-server-args
-    "scala.meta.metals.Main"))
-
-
-
 (use-package perspective
   :defer 0.1
   :custom
@@ -292,7 +276,7 @@
   (blamer-datetime-formatter " [%s] ")
   (blamer-author-formatter "%s")
   (blamer-commit-formatter "%s")
-  (blamer-max-commit-message-length 35)
+  (blamer-max-commit-message-length 3500)
   (blamer-max-lines 500)
   (blamer-uncommitted-changes-message "-- NO COMMIT --")
   :custom-face
@@ -399,7 +383,7 @@
          ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
          ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
          ("C-x f" . projectile-find-file)
-         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+         ;; ("M-y" . consult-yank-pop)                ;; orig. yank-pop
          ("M-g g" . consult-goto-line)             ;; orig. goto-line
          ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
          ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
@@ -499,28 +483,207 @@
   )
 
 
-(use-package copilot
-  :defer 0.1
-  :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("M-e" . copilot-accept-completion)
-              ("C-e" . copilot-accept-completion)
-              )
+;; (use-package emojify
+;;   :hook (after-init . global-emojify-mode))
+
+
+
+(defun lsp-booster--advice-json-parse (old-fn &rest args)
+  "Try to parse bytecode instead of json."
+  (or
+   (when (equal (following-char) ?#)
+     (let ((bytecode (read (current-buffer))))
+       (when (byte-code-function-p bytecode)
+         (funcall bytecode))))
+   (apply old-fn args)))
+(advice-add (if (progn (require 'json)
+                       (fboundp 'json-parse-buffer))
+                'json-parse-buffer
+              'json-read)
+            :around
+            #'lsp-booster--advice-json-parse)
+
+(defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
+  "Prepend emacs-lsp-booster command to lsp CMD."
+  (let ((orig-result (funcall old-fn cmd test?)))
+    (if (and (not test?)                             ;; for check lsp-server-present?
+             (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
+             lsp-use-plists
+             (not (functionp 'json-rpc-connection))  ;; native json-rpc
+             (executable-find "emacs-lsp-booster"))
+        (progn
+          (message "Using emacs-lsp-booster for %s!" orig-result)
+          (cons "emacs-lsp-booster" orig-result))
+      orig-result)))
+(advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
+
+
+
+
+(use-package expreg )
+(global-set-key (kbd "C-t") 'expreg-expand)
+
+
+
+
+(use-package gptel
   :init
 
-  (setq copilot-max-char 30000000)
+  (defun kadir-gptel-groq()
+    (setq gptel-model  "llama-3.1-70b-versatile"
+          gptel-max-tokens nil
+          gptel-temperature 0
+          gptel-backend (gptel-make-openai "Groq"
+                          :host "api.groq.com"
+                          :endpoint "/openai/v1/chat/completions"
+                          :stream t
+
+                          :models
+                          '("llama-3.1-70b-versatile"
+                            "llama-3.1-8b-instant"
+                            "llama3-70b-8192"
+                            "mixtral-8x7b-32768"
+                            "llama3-8b-8192"))))
+
+  (defun kadir-gptel-openai()
+    (setq gptel-model  "gpt-4o-mini-2024-07-18"
+          gptel-max-tokens nil
+          gptel-temperature 0
+          gptel-backend (gptel-make-openai "ChatGPT"
+                          :stream t
+
+                          :models
+                          '("gpt-4o-mini-2024-07-18"
+                            "gpt-4o"
+                            ))))
+
+  (defun kadir-gptel-local()
+    (setq gptel-model "phi3.5")
+    (setq gptel-temperature 0)
+    (setq gptel-backend (gptel-make-ollama "ollama"
+                          :models '("phi3.5"
+                                    "deepseek-coder-v2"
+                                    "deepseek-coder:6.7b"
+                                    "gemma2:2b"
+                                    "llama3.1"
+                                    "gemma2:9b")
+                          :stream t)))
+
+  (kadir-gptel-openai)
 
 
-  (global-set-key (kbd "M-e") 'copilot-complete))
+  )
+
+
+(use-package beyin
+  :straight (beyin :type git :host github :repo "kadircancetin/beyin")
+  :init
+  (global-set-key (kbd "M-ç") 'beyin-chat)
+  :config
+
+  ;;;;;;;;;;;;;;;;;;
+
+  (require 'company)
+
+  (global-company-mode 1)
+
+  (setq beyin-company-prefix "kk")
+
+  (setq command-and-functions
+        '(("-> prompt-grammar" . (lambda () (insert "Find and fix grammar issues on the given text.")))
+          ("-> model-openai-4o" . (lambda () (activate-gpt-model "gpt-4o" 'kadir-gptel-openai)))
+          ("-> model-openai-4o-mini" . (lambda () (activate-gpt-model "gpt-4o-mini-2024-07-18" 'kadir-gptel-openai)))
+          ("-> model-gemma2-2b" . (lambda () (activate-gpt-model "gemma2:2b" 'kadir-gptel-local)))
+          ("-> model-gemma2-9b" . (lambda () (activate-gpt-model "gemma2:9b" 'kadir-gptel-local)))
+          ("-> model-phi3.5" . (lambda () (activate-gpt-model "phi3.5" 'kadir-gptel-local)))
+          ("-> model-llama-3.1--70" . (lambda () (activate-gpt-model "llama-3.1-70b-versatile" 'kadir-gptel-groq)))))
+
+  (defun activate-gpt-model (model func)
+    "Activate the specified GPT model and notify the user."
+    (funcall func)
+    (setq gptel-model model)
+    (message (concat gptel-model " ACTIVATED")))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (defun better-fuzzy-match (prefix candidates)
+    (let ((prefix-list (string-to-list prefix)))
+      (cl-sort
+       (cl-remove-if-not
+        (lambda (candidate)
+          (cl-subsetp prefix-list (string-to-list candidate)))
+        candidates)
+       (lambda (a b)
+         (let ((count-a (count-matches prefix a))
+               (count-b (count-matches prefix b)))
+           (if (= count-a count-b)
+               (string< a b)
+             (> count-a count-b)))))))
+
+  (defun count-matches (prefix candidate)
+    (let ((count 0)
+          (start 0))
+      (while (string-match (regexp-quote prefix) candidate start)
+        (setq count (1+ count))
+        (setq start (match-end 0)))
+      count))
+
+  (defun beyin-company-backend (command &optional arg &rest ignored)
+    (let* ((all-candidates (mapcar 'car command-and-functions)))
+      (case command
+        (prefix (when (eq major-mode 'beyin-mode)
+                  (let ((symbol (symbol-name (symbol-at-point))))
+                    (when (and symbol (string-prefix-p beyin-company-prefix symbol))
+                      (substring symbol (length beyin-company-prefix))))))
+        (candidates (better-fuzzy-match arg all-candidates))
+        (sorted t)
+        (post-completion
+         (delete-region (- (point) (+ (length arg) (length beyin-company-prefix))) (point))
+         (let ((func (cdr (assoc arg command-and-functions))))
+           (when func
+             (funcall func)))))))
+
+  (add-to-list 'company-backends 'beyin-company-backend)
+
+  (define-key company-active-map (kbd "RET")
+              (lambda ()
+                (interactive)
+                (if (and
+                     (string-prefix-p "-> " (nth company-selection company-candidates))
+                     (eq major-mode 'beyin-mode))
+                    (company-complete-selection)
+                  (company-abort)
+                  (newline))))
+
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
+  )
+
+
+
 
 
 
 
-(load-file (expand-file-name "chat.el" user-emacs-directory))
-(load-file (expand-file-name "hidden.el" user-emacs-directory))
+;; (add-to-list 'load-path "/home/kadir/beyin/")
+;; (require 'beyin)
+;; (global-set-key (kbd "M-ç") 'beyin-chat)
 
 
 
-(use-package emojify
-  :hook (after-init . global-emojify-mode))
+(use-package consult-web
+  :straight (consult-web :type git :host github :repo "armindarvish/consult-web" :files (:defaults "sources/*.el"))
+  :after consult
+  :defer nil
+  )
+(require 'consult)
+(require 'consult-web)
+(require 'consult-web-doi)
+
+
+
+(use-package w3)

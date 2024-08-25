@@ -1,3 +1,5 @@
+(setenv "LSP_USE_PLISTS" "true")
+
 (defvar kadir/default-font-size 93)
 
 
