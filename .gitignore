@@ -14,3 +14,4 @@ elpa/
 /places
 spell-fu/
 /hidden.el
+.undo-history/

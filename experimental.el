@@ -143,12 +143,6 @@
 ;; (global-set-key (kbd "C-ü") 'kadir/format-haha)
 
 
-
-(load-file (expand-file-name "language-learn.el" user-emacs-directory))
-(global-set-key (kbd "C-ç") 'kadir/dilogretio)
-
-
-
 ;; (require 'git-file-tree)
 ;; ;; (memory-report)
 ;; ;; company-keywords-alist
@@ -528,6 +522,8 @@
 
 (use-package gptel
   :init
+  (setq gptel-log-level 'debug)
+
 
   (defun kadir-gptel-groq()
     (setq gptel-model  "llama-3.1-70b-versatile"
@@ -537,7 +533,7 @@
                           :host "api.groq.com"
                           :endpoint "/openai/v1/chat/completions"
                           :stream t
-
+                          :key ""
                           :models
                           '("llama-3.1-70b-versatile"
                             "llama-3.1-8b-instant"
@@ -551,7 +547,7 @@
           gptel-temperature 0
           gptel-backend (gptel-make-openai "ChatGPT"
                           :stream t
-
+                          :key ""
                           :models
                           '("gpt-4o-mini-2024-07-18"
                             "gpt-4o"
@@ -569,10 +565,7 @@
                                     "gemma2:9b")
                           :stream t)))
 
-  (kadir-gptel-openai)
-
-
-  )
+  (kadir-gptel-groq))
 
 
 (use-package beyin
@@ -629,19 +622,21 @@
       count))
 
   (defun beyin-company-backend (command &optional arg &rest ignored)
-    (let* ((all-candidates (mapcar 'car command-and-functions)))
-      (case command
-        (prefix (when (eq major-mode 'beyin-mode)
-                  (let ((symbol (symbol-name (symbol-at-point))))
-                    (when (and symbol (string-prefix-p beyin-company-prefix symbol))
-                      (substring symbol (length beyin-company-prefix))))))
-        (candidates (better-fuzzy-match arg all-candidates))
-        (sorted t)
-        (post-completion
-         (delete-region (- (point) (+ (length arg) (length beyin-company-prefix))) (point))
-         (let ((func (cdr (assoc arg command-and-functions))))
-           (when func
-             (funcall func)))))))
+    (condition-case nil
+        (let* ((all-candidates (mapcar 'car command-and-functions)))
+          (case command
+            (prefix (when (eq major-mode 'beyin-mode)
+                      (let ((symbol (symbol-name (symbol-at-point))))
+                        (when (and symbol (string-prefix-p beyin-company-prefix symbol))
+                          (substring symbol (length beyin-company-prefix))))))
+            (candidates (better-fuzzy-match arg all-candidates))
+            (sorted t)
+            (post-completion
+             (delete-region (- (point) (+ (length arg) (length beyin-company-prefix))) (point))
+             (let ((func (cdr (assoc arg command-and-functions))))
+               (when func
+                 (funcall func))))))
+      (error nil)))
 
   (add-to-list 'company-backends 'beyin-company-backend)
 
@@ -657,23 +652,11 @@
 
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-
   )
 
 
-
-
-
 
 
-;; (add-to-list 'load-path "/home/kadir/beyin/")
-;; (require 'beyin)
-;; (global-set-key (kbd "M-ç") 'beyin-chat)
-
-
 
 (use-package consult-web
   :straight (consult-web :type git :host github :repo "armindarvish/consult-web" :files (:defaults "sources/*.el"))
@@ -687,3 +670,15 @@
 
 
 (use-package w3)
+
+
+
+(use-package vdiff)
+(use-package vdiff-magit)
+
+;; (use-package indent-bars
+;;   :hook ((python-mode yaml-mode) . indent-bars-mode)) ; or whichever modes you prefer
+
+
+
+;; (use-package chatgpt-shell)

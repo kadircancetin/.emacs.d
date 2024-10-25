@@ -3,11 +3,8 @@
 (let ((default-directory (expand-file-name "config/" user-emacs-directory)))
   (normal-top-level-add-subdirs-to-load-path))
 
-;; If in old-emacs runs early init el. It contains speed-up hacks and UI fixes.
-(when (version< emacs-version "27") (load-file (expand-file-name "early-init.el" user-emacs-directory)))
 
-
-(require 'k-packaging)         ; straight
+(require 'k-packaging)         ; straight + use-package + no-littering
 (require 'k-mini-funcs)        ; raw functions for raw emacs
 (require 'k-defaults)          ; emacs confs for raw emacs ( emacs level vars, global-modes, hooks)
 
@@ -40,6 +37,7 @@
   ;; (require 'k-clojure)
   (require 'k_rust)
   (require 'k-go)
+  (require 'k-flutter)
   )
 
 (require 'k-eshell)

@@ -39,7 +39,6 @@
 
     ;; o
     ("om"                 . kadir/find-messages)
-    ("oc"                 . kadir/find-config)
     ("oe"                 . kadir/find-experimental-config)
     ("os"                 . kadir/find-scratch-buffer)
     ("od"                 . kadir/find-dashboard)

@@ -19,7 +19,6 @@
 
 
 (defun k/set-init-package-disabling ()
-  ;;(setq-default comp-deferred-compilation t)
   (setq package-enable-at-startup nil)
   ;; (setq load-prefer-newer t)
   (setq load-prefer-newer noninteractive))

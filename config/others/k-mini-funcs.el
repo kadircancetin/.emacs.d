@@ -1,11 +1,6 @@
-(defun kadir/find-config ()
-  ;; source: https://github.com/KaratasFurkan/.emacs.d
-  "Open config file. (probably this file)"
-  (interactive) (find-file "~/.emacs.d/config"))
-
 (defun kadir/find-experimental-config ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
-  (interactive) (find-file "~/.emacs.d/experimental.el"))
+  (interactive) (find-file (expand-file-name "experimental.el" user-emacs-directory)))
 
 (defun kadir/find-messages ()
   ;; source: https://github.com/KaratasFurkan/.emacs.d
@@ -98,7 +93,6 @@
   "Get last buffer. If it is windowed, jump it"
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) nil)))
-
 
 (defun resize-window-width (w)
   ;; source: https://github.com/MatthewZMD/.emacs.d

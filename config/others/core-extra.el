@@ -1,6 +1,5 @@
 (require 'use-package)
 
-(use-package darkroom) ;; NOTE: do I realy need it
 (use-package deadgrep)
 (use-package multiple-cursors)
 (use-package mwim)
@@ -16,6 +15,8 @@
   :defer 0.5
   :config
   (global-undo-tree-mode)
+  (setq undo-tree-history-directory-alist `(("." . ,(expand-file-name ".undo-history/" user-emacs-directory))))
+
   ;; (setq undo-limit 1600)
   ;; (setq undo-tree-strong-limit 1600)
   ;; (setq undo-tree-outer-limit 160000)
