@@ -93,120 +93,28 @@
 
 
 
-(use-package mood-line
-  ;; TODO: s-1 s-2
-  ;; TODO: new created file
-  ;; TODO: is line number mode activated?
-  :init
-  (mood-line-mode)
-  (remove-hook 'flycheck-status-changed-functions #'mood-line--update-flycheck-segment)
-  ;; (remove-hook 'flycheck-mode-hook #'mood-line--update-flycheck-segment)
-
-  (defun kadir-soft-update-mode-line()
-    (setq local-kadir-mode-line-calculated nil))
-
+(use-package doom-modeline
+  :defer nil
   :config
-  (defun kadir/mood-line-segment-buffer-name()
-    (require 's)
-
-    (let ((is-file (buffer-file-name (current-buffer))))
-
-      (if (not is-file)
-          (propertize (format-mode-line "%b") 'face 'mood-line-buffer-name)
-
-        (progn
-          (let* ((p-root (projectile-project-root))
-                 (full-path (buffer-file-name (current-buffer)))
-                 (project-name (car (last (s-split "/" p-root 'omit-nulls))))
-                 (relative-path (s-chop-prefix p-root  full-path))
-                 (file-splitted (s-split "/" relative-path))
-                 (file-name (concat (nth (- (length file-splitted) 1) file-splitted)))
-                 (folder-name (s-chop-suffix file-name relative-path)))
-
-            (concat
-             (propertize folder-name 'face 'mood-line-status-neutral)
-             (propertize file-name 'face 'mood-line-major-mode)
-             " - "
-             (propertize project-name 'face 'mood-line-status-info)
-             " "))))))
-
-  (defun kadir/mood-line-segment-modified ()
-    "Displays a color-coded buffer modification/read-only indicator in the mode-line."
-    (if (not (string-match-p "\\*.*\\*" (buffer-name)))
-        (if (buffer-modified-p)
-            (propertize " ** " 'face '(:weight bold :background "red" :foreground "black"))
-          (if (and buffer-read-only (buffer-file-name))
-              (propertize "■ " 'face 'mood-line-unimportant)
-            "  "))
-      "  "))
+  (setq doom-modeline-buffer-file-name-style 'relative-from-project
+        doom-modeline-icon                    nil
+        doom-modeline-bar-width               1
+        doom-modeline-height                  1
+        doom-modeline-buffer-encoding         nil
+        doom-modeline-env-version             nil
+        doom-modeline-lsp                     nil
+        )
 
 
-  (defun kadir-performance-mode-line()
-    (interactive)
+  (doom-modeline-def-modeline 'kadir
+    '(window-number matches follow buffer-info buffer-position selection-info modals)
+    '(major-mode vcs check time))
 
-    (make-variable-buffer-local 'local-kadir-mode-line-calculated)
-    (make-variable-buffer-local 'local-kadir-mode-line-format)
+  (add-hook 'doom-modeline-mode-hook
+            (lambda ()
+              (doom-modeline-set-modeline 'kadir 'default)))
 
-    (setq local-kadir-mode-line-calculated nil)
-    (setq local-kadir-mode-line-format "calculaing...")
-
-    (defun kadir/full-mood-line()
-      (when (not local-kadir-mode-line-calculated)
-        (setq local-kadir-mode-line-calculated t)
-        (setq local-kadir-mode-line-format
-              (mood-line--format
-               ;; Left
-               (format-mode-line
-                '(" "
-                  (:eval (kadir/mood-line-segment-modified))
-                  (:eval (kadir/mood-line-segment-buffer-name))
-                  ;; (:eval (mood-line-segment-position))
-                  (:eval (mood-line-segment-multiple-cursors))))
-
-               ;; Right
-               (format-mode-line
-                '(;; (:eval (mood-line-segment-vc))
-                  (:eval (mood-line-segment-major-mode))
-                  " ")))))
-
-      local-kadir-mode-line-format)
-    (setq-default mode-line-format '((:eval (kadir/full-mood-line))))
-
-    (defun kadir-force-update-mode-line()
-      (setq local-kadir-mode-line-calculated nil)
-      (force-mode-line-update))
-
-    (defun kadir-soft-update-mode-line-all-buffers()
-      (dolist (buf (mapcar (lambda (wind) (window-buffer wind)) (window-list)))
-        (with-current-buffer buf
-          (kadir-soft-update-mode-line)))
-      (force-mode-line-update t)  ;; force update all
-      )
-
-
-    ;; (kadir-force-update-mode-line)
-    )
-
-
-  (run-with-idle-timer 0.5 t 'kadir-soft-update-mode-line-all-buffers)
-
-  (defun kadir-soft-update-mode-line-advice (func &rest args)
-    (kadir-soft-update-mode-line)
-    (apply func args))
-
-  ;; TODO: not open on helm
-  (add-hook 'change-major-mode-hook 'kadir-performance-mode-line)
-
-  (defun kadir-force-update-mode-line()
-    (setq local-kadir-mode-line-calculated nil)
-    (force-mode-line-update))
-  (add-hook 'after-save-hook 'kadir-force-update-mode-line)
-
-  (advice-add #'undo-tree-undo :around #'kadir-soft-update-mode-line-advice)
-  (advice-add #'backward-delete-char-untabify :around #'kadir-soft-update-mode-line-advice)
-  (advice-add #'delete-char :around #'kadir-soft-update-mode-line-advice)
-  (advice-add #'self-insert-command :around #'kadir-soft-update-mode-line-advice))
-
+  (doom-modeline-mode 1))
 
 
 (use-package stripe-buffer

@@ -151,35 +151,6 @@
       (shell-command  "pip install autoflake flake8"))))
 
 
-(defun kadir/django/find-models()
-  (interactive)
-  (let ((helm-rg-default-glob-string "models.py"))
-    (helm-rg "^class model " )))
-
-(defun kadir/django/find-views()
-  (interactive)
-  (let ((helm-rg-default-glob-string "views.py"))
-    (helm-rg "^class " )))
-
-
-(defun kadir/django/find-urls()
-  (interactive)
-  ;; (find-file (concat (projectile-project-root)
-  ;;                    (nth (-(length (split-string
-  ;;                                    (projectile-project-root) "/"))
-  ;;                           2)
-  ;;                         (split-string (projectile-project-root) "/"))
-  ;;                    "/urls.py"
-  ;;                    ))
-  (let ((helm-rg-default-glob-string "urls.py"))
-    (helm-rg "" )))
-
-(defun kadir/django/find-settings()
-  (interactive)
-  (let ((helm-rg-default-glob-string "settings.py"))
-    (helm-rg "")))
-
-
 
 (defun fk/django-get-module (devider)
   ;; origin: https://github.com/KaratasFurkan/.emacs.d/
@@ -195,7 +166,7 @@
   (require 's)
 
   (let* ((which-result (which-function))
-         (dot-count (s-count-matches "\\." which-result))
+         (dot-count (s-count-matches-all "\\." which-result))
          (class-or-function nil))
 
     (if (> dot-count 0)
@@ -238,11 +209,6 @@
 
 
 
-(defun kadir/python-class-search ()
-  (interactive)
-  (kadir/helm-rg-dwim-with-glob "*.py" "^class "))
-
-
 
 (defun kadir/fast-python()
   (interactive)

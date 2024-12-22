@@ -113,25 +113,6 @@
   (window-resize nil (- (truncate (* (/ h 12.0) (frame-height))) (window-total-height)) nil))
 
 
-
-(defun kadir/adjust-font-size(x)
-  (set-face-attribute 'default nil :height x)
-  (set-face-attribute 'mode-line nil :height x)
-  (set-face-attribute 'mode-line-inactive nil :height x)
-  (message "New Size: %d" x))
-
-(defun kadir/font-size-smaller()
-  (interactive)
-  (setq kadir/default-font-size (- kadir/default-font-size 3))
-  (kadir/adjust-font-size kadir/default-font-size))
-
-(defun kadir/font-size-bigger()
-  (interactive)
-  (setq kadir/default-font-size (+ kadir/default-font-size 10))
-  (kadir/adjust-font-size kadir/default-font-size))
-
-
-
 (defun kadir/bind (args)
   (mapcar
    (lambda (arg)

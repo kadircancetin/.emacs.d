@@ -2,9 +2,6 @@
 
 
 
-(defun tooltip-mode(&rest args)
-  (message "no tooltip mode"))
-
 
 
 
@@ -156,8 +153,8 @@
   :init
   (load-file (expand-file-name "straight/repos/too-long-lines-mode/too-long-lines-mode.el" user-emacs-directory))
 
-  (setq too-long-lines-threshold 220)
-  (setq too-long-lines-show-number-of-characters 50)
+  (setq too-long-lines-threshold 600)
+  (setq too-long-lines-show-number-of-characters 120)
   (setq too-long-lines-special-buffer-modes '(json-mode eshell-mode))
   (setq too-long-lines-idle-seconds 10)
 
@@ -369,61 +366,24 @@
   (setq enable-recursive-minibuffers t))
 
 
-(use-package consult
-  ;; Replace bindings. Lazily loaded due by `use-package'.
-  :bind (
-         ("C-c m" . consult-mode-command)
-         ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
-         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-         ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
-         ("C-x f" . projectile-find-file)
-         ;; ("M-y" . consult-yank-pop)                ;; orig. yank-pop
-         ("M-g g" . consult-goto-line)             ;; orig. goto-line
-         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
-         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
-         ("M-g i" . consult-imenu)
-         ("M-g I" . consult-imenu-multi))
+;; (use-package consult
+;;   ;; Replace bindings. Lazily loaded due by `use-package'.
+;;   :bind (
+;;          ("C-c m" . consult-mode-command)
+;;          ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
+;;          ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+;;          ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+;;          ("C-x f" . projectile-find-file)
+;;          ;; ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+;;          ("M-g g" . consult-goto-line)             ;; orig. goto-line
+;;          ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+;;          ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+;;          ("M-g i" . consult-imenu)
+;;          ("M-g I" . consult-imenu-multi))
 
-  :hook (completion-list-mode . consult-preview-at-point-mode)
+;;   :hook (completion-list-mode . consult-preview-at-point-mode)
+;;   )
 
-  :init
-
-  (setq register-preview-delay 0.5
-        register-preview-function #'consult-register-format)
-  (advice-add #'register-preview :override #'consult-register-window)
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
-
-  :config
-
-  (consult-customize
-   consult-theme :preview-key '(:debounce 0.2 any)
-   ;; consult-ripgrep consult-git-grep consult-grep
-   consult-bookmark consult-recent-file consult-xref
-   consult--source-bookmark consult--source-file-register
-   consult--source-recent-file consult--source-project-recent-file
-   ;; :preview-key (kbd "M-.")
-   :preview-key '(:debounce 0.2 any))
-
-  (setq consult-narrow-key "<"))
-
-;; Optionally use the `orderless' completion style.
-(use-package orderless
-  :init
-  ;; Configure a custom style dispatcher (see the Consult wiki)
-  ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
-  ;;       orderless-component-separator #'orderless-escapable-split-on-space)
-  (setq
-   completion-styles '(basic partial-completion orderless)
-   ;; completion-styles '(orderless)
-   completion-category-defaults nil
-   ;; orderless-match-faces [
-   ;;                        completions-common-part
-   ;;                        orderless-match-face-1
-   ;;                        orderless-match-face-2
-   ;;                        orderless-match-face-3
-   ;;                        ]
-   completion-category-overrides '((file (styles partial-completion)))))
 
 
 (use-package marginalia
@@ -526,7 +486,7 @@
 
 
   (defun kadir-gptel-groq()
-    (setq gptel-model  "llama-3.1-70b-versatile"
+    (setq gptel-model  'llama-3.3-70b-specdec
           gptel-max-tokens nil
           gptel-temperature 0
           gptel-backend (gptel-make-openai "Groq"
@@ -535,14 +495,14 @@
                           :stream t
                           :key ""
                           :models
-                          '("llama-3.1-70b-versatile"
+                          '("llama-3.3-70b-specdec"
                             "llama-3.1-8b-instant"
                             "llama3-70b-8192"
                             "mixtral-8x7b-32768"
                             "llama3-8b-8192"))))
 
   (defun kadir-gptel-openai()
-    (setq gptel-model  "gpt-4o-mini-2024-07-18"
+    (setq gptel-model  'gpt-4o-mini-2024-07-18
           gptel-max-tokens nil
           gptel-temperature 0
           gptel-backend (gptel-make-openai "ChatGPT"
@@ -553,8 +513,17 @@
                             "gpt-4o"
                             ))))
 
+  (defun kadir-gptel-gemini()
+    (setq gptel-model  'gemini-exp-1206
+          gptel-max-tokens nil
+          gptel-temperature 0
+          gptel-backend (gptel-make-gemini "Gemini"
+                          :stream t
+                          :models
+                          '("gemini-exp-1206"))))
+
   (defun kadir-gptel-local()
-    (setq gptel-model "phi3.5")
+    (setq gptel-model 'phi3.5)
     (setq gptel-temperature 0)
     (setq gptel-backend (gptel-make-ollama "ollama"
                           :models '("phi3.5"
@@ -565,13 +534,107 @@
                                     "gemma2:9b")
                           :stream t)))
 
-  (kadir-gptel-groq))
+  ;; (kadir-gptel-gemini)
+  (kadir-gptel-groq)
 
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;; gpt el settings
+  (setq gptel-directives
+        '((default     . "You are an LLM integrated within a text editor, designed to assist with brief, concise, and helpful responses.")
+          (programming . "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note.")
+          (writing     . "You are a large language model and a writing assistant. Respond concisely.")
+          (chat        . "You are a large language model and a conversation partner. Respond concisely.")))
+
+  (setq gptel-prompt-prefix-alist
+        '((markdown-mode . "### --USER:\n")
+          (org-mode . "*** ")
+          (text-mode . "### ")))
+
+  (setq gptel-response-prefix-alist
+        '((markdown-mode . "### --ASSISTANT:\n")
+          (org-mode . "")
+          (text-mode . "")))
+
+  ;; OTHERS
+
+  (require 'gptel)
+  (require 's)
+  (require 'gptel-context)
+
+  (defface gptel-kadir--user-title-font
+    '((t (:foreground "YellowGreen" :height 1.3)))
+    "Face for the user title in gptel-kadir."
+    :group 'gptel-kadir)
+
+  (defface gptel-kadir--assistant-title-font
+    '((t (:foreground "Indianred2" :height 1.3)))
+    "Face for the assistant title in gptel-kadir."
+    :group 'gptel-kadir)
+
+  (font-lock-add-keywords 'markdown-mode `(("^### --\\(USER\\):$" 1 'gptel-kadir--user-title-font prepend)) 'append)
+  (font-lock-add-keywords 'markdown-mode `(("^### --\\(ASSISTANT\\):$" 1 'gptel-kadir--assistant-title-font prepend)) 'append)
+
+  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
+
+
+  ;; mode
+
+  (setq gptel-kadir--chat-buffer-name "gptel-kadir")
+
+  (defun gptel-kadir--open-and-jump-buffer ()
+    (interactive)
+    (let ((buf gptel-kadir--chat-buffer-name))
+      (unless (buffer-live-p buf)
+        (gptel buf))
+      (display-buffer buf '((display-buffer-in-side-window)
+                            (side . right)
+                            (window-width . 80)))
+      (select-window (get-buffer-window buf))
+      (visual-line-mode 1)
+      (goto-char (point-max))))
+
+
+  (defun gptel-kadir--send-or-delete-buffer()
+    (interactive)
+    (goto-char (point-max))
+    (gptel-send)
+    ;; ;; delete window if the last prompt is empty user prompt
+    ;; ;; else send
+    ;; (if (and
+    ;;      ;; role equals USER
+    ;;      (s-equals? (car (last (mapcar (lambda (x) (plist-get x :role)) (gptel--create-prompt)))) "user")
+    ;;      ;; and string equals delimeter
+    ;;      (s-equals? (car (last (mapcar (lambda (x) (plist-get x :content)) (gptel--create-prompt)))) (s-trim (gptel-prompt-prefix-string))))
+    ;;     ;; then
+    ;;     (delete-window)
+    ;;   ;; else
+    ;;   )
+    )
+
+  (defun gptel-kadir ()
+    (interactive)
+    (cond
+     ((bound-and-true-p gptel-mode) (gptel-kadir--send-or-delete-buffer))
+     ((region-active-p)
+      (if (gptel-context--at-point)
+          (gptel-context-remove)
+        (gptel-context-add)))
+     (t (gptel-kadir--open-and-jump-buffer))))
+
+  (global-set-key (kbd "M-ç") 'gptel-kadir))
+
+
+(use-package elysium
+  :config
+  (use-package smerge-mode
+    :commands smerge-mode
+    :hook
+    (prog-mode . smerge-mode)))
 
 (use-package beyin
   :straight (beyin :type git :host github :repo "kadircancetin/beyin")
   :init
-  (global-set-key (kbd "M-ç") 'beyin-chat)
   :config
 
   ;;;;;;;;;;;;;;;;;;
@@ -589,7 +652,9 @@
           ("-> model-gemma2-2b" . (lambda () (activate-gpt-model "gemma2:2b" 'kadir-gptel-local)))
           ("-> model-gemma2-9b" . (lambda () (activate-gpt-model "gemma2:9b" 'kadir-gptel-local)))
           ("-> model-phi3.5" . (lambda () (activate-gpt-model "phi3.5" 'kadir-gptel-local)))
-          ("-> model-llama-3.1--70" . (lambda () (activate-gpt-model "llama-3.1-70b-versatile" 'kadir-gptel-groq)))))
+          ("-> model-llama-3.3--70" . (lambda () (activate-gpt-model "llama-3.3-70b-specdec" 'kadir-gptel-groq)))
+          ("-> model-llama-3.3--70" . (lambda () (activate-gpt-model "gemini-exp-1206" 'kadir-gptel-gemini)))
+          ))
 
   (defun activate-gpt-model (model func)
     "Activate the specified GPT model and notify the user."
@@ -612,6 +677,7 @@
            (if (= count-a count-b)
                (string< a b)
              (> count-a count-b)))))))
+
 
   (defun count-matches (prefix candidate)
     (let ((count 0)
@@ -682,3 +748,47 @@
 
 
 ;; (use-package chatgpt-shell)
+
+
+
+
+;; i hate eldoc with no reason
+
+(global-eldoc-mode 0)
+(defun eldoc-mode(&rest args) (message "no eldoc"))
+
+
+(defun tooltip-mode(&rest args)
+  (message "no tooltip mode"))
+
+
+
+
+
+(use-package helm-mode-manager)
+
+
+
+
+;; (display-battery-mode 1)                ;a
+
+
+
+
+
+
+;; this is a config
+(use-package copilot
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+  :ensure t
+  :defer nil
+  :config
+  (setq copilot-idle-delay 0)
+  (add-hook 'prog-mode-hook 'copilot-mode)
+
+  (global-set-key (kbd "C-ç") 'copilot-complete)
+  (define-key copilot-completion-map (kbd "C-ç") 'copilot-accept-completion)
+  ;; (define-key copilot-completion-map (kbd "M-n") 'copilot-next-completion)
+  ;; (define-key copilot-completion-map (kbd "M-p") 'copilot-previous-completion)
+  (copilot-mode 1)
+  )

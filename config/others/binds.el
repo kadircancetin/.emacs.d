@@ -22,11 +22,6 @@
     ("ç"                 . (lambda() (interactive) (eval-buffer) (message "eval") (save-buffer)))
     ("j"                 . dumb-jump-go)
 
-    ;; D
-    ("dm"                 . (lambda() (interactive)
-                              (let ((helm-rg-default-glob-string "models.py"))
-                                (helm-rg "class model " ))))
-
     ;; W
     ("ws"                 . ace-swap-window)
     ("ww"                 . resize-window-width)
@@ -134,7 +129,7 @@
    ;; ("C-x i"           . helm-imenu-all-buffer)
    ;; ("C-x C-i"         . helm-imenu)
    ("M-y"             . helm-show-kill-ring)
-   ;; ("C-x f"           . helm-projectile)
+   ("C-x f"           . helm-projectile)
 
    ;; helm-rg
    ("<C-tab>"         . kadir/helm-rg)
@@ -149,8 +144,8 @@
    ("C-x g"           . magit-status)
 
    ;; fonts
-   ("C-+"             . kadir/font-size-bigger)
-   ("C--"             . kadir/font-size-smaller)
+   ("C-+"             . global-text-scale-adjust)
+   ("C--"             . global-text-scale-adjust)
    ("C-c c"           . (lambda()(interactive)(org-capture nil "t")))
    )
  )

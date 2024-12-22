@@ -4,16 +4,8 @@
 
 
 
-(setq-default user-full-name "Kadir Can Çetin")
+(setq-default user-full-name "kadir can çetin")
 (setq-default user-mail-address "kadircancetin@gmail.com")
-
-
-
-
-;; I hate eldoc with no reason
-
-(global-eldoc-mode 0)
-(defun eldoc-mode(&rest args) (message "no eldoc"))
 
 
 
@@ -29,12 +21,14 @@
          ;; (display-time-mode 1)
          (delete-selection-mode 1)        ; writing when ther is selected, delete the selected part
          (show-paren-mode 1)              ; shows matching parentheses
+         (setopt show-paren-predicate t)
          (winner-mode 1)                  ; provide undo, redo your window layout
          (global-subword-mode 1)          ; make camel-case usable with word shorcuts
          (save-place-mode 1)              ; save cursor position for next file opening, and restore it
          ;; (global-prettify-symbols-mode 1) ; lambda to cool lambda character
          (global-auto-revert-mode 1)
          ;; (column-number-mode 0)
+         (syntax-wholeline-max 3000)
          (global-auto-composition-mode 1))))
 
 (run-with-idle-timer
