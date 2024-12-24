@@ -549,8 +549,9 @@
                           :stream t)))
 
   (kadir-gptel-gadir)
-  (kadir-gptel-groq)
   (kadir-gptel-gemini)
+  (kadir-gptel-groq)
+
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -563,7 +564,16 @@
    gptel-directives
    '((default
       .
-      "You are an LLM integrated within a text editor, designed to assist with brief, concise and helpful responses. Users may select text. It there is selected text, it will be enclosed in <file> and <context> tags.")))
+      "
+<llm_info>
+You are an LLM integrated within a text editor, designed to assist with brief, concise and helpful responses.
+
+Users may select text. It there is selected text, it will be enclosed in <file> and <context> tags.
+</llm_info>
+<review>
+If user ask you to review a code, try to find bugs, not talk much about what is code for.
+</review>
+")))
 
   (setq gptel-prompt-prefix-alist
         '((markdown-mode . "## --USER:\n")
@@ -587,15 +597,41 @@
     "Face for the assistant title in gptel-kadir."
     :group 'gptel-kadir)
 
-  (font-lock-add-keywords 'markdown-mode `(("^### --\\(USER\\):$" 1 'gptel-kadir--user-title-font prepend)) 'append)
-  (font-lock-add-keywords 'markdown-mode `(("^### --\\(ASSISTANT\\):$" 1 'gptel-kadir--assistant-title-font prepend)) 'append)
+  (font-lock-add-keywords 'markdown-mode `(("^## --\\(USER\\):$" 1 'gptel-kadir--user-title-font prepend)) 'append)
+  (font-lock-add-keywords 'markdown-mode `(("^## --\\(ASSISTANT\\):$" 1 'gptel-kadir--assistant-title-font prepend)) 'append)
 
   (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
 
-
   ;; mode
-
   (setq gptel-kadir--chat-buffer-name "gptel-kadir")
+
+  (defun gptel-kadir--build-region-context()
+    (interactive)
+    (concat
+     "\n#### CONTEXT:"
+     (if (buffer-file-name)
+         (concat "\n<file> " (buffer-file-name) " </file>"))
+     "\n<context>"
+     "\n```"
+     "\n" (buffer-substring-no-properties (region-beginning) (region-end))
+     "\n```"
+     "\n</context>"
+     "\n#### INPUT:"
+     "\n"))
+
+  (defun gptel-kadir--region-handle()
+    (interactive)
+    (let ((context-msg (gptel-kadir--build-region-context)))
+      (gptel-kadir--open-and-jump-buffer)
+
+      (with-current-buffer (get-buffer-create gptel-kadir--chat-buffer-name)
+        (goto-char (point-max))
+        (insert context-msg)
+        (re-search-backward "#### CONTEXT" nil t)
+        (markdown-back-to-heading)
+        (outline-hide-subtree)
+        (setq markdown-cycle-subtree-status 'folded)
+        (goto-char (point-max)))))
 
   (defun gptel-kadir--open-and-jump-buffer ()
     (interactive)
@@ -609,35 +645,27 @@
       (visual-line-mode 1)
       (goto-char (point-max))))
 
-
-  (defun gptel-kadir--send-or-delete-buffer()
+  (defun gptel-kadir--send()
     (interactive)
     (goto-char (point-max))
-    (gptel-send)
-    ;; ;; delete window if the last prompt is empty user prompt
-    ;; ;; else send
-    ;; (if (and
-    ;;      ;; role equals USER
-    ;;      (s-equals? (car (last (mapcar (lambda (x) (plist-get x :role)) (gptel--create-prompt)))) "user")
-    ;;      ;; and string equals delimeter
-    ;;      (s-equals? (car (last (mapcar (lambda (x) (plist-get x :content)) (gptel--create-prompt)))) (s-trim (gptel-prompt-prefix-string))))
-    ;;     ;; then
-    ;;     (delete-window)
-    ;;   ;; else
-    ;;   )
-    )
+    (gptel-send))
 
   (defun gptel-kadir ()
     (interactive)
     (cond
-     ((bound-and-true-p gptel-mode) (gptel-kadir--send-or-delete-buffer))
-     ((region-active-p)
-      (if (gptel-context--at-point)
-          (gptel-context-remove)
-        (gptel-context-add)))
+     ((region-active-p) (gptel-kadir--region-handle))
+     ((bound-and-true-p gptel-mode) (gptel-kadir--send))
      (t (gptel-kadir--open-and-jump-buffer))))
 
-  (global-set-key (kbd "M-ç") 'gptel-kadir))
+  ;; binds
+  (global-set-key (kbd "M-ç") 'gptel-kadir)
+  (advice-add 'keyboard-quit :before
+              (lambda ()
+                (when gptel-mode
+                  (gptel-abort (current-buffer)))))
+
+
+  )
 
 
 (use-package elysium
@@ -763,8 +791,6 @@
 
 
 ;; (use-package chatgpt-shell)
-
-
 
 
 ;; i hate eldoc with no reason
@@ -776,7 +802,6 @@
 (defun tooltip-mode(&rest args)
   (message "no tooltip mode"))
 
-
 
 
 
@@ -785,18 +810,11 @@
 
 
 
-;; (display-battery-mode 1)                ;a
-
-
-
-
-
-
 ;; this is a config
 (use-package copilot
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
   :ensure t
-  :defer nil
+  :defer 10
   :config
   (setq copilot-idle-delay 0)
   (add-hook 'prog-mode-hook 'copilot-mode)
@@ -805,5 +823,8 @@
   (define-key copilot-completion-map (kbd "C-ç") 'copilot-accept-completion)
   ;; (define-key copilot-completion-map (kbd "M-n") 'copilot-next-completion)
   ;; (define-key copilot-completion-map (kbd "M-p") 'copilot-previous-completion)
-  (copilot-mode 1)
   )
+
+
+
+(setq warning-minimum-level :error)
