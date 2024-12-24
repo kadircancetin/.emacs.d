@@ -501,6 +501,20 @@
                             "mixtral-8x7b-32768"
                             "llama3-8b-8192"))))
 
+  (defun kadir-gptel-gadir()
+    (setq gptel-model  'mock-gpt-model
+          gptel-max-tokens nil
+          gptel-temperature 0
+          gptel-backend (gptel-make-openai "Gadir"
+                          :host "localhost:8000"
+                          :endpoint "/chat/completions"
+                          :stream t
+                          :protocol "http"
+                          :key ""
+                          :models
+                          '(
+                            "mock-gpt-model"
+                            ))))
   (defun kadir-gptel-openai()
     (setq gptel-model  'gpt-4o-mini-2024-07-18
           gptel-max-tokens nil
@@ -534,33 +548,34 @@
                                     "gemma2:9b")
                           :stream t)))
 
-  ;; (kadir-gptel-gemini)
+  (kadir-gptel-gadir)
   (kadir-gptel-groq)
+  (kadir-gptel-gemini)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-  ;; gpt el settings
-  (setq gptel-directives
-        '((default     . "You are an LLM integrated within a text editor, designed to assist with brief, concise, and helpful responses.")
-          (programming . "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note.")
-          (writing     . "You are a large language model and a writing assistant. Respond concisely.")
-          (chat        . "You are a large language model and a conversation partner. Respond concisely.")))
-
-  (setq gptel-prompt-prefix-alist
-        '((markdown-mode . "### --USER:\n")
-          (org-mode . "*** ")
-          (text-mode . "### ")))
-
-  (setq gptel-response-prefix-alist
-        '((markdown-mode . "### --ASSISTANT:\n")
-          (org-mode . "")
-          (text-mode . "")))
-
-  ;; OTHERS
 
   (require 'gptel)
   (require 's)
   (require 'gptel-context)
+
+  ;; gpt el settings
+  (setq
+   gptel-directives
+   '((default
+      .
+      "You are an LLM integrated within a text editor, designed to assist with brief, concise and helpful responses. Users may select text. It there is selected text, it will be enclosed in <file> and <context> tags.")))
+
+  (setq gptel-prompt-prefix-alist
+        '((markdown-mode . "## --USER:\n")
+          (org-mode . "*** ")
+          (text-mode . "## ")))
+
+  (setq gptel-response-prefix-alist
+        '((markdown-mode . "## --ASSISTANT:\n")
+          (org-mode . "")
+          (text-mode . "")))
+
+  ;; Visiuals
 
   (defface gptel-kadir--user-title-font
     '((t (:foreground "YellowGreen" :height 1.3)))
