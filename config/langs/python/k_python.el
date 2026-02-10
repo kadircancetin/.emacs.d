@@ -32,8 +32,6 @@
 
   (kadir/enable-flycheck-flake8-python)
 
-  (add-hook 'after-save-hook 'kadir/python-remove-unused-imports)
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; (require 'company-tabnine)
   ;; (setq company-backends '(company-tabnine))
@@ -82,7 +80,11 @@
   (setq lsp-diagnostic-package :none) ;; lsp kapa
   (setq lsp-diagnostics-provider :none) ;; lsp kapa
   (setq flycheck-disabled-checkers '(python-pycompile python-mypy python-pylint))
-  (flycheck-select-checker 'python-flake8)
+  (ignore-errors
+    (flycheck-select-checker 'python-flake8)
+    (add-hook 'after-save-hook 'kadir/python-remove-unused-imports)
+    )
+
 
   ;; (setq flycheck-checkers '( python-flake8 python-pycompile))
 
@@ -96,21 +98,18 @@
 
 
 (defun kadir/activate-venv ()
-  "source: https://github.com/jorgenschaefer/pyvenv/issues/51"
+  "Activate venv named in .venv if the file exists; else do nothing."
   (interactive)
   (require 'pyvenv)
   (require 'lsp)
   (let* ((pdir (projectile-project-root))
-         (pfile (concat pdir ".venv"))
-         (ploc nil))
-    (when (file-exists-p pfile)
-      (setq ploc (with-temp-buffer
-                   (insert-file-contents pfile)
-                   (nth 0 (split-string (buffer-string)))))
-
-      (pyvenv-workon ploc)
-      (setq lsp-pyright-venv-path (concat (pyvenv-workon-home) "/" ploc "/")))))
-
+         (pfile (concat pdir ".venv")))
+    (when (and pdir (file-regular-p pfile))   ; <-- only regular files
+      (let ((ploc (string-trim (with-temp-buffer
+                                 (insert-file-contents pfile)
+                                 (buffer-string)))))
+        (pyvenv-workon ploc)
+        (setq lsp-pyright-venv-path (concat (pyvenv-workon-home) "/" ploc "/"))))))
 
 (setq kadir/python-remove-unused-imports--open t)
 

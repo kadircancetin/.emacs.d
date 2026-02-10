@@ -1,12 +1,15 @@
+(epa-file-enable)
+(let ((secrets-file "~/.emacs.d/secrets.el.gpg"))
+  (if (file-exists-p secrets-file)
+      (load secrets-file)
+    (message "Warning: Secrets file not found")))
+
+
 (global-set-key (kbd "M-:") 'xref-find-definitions-other-window)
 
 
 
-
-
-
 (load-file (expand-file-name "side-window.el" user-emacs-directory))
-
 
 
 
@@ -98,54 +101,6 @@
 
 ;; (defun lsp--create-filter-function (workspace)(prin1 workspace))
 
-(use-package company-tabnine
-  :defer 20
-  :init
-  (defun kadir/company-tabnine-disable()
-    (interactive)
-    (setq company-backends (remove 'company-tabnine company-backends)))
-
-  (defun kadir/company-tabnine-enable()
-    (interactive)
-    (set (make-local-variable 'company-idle-delay) .15)
-    (set (make-local-variable 'company-tooltip-idle-delay) .15)
-    (set (make-local-variable 'company-echo-delay) .15)
-    (set (make-local-variable 'company-backends ) '(company-tabnine))
-    (set (make-local-variable 'lsp-completion-provider ) :none)
-    )
-
-  (setq company-tabnine--disable-next-transform nil)
-  (defun my-company--transform-candidates (func &rest args)
-    (if (not company-tabnine--disable-next-transform)
-        (apply func args)
-      (setq company-tabnine--disable-next-transform nil)
-      (car args)))
-
-  (defun my-company-tabnine (func &rest args)
-    (when (eq (car args) 'candidates)
-      (setq company-tabnine--disable-next-transform t))
-    (apply func args))
-
-  (advice-add #'company--transform-candidates :around #'my-company--transform-candidates)
-  (advice-add #'company-tabnine :around #'my-company-tabnine))
-
-;; (defun kadir/format-haha()
-;;   (interactive)
-;;   (kadir/dired-smart-open)
-;;   (lsp-format-buffer)
-;;   (save-buffer)
-;;   (kadir/last-buffer)
-;;   (next-line)
-;;   )
-;; (global-set-key (kbd "C-ü") 'kadir/format-haha)
-
-
-;; (require 'git-file-tree)
-;; ;; (memory-report)
-;; ;; company-keywords-alist
-;; ;; thai-word-table
-
-
 
 (use-package too-long-lines-mode
   :straight (too-long-lines-mode :type git :host github :repo "rakete/too-long-lines-mode")
@@ -224,20 +179,6 @@
 
 
 
-(defun buffer-shown-in-a-window?(buf)
-  "Return t if buffer shown in any window"
-  (if (member buf (mapcar (lambda (wind) (window-buffer wind)) (window-list))) t nil))
-
-
-;; (global-set-key (kbd "C-x t g")
-;;                 (lambda ()
-;;                   (interactive)
-;;                   (kadir/open-updater)
-;;                   (select-window (get-buffer-window refresh-buff))
-;;                   (kadir-tree-mode)))
-
-;; 
-
 ;; Put backup files neatly away
 (let ((backup-dir "~/tmp/emacs/backups")
       (auto-saves-dir "~/tmp/emacs/auto-saves/"))
@@ -256,7 +197,6 @@
       kept-new-versions 5    ; keep some new versions
       kept-old-versions 2)   ; and some old ones, too
 
-
 
 (use-package blamer
   :ensure t
@@ -480,298 +420,237 @@
 
 
 
+
+
 (use-package gptel
-  :init
-  (setq gptel-log-level 'debug)
 
+  :config
 
-  (defun kadir-gptel-groq()
-    (setq gptel-model  'llama-3.3-70b-specdec
-          gptel-max-tokens nil
-          gptel-temperature 0
-          gptel-backend (gptel-make-openai "Groq"
-                          :host "api.groq.com"
-                          :endpoint "/openai/v1/chat/completions"
-                          :stream t
-                          :key ""
-                          :models
-                          '("llama-3.3-70b-specdec"
-                            "llama-3.1-8b-instant"
-                            "llama3-70b-8192"
-                            "mixtral-8x7b-32768"
-                            "llama3-8b-8192"))))
-
-  (defun kadir-gptel-gadir()
-    (setq gptel-model  'mock-gpt-model
-          gptel-max-tokens nil
-          gptel-temperature 0
-          gptel-backend (gptel-make-openai "Gadir"
-                          :host "localhost:8000"
-                          :endpoint "/chat/completions"
-                          :stream t
-                          :protocol "http"
-                          :key ""
-                          :models
-                          '(
-                            "mock-gpt-model"
-                            ))))
-  (defun kadir-gptel-openai()
-    (setq gptel-model  'gpt-4o-mini-2024-07-18
-          gptel-max-tokens nil
-          gptel-temperature 0
-          gptel-backend (gptel-make-openai "ChatGPT"
-                          :stream t
-                          :key ""
-                          :models
-                          '("gpt-4o-mini-2024-07-18"
-                            "gpt-4o"
-                            ))))
-
-  (defun kadir-gptel-gemini()
-    (setq gptel-model  'gemini-exp-1206
-          gptel-max-tokens nil
-          gptel-temperature 0
-          gptel-backend (gptel-make-gemini "Gemini"
-                          :stream t
-                          :models
-                          '("gemini-exp-1206"))))
-
-  (defun kadir-gptel-local()
-    (setq gptel-model 'phi3.5)
-    (setq gptel-temperature 0)
-    (setq gptel-backend (gptel-make-ollama "ollama"
-                          :models '("phi3.5"
-                                    "deepseek-coder-v2"
-                                    "deepseek-coder:6.7b"
-                                    "gemma2:2b"
-                                    "llama3.1"
-                                    "gemma2:9b")
-                          :stream t)))
-
-  (kadir-gptel-gadir)
-  (kadir-gptel-gemini)
-  (kadir-gptel-groq)
-
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-  (require 'gptel)
-  (require 's)
-  (require 'gptel-context)
-
-  ;; gpt el settings
   (setq
-   gptel-directives
-   '((default
-      .
-      "
-<llm_info>
-You are an LLM integrated within a text editor, designed to assist with brief, concise and helpful responses.
+   groq-backend (gptel-make-openai "Groq"
+                  :host "api.groq.com"
+                  :endpoint "/openai/v1/chat/completions"
+                  :stream t
+                  :key kadir-groq-api-key
+                  :models
+                  '("moonshotai/kimi-k2-instruct-0905"))
+   gptel-backend groq-backend
+   gptel-model "moonshotai/kimi-k2-instruct-0905")
 
-Users may select text. It there is selected text, it will be enclosed in <file> and <context> tags.
-</llm_info>
-<review>
-If user ask you to review a code, try to find bugs, not talk much about what is code for.
-</review>
+  (setq
+   open-router-backend (gptel-make-openai "OpenRouter"
+                         :header (lambda ()
+                                   (when-let* ((key (gptel--get-api-key)))
+                                     `(("Authorization" . ,(concat "Bearer " key))
+                                       ;; ;; https://openrouter.ai/docs/app-attribution
+                                       ("HTTP-Referer" . "https://github.com/karthink/gptel")
+                                       ("X-Title" . "emacs/gptel"))))
+                         :host "openrouter.ai"
+                         :endpoint "/api/v1/chat/completions"
+                         :stream t
+                         :key kadir-open-router-api-key
+
+                         :models '("moonshotai/kimi-k2.5"
+                                   "google/gemini-3-flash-preview"
+                                   "moonshotai/kimi-k2.5"
+                                   "deepseek/deepseek-v3.2"
+                                   "anthropic/claude-opus-4.6"
+                                   "google/gemini-3-pro-preview"
+                                   )
+                         ;; https://openrouter.ai/docs/features/provider-routing
+                         ;; https://openrouter.ai/docs/guides/best-practices/reasoning-tokens#reasoning-effort-level
+                         ;; :request-params '(:provider (:order ["z-ai"]))
+                         ;; :request-params '(:reasoning (:effort "minimal"))
+                         ;; :request-params '(:reasoning (:enabled :json-false))
+                         ;; :request-params '(:provider (:sort "throughput"))
+
+                         :request-params '(
+                                           :provider (:sort "latency")
+                                           :reasoning (:effort "low"))
+                         ;; :request-params '(
+                         ;;                   :provider (
+                         ;;                              :order ["deepseek"]
+                         ;;                              :sort "latency"
+                         ;;                              )
+                         ;;                   )
+                         )
+   gptel-backend open-router-backend
+
+   gptel-model "deepseek/deepseek-v3.2"
+   gptel-model "anthropic/claude-opus-4.6"
+   gptel-model "google/gemini-3-pro-preview"
+   ;;
+   gptel-model "anthropic/claude-sonnet-4.5"
+   gptel-model "moonshotai/kimi-k2.5"
+   gptel-model "google/gemini-3-flash-preview"
+   )
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+  (setq-default gptel-directives
+                '((default
+                   .
+                   "- You are an LLM integrated within a text editor. Provide brief, concise, and helpful responses.
+- Selected text appears within <file> and <context> tags when present.
+- Keep responses short and direct. Prioritize clarity over completeness.
+- Avoid unnecessary explanations, preambles, or asking clarifying questions unless critical.
 ")))
 
-  (setq gptel-prompt-prefix-alist
-        '((markdown-mode . "## --USER:\n")
-          (org-mode . "*** ")
-          (text-mode . "## ")))
 
-  (setq gptel-response-prefix-alist
-        '((markdown-mode . "## --ASSISTANT:\n")
-          (org-mode . "")
-          (text-mode . "")))
 
-  ;; Visiuals
-
-  (defface gptel-kadir--user-title-font
+  (defface beyin-user-title-font
     '((t (:foreground "YellowGreen" :height 1.3)))
-    "Face for the user title in gptel-kadir."
-    :group 'gptel-kadir)
+    "HERE"
+    ;; :type 'integer
+    :group 'beyin)
 
-  (defface gptel-kadir--assistant-title-font
+  (defface beyin-asistant-title-font
     '((t (:foreground "Indianred2" :height 1.3)))
-    "Face for the assistant title in gptel-kadir."
-    :group 'gptel-kadir)
+    "HERE"
+    :group 'beyin)
 
-  (font-lock-add-keywords 'markdown-mode `(("^## --\\(USER\\):$" 1 'gptel-kadir--user-title-font prepend)) 'append)
-  (font-lock-add-keywords 'markdown-mode `(("^## --\\(ASSISTANT\\):$" 1 'gptel-kadir--assistant-title-font prepend)) 'append)
 
-  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
+  (dolist (role-face '(("USER" . beyin-user-title-font)
+                       ("ASSISTANT" . beyin-asistant-title-font)
+                       ))
+    (font-lock-add-keywords 'markdown-mode
+                            `((,(concat "^# --\\(" (car role-face) "\\):$") 1 ',(cdr role-face) prepend)) 'append))
+  (dolist (role-face '(("USER" . beyin-user-title-font)
+                       ("ASSISTANT" . beyin-asistant-title-font)
+                       ))
+    (font-lock-add-keywords 'org-mode
+                            `((,(concat "^* --\\(" (car role-face) "\\):$") 1 ',(cdr role-face) prepend)) 'append))
 
-  ;; mode
-  (setq gptel-kadir--chat-buffer-name "gptel-kadir")
 
-  (defun gptel-kadir--build-region-context()
+  (setq gptel-default-mode 'org-mode)
+  (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "* --USER:\n")
+  (setf (alist-get 'org-mode gptel-response-prefix-alist) "* --ASSISTANT:\n")
+
+  ;; (setq gptel-default-mode 'markdown-mode)
+  ;; (setf (alist-get 'markdown-mode gptel-prompt-prefix-alist) "# --USER:\n")
+  ;; (setf (alist-get 'markdown-mode gptel-response-prefix-alist) "# --ASSISTANT:\n")
+
+  (setq gptel-relsponse-separator "\n")
+  (setq gptel-log-level 'debug
+        gptel-max-tokens nil
+        gptel-temperature 0.5
+        gptel-include-reasoning 'ignore
+        )
+
+  (defun my-gptel-send-in-en-buffer ()
     (interactive)
-    (concat
-     "\n#### CONTEXT:"
-     (if (buffer-file-name)
-         (concat "\n<file> " (buffer-file-name) " </file>"))
-     "\n<context>"
-     "\n```"
-     "\n" (buffer-substring-no-properties (region-beginning) (region-end))
-     "\n```"
-     "\n</context>"
-     "\n#### INPUT:"
-     "\n"))
+    (let ((current-buffer (current-buffer)))
+      (end-of-buffer)
+      (gptel-send)))
 
-  (defun gptel-kadir--region-handle()
-    (interactive)
-    (let ((context-msg (gptel-kadir--build-region-context)))
-      (gptel-kadir--open-and-jump-buffer)
+  (define-key gptel-mode-map (kbd "C-c RET") 'my-gptel-send-in-en-buffer)
 
-      (with-current-buffer (get-buffer-create gptel-kadir--chat-buffer-name)
-        (goto-char (point-max))
-        (insert context-msg)
-        (re-search-backward "#### CONTEXT" nil t)
-        (markdown-back-to-heading)
-        (outline-hide-subtree)
-        (setq markdown-cycle-subtree-status 'folded)
-        (goto-char (point-max)))))
-
-  (defun gptel-kadir--open-and-jump-buffer ()
-    (interactive)
-    (let ((buf gptel-kadir--chat-buffer-name))
-      (unless (buffer-live-p buf)
-        (gptel buf))
-      (display-buffer buf '((display-buffer-in-side-window)
-                            (side . right)
-                            (window-width . 80)))
-      (select-window (get-buffer-window buf))
-      (visual-line-mode 1)
-      (goto-char (point-max))))
-
-  (defun gptel-kadir--send()
-    (interactive)
-    (goto-char (point-max))
-    (gptel-send))
-
-  (defun gptel-kadir ()
-    (interactive)
-    (cond
-     ((region-active-p) (gptel-kadir--region-handle))
-     ((bound-and-true-p gptel-mode) (gptel-kadir--send))
-     (t (gptel-kadir--open-and-jump-buffer))))
-
-  ;; binds
-  (global-set-key (kbd "M-ç") 'gptel-kadir)
-  (advice-add 'keyboard-quit :before
-              (lambda ()
-                (when gptel-mode
-                  (gptel-abort (current-buffer)))))
-
-
-  )
-
-
-(use-package elysium
-  :config
-  (use-package smerge-mode
-    :commands smerge-mode
-    :hook
-    (prog-mode . smerge-mode)))
-
-(use-package beyin
-  :straight (beyin :type git :host github :repo "kadircancetin/beyin")
   :init
-  :config
+  (setq last-beyin-buffer nil)
 
-  ;;;;;;;;;;;;;;;;;;
+  (defun beyin-display-last-buffer ()
+    "Display the beyin buffer in a side window on the right.
+Close the buffer window only if the cursor is in the beyin buffer.
+If a region is active and not in the buffer, copy the region and paste it between ```` tags."
+    (interactive)
+    ;; Save the current beyin buffer if in gptel-mode
+    (when (bound-and-true-p gptel-mode)
+      (setq last-beyin-buffer (current-buffer)))
 
-  (require 'company)
+    (when (or (not last-beyin-buffer)
+              (not (buffer-live-p last-beyin-buffer)))
+      (setq last-beyin-buffer (get-buffer (gptel (string-trim (shell-command-to-string "uuidgen -7"))))))
 
-  (global-company-mode 1)
+    (if (eq (current-buffer) last-beyin-buffer)
+        ;; if the cursor is in the beyin buffer, close the window
+        (delete-window (get-buffer-window (current-buffer)))
+      ;; else:
+      (if (region-active-p)
+          (progn
+            (let* ((start-line (line-number-at-pos (region-beginning)))
+                   (source-file (or (buffer-file-name) (buffer-name)))
+                   (source-mode (symbol-name major-mode))
+                   (lang (replace-regexp-in-string "-mode\\'" "" source-mode))
+                   (last-beyin-buffer (get-buffer-create (gptel "beyin"))))
+              (copy-region-as-kill (region-beginning) (region-end))
+              (display-buffer last-beyin-buffer
+                              `((display-buffer-in-side-window)
+                                (side . right)
+                                (window-width . 80)))
+              (select-window (get-buffer-window last-beyin-buffer 0))
+              (goto-char (point-max))
+              (visual-line-mode 1)
+              (spell-fu-mode 0)
+              (insert "\n** Context \nFile: " source-file  "\nLine: " (number-to-string start-line)
+                      "\n\n#+begin_src " lang "\n" (current-kill 0) "\n#+end_src\n** Question\n")
 
-  (setq beyin-company-prefix "kk")
+              ))
+        ;; If no region is active, just display the buffer
+        (display-buffer last-beyin-buffer
+                        `((display-buffer-in-side-window)
+                          (side . right)
+                          (window-width . 80)))
+        (select-window (get-buffer-window last-beyin-buffer 0))
+        (goto-char (point-max))
+        (spell-fu-mode 0)
+        (visual-line-mode 1))))
 
-  (setq command-and-functions
-        '(("-> prompt-grammar" . (lambda () (insert "Find and fix grammar issues on the given text.")))
-          ("-> model-openai-4o" . (lambda () (activate-gpt-model "gpt-4o" 'kadir-gptel-openai)))
-          ("-> model-openai-4o-mini" . (lambda () (activate-gpt-model "gpt-4o-mini-2024-07-18" 'kadir-gptel-openai)))
-          ("-> model-gemma2-2b" . (lambda () (activate-gpt-model "gemma2:2b" 'kadir-gptel-local)))
-          ("-> model-gemma2-9b" . (lambda () (activate-gpt-model "gemma2:9b" 'kadir-gptel-local)))
-          ("-> model-phi3.5" . (lambda () (activate-gpt-model "phi3.5" 'kadir-gptel-local)))
-          ("-> model-llama-3.3--70" . (lambda () (activate-gpt-model "llama-3.3-70b-specdec" 'kadir-gptel-groq)))
-          ("-> model-llama-3.3--70" . (lambda () (activate-gpt-model "gemini-exp-1206" 'kadir-gptel-gemini)))
-          ))
+  (defun beyin-new()
+    (interactive)
+    (setq
+     last-beyin-buffer
+     (get-buffer (gptel (string-trim (shell-command-to-string "uuidgen -7")))))  ;; uuid7
+    (when (bound-and-true-p gptel-mode)
+      (kadir/delete-window))
+    (beyin-display-last-buffer))
 
-  (defun activate-gpt-model (model func)
-    "Activate the specified GPT model and notify the user."
-    (funcall func)
-    (setq gptel-model model)
-    (message (concat gptel-model " ACTIVATED")))
+  (defun beyin-next-beyin ()
+    (interactive)
+    (let* ((gptel-buffers (seq-filter (lambda (buf)
+                                        (buffer-local-value 'gptel-mode buf))
+                                      (buffer-list)))
+           (sorted-buffers (sort gptel-buffers
+                                 (lambda (a b)
+                                   (string< (buffer-name a) (buffer-name b)))))
+           (current (current-buffer))
+           (current-pos (cl-position current sorted-buffers))
+           (buf-count (length sorted-buffers)))
+      (cond
+       ;; No gptel buffers: create one
+       ((zerop buf-count)
+        (prin1 "No gptel buffers found. Creating a new one.")
+        (call-interactively 'beyin-new))
+       ;; At last buffer with content: spawn new instead of wrapping
+       ((and current-pos
+             (= current-pos (1- buf-count))
+             (not (string= (with-current-buffer current
+                             (buffer-string))
+                           "* --USER:\n")))
+        (prin1 "At the last gptel buffer with content. Creating a new one.")
+        (call-interactively 'beyin-new))
+       ;; Normal cycle (next or wrap to first)
+       (t (switch-to-buffer
+           (if current-pos
+               (nth (mod (1+ current-pos) buf-count) sorted-buffers)
+             (car sorted-buffers)))))))
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (global-set-key (kbd "M-ç") 'beyin-display-last-buffer)
+  (require 'gptel)
+  (define-key gptel-mode-map (kbd "M-n") 'beyin-next-beyin)
 
-  (defun better-fuzzy-match (prefix candidates)
-    (let ((prefix-list (string-to-list prefix)))
-      (cl-sort
-       (cl-remove-if-not
-        (lambda (candidate)
-          (cl-subsetp prefix-list (string-to-list candidate)))
-        candidates)
-       (lambda (a b)
-         (let ((count-a (count-matches prefix a))
-               (count-b (count-matches prefix b)))
-           (if (= count-a count-b)
-               (string< a b)
-             (> count-a count-b)))))))
-
-
-  (defun count-matches (prefix candidate)
-    (let ((count 0)
-          (start 0))
-      (while (string-match (regexp-quote prefix) candidate start)
-        (setq count (1+ count))
-        (setq start (match-end 0)))
-      count))
-
-  (defun beyin-company-backend (command &optional arg &rest ignored)
-    (condition-case nil
-        (let* ((all-candidates (mapcar 'car command-and-functions)))
-          (case command
-            (prefix (when (eq major-mode 'beyin-mode)
-                      (let ((symbol (symbol-name (symbol-at-point))))
-                        (when (and symbol (string-prefix-p beyin-company-prefix symbol))
-                          (substring symbol (length beyin-company-prefix))))))
-            (candidates (better-fuzzy-match arg all-candidates))
-            (sorted t)
-            (post-completion
-             (delete-region (- (point) (+ (length arg) (length beyin-company-prefix))) (point))
-             (let ((func (cdr (assoc arg command-and-functions))))
-               (when func
-                 (funcall func))))))
-      (error nil)))
-
-  (add-to-list 'company-backends 'beyin-company-backend)
-
-  (define-key company-active-map (kbd "RET")
-              (lambda ()
-                (interactive)
-                (if (and
-                     (string-prefix-p "-> " (nth company-selection company-candidates))
-                     (eq major-mode 'beyin-mode))
-                    (company-complete-selection)
-                  (company-abort)
-                  (newline))))
-
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   )
+
 
 
 
 
-
 (use-package consult-web
   :straight (consult-web :type git :host github :repo "armindarvish/consult-web" :files (:defaults "sources/*.el"))
   :after consult
-  :defer nil
-  )
+  :defer nil)
 (require 'consult)
 (require 'consult-web)
 (require 'consult-web-doi)
@@ -789,10 +668,6 @@ If user ask you to review a code, try to find bugs, not talk much about what is 
 ;;   :hook ((python-mode yaml-mode) . indent-bars-mode)) ; or whichever modes you prefer
 
 
-
-;; (use-package chatgpt-shell)
-
-
 ;; i hate eldoc with no reason
 
 (global-eldoc-mode 0)
@@ -803,28 +678,42 @@ If user ask you to review a code, try to find bugs, not talk much about what is 
   (message "no tooltip mode"))
 
 
-
-
 (use-package helm-mode-manager)
-
-
 
 
-;; this is a config
 (use-package copilot
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
   :ensure t
   :defer 10
   :config
   (setq copilot-idle-delay 0)
-  (add-hook 'prog-mode-hook 'copilot-mode)
+  (setq copilot-enable-predicates nil)
+
+  (add-hook 'python-mode-hook 'copilot-mode)
 
   (global-set-key (kbd "C-ç") 'copilot-complete)
   (define-key copilot-completion-map (kbd "C-ç") 'copilot-accept-completion)
-  ;; (define-key copilot-completion-map (kbd "M-n") 'copilot-next-completion)
-  ;; (define-key copilot-completion-map (kbd "M-p") 'copilot-previous-completion)
   )
 
 
 
 (setq warning-minimum-level :error)
+
+
+(use-package helm-xref)
+
+
+
+(use-package gdscript-mode
+  :straight (gdscript-mode
+             :type git
+             :host github
+             :repo "godotengine/emacs-gdscript-mode")
+  :hook (gdscript-mode . eglot-ensure)
+  :custom (gdscript-eglot-version 3)
+  )
+
+
+(use-package mermaid-mode)
+(use-package ox-pandoc)
+

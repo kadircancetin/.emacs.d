@@ -28,7 +28,7 @@
          ;; (global-prettify-symbols-mode 1) ; lambda to cool lambda character
          (global-auto-revert-mode 1)
          ;; (column-number-mode 0)
-         (syntax-wholeline-max 3000)
+         ;; (syntax-wholeline-max 3000)
          (global-auto-composition-mode 1))))
 
 (run-with-idle-timer

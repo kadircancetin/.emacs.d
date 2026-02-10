@@ -92,9 +92,9 @@
 (use-package org-fancy-priorities
   :custom
   (org-fancy-priorities-list '("[!!!]" "[!!]" "[!]"))
-  (org-priority-faces '((?A . (:foreground "orangered2" :weight extrabold :height 1.3))  ; org-mode
-                        (?B . (:foreground "orange" :weight extrabold :height 1.3))
-                        (?C . (:foreground "Burlywood" :weight extrabold :height 1.3))))
+  (org-priority-faces '((?A . (:foreground "orangered2" :weight extrabold :height 1.0))  ; org-mode
+                        (?B . (:foreground "orange" :weight extrabold :height 1.0))
+                        (?C . (:foreground "Burlywood" :weight extrabold :height 1.0))))
   :hook
   (org-mode . org-fancy-priorities-mode))
 

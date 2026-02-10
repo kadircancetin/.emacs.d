@@ -7,8 +7,8 @@
   :commands (go-mode)
   :init
   (add-to-list 'auto-mode-alist (cons "\\.go\\'" 'go-mode))
-  :hook
-  (go-mode . kadir/go-mode-hook-lsp)
+  ;; :hook
+  ;; (go-mode . kadir/go-mode-hook-eglot)
   :bind
   (:map go-mode-map
         ("C-c C-d" . lsp-ui-doc-show)

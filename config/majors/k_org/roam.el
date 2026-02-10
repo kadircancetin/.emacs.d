@@ -1,5 +1,10 @@
 ;; org-roam
 
+(use-package emacsql
+  :init
+  (require 'emacsql)
+  )
+
 (defun kadir/roam-auto-open-hook()
   (interactive)
 
