@@ -428,75 +428,109 @@
 
   (setq
    groq-backend (gptel-make-openai "Groq"
-                  :host "api.groq.com"
-                  :endpoint "/openai/v1/chat/completions"
+                  :host "api.sambanova.ai"
+                  :endpoint "/v1/chat/completions"
                   :stream t
-                  :key kadir-groq-api-key
+                  :key kadir-sambanova-api-key
                   :models
-                  '("moonshotai/kimi-k2-instruct-0905"))
+                  '("DeepSeek-V3.1"))
    gptel-backend groq-backend
-   gptel-model "moonshotai/kimi-k2-instruct-0905")
+   gptel-model "DeepSeek-V3.1")
 
-  (setq
-   open-router-backend (gptel-make-openai "OpenRouter"
-                         :header (lambda ()
-                                   (when-let* ((key (gptel--get-api-key)))
-                                     `(("Authorization" . ,(concat "Bearer " key))
-                                       ;; ;; https://openrouter.ai/docs/app-attribution
-                                       ("HTTP-Referer" . "https://github.com/karthink/gptel")
-                                       ("X-Title" . "emacs/gptel"))))
-                         :host "openrouter.ai"
-                         :endpoint "/api/v1/chat/completions"
-                         :stream t
-                         :key kadir-open-router-api-key
+  (defun kadir/beyin/setup-backend (model &optional request-params)
+    "Set up OpenRouter backend with MODEL."
+    (let* ((backend-name (format "OpenRouter/%s" model))
+           (header-fn (lambda ()
+                        (when-let* ((key (gptel--get-api-key)))
+                          (list
+                           (cons "Authorization" (concat "Bearer " key))
+                           (cons "HTTP-Referer" "https://github.com/karthink/gptel")
+                           (cons "X-Title" "emacs/gptel")))))
+           (backend (gptel-make-openai backend-name
+                      :header header-fn
+                      :host "openrouter.ai"
+                      :endpoint "/api/v1/chat/completions"
+                      :stream t
+                      :key kadir-open-router-api-key
+                      :models (list model)
+                      ;; https://openrouter.ai/docs/features/provider-routing
+                      ;; https://openrouter.ai/docs/guides/best-practices/reasoning-tokens#reasoning-effort-level
+                      ;; :request-params '(:provider (:order ["z-ai"]))
+                      ;; :request-params '(:reasoning (:effort "minimal"))
+                      ;; :request-params '(:reasoning (:enabled :json-false))
+                      ;; :request-params '(:provider (:sort "throughput"))
 
-                         :models '("moonshotai/kimi-k2.5"
-                                   "google/gemini-3-flash-preview"
-                                   "moonshotai/kimi-k2.5"
-                                   "deepseek/deepseek-v3.2"
-                                   "anthropic/claude-opus-4.6"
-                                   "google/gemini-3-pro-preview"
-                                   )
-                         ;; https://openrouter.ai/docs/features/provider-routing
-                         ;; https://openrouter.ai/docs/guides/best-practices/reasoning-tokens#reasoning-effort-level
-                         ;; :request-params '(:provider (:order ["z-ai"]))
-                         ;; :request-params '(:reasoning (:effort "minimal"))
-                         ;; :request-params '(:reasoning (:enabled :json-false))
-                         ;; :request-params '(:provider (:sort "throughput"))
+                      ;; :request-params '(
+                      ;;                   :provider (
+                      ;;                              :sort "latency"
+                      ;;                              :order ["sambanova" "cerebras/fp16" "groq" "minimax/highspeed"]
+                      ;;                              )
+                      ;;                   ;; :reasoning (:effort "low")
 
-                         :request-params '(
-                                           :provider (:sort "latency")
-                                           :reasoning (:effort "low"))
-                         ;; :request-params '(
-                         ;;                   :provider (
-                         ;;                              :order ["deepseek"]
-                         ;;                              :sort "latency"
-                         ;;                              )
-                         ;;                   )
-                         )
-   gptel-backend open-router-backend
+                      ;;                   )
 
-   gptel-model "deepseek/deepseek-v3.2"
-   gptel-model "anthropic/claude-opus-4.6"
-   gptel-model "google/gemini-3-pro-preview"
-   ;;
-   gptel-model "anthropic/claude-sonnet-4.5"
-   gptel-model "moonshotai/kimi-k2.5"
-   gptel-model "google/gemini-3-flash-preview"
-   )
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      ;; :request-params '(
+                      ;;                   :provider (
+                      ;;                              :sort "latency"
+                      ;;                              :order ["sambanova"]
+                      ;;                              )
+                      ;;                   :reasoning (:effort "low")
+
+                      ;;                   )
+                      ;; :request-params '(
+                      ;;                   :provider (
+                      ;;                              :order ["deepseek"]
+                      ;;                              :sort "latency"
+                      ;;                              )
+                      ;;                   )
+                      :request-params request-params)))
+      (setq open-router-backend backend
+            gptel-backend backend
+            gptel-model model)))
+
+  (kadir/beyin/setup-backend "anthropic/claude-sonnet-4.6" '(:reasoning (:effort "minimal")))
+  (kadir/beyin/setup-backend "google/gemini-3.1-pro-preview")
+  (kadir/beyin/setup-backend "deepseek/deepseek-v3.2")
+  (kadir/beyin/setup-backend "anthropic/claude-opus-4.6" '(:reasoning (:enabled :json-false)))
+  (kadir/beyin/setup-backend "anthropic/claude-opus-4.6")
+  (kadir/beyin/setup-backend "minimax/minimax-m2.7")
+
 
 
   (setq-default gptel-directives
                 '((default
                    .
-                   "- You are an LLM integrated within a text editor. Provide brief, concise, and helpful responses.
-- Selected text appears within <file> and <context> tags when present.
-- Keep responses short and direct. Prioritize clarity over completeness.
-- Avoid unnecessary explanations, preambles, or asking clarifying questions unless critical.
+                   "*ROLE*
+Developer assistant in Emacs. Be brief, direct, and actionable.
+
+*CONTEXT*
+- Linux, Python/TypeScript, Emacs
+- Selected text in <file>/<context> tags
+- Ask for missing context before guessing
+
+*OUTPUT RULES*
+- Keep responses short and direct
+- Prioritize clarity over completeness
+- Avoid unnecessary explanations or preambles
+- Provide actionable solutions
+- Use code blocks with language hints for syntax highlighting
+
+*EXTRA INFORMATION NEEDS*
+When you need more context to answer properly:
+- Wrap requests in <extra_information_need> tags
+- Provide easy-to-run bash commands
+- Use xclip for one-click copying
+
+Example:
+<extra_information_need>
+cat package.json | xclip -sel clip
+</extra_information_need>
+
+*BEHAVIOR*
+- For code questions: provide working examples
+- For errors: ask for full error message + relevant code. If possible give the xclip.
+- For shell commands: prefer safe, read-only operations when possible
 ")))
 
 
@@ -717,3 +751,10 @@ If a region is active and not in the buffer, copy the region and paste it betwee
 (use-package mermaid-mode)
 (use-package ox-pandoc)
 
+
+(use-package forge :after magit)
+(setq auth-sources '("~/.emacs.d/.authinfo.gpg"))
+
+
+
+(ghub-request "GET" "/user")

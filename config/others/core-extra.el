@@ -68,6 +68,17 @@
 
 (use-package magit
   :config
+  (setq magit-diff-refine-hunk 'all)
+  (setq diff-refine-nonmodified t)
+  (setq magit-diff-refine-ignore-whitespace nil)
+  (set-face-attribute 'diff-refine-removed nil
+                      :background "#311"
+                      :weight 'normal)
+  (set-face-attribute 'diff-refine-added nil
+                      :background "#131"
+                      :weight 'normal)
+
+
   (require 'k-spell-fu)
   (defun kadir/cool-spell()
     (spell-fu-mode 1)
@@ -84,11 +95,10 @@
   ;; (use-package magit-todos :hook (magit-mode . magit-todos-mode))
   (add-to-list 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
 
-  (add-hook 'magit-diff-mode-hook 'kadir/cool-spell 100)
-  (add-hook 'magit-mode-hook 'kadir/cool-spell 100)
+  ;; (add-hook 'magit-diff-mode-hook 'kadir/cool-spell 100)
+  ;; (add-hook 'magit-mode-hook 'kadir/cool-spell 100)
 
   (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
-
 
 
   (defun th/magit--with-difftastic (buffer command)

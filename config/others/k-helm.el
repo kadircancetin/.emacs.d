@@ -80,7 +80,12 @@
 
   (defun kadir/helm-rg-dwim (&optional query)
     (interactive)
-    (let ((helm-rg-default-directory (or (projectile-project-root) default-directory)))
+    (let ((helm-rg-default-directory
+           (cond
+            ((string-prefix-p "/home/kadir/algorand-backend/bun" (expand-file-name default-directory))
+             "/home/kadir/algorand-backend/bun")
+            ((projectile-project-root))
+            (t default-directory))))
 
       (cl-letf (((symbol-function 'helm-rg--get-thing-at-pt) (lambda () query)))
         (call-interactively 'helm-rg))))
